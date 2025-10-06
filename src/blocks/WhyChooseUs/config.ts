@@ -1,0 +1,138 @@
+import type { Block } from 'payload'
+
+export const WhyChooseUs: Block = {
+  slug: 'whyChooseUs',
+  fields: [
+    {
+      name: 'badge',
+      type: 'text',
+      label: 'Badge Text',
+      defaultValue: 'WHY CHOOSE US',
+      required: true,
+    },
+    {
+      name: 'title',
+      type: 'text',
+      label: 'Main Title',
+      defaultValue: 'Why Businesses Trust Us',
+      required: true,
+    },
+    {
+      name: 'subtitle',
+      type: 'textarea',
+      label: 'Subtitle',
+      defaultValue: "Designing the right technology partner isn't just about products — it's about reliability, capabilities, and support that never stops.",
+      required: true,
+    },
+    {
+      name: 'features',
+      type: 'array',
+      label: 'Feature Cards',
+      minRows: 4,
+      maxRows: 4,
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          label: 'Feature Title',
+          required: true,
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+          label: 'Feature Description',
+          required: true,
+        },
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Feature Image',
+          required: true,
+        },
+        {
+          name: 'alt',
+          type: 'text',
+          label: 'Image Alt Text',
+          required: true,
+        },
+        {
+          name: 'colSpan',
+          type: 'select',
+          label: 'Column Span',
+          options: [
+            { label: '4 columns (Left/Top)', value: '4' },
+            { label: '5 columns (Right/Bottom)', value: '5' },
+          ],
+          defaultValue: '4',
+          required: true,
+        },
+        {
+          name: 'hasGradient',
+          type: 'checkbox',
+          label: 'Has Dark Gradient Overlay',
+          defaultValue: false,
+        },
+        {
+          name: 'textColor',
+          type: 'select',
+          label: 'Text Color',
+          options: [
+            { label: 'White', value: 'white' },
+            { label: 'Black', value: 'black' },
+          ],
+          defaultValue: 'white',
+        },
+        {
+          name: 'contentPosition',
+          type: 'select',
+          label: 'Content Position',
+          options: [
+            { label: 'Bottom', value: 'bottom' },
+            { label: 'Center', value: 'center' },
+          ],
+          defaultValue: 'bottom',
+        },
+      ],
+      defaultValue: [
+        {
+          title: 'CERTIFIED TECHNOLOGIES & SERVICES',
+          description: 'Certified by leading tech providers, we deliver every project to global standards — from network security to AV integration.',
+          alt: 'Certified technologies',
+          colSpan: '4',
+          hasGradient: true,
+          textColor: 'white',
+          contentPosition: 'bottom',
+        },
+        {
+          title: 'END-TO-END SERVICE',
+          description: 'We design, install, and support tailored solutions for peak performance.',
+          alt: 'End-to-end service',
+          colSpan: '5',
+          hasGradient: false,
+          textColor: 'black',
+          contentPosition: 'center',
+        },
+        {
+          title: '24/7 SUPPORT',
+          description: 'Round-the-clock support with quick response times and fully trackable service requests.',
+          alt: '24/7 support',
+          colSpan: '5',
+          hasGradient: false,
+          textColor: 'black',
+          contentPosition: 'center',
+        },
+        {
+          title: 'PROVEN INDUSTRY EXPERIENCE',
+          description: 'Proven IT, security, and AV solutions across industries in the UAE.',
+          alt: 'Industry experience',
+          colSpan: '4',
+          hasGradient: true,
+          textColor: 'white',
+          contentPosition: 'bottom',
+        },
+      ],
+    },
+  ],
+  interfaceName: 'WhyChooseUsBlock',
+}

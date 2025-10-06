@@ -1,0 +1,256 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================= */
+/* FONT FACE (Open Sauce Sans)   */
+/* ============================= */
+@font-face {
+  font-family: 'Open Sauce Sans';
+  src: url('/fonts/open-sauce/OpenSauceSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sauce Sans';
+  src: url('/fonts/open-sauce/OpenSauceSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sauce Sans';
+  src: url('/fonts/open-sauce/OpenSauceSans-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sauce Sans';
+  src: url('/fonts/open-sauce/OpenSauceSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================= */
+/* BASE VARIABLES (LIGHT THEME)  */
+/* ============================= */
+@layer base {
+  :root {
+    --font-sans: 'Open Sauce Sans', sans-serif;
+
+    --background: 0 0% 100%;
+    --foreground: 32 7% 13%; /* #202123 */
+
+    --card: 0 0% 100%;
+    --card-foreground: 32 7% 13%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 32 7% 13%;
+
+    --primary: 357 72% 53%; /* #DF3341 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 210 10% 25%; /* #364152 */
+
+    --muted: 0 0% 90%; /* #E6E6E6 */
+    --muted-foreground: 210 5% 45%; /* #717680 */
+
+    --accent: 357 72% 53%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 95%;
+    --ring: 357 72% 53%;
+
+    --radius: 0.5rem;
+
+    --success: 152 52% 42%;
+    --warning: 34 89% 55%;
+    --error: 357 72% 53%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground min-h-[100vh] flex flex-col font-sans;
+  }
+}
+
+/* ============================= */
+/* DESIGN TOKENS (UTILITIES)     */
+/* ============================= */
+@layer utilities {
+  /* Headings */
+  .heading-h1 {
+    @apply text-h1 font-medium;
+  }
+  .heading-h2 {
+    @apply text-h2 font-semibold;
+  }
+  .heading-h3 {
+    @apply text-h3 font-semibold;
+  }
+
+  /* Body */
+  .body-b1 {
+    @apply text-b1 font-normal;
+  }
+  .body-b2 {
+    @apply text-b2 font-normal;
+  }
+  .body-b3 {
+    @apply text-b3 font-normal;
+  }
+  .body-b4 {
+    @apply text-b4 font-normal;
+  }
+  .body-b5 {
+    @apply text-b5 font-normal;
+  }
+
+  /* Buttons */
+  .btn-lg {
+    @apply text-btn-lg font-medium;
+  }
+  .btn-sm {
+    @apply text-btn-sm font-medium;
+  }
+  .btn-link {
+    @apply text-btn-link font-semibold underline-offset-2 hover:underline;
+  }
+
+  /* Spacing */
+  .space-40 {
+    margin: 2.5rem;
+  } /* 40px */
+  .space-32 {
+    margin: 2rem;
+  } /* 32px */
+  .space-16 {
+    margin: 1rem;
+  } /* 16px */
+
+  /* Colors */
+  .bg-brand-primary {
+    background-color: hsl(var(--primary));
+  }
+  .text-brand-primary {
+    color: hsl(var(--primary));
+  }
+  .border-brand-primary {
+    border-color: hsl(var(--primary));
+  }
+
+  .bg-brand-secondary {
+    background-color: hsl(var(--secondary));
+  }
+  .text-brand-secondary {
+    color: hsl(var(--secondary));
+  }
+  .border-brand-secondary {
+    border-color: hsl(var(--secondary));
+  }
+
+  .bg-brand-accent {
+    background-color: hsl(var(--accent));
+  }
+  .text-brand-accent {
+    color: hsl(var(--accent));
+  }
+  .border-brand-accent {
+    border-color: hsl(var(--accent));
+  }
+
+  .bg-success {
+    background-color: hsl(var(--success));
+  }
+  .text-success {
+    color: hsl(var(--success));
+  }
+  .border-success {
+    border-color: hsl(var(--success));
+  }
+
+  .bg-warning {
+    background-color: hsl(var(--warning));
+  }
+  .text-warning {
+    color: hsl(var(--warning));
+  }
+  .border-warning {
+    border-color: hsl(var(--warning));
+  }
+
+  .bg-error {
+    background-color: hsl(var(--error));
+  }
+  .text-error {
+    color: hsl(var(--error));
+  }
+  .border-error {
+    border-color: hsl(var(--error));
+  }
+
+  .bg-surface-card {
+    background-color: hsl(var(--card));
+  }
+  .text-surface-card {
+    color: hsl(var(--card-foreground));
+  }
+  .border-surface-card {
+    border-color: hsl(var(--card));
+  }
+
+  .bg-surface-muted {
+    background-color: hsl(var(--muted));
+  }
+  .text-surface-muted {
+    color: hsl(var(--muted-foreground));
+  }
+  .border-surface-muted {
+    border-color: hsl(var(--muted));
+  }
+
+  .bg-surface-popover {
+    background-color: hsl(var(--popover));
+  }
+  .text-surface-popover {
+    color: hsl(var(--popover-foreground));
+  }
+  .border-surface-popover {
+    border-color: hsl(var(--popover));
+  }
+
+  .bg-app {
+    background-color: hsl(var(--background));
+  }
+  .text-app {
+    color: hsl(var(--foreground));
+  }
+  .border-app {
+    border-color: hsl(var(--border));
+  }
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;   
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+/* ============================= */
+/* END OF FILE                    */
+/* ============================= */
