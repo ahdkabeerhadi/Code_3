@@ -34,6 +34,13 @@ export const ServicesBlock: React.FC<Props> = ({
     }
   }, [currentService])
 
+  const getImageUrl = (image: string | { url?: string; filename?: string }) => {
+    if (typeof image === 'string') {
+      return image.startsWith('http') ? image : `/images/${image}` // adjust relative path if needed
+    }
+    return image?.url || image?.filename || ''
+  }
+
   return (
     <section className={cn('bg-white py-16 lg:py-20 px-4 relative', className)}>
       {/* Header */}
@@ -92,25 +99,16 @@ export const ServicesBlock: React.FC<Props> = ({
           <div className="relative w-full rounded-3xl overflow-hidden transition-all duration-500">
             {currentService?.image ? (
               <Image
-                src={
-                  typeof currentService?.image === 'string'
-                    ? currentService.image
-                    : (currentService?.image as { url?: string; filename?: string })?.url ||
-                      (currentService?.image as { url?: string; filename?: string })?.filename ||
-                      ''
-                }
+                src={getImageUrl(currentService?.image)}
                 alt={currentService?.label || 'Service image'}
+                width={800}
+                height={500}
                 className="aspect-3/2 h-full w-full object-cover transition-all duration-700 ease-in-out"
                 onError={(e) => {
                   console.error('Image failed to load:', e.currentTarget.src)
-                  // Fallback to gradient if image fails to load
                   e.currentTarget.style.display = 'none'
                 }}
-                width={800}
-                height={500}
-
               />
-              
             ) : (
               <div
                 className="absolute w-0 h-0 bg-cover bg-center transition-all duration-700 ease-in-out"
@@ -120,10 +118,9 @@ export const ServicesBlock: React.FC<Props> = ({
                 }}
               />
             )}
-           
           </div>
         </div>
       </div>
     </section>
-)
+  )
 }
