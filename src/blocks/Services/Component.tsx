@@ -24,8 +24,6 @@ export const ServicesBlock: React.FC<Props> = ({
   // Debug: Log current service data
   React.useEffect(() => {
     if (currentService) {
-      console.log('Current service:', currentService)
-      console.log('Image data:', currentService.image)
       if (currentService.image) {
         const imageUrl =
           typeof currentService.image === 'string'
@@ -91,7 +89,7 @@ export const ServicesBlock: React.FC<Props> = ({
           </div>
 
           {/* Right Side - Image */}
-          <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-2xl transition-all duration-500">
+          <div className="relative w-full rounded-3xl overflow-hidden transition-all duration-500">
             {currentService?.image ? (
               <Image
                 src={
@@ -102,7 +100,7 @@ export const ServicesBlock: React.FC<Props> = ({
                       ''
                 }
                 alt={currentService?.label || 'Service image'}
-                className="absolute aspect-square inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out"
+                className="aspect-3/2 h-full w-full object-cover transition-all duration-700 ease-in-out"
                 onError={(e) => {
                   console.error('Image failed to load:', e.currentTarget.src)
                   // Fallback to gradient if image fails to load

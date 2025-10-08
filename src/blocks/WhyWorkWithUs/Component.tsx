@@ -74,14 +74,12 @@ export const WhyWorkWithUsBlock: React.FC<Props> = ({
                 </h2>
 
                 {/* Content */}
-                <p className="text-gray-800 lg:text-lg max-w-md">
-                  {feature.description}
-                </p>
+                <p className="text-gray-800 lg:text-lg max-w-md">{feature.description}</p>
               </div>
             </div>
           ))}
         </div>
       </div>
     </section>
-  )
+  )
 }

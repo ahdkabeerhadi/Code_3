@@ -1,5 +1,4 @@
 import type { GlobalConfig } from 'payload'
-
 import { link } from '@/fields/link'
 import { revalidateFooter } from './hooks/revalidateFooter'
 
@@ -10,11 +9,17 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
+      name: 'logo',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Company Logo',
+      required: true,
+    },
+    {
       name: 'description',
       type: 'textarea',
       label: 'Company Description',
-      defaultValue:
-        'From technology infrastructure to digital growth, we deliver end-to-end solutions that help your business run smarter and grow faster.',
+      defaultValue: 'From technology infrastructure to digital growth, we deliver end-to-end solutions that help your business run smarter and grow faster.',
       required: true,
     },
     {
@@ -43,7 +48,7 @@ export const Footer: GlobalConfig = {
           name: 'phone',
           type: 'text',
           label: 'Phone Number',
-          defaultValue: '‪+971 54 360 4546‬',
+          defaultValue: '+971 54 360 4546',
           required: true,
         },
         {
@@ -141,5 +146,5 @@ export const Footer: GlobalConfig = {
   ],
   hooks: {
     afterChange: [revalidateFooter],
-  },
+  },
 }

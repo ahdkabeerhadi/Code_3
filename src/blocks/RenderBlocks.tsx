@@ -14,11 +14,11 @@ import { MissionAndValuesBlock } from './MissionAndValues/Component'
 import { WhyWorkWithUsBlock } from './WhyWorkWithUs/Component'
 import { WhyChooseUsAboutBlock } from './WhyChooseUsAbout/Component'
 import { ContactUsBlock } from './ContactUs/Component'
-import { CareersBlock } from './CareersBanner/Component'
 import { AboutUsBannerBlock } from './AboutUsBanner/Component'
 import { WhyChooseUsBlock } from './WhyChooseUs/Component'
-import { TrustedBrandsBlock } from './TrustedBrands/Component'
 import { CurrentOpeningsBlock } from './CurrentOpenings/Component'
+import { CareersBlock } from './CareersBanner/Component'
+import { TrustedBrandsBlock } from './TrustedBrands/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -59,6 +59,7 @@ export const RenderBlocks: React.FC<{
             if (Block) {
               return (
                 <div className="" key={index}>
+                  {/* @ts-expect-error there may be some mismatch between the expected types here */}
                   <Block {...block} disableInnerContainer />
                 </div>
               )

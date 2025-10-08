@@ -150,6 +150,21 @@ export interface Page {
   title: string;
   hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
+    richText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
     /**
      * Text to display in the hero section
      */
@@ -210,27 +225,7 @@ export interface Page {
     | WhyChooseUsAboutBlock
     | WhyChooseUsBlock
     | ContactUsBlock
-    | {
-        title: string;
-        subtitle: string;
-        description?: string | null;
-        buttonText?: string | null;
-        buttonLink?: string | null;
-        teamImages?:
-          | {
-              image: string | Media;
-              alt?: string | null;
-              hasTopMargin?: boolean | null;
-              isVisibleOnMobile?: boolean | null;
-              isVisibleOnTablet?: boolean | null;
-              isVisibleOnDesktop?: boolean | null;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'careers';
-      }
+    | CareersBlock
     | AboutUsBannerBlock
     | TrustedBrandsBlock
     | CurrentOpeningsBlock
@@ -947,6 +942,31 @@ export interface ContactUsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CareersBlock".
+ */
+export interface CareersBlock {
+  title: string;
+  subtitle: string;
+  description?: string | null;
+  buttonText?: string | null;
+  buttonLink?: string | null;
+  teamImages?:
+    | {
+        image: string | Media;
+        alt?: string | null;
+        hasTopMargin?: boolean | null;
+        isVisibleOnMobile?: boolean | null;
+        isVisibleOnTablet?: boolean | null;
+        isVisibleOnDesktop?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'careers';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "AboutUsBannerBlock".
  */
 export interface AboutUsBannerBlock {
@@ -982,10 +1002,21 @@ export interface AboutUsBannerBlock {
  */
 export interface TrustedBrandsBlock {
   title: string;
+  /**
+   * Control the speed of the scrolling animation
+   */
+  animationSpeed?: ('slow' | 'normal' | 'fast') | null;
+  /**
+   * Pause the scrolling animation when users hover over the brands
+   */
+  pauseOnHover?: boolean | null;
   brands?:
     | {
         name: string;
         logo: string | Media;
+        /**
+         * Optional: Link to brand website
+         */
         url?: string | null;
         id?: string | null;
       }[]
@@ -1293,6 +1324,7 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
+        richText?: T;
         HeroText?: T;
         subText?: T;
         links?:
@@ -1343,28 +1375,7 @@ export interface PagesSelect<T extends boolean = true> {
         whyChooseUsAbout?: T | WhyChooseUsAboutBlockSelect<T>;
         whyChooseUs?: T | WhyChooseUsBlockSelect<T>;
         contactUs?: T | ContactUsBlockSelect<T>;
-        careers?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              description?: T;
-              buttonText?: T;
-              buttonLink?: T;
-              teamImages?:
-                | T
-                | {
-                    image?: T;
-                    alt?: T;
-                    hasTopMargin?: T;
-                    isVisibleOnMobile?: T;
-                    isVisibleOnTablet?: T;
-                    isVisibleOnDesktop?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
+        careers?: T | CareersBlockSelect<T>;
         aboutUsBanner?: T | AboutUsBannerBlockSelect<T>;
         trustedBrands?: T | TrustedBrandsBlockSelect<T>;
         currentOpenings?: T | CurrentOpeningsBlockSelect<T>;
@@ -1640,6 +1651,30 @@ export interface ContactUsBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CareersBlock_select".
+ */
+export interface CareersBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  description?: T;
+  buttonText?: T;
+  buttonLink?: T;
+  teamImages?:
+    | T
+    | {
+        image?: T;
+        alt?: T;
+        hasTopMargin?: T;
+        isVisibleOnMobile?: T;
+        isVisibleOnTablet?: T;
+        isVisibleOnDesktop?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "AboutUsBannerBlock_select".
  */
 export interface AboutUsBannerBlockSelect<T extends boolean = true> {
@@ -1674,6 +1709,8 @@ export interface AboutUsBannerBlockSelect<T extends boolean = true> {
  */
 export interface TrustedBrandsBlockSelect<T extends boolean = true> {
   title?: T;
+  animationSpeed?: T;
+  pauseOnHover?: T;
   brands?:
     | T
     | {
@@ -2151,11 +2188,53 @@ export interface Header {
     | {
         label: string;
         link: string;
+        type: 'internal' | 'external' | 'anchor' | 'dropdown' | 'mega';
+        openInNewTab?: boolean | null;
+        /**
+         * Enter the name of a Lucide React icon (e.g., "home", "user", "settings")
+         */
+        icon?: string | null;
         showInMobile?: boolean | null;
+        showInDesktop?: boolean | null;
+        /**
+         * Lower numbers appear first
+         */
+        order?: number | null;
+        /**
+         * Additional CSS classes for styling
+         */
+        cssClass?: string | null;
+        subItems?:
+          | {
+              label: string;
+              link: string;
+              /**
+               * Optional description for the sub menu item
+               */
+              description?: string | null;
+              icon?: string | null;
+              openInNewTab?: boolean | null;
+              image?: (string | null) | Media;
+              order?: number | null;
+              id?: string | null;
+            }[]
+          | null;
+        megaMenuConfig?: {
+          title?: string | null;
+          description?: string | null;
+          columns?: number | null;
+          backgroundImage?: (string | null) | Media;
+          /**
+           * CSS color value (e.g., #ff0000, rgb(255,0,0), red)
+           */
+          backgroundColor?: string | null;
+        };
         id?: string | null;
       }[]
     | null;
   megaMenu?: {
+    showMegaMenu?: boolean | null;
+    megaMenuLabel?: string | null;
     title?: string | null;
     brandText?: string | null;
     serviceCategories?:
@@ -2189,8 +2268,34 @@ export interface Header {
   };
   ctaButtons?: {
     loginText?: string | null;
+    loginLink?: string | null;
     contactText?: string | null;
     contactLink?: string | null;
+    showLoginButton?: boolean | null;
+    showContactButton?: boolean | null;
+    buttonStyle?: ('default' | 'rounded' | 'pill' | 'outline') | null;
+  };
+  settings?: {
+    stickyHeader?: boolean | null;
+    showSearchIcon?: boolean | null;
+    searchLink?: string | null;
+    mobileMenuStyle?: ('slide' | 'fullscreen' | 'dropdown') | null;
+    /**
+     * Tailwind CSS height class (e.g., h-16, h-20)
+     */
+    headerHeight?: string | null;
+    /**
+     * Tailwind CSS background class (e.g., bg-white, bg-gray-100)
+     */
+    backgroundColor?: string | null;
+    /**
+     * Tailwind CSS text color class (e.g., text-gray-900, text-white)
+     */
+    textColor?: string | null;
+    /**
+     * Tailwind CSS hover color class (e.g., hover:text-red-600, hover:text-blue-600)
+     */
+    hoverColor?: string | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -2201,6 +2306,7 @@ export interface Header {
  */
 export interface Footer {
   id: string;
+  logo: string | Media;
   description: string;
   navItems?:
     | {
@@ -2255,12 +2361,41 @@ export interface HeaderSelect<T extends boolean = true> {
     | {
         label?: T;
         link?: T;
+        type?: T;
+        openInNewTab?: T;
+        icon?: T;
         showInMobile?: T;
+        showInDesktop?: T;
+        order?: T;
+        cssClass?: T;
+        subItems?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              description?: T;
+              icon?: T;
+              openInNewTab?: T;
+              image?: T;
+              order?: T;
+              id?: T;
+            };
+        megaMenuConfig?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              columns?: T;
+              backgroundImage?: T;
+              backgroundColor?: T;
+            };
         id?: T;
       };
   megaMenu?:
     | T
     | {
+        showMegaMenu?: T;
+        megaMenuLabel?: T;
         title?: T;
         brandText?: T;
         serviceCategories?:
@@ -2298,8 +2433,24 @@ export interface HeaderSelect<T extends boolean = true> {
     | T
     | {
         loginText?: T;
+        loginLink?: T;
         contactText?: T;
         contactLink?: T;
+        showLoginButton?: T;
+        showContactButton?: T;
+        buttonStyle?: T;
+      };
+  settings?:
+    | T
+    | {
+        stickyHeader?: T;
+        showSearchIcon?: T;
+        searchLink?: T;
+        mobileMenuStyle?: T;
+        headerHeight?: T;
+        backgroundColor?: T;
+        textColor?: T;
+        hoverColor?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -2310,6 +2461,7 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  logo?: T;
   description?: T;
   navItems?:
     | T

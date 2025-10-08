@@ -7,24 +7,31 @@ type Props = {
   className?: string
 } & HeroBannerBlockProps
 
-export const HeroBannerBlock: React.FC<Props> = ({ 
-  className, 
-  title, 
-  subtitle, 
-  buttonText, 
+export const HeroBannerBlock: React.FC<Props> = ({
+  className,
+  title,
+  subtitle,
+  buttonText,
   buttonLink,
   backgroundImage,
-  showLogo = true 
+  showLogo = true,
 }) => {
   return (
-    <div className={cn('max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[1rem] pb-[3rem] md:pb-[4rem] xl:pb-[5rem]', className)}>
+    <div
+      className={cn(
+        'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[1rem] pb-[3rem] md:pb-[4rem] xl:pb-[5rem]',
+        className,
+      )}
+    >
       <div className="relative mx-auto min-w-full max-w-6xl rounded-[32px] text-center">
         {backgroundImage && (
           <div className="absolute inset-0 z-[-1] rounded-[32px] overflow-hidden">
             <img
-            src={typeof backgroundImage === 'string' ? backgroundImage : backgroundImage.url || ''}
-            alt="Background"
-            className="h-full w-full rounded-[32px] object-cover"
+              src={
+                typeof backgroundImage === 'string' ? backgroundImage : backgroundImage.url || ''
+              }
+              alt="Background"
+              className="h-full w-full rounded-[32px] object-cover"
             />
           </div>
         )}
@@ -38,14 +45,7 @@ export const HeroBannerBlock: React.FC<Props> = ({
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <rect
-                  x="0.8"
-                  y="0.3"
-                  width="23.4"
-                  height="23.4"
-                  rx="11.7"
-                  fill="#181A1A"
-                />
+                <rect x="0.8" y="0.3" width="23.4" height="23.4" rx="11.7" fill="#181A1A" />
                 <rect
                   x="0.8"
                   y="0.3"
@@ -101,6 +101,6 @@ export const HeroBannerBlock: React.FC<Props> = ({
           )}
         </div>
       </div>
-    </div>
-  )
+    </div>
+  )
 }

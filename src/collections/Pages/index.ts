@@ -28,10 +28,10 @@ import { WhyWorkWithUs } from '@/blocks/WhyWorkWithUs/config'
 import { WhyChooseUsAbout } from '@/blocks/WhyChooseUsAbout/config'
 import { WhyChooseUs } from '@/blocks/WhyChooseUs/config'
 import { ContactUs } from '@/blocks/ContactUs/config'
-import { Careers } from '@/blocks/CareersBanner/config'
 import { AboutUsBanner } from '@/blocks/AboutUsBanner/config'
-import { TrustedBrands } from '@/blocks/TrustedBrands/config'
 import { CurrentOpenings } from '@/blocks/CurrentOpenings/config'
+import { Careers } from '@/blocks/CareersBanner/config'
+import { TrustedBrands } from '@/blocks/TrustedBrands/config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',

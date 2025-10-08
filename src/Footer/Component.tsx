@@ -1,24 +1,20 @@
 import { getCachedGlobal } from '@/utilities/getGlobals'
-import Link from 'next/link'
 import React from 'react'
-
 import type { Footer } from '@/payload-types'
-
 import { CMSLink } from '@/components/Link'
-import Image from 'next/image'
+import { Logo } from '@/components/Logo/Logo'
 
 export async function Footer() {
   const footerData = (await getCachedGlobal('footer', 1)()) as Footer
 
   const navItems = footerData?.navItems || []
-  const description =
-    footerData?.description ||
-    'From technology infrastructure to digital growth, we deliver end-to-end solutions that help your business run smarter and grow faster.'
+  const description = footerData?.description
   const contactInfo = footerData?.contactInfo
   const bottomBar = footerData?.bottomBar
+  const logo = footerData?.logo
 
   return (
-    <footer className="bg-black text-white relative">
+    <footer className="bg-black text-white relative">                                       
       {/* Main Footer Content */}
       <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -26,8 +22,8 @@ export async function Footer() {
           <div className="lg:col-span-2">
             {/* Logo */}
             <div className="flex items-center mb-6">
-              <Image src={'/media/logo-with-mark-1.svg'} alt="Logo" width={350} height={250} />
-            </div>
+              <Logo logo={logo} width={274} height={89} alt="Company Logo" />
+          </div>
 
             {/* Description */}
             <p className="text-gray-300 text-sm leading-relaxed mb-16 max-w-sm">{description}</p>

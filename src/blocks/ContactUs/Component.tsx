@@ -116,7 +116,7 @@ export const ContactUsBlock: React.FC<Props> = ({
                   <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                     {formFields.phoneLabel}
                   </label>
-                  <div className="flex">
+                  <div className="flex lg:">
                     <select className="px-3 py-3 border-b bg-[#F7F7F7] text-gray-700 border-[#E0DDDD]">
                       {countryOptions?.map((option) => (
                         <option key={option.value} value={option.value}>
@@ -128,7 +128,7 @@ export const ContactUsBlock: React.FC<Props> = ({
                       type="tel"
                       id="phone"
                       name="phone"
-                      placeholder={formFields.phonePlaceholder || '+1 (555) 000-0000'}
+                      placeholder={formFields.phonePlaceholder || '+1 (555) 000-000'}
                       className="flex-1 px-4 py-3 border-b outline-none bg-[#F7F7F7] border-[#E0DDDD] text-gray-900 placeholder-gray-500 transition-colors"
                     />
                   </div>
@@ -197,5 +197,5 @@ export const ContactUsBlock: React.FC<Props> = ({
         </div>
       </div>
     </section>
-  )
+  )
 }

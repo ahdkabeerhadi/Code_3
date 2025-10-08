@@ -73,12 +73,10 @@ export const MissionAndValuesBlock: React.FC<Props> = ({
             </h2>
 
             {/* Values Content */}
-            <div className="text-gray-800 leading-6 lg:text-lg space-y-1">
-              {valuesCard.content}
-            </div>
+            <div className="text-gray-800 leading-6 lg:text-lg space-y-1">{valuesCard.content}</div>
           </div>
         )}
       </div>
     </section>
-  )
+  )
 }

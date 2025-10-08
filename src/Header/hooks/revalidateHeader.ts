@@ -9,5 +9,5 @@ export const revalidateHeader: GlobalAfterChangeHook = ({ doc, req: { payload, c
     revalidateTag('global_header')
   }
 
-  return doc
+  return doc
 }

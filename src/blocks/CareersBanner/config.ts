@@ -49,39 +49,6 @@ export const Careers: Block = {
           name: 'alt',
           type: 'text',
         },
-        // {
-        //   name: 'aspectRatioMobile',
-        //   type: 'select',
-        //   options: [
-        //     { label: 'Video (16:9)', value: 'aspect-video' },
-        //     { label: 'Square (1:1)', value: 'aspect-square' },
-        //     { label: 'Portrait (2:3)', value: 'aspect-[2/3]' },
-        //     { label: 'Landscape (3:2)', value: 'aspect-[3/2]' },
-        //   ],
-        //   defaultValue: 'aspect-video', 
-        // },
-        // {
-        //   name: 'aspectRatioTablet',
-        //   type: 'select',
-        //   options: [
-        //     { label: 'Video (16:9)', value: 'aspect-video' },
-        //     { label: 'Square (1:1)', value: 'aspect-square' },
-        //     { label: 'Portrait (2:3)', value: 'aspect-[2/3]' },
-        //     { label: 'Landscape (3:2)', value: 'aspect-[3/2]' },
-        //   ],
-        //   defaultValue: 'aspect-[2/3]', 
-        // },
-        // {
-        //   name: 'aspectRatioDesktop',
-        //   type: 'select',
-        //   options: [
-        //     { label: 'Video (16:9)', value: 'aspect-video' },
-        //     { label: 'Square (1:1)', value: 'aspect-square' },
-        //     { label: 'Portrait (2:3)', value: 'aspect-[2/3]' },
-        //     { label: 'Landscape (3:2)', value: 'aspect-[3/2]' },
-        //   ],
-        //   defaultValue: 'aspect-[3/2]', 
-        // },
         {
           name: 'hasTopMargin',
           type: 'checkbox',
@@ -105,4 +72,5 @@ export const Careers: Block = {
       ],
     },
   ],
+  interfaceName: 'CareersBlock',
 }

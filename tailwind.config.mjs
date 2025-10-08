@@ -9,7 +9,17 @@ const config = {
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
   ],
-  plugins: [tailwindcssAnimate, typography],
+  plugins: [
+    tailwindcssAnimate, 
+    typography, 
+    function({ addUtilities }) {
+      addUtilities({
+        '.animation-paused': {
+          'animation-play-state': 'paused',
+        },
+      })
+    }
+  ],
   prefix: '',
   safelist: [
     'lg:col-span-4',
@@ -59,6 +69,10 @@ const config = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'gentle-pulse': 'gentle-pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'scroll': 'scroll 30s linear infinite',
+        'scroll-slow': 'scroll 50s linear infinite',
+        'scroll-fast': 'scroll 20s linear infinite',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -134,6 +148,20 @@ const config = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        'gentle-pulse': {
+          '50%': { 
+            opacity: '0.8',
+            scale: '0.97'
+          },
+        },
+        scroll: {
+          '0%': { 
+            transform: 'translateX(0)' 
+          },
+          '100%': { 
+            transform: 'translateX(-100%)' 
+          },
+        }
       },
     },
   },

@@ -115,6 +115,6 @@ export const FAQBlock: React.FC<FAQBlockProps> = ({
           </div>
         </div>
       </div>
-    </div>
-  )
+    </div>
+  )
 }

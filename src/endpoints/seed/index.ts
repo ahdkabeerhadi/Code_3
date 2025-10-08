@@ -286,23 +286,23 @@ export const seed = async ({
     payload.updateGlobal({
       slug: 'header',
       data: {
+        logo: imageHomeDoc.id,
         navItems: [
           {
-            link: {
-              type: 'custom',
-              label: 'Posts',
-              url: '/posts',
-            },
+            label: 'Posts',
+            link: '/posts',
+            type: 'internal',
+            showInMobile: true,
+            showInDesktop: true,
+            order: 1,
           },
           {
-            link: {
-              type: 'reference',
-              label: 'Contact',
-              reference: {
-                relationTo: 'pages',
-                value: contactPage.id,
-              },
-            },
+            label: 'Contact',
+            link: '/contact',
+            type: 'internal', 
+            showInMobile: true,
+            showInDesktop: true,
+            order: 2,
           },
         ],
       },

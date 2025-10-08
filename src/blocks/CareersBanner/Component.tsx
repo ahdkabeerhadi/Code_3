@@ -4,9 +4,9 @@ import type { CareersBlock as CareersBlockProps } from 'src/payload-types'
 import { cn } from '@/utilities/ui'
 import React from 'react'
 
-type Props = {
+type Props = CareersBlockProps & {
   className?: string
-} & CareersBlockProps
+}
 
 export const CareersBlock: React.FC<Props> = ({
   className,
@@ -19,10 +19,6 @@ export const CareersBlock: React.FC<Props> = ({
 }) => {
   // Helper function to generate responsive classes for each team member
   const getResponsiveClasses = (member: NonNullable<typeof teamImages>[number]) => {
-    const aspectMobile = member.aspectRatioMobile || 'aspect-video'
-    const aspectTablet =  'aspect-[2/3]'
-    const aspectDesktop =  'aspect-[2/3]'
-
     return cn(
       `aspect-[1/1]`,
       `sm:aspect-[2/3]`,

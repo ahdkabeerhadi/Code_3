@@ -34,6 +34,6 @@ export const FAQ: Block = {
           required: true,
         },
       ],
-    },
-  ],
+    },
+  ],
 }

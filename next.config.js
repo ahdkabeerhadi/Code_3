@@ -21,7 +21,7 @@ const nextConfig = {
       {
         hostname: 'localhost',
         protocol: 'http',
-      },
+      },
     ],
   },
   webpack: (webpackConfig) => {
