@@ -1,6 +1,6 @@
 'use client'
 
-import type { ServicesBlock as ServicesBlockProps } from 'src/payload-types'
+import type { Media, ServicesBlock as ServicesBlockProps } from 'src/payload-types'
 
 import { cn } from '@/utilities/ui'
 import Image from 'next/image'
@@ -34,7 +34,7 @@ export const ServicesBlock: React.FC<Props> = ({
     }
   }, [currentService])
 
-  const getImageUrl = (image: string | { url?: string; filename?: string }) => {
+  const getImageUrl = (image: string | { url?: string; filename?: string } | Media) => {
     if (typeof image === 'string') {
       return image.startsWith('http') ? image : `/images/${image}` // adjust relative path if needed
     }

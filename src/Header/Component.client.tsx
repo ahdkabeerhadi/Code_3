@@ -156,7 +156,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, navigationPage
 
   return (
     <header
-      className={`${settings?.backgroundColor || 'bg-white/80'} w-full backdrop-blur-2xl relative z-50 lg:px-16 lg:pt-6 pt-4 ${
+      className={`${settings?.backgroundColor || 'bg-white/80'} w-full backdrop-blur-2xl relative z-50 lg:px-16 lg:py-6 py-4 ${
         settings?.stickyHeader ? 'sticky top-0' : ''
       }`}
       {...(theme ? { 'data-theme': theme } : {})}
