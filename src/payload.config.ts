@@ -72,6 +72,7 @@ export default buildConfig({
     // storage-adapter-placeholder
     vercelBlobStorage({
       enabled: true,
+      clientUploads: true,
       collections: {
         media: true,
       },
