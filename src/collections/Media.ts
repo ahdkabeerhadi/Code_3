@@ -40,7 +40,6 @@ export const Media: CollectionConfig = {
   ],
   upload: {
     // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload
-    staticDir: path.resolve(dirname, '../../public/media'),
     adminThumbnail: 'thumbnail',
     focalPoint: true,
     mimeTypes: ['image/*'],
@@ -75,6 +74,17 @@ export const Media: CollectionConfig = {
         width: 1200,
         height: 630,
         crop: 'center',
+      },
+    ],
+  },
+  hooks: {
+    afterChange: [
+      ({ doc }) => {
+        console.log('✅ File uploaded to Blob:', doc.url)
+        if (doc?.sizes) {
+          console.log('Generated sizes:', Object.keys(doc.sizes))
+        }
+        return doc
       },
     ],
   },
