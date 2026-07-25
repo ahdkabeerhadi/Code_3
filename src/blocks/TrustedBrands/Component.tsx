@@ -75,8 +75,10 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
         onError={() => setLogoFailed(true)}
       />
     ) : (
-      <div className="h-8 md:h-10 w-24 md:w-32 bg-gray-200 rounded flex items-center justify-center">
-        <span className="text-gray-500 text-xs md:text-sm font-medium">{brand.name}</span>
+      <div className="h-8 md:h-10 px-2 flex items-center justify-center">
+        <span className="whitespace-nowrap text-sm md:text-base font-semibold text-foreground transition-all duration-300 group-hover:scale-110 group-hover:text-primary_red">
+          {brand.name}
+        </span>
       </div>
     )
 
@@ -184,7 +186,7 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
                 {duplicatedBrands.map((brand, index) => (
                   <div
                     key={`${brand.name}-${index}`}
-                    className="flex-shrink-0 flex items-center justify-center"
+                    className="group flex-shrink-0 flex items-center justify-center"
                   >
                     <BrandLogo brand={brand} index={index} />
                   </div>
