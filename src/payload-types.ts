@@ -307,6 +307,7 @@ export interface Page {
     | TestimonialsBlock
     | AccreditationsBlock
     | IndustriesBlock
+    | DeliveryProcessBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1410,6 +1411,29 @@ export interface IndustriesBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DeliveryProcessBlock".
+ */
+export interface DeliveryProcessBlock {
+  badge?: string | null;
+  title: string;
+  description?: string | null;
+  steps?:
+    | {
+        /**
+         * e.g. "STEP 01" — auto-generated from position if left blank
+         */
+        stepLabel?: string | null;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'deliveryProcess';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "complaints".
  */
 export interface Complaint {
@@ -1834,6 +1858,7 @@ export interface PagesSelect<T extends boolean = true> {
         testimonials?: T | TestimonialsBlockSelect<T>;
         accreditations?: T | AccreditationsBlockSelect<T>;
         industries?: T | IndustriesBlockSelect<T>;
+        deliveryProcess?: T | DeliveryProcessBlockSelect<T>;
       };
   meta?:
     | T
@@ -2351,6 +2376,25 @@ export interface IndustriesBlockSelect<T extends boolean = true> {
     | {
         name?: T;
         icon?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DeliveryProcessBlock_select".
+ */
+export interface DeliveryProcessBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  description?: T;
+  steps?:
+    | T
+    | {
+        stepLabel?: T;
+        title?: T;
         description?: T;
         id?: T;
       };
