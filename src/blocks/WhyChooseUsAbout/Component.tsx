@@ -18,21 +18,21 @@ export const WhyChooseUsAboutBlock: React.FC<Props> = ({
   features = [],
 }) => {
   return (
-    <section className={cn('bg-white py-12 md:py-16', className)}>
+    <section className={cn('bg-white py-10 md:py-12', className)}>
       <div className="container mx-auto px-4 sm:px-6">
-        <Reveal className="max-w-2xl mb-10">
+        <Reveal className="max-w-2xl mb-6">
           {badge && <Eyebrow>{badge}</Eyebrow>}
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">{title}</h2>
-          {subtitle && <p className="mt-4 text-gray-600 leading-relaxed">{subtitle}</p>}
+          {subtitle && <p className="mt-3 text-gray-600 leading-relaxed">{subtitle}</p>}
         </Reveal>
 
         {features && features.length > 0 && (
           <Reveal
             delayMs={100}
-            className="grid grid-cols-1 sm:grid-cols-2 border-t border-l border-border"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t border-l border-border"
           >
             {features.map((feature, index) => (
-              <div key={feature.id || index} className="border-r border-b border-border p-6">
+              <div key={feature.id || index} className="border-r border-b border-border p-5">
                 <div className="flex items-center gap-3 mb-3">
                   {feature.icon && (
                     <span className="h-11 w-11 flex-none rounded-full bg-[#FDEBEC] flex items-center justify-center overflow-hidden">
