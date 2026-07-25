@@ -41,5 +41,14 @@ export const AboutTeaser: Block = {
       label: 'Link URL',
       defaultValue: '/about-us',
     },
+    {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Image',
+      admin: {
+        description: 'Optional. When set, the section splits into text + image.',
+      },
+    },
   ],
 }

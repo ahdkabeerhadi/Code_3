@@ -1443,6 +1443,10 @@ export interface AboutTeaserBlock {
   description: string;
   linkLabel?: string | null;
   linkUrl?: string | null;
+  /**
+   * Optional. When set, the section splits into text + image.
+   */
+  image?: (string | null) | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'aboutTeaser';
@@ -2427,6 +2431,7 @@ export interface AboutTeaserBlockSelect<T extends boolean = true> {
   description?: T;
   linkLabel?: T;
   linkUrl?: T;
+  image?: T;
   id?: T;
   blockName?: T;
 }
