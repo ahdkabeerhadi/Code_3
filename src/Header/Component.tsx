@@ -1,4 +1,5 @@
 import { HeaderClient } from './Component.client'
+import { TopBar } from './TopBar'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
@@ -59,5 +60,10 @@ export async function Header() {
       }
     })
 
-  return <HeaderClient data={(headerData as Header) || null} navigationPages={navigationPages} />
+  return (
+    <>
+      <TopBar />
+      <HeaderClient data={(headerData as Header) || null} navigationPages={navigationPages} />
+    </>
+  )
 }
