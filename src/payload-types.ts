@@ -1397,6 +1397,10 @@ export interface IndustriesBlock {
           | 'shoppingBag'
           | 'factory'
           | 'bed';
+        /**
+         * Shown on the back of the card when flipped/hovered.
+         */
+        description?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -2347,6 +2351,7 @@ export interface IndustriesBlockSelect<T extends boolean = true> {
     | {
         name?: T;
         icon?: T;
+        description?: T;
         id?: T;
       };
   id?: T;

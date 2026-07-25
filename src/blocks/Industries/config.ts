@@ -40,6 +40,14 @@ export const Industries: Block = {
           options: [...ICON_PRESET_OPTIONS],
           required: true,
         },
+        {
+          name: 'description',
+          type: 'textarea',
+          label: 'Description',
+          admin: {
+            description: 'Shown on the back of the card when flipped/hovered.',
+          },
+        },
       ],
     },
   ],
