@@ -1,12 +1,29 @@
 import type { Metadata } from 'next/types'
 
-import { CollectionArchive } from '@/components/CollectionArchive'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
+import Link from 'next/link'
 import React from 'react'
 import { Search } from '@/search/Component'
 import PageClient from './page.client'
-import { CardPostData } from '@/components/Card'
+
+type SearchResult = {
+  id: string | number
+  title?: string | null
+  slug?: string | null
+  serviceCategory?: string | null
+  meta?: { title?: string | null; description?: string | null } | null
+  doc?: { relationTo?: string | null; value?: string | number | null } | null
+}
+
+function getResultHref(result: SearchResult): string {
+  const slug = result.slug || ''
+  if (result.doc?.relationTo === 'pages') {
+    if (slug === 'home') return '/'
+    return result.serviceCategory ? `/service/${slug}` : `/${slug}`
+  }
+  return `/posts/${slug}`
+}
 
 type Args = {
   searchParams: Promise<{
@@ -17,47 +34,33 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
   const { q: query } = await searchParamsPromise
   const payload = await getPayload({ config: configPromise })
 
-  const posts = await payload.find({
+  const results = await payload.find({
     collection: 'search',
-    depth: 1,
-    limit: 12,
+    depth: 0,
+    limit: 24,
     select: {
       title: true,
       slug: true,
-      categories: true,
+      serviceCategory: true,
       meta: true,
+      doc: true,
     },
-    // pagination: false reduces overhead if you don't need totalDocs
     pagination: false,
     ...(query
       ? {
           where: {
             or: [
-              {
-                title: {
-                  like: query,
-                },
-              },
-              {
-                'meta.description': {
-                  like: query,
-                },
-              },
-              {
-                'meta.title': {
-                  like: query,
-                },
-              },
-              {
-                slug: {
-                  like: query,
-                },
-              },
+              { title: { like: query } },
+              { 'meta.description': { like: query } },
+              { 'meta.title': { like: query } },
+              { slug: { like: query } },
             ],
           },
         }
       : {}),
   })
+
+  const docs = results.docs as unknown as SearchResult[]
 
   return (
     <div className="pt-24 pb-24">
@@ -72,8 +75,27 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
         </div>
       </div>
 
-      {posts.totalDocs > 0 ? (
-        <CollectionArchive posts={posts.docs as CardPostData[]} />
+      {docs.length > 0 ? (
+        <div className="container">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {docs.map((result) => {
+              const href = getResultHref(result)
+              const title = result.meta?.title || result.title
+              return (
+                <Link
+                  key={result.id}
+                  href={href}
+                  className="block rounded-lg border border-border p-5 hover:shadow-lg transition-shadow"
+                >
+                  <h3 className="text-lg font-semibold text-foreground mb-2">{title}</h3>
+                  {result.meta?.description && (
+                    <p className="text-sm text-gray-600 line-clamp-3">{result.meta.description}</p>
+                  )}
+                </Link>
+              )
+            })}
+          </div>
+        </div>
       ) : (
         <div className="container">No results found.</div>
       )}
@@ -83,6 +105,6 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Payload Website Template Search`,
+    title: `Search | CODE3`,
   }
 }

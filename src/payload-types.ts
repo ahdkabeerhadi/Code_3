@@ -1528,11 +1528,20 @@ export interface Search {
   id: string;
   title?: string | null;
   priority?: number | null;
-  doc: {
-    relationTo: 'posts';
-    value: string | Post;
-  };
+  doc:
+    | {
+        relationTo: 'posts';
+        value: string | Post;
+      }
+    | {
+        relationTo: 'pages';
+        value: string | Page;
+      };
   slug?: string | null;
+  /**
+   * Copied from the source page, used to build the right URL for service pages.
+   */
+  serviceCategory?: string | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -2743,6 +2752,7 @@ export interface SearchSelect<T extends boolean = true> {
   priority?: T;
   doc?: T;
   slug?: T;
+  serviceCategory?: T;
   meta?:
     | T
     | {

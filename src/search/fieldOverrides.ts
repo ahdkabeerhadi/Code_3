@@ -10,6 +10,15 @@ export const searchFields: Field[] = [
     },
   },
   {
+    name: 'serviceCategory',
+    type: 'text',
+    index: true,
+    admin: {
+      readOnly: true,
+      description: 'Copied from the source page, used to build the right URL for service pages.',
+    },
+  },
+  {
     name: 'meta',
     label: 'Meta',
     type: 'group',
