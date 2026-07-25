@@ -277,6 +277,11 @@
   background-size: 800px 104px;
   position: relative;
 }
+/* Align the Zoho SalesIQ chat bubble with our phone/WhatsApp buttons stacked above it */
+#zsiq_float {
+  right: 24px !important;
+}
+
 /* ============================= */
 /* END OF FILE                    */
 /* ============================= */
