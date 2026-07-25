@@ -35,6 +35,11 @@ export const ICON_PRESET_OPTIONS = [
   { label: 'Handshake (Transfer/Outsourcing)', value: 'handshake' },
   { label: 'Check (Completed/Success)', value: 'check' },
   { label: 'Smile (Satisfaction)', value: 'smile' },
+  { label: 'Health (Medical/Healthcare)', value: 'health' },
+  { label: 'Home (Residential)', value: 'home' },
+  { label: 'Shopping Bag (Retail)', value: 'shoppingBag' },
+  { label: 'Factory (Manufacturing)', value: 'factory' },
+  { label: 'Bed (Hospitality)', value: 'bed' },
 ] as const
 
 export type IconPreset = (typeof ICON_PRESET_OPTIONS)[number]['value']
@@ -74,6 +79,11 @@ const ICON_PATHS: Record<IconPreset, string> = {
   handshake: 'M11 17l-2.2-2.2a2.5 2.5 0 013.5-3.5L14 13 M9 15l4.5 4.5a1.5 1.5 0 002.1-2.1L11 13 M2 12l5-5 4 4 M22 12l-5-5-2 2 M7 7l3-3 4 4-1.5 1.5',
   check: 'M22 11.08V12a10 10 0 11-5.93-9.14 M22 4L12 14.01l-3-3',
   smile: 'M12 22a10 10 0 100-20 10 10 0 000 20z M8 14s1.5 2 4 2 4-2 4-2 M9 9h.01 M15 9h.01',
+  health: 'M20 8.5a5.5 5.5 0 00-9.5-3.8A5.5 5.5 0 001 8.5c0 5 9.5 12 9.5 12S20 13.5 20 8.5z M12 8v6 M9 11h6',
+  home: 'M3 12l9-9 9 9 M5 10v10h14V10 M9 20v-6h6v6',
+  shoppingBag: 'M6 2l1.5 4h9L18 2 M3 6h18l-1.5 14h-15L3 6z M8 10a4 4 0 008 0',
+  factory: 'M2 22V12l6 4v-4l6 4V8l6 4v10H2z M6 22v-4 M12 22v-4 M18 22v-4',
+  bed: 'M3 18v-6a2 2 0 012-2h4a2 2 0 012 2v2 M13 12h6a2 2 0 012 2v4 M1 22v-4h22v4 M1 22v-2h22v2',
 }
 
 export function ServiceIcon({ preset, className }: { preset: string; className?: string }) {

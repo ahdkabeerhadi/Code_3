@@ -201,6 +201,11 @@ export interface Page {
         | 'handshake'
         | 'check'
         | 'smile'
+        | 'health'
+        | 'home'
+        | 'shoppingBag'
+        | 'factory'
+        | 'bed'
       )
     | null;
   hero: {
@@ -301,6 +306,7 @@ export interface Page {
     | StatsBlock
     | TestimonialsBlock
     | AccreditationsBlock
+    | IndustriesBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1278,6 +1284,11 @@ export interface StatsBlock {
           | 'handshake'
           | 'check'
           | 'smile'
+          | 'health'
+          | 'home'
+          | 'shoppingBag'
+          | 'factory'
+          | 'bed'
         )
       | null;
     iconMedia?: (string | null) | Media;
@@ -1335,6 +1346,63 @@ export interface AccreditationsBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'accreditations';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndustriesBlock".
+ */
+export interface IndustriesBlock {
+  badge?: string | null;
+  title: string;
+  items?:
+    | {
+        name: string;
+        icon:
+          | 'shield'
+          | 'server'
+          | 'cloud'
+          | 'network'
+          | 'phone'
+          | 'monitor'
+          | 'wrench'
+          | 'refresh'
+          | 'chart'
+          | 'users'
+          | 'layout'
+          | 'code'
+          | 'search'
+          | 'smartphone'
+          | 'palette'
+          | 'truck'
+          | 'camera'
+          | 'lock'
+          | 'box'
+          | 'lightbulb'
+          | 'headset'
+          | 'building'
+          | 'pin'
+          | 'database'
+          | 'settings'
+          | 'document'
+          | 'graduation'
+          | 'printer'
+          | 'tv'
+          | 'mic'
+          | 'wifi'
+          | 'handshake'
+          | 'check'
+          | 'smile'
+          | 'health'
+          | 'home'
+          | 'shoppingBag'
+          | 'factory'
+          | 'bed';
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'industries';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1752,6 +1820,7 @@ export interface PagesSelect<T extends boolean = true> {
         stats?: T | StatsBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
         accreditations?: T | AccreditationsBlockSelect<T>;
+        industries?: T | IndustriesBlockSelect<T>;
       };
   meta?:
     | T
@@ -2252,6 +2321,23 @@ export interface AccreditationsBlockSelect<T extends boolean = true> {
     | {
         name?: T;
         badge?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndustriesBlock_select".
+ */
+export interface IndustriesBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  items?:
+    | T
+    | {
+        name?: T;
+        icon?: T;
         id?: T;
       };
   id?: T;
