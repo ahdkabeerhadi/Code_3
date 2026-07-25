@@ -1067,6 +1067,10 @@ export interface AboutUsBannerBlock {
 export interface TrustedBrandsBlock {
   title: string;
   /**
+   * Scrolling marquee animates the logos in a loop; static grid lays them out in a fixed, non-moving grid.
+   */
+  displayStyle?: ('scroll' | 'grid') | null;
+  /**
    * Control the speed of the scrolling animation
    */
   animationSpeed?: ('slow' | 'normal' | 'fast') | null;
@@ -2044,6 +2048,7 @@ export interface AboutUsBannerBlockSelect<T extends boolean = true> {
  */
 export interface TrustedBrandsBlockSelect<T extends boolean = true> {
   title?: T;
+  displayStyle?: T;
   animationSpeed?: T;
   pauseOnHover?: T;
   brands?:

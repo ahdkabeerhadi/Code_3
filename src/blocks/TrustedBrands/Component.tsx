@@ -15,11 +15,13 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
   className,
   title,
   brands = [],
+  displayStyle = 'scroll',
   animationSpeed = 'normal',
   pauseOnHover = true,
 }) => {
   const safeBrands = brands || []
-  const duplicatedBrands = safeBrands.length > 0 ? [...safeBrands, ...safeBrands, ...safeBrands] : []
+  const isGrid = displayStyle === 'grid'
+  const duplicatedBrands = !isGrid && safeBrands.length > 0 ? [...safeBrands, ...safeBrands, ...safeBrands] : safeBrands
   const safeAnimationSpeed = animationSpeed || 'normal'
   const speedClasses = {
     slow: 'animate-scroll-slow',
@@ -132,35 +134,48 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
           </h2>
         </div>
 
-        {/* Infinite Scrolling Brands Container */}
-        <div className="relative w-full">
-          {/* Gradient fade masks */}
-          <div className="absolute -left-1 top-0 w-16 md:w-24 h-full bg-gradient-to-r from-white via-white/30 to-transparent z-10 pointer-events-none"></div>
-          <div className="absolute -right-1 top-0 w-16 md:w-24 h-full bg-gradient-to-l from-white via-white/30 to-transparent z-10 pointer-events-none"></div>
-          
-          {/* Scrolling container */}
-          <div className="flex overflow-hidden">
-            <div 
-              className={cn(
-                'flex items-center gap-8 md:gap-12 lg:gap-16 xl:gap-20 whitespace-nowrap',
-                speedClasses[safeAnimationSpeed],
-                pauseOnHover && 'hover:[animation-play-state:paused]'
-              )}
-              style={{
-                width: 'max-content',
-              }}
-            >
-              {duplicatedBrands.map((brand, index) => (
-                <div 
-                  key={`${brand.name}-${index}`} 
-                  className="flex-shrink-0 flex items-center justify-center"
-                >
-                  <BrandLogo brand={brand} index={index} />
-                </div>
-              ))}
+        {isGrid ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {safeBrands.map((brand, index) => (
+              <div
+                key={`${brand.name}-${index}`}
+                className="flex items-center justify-center rounded-xl border border-border p-5 h-20"
+              >
+                <BrandLogo brand={brand} index={index} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          /* Infinite Scrolling Brands Container */
+          <div className="relative w-full">
+            {/* Gradient fade masks */}
+            <div className="absolute -left-1 top-0 w-16 md:w-24 h-full bg-gradient-to-r from-white via-white/30 to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute -right-1 top-0 w-16 md:w-24 h-full bg-gradient-to-l from-white via-white/30 to-transparent z-10 pointer-events-none"></div>
+
+            {/* Scrolling container */}
+            <div className="flex overflow-hidden">
+              <div
+                className={cn(
+                  'flex items-center gap-8 md:gap-12 lg:gap-16 xl:gap-20 whitespace-nowrap',
+                  speedClasses[safeAnimationSpeed],
+                  pauseOnHover && 'hover:[animation-play-state:paused]'
+                )}
+                style={{
+                  width: 'max-content',
+                }}
+              >
+                {duplicatedBrands.map((brand, index) => (
+                  <div
+                    key={`${brand.name}-${index}`}
+                    className="flex-shrink-0 flex items-center justify-center"
+                  >
+                    <BrandLogo brand={brand} index={index} />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   )
