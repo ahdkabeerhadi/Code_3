@@ -8,7 +8,7 @@ interface ScrollToTopButtonProps {
 }
 
 export function ScrollToTopButton({ 
-  className = 'hidden md:block hover:cursor-pointer md:col-span-2 mt-auto transition-all duration-300 active:scale-95 rounded-full bg-[#CB101F] w-max p-3',
+  className = 'hidden md:block hover:cursor-pointer md:col-span-2 mt-auto transition-all duration-300 active:scale-95 rounded-full bg-foreground w-max p-3',
   ariaLabel = 'Scroll to top'
 }: ScrollToTopButtonProps) {
   const scrollToTop = () => {
@@ -41,7 +41,7 @@ export function ScrollToTopButton({
 }
 
 export function ScrollToTopButtonMobile({ 
-  className = 'mt-auto hover:cursor-pointer transition-all duration-300 active:scale-95 rounded-full bg-[#CB101F] w-max p-3',
+  className = 'mt-auto hover:cursor-pointer transition-all duration-300 active:scale-95 rounded-full bg-foreground w-max p-3',
   ariaLabel = 'Scroll to top'
 }: ScrollToTopButtonProps) {
   const scrollToTop = () => {

@@ -17,29 +17,29 @@ export async function Footer() {
   const logo = footerData?.logo
 
   return (
-    <footer className="bg-black text-white relative">
+    <footer className="bg-primary_red text-white relative">
       {/* Main Footer Content */}
       <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
           {/* Brand */}
           <div className="lg:col-span-4">
             <div className="mb-6">
-              <Logo href="/" logo={logo} width={180} height={58} alt="Company Logo" />
+              <Logo href="/" logo={logo} width={180} height={58} alt="Company Logo" variant="white" />
             </div>
-            <p className="text-gray-400 text-sm leading-relaxed max-w-sm">{description}</p>
+            <p className="text-white/75 text-sm leading-relaxed max-w-sm">{description}</p>
           </div>
 
           {/* Quick Links */}
           {navItems.length > 0 && (
             <div className="lg:col-span-4">
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-6">
+              <h3 className="inline-block text-xs font-semibold text-white uppercase tracking-wide mb-6 pb-2 border-b border-white/30">
                 Quick Links
               </h3>
               <nav className="grid grid-cols-2 gap-x-6 gap-y-3">
                 {navItems.map(({ link }, i) => (
                   <CMSLink
                     key={i}
-                    className="text-gray-300 hover:text-primary_red transition-colors text-sm"
+                    className="text-white/80 hover:text-white hover:underline transition-colors text-sm"
                     {...link}
                   />
                 ))}
@@ -49,29 +49,29 @@ export async function Footer() {
 
           {/* Contact */}
           <div className="lg:col-span-4">
-            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-6">
+            <h3 className="inline-block text-xs font-semibold text-white uppercase tracking-wide mb-6 pb-2 border-b border-white/30">
               Get In Touch
             </h3>
             <div className="space-y-5 text-sm">
               <a
                 href={`tel:${contactInfo?.phone}`}
-                className="block text-lg font-semibold text-white hover:text-primary_red transition-colors"
+                className="block text-lg font-semibold text-white hover:underline transition-colors"
               >
                 {contactInfo?.phone}
               </a>
               <a
                 href={`mailto:${contactInfo?.email}`}
-                className="block text-gray-300 hover:text-primary_red transition-colors"
+                className="block text-white/80 hover:text-white hover:underline transition-colors"
               >
                 {contactInfo?.email}
               </a>
-              <div className="text-gray-400 leading-relaxed">
+              <div className="text-white/75 leading-relaxed">
                 <p>{contactInfo?.address?.companyName}</p>
                 <p>{contactInfo?.address?.building}</p>
                 <p>{contactInfo?.address?.poBox}</p>
               </div>
-              <div className="text-gray-400">
-                <span className="text-gray-500">{contactInfo?.workingHours?.days}</span>
+              <div className="text-white/75">
+                <span className="text-white/60">{contactInfo?.workingHours?.days}</span>
                 {' — '}
                 {contactInfo?.workingHours?.time}
               </div>
@@ -81,11 +81,11 @@ export async function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="grid gap-8 md:gap-4 max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12 border-t border-white/10">
+      <div className="grid gap-8 md:gap-4 max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12 border-t border-white/20">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <ScrollToTopButton />
 
-          <div className="hidden md:block text-gray-500 mt-auto text-sm">
+          <div className="hidden md:block text-white/70 mt-auto text-sm">
             {bottomBar?.copyrightText}
           </div>
         </div>
@@ -98,7 +98,7 @@ export async function Footer() {
                 imgClassName="w-full h-[80px] lg:h-[120px] rounded-xl object-cover"
               />
             ) : (
-              <div className="w-full h-26 rounded-xl bg-red-800"></div>
+              <div className="w-full h-26 rounded-xl bg-foreground"></div>
             )}
 
             <div className="absolute inset-0 flex items-center justify-between gap-5 px-5 sm:px-10 xl:px-14">
@@ -119,7 +119,7 @@ export async function Footer() {
         </Link>
 
         <div className="md:hidden flex justify-between">
-          <div className="text-gray-500 mt-auto text-sm">{bottomBar?.copyrightText}</div>
+          <div className="text-white/70 mt-auto text-sm">{bottomBar?.copyrightText}</div>
           <ScrollToTopButtonMobile />
         </div>
       </div>
