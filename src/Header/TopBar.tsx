@@ -39,7 +39,7 @@ export async function TopBar() {
   if (!phone && !email && !address) return null
 
   return (
-    <div className="bg-foreground text-white text-xs">
+    <div className="sticky top-0 z-[60] bg-foreground text-white text-xs">
       <div className="container mx-auto px-4 sm:px-6 flex h-9 items-center justify-between gap-4">
         <div className="flex items-center gap-5 overflow-x-auto scrollbar-hide">
           {phone && (
