@@ -26,7 +26,7 @@ export function WhatsAppButton() {
       aria-label="Chat with CODE3 on WhatsApp"
       style={{
         position: 'fixed',
-        bottom: '96px',
+        bottom: '81px',
         right: '24px',
         zIndex: 9999,
         width: '58px',
