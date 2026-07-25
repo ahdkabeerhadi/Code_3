@@ -34,10 +34,18 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
   const { q: query } = await searchParamsPromise
   const payload = await getPayload({ config: configPromise })
 
+  // "service"/"services" is a generic, navigational query — production's real page
+  // copy doesn't repeat that word in every description, so a plain substring match
+  // would return nothing useful even though every service page conceptually matches.
+  // Special-case it to browse all real service pages directly.
+  const normalizedQuery = query?.trim().toLowerCase()
+  const isGenericServicesQuery = normalizedQuery === 'service' || normalizedQuery === 'services'
+
   const results = await payload.find({
     collection: 'search',
     depth: 0,
-    limit: 24,
+    limit: isGenericServicesQuery ? 300 : 24,
+    sort: isGenericServicesQuery ? 'title' : undefined,
     select: {
       title: true,
       slug: true,
@@ -46,18 +54,20 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
       doc: true,
     },
     pagination: false,
-    ...(query
-      ? {
-          where: {
-            or: [
-              { title: { like: query } },
-              { 'meta.description': { like: query } },
-              { 'meta.title': { like: query } },
-              { slug: { like: query } },
-            ],
-          },
-        }
-      : {}),
+    ...(isGenericServicesQuery
+      ? { where: { serviceCategory: { exists: true } } }
+      : query
+        ? {
+            where: {
+              or: [
+                { title: { like: query } },
+                { 'meta.description': { like: query } },
+                { 'meta.title': { like: query } },
+                { slug: { like: query } },
+              ],
+            },
+          }
+        : {}),
   })
 
   const docs = results.docs as unknown as SearchResult[]
