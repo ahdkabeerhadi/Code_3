@@ -2920,6 +2920,12 @@ export interface Footer {
       time: string;
     };
   };
+  socialLinks?: {
+    twitter?: string | null;
+    facebook?: string | null;
+    linkedin?: string | null;
+    youtube?: string | null;
+  };
   bottomBar: {
     copyrightText: string;
     exploreServicesText?: string | null;
@@ -3021,6 +3027,14 @@ export interface FooterSelect<T extends boolean = true> {
               days?: T;
               time?: T;
             };
+      };
+  socialLinks?:
+    | T
+    | {
+        twitter?: T;
+        facebook?: T;
+        linkedin?: T;
+        youtube?: T;
       };
   bottomBar?:
     | T

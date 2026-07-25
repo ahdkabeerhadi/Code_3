@@ -113,6 +113,17 @@ export const Footer: GlobalConfig = {
       ],
     },
     {
+      name: 'socialLinks',
+      type: 'group',
+      label: 'Social Links',
+      fields: [
+        { name: 'twitter', type: 'text', label: 'X / Twitter URL' },
+        { name: 'facebook', type: 'text', label: 'Facebook URL' },
+        { name: 'linkedin', type: 'text', label: 'LinkedIn URL' },
+        { name: 'youtube', type: 'text', label: 'YouTube URL' },
+      ],
+    },
+    {
       name: 'bottomBar',
       type: 'group',
       label: 'Bottom Bar',
