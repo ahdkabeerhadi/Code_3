@@ -13,6 +13,7 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
 import { caMechano } from '@/fonts'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
+import { PhoneButton } from '@/components/PhoneButton'
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
 
@@ -40,6 +41,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Header />
           {children}
           <Footer />
+          <PhoneButton />
           <WhatsAppButton />
         </Providers>
       </body>
