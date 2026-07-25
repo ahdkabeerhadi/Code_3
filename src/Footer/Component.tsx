@@ -7,6 +7,7 @@ import { CMSLink } from '@/components/Link'
 import { Logo } from '@/components/Logo/Logo'
 import { Media } from '@/components/Media'
 import { ScrollToTopButton, ScrollToTopButtonMobile } from './ScrollToTopButton'
+import { FooterServicesGrid } from './ServicesGrid'
 import Link from 'next/link'
 
 interface ServicePageData {
@@ -15,10 +16,6 @@ interface ServicePageData {
   title: string
   serviceCategory: 'infrastructure' | 'digital'
   parentService: string | null
-}
-
-function getServiceHref(page: ServicePageData): string {
-  return `/service/${page.slug}`
 }
 
 export async function Footer() {
@@ -58,11 +55,11 @@ export async function Footer() {
 
   const parentServices = servicePages.filter((p) => !p.parentService)
   const subServices = servicePages.filter((p) => p.parentService)
-  const subServicesByParent = new Map<string, ServicePageData[]>()
+  const subServicesByParent: Record<string, ServicePageData[]> = {}
   for (const sub of subServices) {
-    const list = subServicesByParent.get(sub.parentService as string) || []
-    list.push(sub)
-    subServicesByParent.set(sub.parentService as string, list)
+    const key = sub.parentService as string
+    if (!subServicesByParent[key]) subServicesByParent[key] = []
+    subServicesByParent[key].push(sub)
   }
 
   return (
@@ -129,38 +126,13 @@ export async function Footer() {
         </div>
       </div>
 
-      {/* All Services (parent + sub-service links) */}
+      {/* All Services (parent services only; sub-services reveal on hover/tap) */}
       {parentServices.length > 0 && (
         <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 pb-16 border-t border-white/20 pt-12">
           <h3 className="inline-block text-xs font-semibold text-white uppercase tracking-wide mb-8 pb-2 border-b border-white/30">
             All Services
           </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-8 gap-y-10">
-            {parentServices.map((parent) => (
-              <div key={parent.id}>
-                <Link
-                  href={getServiceHref(parent)}
-                  className="block text-sm font-semibold text-white hover:underline mb-3"
-                >
-                  {parent.title}
-                </Link>
-                {(subServicesByParent.get(parent.id) || []).length > 0 && (
-                  <ul className="space-y-2">
-                    {(subServicesByParent.get(parent.id) || []).map((sub) => (
-                      <li key={sub.id}>
-                        <Link
-                          href={getServiceHref(sub)}
-                          className="text-xs text-white/70 hover:text-white hover:underline transition-colors"
-                        >
-                          {sub.title}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-          </div>
+          <FooterServicesGrid parents={parentServices} subsByParent={subServicesByParent} />
         </div>
       )}
 
