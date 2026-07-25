@@ -253,6 +253,15 @@ export interface Page {
         }[]
       | null;
     media?: (string | null) | Media;
+    /**
+     * Optional extra slides shown alongside the main image above, rotating automatically.
+     */
+    carouselImages?:
+      | {
+          image: string | Media;
+          id?: string | null;
+        }[]
+      | null;
   };
   layout: (
     | CallToActionBlock
@@ -1641,6 +1650,12 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        carouselImages?:
+          | T
+          | {
+              image?: T;
+              id?: T;
+            };
       };
   layout?:
     | T
