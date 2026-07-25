@@ -18,7 +18,7 @@ export const WhyChooseUsAboutBlock: React.FC<Props> = ({
   features = [],
 }) => {
   return (
-    <section className={cn('bg-white py-10 md:py-12', className)}>
+    <section className={cn('bg-white py-7 md:py-9', className)}>
       <div className="container mx-auto px-4 sm:px-6">
         <Reveal className="max-w-2xl mb-6">
           {badge && <Eyebrow>{badge}</Eyebrow>}

@@ -36,7 +36,7 @@ export const AccreditationsBlock: React.FC<Props> = ({ className, title, items =
   if (safeItems.length === 0) return null
 
   return (
-    <section className={cn('bg-white py-12 md:py-16', className)}>
+    <section className={cn('bg-white py-8 md:py-10', className)}>
       <div className="container mx-auto px-4 sm:px-6">
         <Reveal className="max-w-2xl mb-10">
           <Eyebrow>ACCREDITATIONS</Eyebrow>

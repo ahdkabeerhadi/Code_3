@@ -41,7 +41,7 @@ export const BlogScrollBlock: React.FC<Props> = async ({
   if (posts.length === 0) return null
 
   return (
-    <section className={cn('bg-white py-12 md:py-16', className)}>
+    <section className={cn('bg-white py-8 md:py-10', className)}>
       <div className="container mx-auto px-4 sm:px-6">
         <Reveal className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">

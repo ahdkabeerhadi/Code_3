@@ -27,7 +27,7 @@ export const DeliveryProcessBlock: React.FC<Props> = ({
   if (safeSteps.length === 0) return null
 
   return (
-    <section className={cn('bg-white py-12 md:py-16', className)}>
+    <section className={cn('bg-white py-8 md:py-10', className)}>
       <div className="container mx-auto px-4 sm:px-6">
         <Reveal className="max-w-2xl mb-16">
           {badge && <Eyebrow>{badge}</Eyebrow>}

@@ -26,7 +26,7 @@ export const AboutTeaserBlock: React.FC<Props> = ({
   const hasImage = !!image && !imageFailed
 
   return (
-    <section className={cn('bg-white py-12 md:py-16', className)}>
+    <section className={cn('bg-white py-8 md:py-10', className)}>
       <div className="container mx-auto px-4 sm:px-6">
         <div className={cn('grid gap-10 items-center', hasImage && 'md:grid-cols-2')}>
           <Reveal className={cn(!hasImage && 'max-w-2xl')}>

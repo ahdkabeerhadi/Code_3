@@ -37,7 +37,7 @@ export const ServiceCatalogClient: React.FC<ServiceCatalogClientProps> = ({
   const items = active?.items || []
 
   return (
-    <section className={cn('bg-white py-12 md:py-16', className)}>
+    <section className={cn('bg-white py-8 md:py-10', className)}>
       <div className="container mx-auto px-4 sm:px-6">
         <Reveal className="mb-8">
           <span className="block h-[3px] w-9 bg-primary_red mb-3" />
