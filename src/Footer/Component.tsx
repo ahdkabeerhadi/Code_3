@@ -124,17 +124,17 @@ export async function Footer() {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* All Services (parent services only; sub-services reveal on hover/tap) */}
-      {parentServices.length > 0 && (
-        <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 pb-16 border-t border-white/20 pt-12">
-          <h3 className="inline-block text-xs font-semibold text-white uppercase tracking-wide mb-8 pb-2 border-b border-white/30">
-            All Services
-          </h3>
-          <FooterServicesGrid parents={parentServices} subsByParent={subServicesByParent} />
-        </div>
-      )}
+        {/* All Services (parent services only; sub-services reveal on hover/tap) */}
+        {parentServices.length > 0 && (
+          <div className="mt-12">
+            <h3 className="inline-block text-xs font-semibold text-white uppercase tracking-wide mb-8 pb-2 border-b border-white/30">
+              All Services
+            </h3>
+            <FooterServicesGrid parents={parentServices} subsByParent={subServicesByParent} />
+          </div>
+        )}
+      </div>
 
       {/* Bottom Bar */}
       <div className="grid gap-8 md:gap-4 max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12 border-t border-white/20">
