@@ -1,11 +1,25 @@
 import { getCachedGlobal } from '@/utilities/getGlobals'
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
 import React from 'react'
-import type { Footer } from '@/payload-types'
+import type { Footer, Page } from '@/payload-types'
 import { CMSLink } from '@/components/Link'
 import { Logo } from '@/components/Logo/Logo'
 import { Media } from '@/components/Media'
 import { ScrollToTopButton, ScrollToTopButtonMobile } from './ScrollToTopButton'
 import Link from 'next/link'
+
+interface ServicePageData {
+  id: string
+  slug: string
+  title: string
+  serviceCategory: 'infrastructure' | 'digital'
+  parentService: string | null
+}
+
+function getServiceHref(page: ServicePageData): string {
+  return `/service/${page.slug}`
+}
 
 export async function Footer() {
   const footerData = (await getCachedGlobal('footer', 1)()) as Footer
@@ -15,6 +29,41 @@ export async function Footer() {
   const contactInfo = footerData?.contactInfo
   const bottomBar = footerData?.bottomBar
   const logo = footerData?.logo
+
+  const payload = await getPayload({ config: configPromise })
+  const servicePagesRes = await payload.find({
+    collection: 'pages',
+    depth: 0,
+    limit: 300,
+    where: {
+      and: [
+        { serviceCategory: { in: ['infrastructure', 'digital'] } },
+        { _status: { equals: 'published' } },
+      ],
+    },
+  })
+
+  const servicePages: ServicePageData[] = (servicePagesRes.docs as Page[])
+    .filter((p) => p.slug && p.serviceCategory && p.serviceCategory !== 'none')
+    .map((p) => ({
+      id: p.id,
+      slug: p.slug as string,
+      title: p.title,
+      serviceCategory: p.serviceCategory as 'infrastructure' | 'digital',
+      parentService:
+        typeof p.parentService === 'object' && p.parentService
+          ? p.parentService.id
+          : (p.parentService as string | null) || null,
+    }))
+
+  const parentServices = servicePages.filter((p) => !p.parentService)
+  const subServices = servicePages.filter((p) => p.parentService)
+  const subServicesByParent = new Map<string, ServicePageData[]>()
+  for (const sub of subServices) {
+    const list = subServicesByParent.get(sub.parentService as string) || []
+    list.push(sub)
+    subServicesByParent.set(sub.parentService as string, list)
+  }
 
   return (
     <footer className="bg-primary_red text-white relative">
@@ -79,6 +128,41 @@ export async function Footer() {
           </div>
         </div>
       </div>
+
+      {/* All Services (parent + sub-service links) */}
+      {parentServices.length > 0 && (
+        <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 pb-16 border-t border-white/20 pt-12">
+          <h3 className="inline-block text-xs font-semibold text-white uppercase tracking-wide mb-8 pb-2 border-b border-white/30">
+            All Services
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-8 gap-y-10">
+            {parentServices.map((parent) => (
+              <div key={parent.id}>
+                <Link
+                  href={getServiceHref(parent)}
+                  className="block text-sm font-semibold text-white hover:underline mb-3"
+                >
+                  {parent.title}
+                </Link>
+                {(subServicesByParent.get(parent.id) || []).length > 0 && (
+                  <ul className="space-y-2">
+                    {(subServicesByParent.get(parent.id) || []).map((sub) => (
+                      <li key={sub.id}>
+                        <Link
+                          href={getServiceHref(sub)}
+                          className="text-xs text-white/70 hover:text-white hover:underline transition-colors"
+                        >
+                          {sub.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Bottom Bar */}
       <div className="grid gap-8 md:gap-4 max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12 border-t border-white/20">
