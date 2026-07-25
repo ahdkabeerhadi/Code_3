@@ -3,6 +3,7 @@ import type { Metadata } from 'next/types'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import React from 'react'
 import { Search } from '@/search/Component'
 import PageClient from './page.client'
@@ -71,6 +72,19 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
   })
 
   const docs = results.docs as unknown as SearchResult[]
+
+  // If there's exactly one match, or one result's title is an exact match for the
+  // query, that's an unambiguous result — go straight there instead of making the
+  // user click through an intermediate results page.
+  if (!isGenericServicesQuery && query && docs.length > 0) {
+    const exactMatch = docs.find(
+      (d) => (d.meta?.title || d.title || '').trim().toLowerCase() === normalizedQuery,
+    )
+    const target = docs.length === 1 ? docs[0] : exactMatch
+    if (target) {
+      redirect(getResultHref(target))
+    }
+  }
 
   return (
     <div className="pt-24 pb-24">
