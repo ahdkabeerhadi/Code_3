@@ -38,6 +38,7 @@ import { ServiceDetailBanner } from '@/blocks/ServiceDetailBanner/config'
 import { ServiceOverview } from '@/blocks/ServiceOverview/config'
 import { ServiceCatalog } from '@/blocks/ServiceCatalog/config'
 import { Stats } from '@/blocks/Stats/config'
+import { Testimonials } from '@/blocks/Testimonials/config'
 import { ICON_PRESET_OPTIONS } from '@/components/site/icons'
 
 export const Pages: CollectionConfig<'pages'> = {
@@ -164,6 +165,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 ServiceOverview,
                 ServiceCatalog,
                 Stats,
+                Testimonials,
               ],
               required: true,
               admin: {

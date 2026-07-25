@@ -299,6 +299,7 @@ export interface Page {
     | ServiceOverviewBlock
     | ServiceCatalogBlock
     | StatsBlock
+    | TestimonialsBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1286,6 +1287,29 @@ export interface StatsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialsBlock".
+ */
+export interface TestimonialsBlock {
+  badge?: string | null;
+  title: string;
+  /**
+   * Requires GOOGLE_PLACES_API_KEY and GOOGLE_PLACES_ID env vars. Falls back to the quotes below if not configured or the fetch fails.
+   */
+  useGoogleReviews?: boolean | null;
+  fallbackQuotes?:
+    | {
+        quote: string;
+        name: string;
+        role: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'testimonials';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "complaints".
  */
 export interface Complaint {
@@ -1698,6 +1722,7 @@ export interface PagesSelect<T extends boolean = true> {
         serviceOverview?: T | ServiceOverviewBlockSelect<T>;
         serviceCatalog?: T | ServiceCatalogBlockSelect<T>;
         stats?: T | StatsBlockSelect<T>;
+        testimonials?: T | TestimonialsBlockSelect<T>;
       };
   meta?:
     | T
@@ -2162,6 +2187,25 @@ export interface StatsBlockSelect<T extends boolean = true> {
         value?: T;
         suffix?: T;
         label?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialsBlock_select".
+ */
+export interface TestimonialsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  useGoogleReviews?: T;
+  fallbackQuotes?:
+    | T
+    | {
+        quote?: T;
+        name?: T;
+        role?: T;
         id?: T;
       };
   id?: T;
