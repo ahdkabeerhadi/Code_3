@@ -308,6 +308,7 @@ export interface Page {
     | AccreditationsBlock
     | IndustriesBlock
     | DeliveryProcessBlock
+    | AboutTeaserBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1434,6 +1435,20 @@ export interface DeliveryProcessBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutTeaserBlock".
+ */
+export interface AboutTeaserBlock {
+  badge?: string | null;
+  title: string;
+  description: string;
+  linkLabel?: string | null;
+  linkUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'aboutTeaser';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "complaints".
  */
 export interface Complaint {
@@ -1859,6 +1874,7 @@ export interface PagesSelect<T extends boolean = true> {
         accreditations?: T | AccreditationsBlockSelect<T>;
         industries?: T | IndustriesBlockSelect<T>;
         deliveryProcess?: T | DeliveryProcessBlockSelect<T>;
+        aboutTeaser?: T | AboutTeaserBlockSelect<T>;
       };
   meta?:
     | T
@@ -2398,6 +2414,19 @@ export interface DeliveryProcessBlockSelect<T extends boolean = true> {
         description?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutTeaserBlock_select".
+ */
+export interface AboutTeaserBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  description?: T;
+  linkLabel?: T;
+  linkUrl?: T;
   id?: T;
   blockName?: T;
 }

@@ -42,6 +42,7 @@ import { Testimonials } from '@/blocks/Testimonials/config'
 import { Accreditations } from '@/blocks/Accreditations/config'
 import { Industries } from '@/blocks/Industries/config'
 import { DeliveryProcess } from '@/blocks/DeliveryProcess/config'
+import { AboutTeaser } from '@/blocks/AboutTeaser/config'
 import { ICON_PRESET_OPTIONS } from '@/components/site/icons'
 
 export const Pages: CollectionConfig<'pages'> = {
@@ -172,6 +173,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 Accreditations,
                 Industries,
                 DeliveryProcess,
+                AboutTeaser,
               ],
               required: true,
               admin: {

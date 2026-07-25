@@ -29,6 +29,7 @@ import { TestimonialsBlock } from './Testimonials/Component'
 import { AccreditationsBlock } from './Accreditations/Component'
 import { IndustriesBlock } from './Industries/Component'
 import { DeliveryProcessBlock } from './DeliveryProcess/Component'
+import { AboutTeaserBlock } from './AboutTeaser/Component'
 
 interface BlockProps {
   disableInnerContainer?: boolean
@@ -64,6 +65,7 @@ const blockComponents = {
   accreditations: AccreditationsBlock,
   industries: IndustriesBlock,
   deliveryProcess: DeliveryProcessBlock,
+  aboutTeaser: AboutTeaserBlock,
 }
 
 export const RenderBlocks: React.FC<{
