@@ -19,12 +19,13 @@ export const TrustedBrands: Block = {
       type: 'select',
       label: 'Display Style',
       options: [
-        { label: 'Scrolling Marquee', value: 'scroll' },
+        { label: 'Scrolling Marquee (auto-animates)', value: 'scroll' },
         { label: 'Static Grid', value: 'grid' },
+        { label: 'Horizontal Scroll (manual, no animation)', value: 'horizontalScroll' },
       ],
       defaultValue: 'scroll',
       admin: {
-        description: 'Scrolling marquee animates the logos in a loop; static grid lays them out in a fixed, non-moving grid.',
+        description: 'Marquee auto-animates in a loop; static grid wraps into rows; horizontal scroll is a single row the user scrolls manually.',
       },
     },
     {
@@ -48,7 +49,7 @@ export const TrustedBrands: Block = {
       defaultValue: 'normal',
       admin: {
         description: 'Control the speed of the scrolling animation',
-        condition: (_, siblingData) => siblingData?.displayStyle !== 'grid',
+        condition: (_, siblingData) => siblingData?.displayStyle === 'scroll',
       },
     },
     {
@@ -58,7 +59,7 @@ export const TrustedBrands: Block = {
       defaultValue: true,
       admin: {
         description: 'Pause the scrolling animation when users hover over the brands',
-        condition: (_, siblingData) => siblingData?.displayStyle !== 'grid',
+        condition: (_, siblingData) => siblingData?.displayStyle === 'scroll',
       },
     },
     {

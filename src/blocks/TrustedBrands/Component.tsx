@@ -21,7 +21,9 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
 }) => {
   const safeBrands = brands || []
   const isGrid = displayStyle === 'grid'
-  const duplicatedBrands = !isGrid && safeBrands.length > 0 ? [...safeBrands, ...safeBrands, ...safeBrands] : safeBrands
+  const isHorizontalScroll = displayStyle === 'horizontalScroll'
+  const isMarquee = !isGrid && !isHorizontalScroll
+  const duplicatedBrands = isMarquee && safeBrands.length > 0 ? [...safeBrands, ...safeBrands, ...safeBrands] : safeBrands
   const safeAnimationSpeed = animationSpeed || 'normal'
   const speedClasses = {
     slow: 'animate-scroll-slow',
@@ -142,6 +144,19 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
                 className="group flex items-center justify-center rounded-xl border border-border p-5 h-20 transition-colors duration-300 hover:border-primary_red"
               >
                 <span className="font-semibold text-foreground transition-all duration-300 group-hover:scale-110 group-hover:text-primary_red">
+                  {brand.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        ) : isHorizontalScroll ? (
+          <div className="flex gap-4 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide">
+            {safeBrands.map((brand, index) => (
+              <div
+                key={`${brand.name}-${index}`}
+                className="group flex flex-none snap-start items-center justify-center rounded-xl border border-border px-6 py-5 h-20 min-w-[140px] transition-colors duration-300 hover:border-primary_red"
+              >
+                <span className="whitespace-nowrap font-semibold text-foreground transition-all duration-300 group-hover:text-primary_red">
                   {brand.name}
                 </span>
               </div>

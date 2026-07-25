@@ -1074,9 +1074,9 @@ export interface AboutUsBannerBlock {
 export interface TrustedBrandsBlock {
   title: string;
   /**
-   * Scrolling marquee animates the logos in a loop; static grid lays them out in a fixed, non-moving grid.
+   * Marquee auto-animates in a loop; static grid wraps into rows; horizontal scroll is a single row the user scrolls manually.
    */
-  displayStyle?: ('scroll' | 'grid') | null;
+  displayStyle?: ('scroll' | 'grid' | 'horizontalScroll') | null;
   /**
    * Control the speed of the scrolling animation
    */

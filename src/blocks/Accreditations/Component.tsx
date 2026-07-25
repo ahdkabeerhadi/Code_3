@@ -17,7 +17,7 @@ function Badge({ name, badge }: { name: string; badge: AccreditationItem['badge'
   const [failed, setFailed] = useState(false)
 
   return (
-    <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-border p-6 text-center transition-colors duration-300 hover:border-primary_red">
+    <div className="flex flex-none snap-start flex-col items-center justify-center gap-3 rounded-xl border border-border p-6 h-32 min-w-[160px] text-center transition-colors duration-300 hover:border-primary_red">
       {badge && !failed ? (
         <Media
           resource={badge}
@@ -25,7 +25,7 @@ function Badge({ name, badge }: { name: string; badge: AccreditationItem['badge'
           onError={() => setFailed(true)}
         />
       ) : (
-        <span className="text-sm font-semibold text-foreground">{name}</span>
+        <span className="whitespace-nowrap text-sm font-semibold text-foreground">{name}</span>
       )}
     </div>
   )
@@ -43,7 +43,7 @@ export const AccreditationsBlock: React.FC<Props> = ({ className, title, items =
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">{title}</h2>
         </Reveal>
 
-        <Reveal delayMs={100} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <Reveal delayMs={100} className="flex gap-4 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide">
           {safeItems.map((item, i) => (
             <Badge key={item.id || i} name={item.name} badge={item.badge} />
           ))}
