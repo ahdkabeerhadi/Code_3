@@ -12,7 +12,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, HeroText,
 
   return (
     <section className="w-full bg-white">
-      <div className="container mx-auto px-4 sm:px-6 pt-16 pb-12 md:pt-24 md:pb-16 lg:pt-28 lg:pb-20">
+      <div className="container mx-auto px-4 sm:px-6 pt-8 pb-12 md:pt-10 md:pb-16 lg:pt-12 lg:pb-20">
         <div className="max-w-3xl">
           <Eyebrow>IT Infrastructure · Cybersecurity · Digital Growth</Eyebrow>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-tight text-foreground">
