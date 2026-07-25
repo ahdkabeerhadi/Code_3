@@ -1,9 +1,9 @@
 'use client'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, Search, X } from 'lucide-react'
 
 import type { Header } from '@/payload-types'
 
@@ -78,6 +78,37 @@ const NavDropdown = ({
         </div>
       )}
     </div>
+  )
+}
+
+const HeaderSearchBox = ({ className = 'w-36 lg:w-44' }: { className?: string }) => {
+  const router = useRouter()
+  const [query, setQuery] = useState('')
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!query.trim()) return
+    router.push(`/search?q=${encodeURIComponent(query.trim())}`)
+  }
+
+  return (
+    <form onSubmit={onSubmit} className={`flex items-center rounded-full border border-border bg-white ${className}`}>
+      <input
+        type="search"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search..."
+        aria-label="Search"
+        className="w-full min-w-0 flex-1 bg-transparent px-4 py-1.5 text-sm text-foreground outline-none placeholder:text-gray-400"
+      />
+      <button
+        type="submit"
+        aria-label="Submit search"
+        className="flex-none pr-3 text-gray-500 hover:text-red-600 transition"
+      >
+        <Search className="h-4 w-4" />
+      </button>
+    </form>
   )
 }
 
@@ -335,12 +366,14 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, navigationPage
                 onClick={toggleInfraMegaMenu}
                 className="hover:text-red-600 transition flex items-center gap-1"
               >
-                Infra Services
+                IT Infra Services
                 <span className="text-xl font-bold transition-transform duration-300">
                   {showInfraMegaMenu ? '−' : '+'}
                 </span>
               </button>
             )}
+
+            <HeaderSearchBox />
 
             {/* Fallback Navigation Items */}
             {allNavItems.length === 0 && (
@@ -405,6 +438,8 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, navigationPage
               <div
                 className="p-6 flex-1 flex flex-col scrollbar-hide overflow-y-auto"
               >
+                <HeaderSearchBox className="mb-6 w-full" />
+
                 {/* Dynamic Navigation Items for Mobile */}
                 <div className="space-y-2">
                   {allNavItems.map((item: NavigationItem, index: number) =>
@@ -459,7 +494,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, navigationPage
                 {/* Infra Services Section */}
                 {infraPages.length > 0 && (
                   <MobileServiceSection
-                    title="Infra Services"
+                    title="IT Infra Services"
                     pages={infraPages}
                     subServices={infraSubServices}
                     getSubServices={getSubServices}

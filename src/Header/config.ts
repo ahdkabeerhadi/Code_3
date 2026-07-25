@@ -98,7 +98,7 @@ export const Header: GlobalConfig = {
     linkGroup({
       appearances: ['default', 'outline'],
       overrides: {
-        maxRows: 2,
+        maxRows: 4,
       },
     }),
   ],
