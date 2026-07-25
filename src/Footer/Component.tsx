@@ -17,10 +17,6 @@ interface ServicePageData {
   parentService: string | null
 }
 
-const TECH_PARTNERS = [
-  'Microsoft', 'Cisco', 'Fortinet', 'Sophos', 'Dell', 'HP', 'Ubiquiti', 'Synology', 'Yealink',
-]
-
 function PinIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-6 w-6 flex-none">
@@ -99,7 +95,7 @@ export async function Footer() {
     limit: 300,
     where: {
       and: [
-        { serviceCategory: { in: ['infrastructure', 'digital'] } },
+        { serviceCategory: { equals: 'infrastructure' } },
         { _status: { equals: 'published' } },
       ],
     },
@@ -208,7 +204,7 @@ export async function Footer() {
           )}
         </div>
 
-        {/* All Services + Technology Partners (fully expanded) */}
+        {/* All Services (fully expanded) */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-8 gap-y-10">
           {parentServices.map((parent) => (
             <div key={parent.id}>
@@ -234,17 +230,6 @@ export async function Footer() {
               )}
             </div>
           ))}
-
-          <div>
-            <h3 className="text-sm font-semibold text-white mb-3">Technology Partners</h3>
-            <ul className="space-y-2">
-              {TECH_PARTNERS.map((name) => (
-                <li key={name} className="text-xs text-white/70">
-                  {name}
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
       </div>
 
