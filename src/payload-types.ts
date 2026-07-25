@@ -2644,12 +2644,20 @@ export interface Header {
     | {
         label: string;
         link: string;
-        type: 'internal' | 'external' | 'anchor';
+        type: 'internal' | 'external' | 'anchor' | 'dropdown';
         openInNewTab?: boolean | null;
         /**
          * Lower numbers appear first
          */
         order?: number | null;
+        subItems?:
+          | {
+              label: string;
+              link: string;
+              openInNewTab?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -2754,6 +2762,14 @@ export interface HeaderSelect<T extends boolean = true> {
         type?: T;
         openInNewTab?: T;
         order?: T;
+        subItems?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              openInNewTab?: T;
+              id?: T;
+            };
         id?: T;
       };
   links?:

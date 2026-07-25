@@ -44,6 +44,7 @@ export const Header: GlobalConfig = {
             { label: 'Internal Page', value: 'internal' },
             { label: 'External URL', value: 'external' },
             { label: 'Anchor Link', value: 'anchor' },
+            { label: 'Dropdown (grouped links)', value: 'dropdown' },
           ],
           defaultValue: 'internal',
           required: true,
@@ -64,6 +65,33 @@ export const Header: GlobalConfig = {
           admin: {
             description: 'Lower numbers appear first',
           },
+        },
+        {
+          name: 'subItems',
+          type: 'array',
+          label: 'Dropdown Items',
+          admin: {
+            condition: (data, siblingData) => siblingData?.type === 'dropdown',
+          },
+          fields: [
+            {
+              name: 'label',
+              type: 'text',
+              label: 'Label',
+              required: true,
+            },
+            {
+              name: 'link',
+              type: 'text',
+              label: 'Link',
+              required: true,
+            },
+            {
+              name: 'openInNewTab',
+              type: 'checkbox',
+              label: 'Open in New Tab',
+            },
+          ],
         },
       ],
     },
