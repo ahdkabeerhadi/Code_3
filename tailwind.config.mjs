@@ -72,6 +72,7 @@ const config = {
         'gentle-pulse': 'gentle-pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'scroll': 'scroll 30s linear infinite',
         'scroll-slow': 'scroll 50s linear infinite',
+        'scroll-veryslow': 'scroll 90s linear infinite',
         'scroll-fast': 'scroll 20s linear infinite',
         'slide-in-from-bottom': 'slide-in-from-bottom 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
         'slide-in-from-top': 'slide-in-from-top 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',

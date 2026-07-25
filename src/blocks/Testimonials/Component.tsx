@@ -53,20 +53,36 @@ export const TestimonialsBlock: React.FC<Props> = async ({
         ? fallbackQuotes
         : FALLBACK_QUOTES
 
+  // Duplicate the list so the marquee loop is seamless (matches the TrustedBrands pattern).
+  const duplicatedCards = cards.length > 0 ? [...cards, ...cards, ...cards] : cards
+
   return (
-    <section className={cn('bg-white py-8 md:py-10', className)}>
+    <section className={cn('bg-white py-8 md:py-10 overflow-hidden', className)}>
       <div className="container mx-auto px-4 sm:px-6">
         <Reveal className="max-w-2xl mb-10">
           {badge && <Eyebrow>{badge}</Eyebrow>}
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">{title}</h2>
         </Reveal>
-
-        <Reveal delayMs={100} className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-          {cards.map((t, i) => (
-            <TestimonialCard key={t.name + i} t={t} />
-          ))}
-        </Reveal>
       </div>
+
+      <Reveal delayMs={100} className="relative w-full">
+        {/* Gradient fade masks */}
+        <div className="absolute -left-1 top-0 w-16 md:w-24 h-full bg-gradient-to-r from-white via-white/30 to-transparent z-10 pointer-events-none" />
+        <div className="absolute -right-1 top-0 w-16 md:w-24 h-full bg-gradient-to-l from-white via-white/30 to-transparent z-10 pointer-events-none" />
+
+        <div className="flex overflow-hidden">
+          <div
+            className="flex items-stretch gap-6 animate-scroll-veryslow hover:[animation-play-state:paused]"
+            style={{ width: 'max-content' }}
+          >
+            {duplicatedCards.map((t, i) => (
+              <div key={t.name + i} className="w-[320px] sm:w-[380px] flex-none">
+                <TestimonialCard t={t} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
     </section>
   )
 }
