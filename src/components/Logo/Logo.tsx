@@ -1,5 +1,7 @@
+'use client'
+
 import clsx from 'clsx'
-import React from 'react'
+import React, { useState } from 'react'
 import type { Media as MediaTypes } from '@/payload-types'
 import { Media } from '@/components/Media'
 
@@ -30,6 +32,7 @@ export const Logo = (props: LogoProps) => {
 
   const loading = loadingFromProps || 'lazy'
   const priority = priorityFromProps || 'low'
+  const [logoFailed, setLogoFailed] = useState(false)
 
   // Default SVG logo as fallback
   const DefaultLogo = () => (
@@ -76,11 +79,17 @@ export const Logo = (props: LogoProps) => {
     </svg>
   )
 
-  // If logo is provided from CMS, use it
-  if (logo) {
+  // If logo is provided from CMS and hasn't failed to load, use it
+  if (logo && !logoFailed) {
     const logoElement = (
       <div className={clsx('flex items-center', className)}>
-        <Media resource={logo} alt={alt} loading={loading} priority={priority === 'high'} />
+        <Media
+          resource={logo}
+          alt={alt}
+          loading={loading}
+          priority={priority === 'high'}
+          onError={() => setLogoFailed(true)}
+        />
       </div>
     )
 
