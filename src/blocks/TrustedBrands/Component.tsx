@@ -139,9 +139,11 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
             {safeBrands.map((brand, index) => (
               <div
                 key={`${brand.name}-${index}`}
-                className="flex items-center justify-center rounded-xl border border-border p-5 h-20"
+                className="group flex items-center justify-center rounded-xl border border-border p-5 h-20 transition-colors duration-300 hover:border-primary_red"
               >
-                <BrandLogo brand={brand} index={index} />
+                <span className="font-semibold text-foreground transition-all duration-300 group-hover:scale-110 group-hover:text-primary_red">
+                  {brand.name}
+                </span>
               </div>
             ))}
           </div>
