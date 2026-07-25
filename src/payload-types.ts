@@ -309,6 +309,7 @@ export interface Page {
     | IndustriesBlock
     | DeliveryProcessBlock
     | AboutTeaserBlock
+    | BlogScrollBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1453,6 +1454,23 @@ export interface AboutTeaserBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogScrollBlock".
+ */
+export interface BlogScrollBlock {
+  badge?: string | null;
+  title: string;
+  /**
+   * Most recent published posts are pulled in automatically.
+   */
+  limit?: number | null;
+  viewAllLabel?: string | null;
+  viewAllUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blogScroll';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "complaints".
  */
 export interface Complaint {
@@ -1879,6 +1897,7 @@ export interface PagesSelect<T extends boolean = true> {
         industries?: T | IndustriesBlockSelect<T>;
         deliveryProcess?: T | DeliveryProcessBlockSelect<T>;
         aboutTeaser?: T | AboutTeaserBlockSelect<T>;
+        blogScroll?: T | BlogScrollBlockSelect<T>;
       };
   meta?:
     | T
@@ -2432,6 +2451,19 @@ export interface AboutTeaserBlockSelect<T extends boolean = true> {
   linkLabel?: T;
   linkUrl?: T;
   image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogScrollBlock_select".
+ */
+export interface BlogScrollBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  limit?: T;
+  viewAllLabel?: T;
+  viewAllUrl?: T;
   id?: T;
   blockName?: T;
 }
