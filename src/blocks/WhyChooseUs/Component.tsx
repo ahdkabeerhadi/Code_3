@@ -18,7 +18,7 @@ export const WhyChooseUsBlock: React.FC<Props> = ({
   features = [],
 }) => {
   return (
-    <div className={cn('py-16 lg:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden', className)}>
+    <div className={cn('py-12 lg:py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden', className)}>
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header Section */}
         <div className="text-center mb-[64px]">

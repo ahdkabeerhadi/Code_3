@@ -18,7 +18,7 @@ export const CallToActionBlock: React.FC<Props> = ({
   backgroundImage,
 }) => {
   return (
-    <section className={cn('bg-white py-12 md:py-16', className)}>
+    <section className={cn('bg-white py-10 md:py-14', className)}>
       <div className="container mx-auto px-4 sm:px-6">
         <Reveal className="relative overflow-hidden rounded-2xl bg-foreground px-8 py-14 md:py-16 text-center">
           {backgroundImage && (

@@ -27,7 +27,7 @@ export const CurrentOpeningsBlock: React.FC<Props> = ({
   }, [jobListings, activeDept])
 
   return (
-    <section id="current-openings" className={cn('bg-white py-16 md:py-24', className)}>
+    <section id="current-openings" className={cn('bg-white py-12 md:py-16', className)}>
       <div className="container mx-auto px-4 sm:px-6">
         <Reveal className="max-w-2xl mb-10">
           {badge && <Eyebrow>{badge}</Eyebrow>}

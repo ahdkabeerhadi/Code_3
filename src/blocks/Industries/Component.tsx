@@ -54,7 +54,7 @@ export const IndustriesBlock: React.FC<Props> = ({ className, badge, title, item
   if (safeItems.length === 0) return null
 
   return (
-    <section className={cn('bg-white py-16 md:py-24', className)}>
+    <section className={cn('bg-white py-12 md:py-16', className)}>
       <div className="container mx-auto px-4 sm:px-6">
         <Reveal className="max-w-2xl mb-10">
           {badge && <Eyebrow>{badge}</Eyebrow>}

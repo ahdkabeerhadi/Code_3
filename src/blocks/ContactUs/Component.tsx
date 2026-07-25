@@ -157,7 +157,7 @@ export const ContactUsBlock: React.FC<Props> = ({
 
   return (
     <>
-      <section className={cn('bg-white py-16 md:py-24', className)}>
+      <section className={cn('bg-white py-12 md:py-16', className)}>
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
             {/* Left: heading */}
