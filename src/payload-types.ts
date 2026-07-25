@@ -300,6 +300,7 @@ export interface Page {
     | ServiceCatalogBlock
     | StatsBlock
     | TestimonialsBlock
+    | AccreditationsBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1314,6 +1315,29 @@ export interface TestimonialsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccreditationsBlock".
+ */
+export interface AccreditationsBlock {
+  title: string;
+  items?:
+    | {
+        /**
+         * e.g. "Fortinet Authorized Partner", "AWS Partner – Advanced Tier Services"
+         */
+        name: string;
+        /**
+         * The official certification badge/logo. Falls back to the name as text if not set.
+         */
+        badge?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'accreditations';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "complaints".
  */
 export interface Complaint {
@@ -1727,6 +1751,7 @@ export interface PagesSelect<T extends boolean = true> {
         serviceCatalog?: T | ServiceCatalogBlockSelect<T>;
         stats?: T | StatsBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
+        accreditations?: T | AccreditationsBlockSelect<T>;
       };
   meta?:
     | T
@@ -2211,6 +2236,22 @@ export interface TestimonialsBlockSelect<T extends boolean = true> {
         quote?: T;
         name?: T;
         role?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccreditationsBlock_select".
+ */
+export interface AccreditationsBlockSelect<T extends boolean = true> {
+  title?: T;
+  items?:
+    | T
+    | {
+        name?: T;
+        badge?: T;
         id?: T;
       };
   id?: T;

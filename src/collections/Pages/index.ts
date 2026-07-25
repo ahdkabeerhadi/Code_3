@@ -39,6 +39,7 @@ import { ServiceOverview } from '@/blocks/ServiceOverview/config'
 import { ServiceCatalog } from '@/blocks/ServiceCatalog/config'
 import { Stats } from '@/blocks/Stats/config'
 import { Testimonials } from '@/blocks/Testimonials/config'
+import { Accreditations } from '@/blocks/Accreditations/config'
 import { ICON_PRESET_OPTIONS } from '@/components/site/icons'
 
 export const Pages: CollectionConfig<'pages'> = {
@@ -166,6 +167,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 ServiceCatalog,
                 Stats,
                 Testimonials,
+                Accreditations,
               ],
               required: true,
               admin: {
