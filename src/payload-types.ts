@@ -283,6 +283,10 @@ export interface Page {
           answer: string;
           id?: string | null;
         }[];
+        /**
+         * Short line shown next to the button.
+         */
+        ctaText?: string | null;
         ctaLabel?: string | null;
         /**
          * Leave the label blank to hide the button entirely.
@@ -931,6 +935,10 @@ export interface WhyChooseUsAboutBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
   ctaLabel?: string | null;
   /**
    * Leave the label blank to hide the button entirely.
@@ -1117,6 +1125,10 @@ export interface TrustedBrandsBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
   ctaLabel?: string | null;
   /**
    * Leave the label blank to hide the button entirely.
@@ -1253,6 +1265,10 @@ export interface ServiceCatalogBlock {
    * Tabs are built from your published top-level pages of this category; cards under each tab come from that page's sub-services (Parent Service field).
    */
   serviceType: 'infrastructure' | 'digital';
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
   ctaLabel?: string | null;
   /**
    * Leave the label blank to hide the button entirely.
@@ -1343,6 +1359,10 @@ export interface TestimonialsBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
   ctaLabel?: string | null;
   /**
    * Leave the label blank to hide the button entirely.
@@ -1432,6 +1452,10 @@ export interface IndustriesBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
   ctaLabel?: string | null;
   /**
    * Leave the label blank to hide the button entirely.
@@ -1460,6 +1484,10 @@ export interface DeliveryProcessBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
   ctaLabel?: string | null;
   /**
    * Leave the label blank to hide the button entirely.
@@ -1907,6 +1935,7 @@ export interface PagesSelect<T extends boolean = true> {
                     answer?: T;
                     id?: T;
                   };
+              ctaText?: T;
               ctaLabel?: T;
               ctaUrl?: T;
               id?: T;
@@ -2118,6 +2147,7 @@ export interface WhyChooseUsAboutBlockSelect<T extends boolean = true> {
         description?: T;
         id?: T;
       };
+  ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;
   id?: T;
@@ -2271,6 +2301,7 @@ export interface TrustedBrandsBlockSelect<T extends boolean = true> {
         servicePage?: T;
         id?: T;
       };
+  ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;
   id?: T;
@@ -2388,6 +2419,7 @@ export interface ServiceCatalogBlockSelect<T extends boolean = true> {
   titleHighlight?: T;
   title?: T;
   serviceType?: T;
+  ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;
   id?: T;
@@ -2427,6 +2459,7 @@ export interface TestimonialsBlockSelect<T extends boolean = true> {
         role?: T;
         id?: T;
       };
+  ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;
   id?: T;
@@ -2463,6 +2496,7 @@ export interface IndustriesBlockSelect<T extends boolean = true> {
         description?: T;
         id?: T;
       };
+  ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;
   id?: T;
@@ -2484,6 +2518,7 @@ export interface DeliveryProcessBlockSelect<T extends boolean = true> {
         description?: T;
         id?: T;
       };
+  ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;
   id?: T;

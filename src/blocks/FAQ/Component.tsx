@@ -15,6 +15,7 @@ interface FAQBlockProps {
   subtitle?: string
   badge?: string
   faqs: FAQItem[]
+  ctaText?: string | null
   ctaLabel?: string | null
   ctaUrl?: string | null
   id?: string
@@ -60,6 +61,7 @@ export const FAQBlock: React.FC<FAQBlockProps> = ({
   subtitle,
   badge = 'FAQS',
   faqs = [],
+  ctaText,
   ctaLabel,
   ctaUrl,
 }) => {
@@ -77,7 +79,7 @@ export const FAQBlock: React.FC<FAQBlockProps> = ({
             {badge && <Eyebrow>{badge}</Eyebrow>}
             <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground">{title}</h2>
             {subtitle && <p className="mt-4 text-gray-600 leading-relaxed">{subtitle}</p>}
-            <CtaButton label={ctaLabel} url={ctaUrl} className="mt-6 inline-block" />
+            <CtaButton text={ctaText} label={ctaLabel} url={ctaUrl} className="mt-6 !flex-col !items-start" />
           </Reveal>
 
           <Reveal delayMs={100} className="md:col-span-2">

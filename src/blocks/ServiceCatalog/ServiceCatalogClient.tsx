@@ -24,6 +24,7 @@ export interface ServiceCatalogClientProps {
   titleHighlight?: string | null
   title?: string | null
   categories: ServiceCategoryData[]
+  ctaText?: string | null
   ctaLabel?: string | null
   ctaUrl?: string | null
 }
@@ -33,6 +34,7 @@ export const ServiceCatalogClient: React.FC<ServiceCatalogClientProps> = ({
   titleHighlight,
   title,
   categories,
+  ctaText,
   ctaLabel,
   ctaUrl,
 }) => {
@@ -115,7 +117,7 @@ export const ServiceCatalogClient: React.FC<ServiceCatalogClientProps> = ({
           </Reveal>
         )}
 
-        <CtaButton label={ctaLabel} url={ctaUrl} className="mt-10 inline-block" />
+        <CtaButton text={ctaText} label={ctaLabel} url={ctaUrl} className="mt-10" />
       </div>
     </section>
   )

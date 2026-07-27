@@ -51,6 +51,9 @@ export const Industries: Block = {
         },
       ],
     },
-    ...ctaFields('Find Your Industry Solution'),
+    ...ctaFields(
+      'Find Your Industry Solution',
+      "Don't see your industry listed? We can still help.",
+    ),
   ],
 }

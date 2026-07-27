@@ -19,6 +19,7 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
   displayStyle = 'scroll',
   animationSpeed = 'normal',
   pauseOnHover = true,
+  ctaText,
   ctaLabel,
   ctaUrl,
 }) => {
@@ -199,9 +200,7 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
           </div>
         )}
 
-        <div className="text-center mt-8 md:mt-10">
-          <CtaButton label={ctaLabel} url={ctaUrl} className="inline-block" />
-        </div>
+        <CtaButton text={ctaText} label={ctaLabel} url={ctaUrl} className="mt-8 md:mt-10" />
       </div>
     </section>
   )

@@ -17,6 +17,7 @@ export const WhyChooseUsAboutBlock: React.FC<Props> = ({
   title,
   subtitle,
   features = [],
+  ctaText,
   ctaLabel,
   ctaUrl,
 }) => {
@@ -50,7 +51,7 @@ export const WhyChooseUsAboutBlock: React.FC<Props> = ({
           </Reveal>
         )}
 
-        <CtaButton label={ctaLabel} url={ctaUrl} className="mt-6 inline-block" />
+        <CtaButton text={ctaText} label={ctaLabel} url={ctaUrl} className="mt-6" />
       </div>
     </section>
   )

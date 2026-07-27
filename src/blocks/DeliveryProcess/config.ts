@@ -88,6 +88,9 @@ export const DeliveryProcess: Block = {
         },
       ],
     },
-    ...ctaFields('Start Your Project'),
+    ...ctaFields(
+      'Start Your Project',
+      'Ready to kick off your next project with us?',
+    ),
   ],
 }

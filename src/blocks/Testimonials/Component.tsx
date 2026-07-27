@@ -38,6 +38,7 @@ export const TestimonialsBlock: React.FC<Props> = async ({
   title,
   useGoogleReviews = true,
   fallbackQuotes,
+  ctaText,
   ctaLabel,
   ctaUrl,
 }) => {
@@ -88,7 +89,7 @@ export const TestimonialsBlock: React.FC<Props> = async ({
       </Reveal>
 
       <div className="container mx-auto px-4 sm:px-6">
-        <CtaButton label={ctaLabel} url={ctaUrl} className="mt-8 inline-block" />
+        <CtaButton text={ctaText} label={ctaLabel} url={ctaUrl} className="mt-8" />
       </div>
     </section>
   )

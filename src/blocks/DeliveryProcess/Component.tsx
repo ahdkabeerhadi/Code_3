@@ -23,6 +23,7 @@ export const DeliveryProcessBlock: React.FC<Props> = ({
   title,
   description,
   steps = [],
+  ctaText,
   ctaLabel,
   ctaUrl,
 }) => {
@@ -82,7 +83,7 @@ export const DeliveryProcessBlock: React.FC<Props> = ({
           </div>
         </div>
 
-        <CtaButton label={ctaLabel} url={ctaUrl} className="mt-10 inline-block" />
+        <CtaButton text={ctaText} label={ctaLabel} url={ctaUrl} className="mt-10" />
       </div>
     </section>
   )

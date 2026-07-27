@@ -55,6 +55,9 @@ export const Testimonials: Block = {
         },
       ],
     },
-    ...ctaFields('Become Our Next Success Story'),
+    ...ctaFields(
+      'Become Our Next Success Story',
+      'Ready to experience the same level of service?',
+    ),
   ],
 }

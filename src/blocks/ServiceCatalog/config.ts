@@ -38,6 +38,9 @@ export const ServiceCatalog: Block = {
           "Tabs are built from your published top-level pages of this category; cards under each tab come from that page's sub-services (Parent Service field).",
       },
     },
-    ...ctaFields('Get a Free Consultation'),
+    ...ctaFields(
+      'Get a Free Consultation',
+      'Not sure where to start? Our team can help you find the right fit.',
+    ),
   ],
 }

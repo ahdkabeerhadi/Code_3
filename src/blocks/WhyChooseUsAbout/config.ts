@@ -51,7 +51,10 @@ export const WhyChooseUsAbout: Block = {
         },
       ],
     },
-    ...ctaFields('Talk to Our Experts'),
+    ...ctaFields(
+      'Talk to Our Experts',
+      'Want to see how we can support your business?',
+    ),
   ],
   interfaceName: 'WhyChooseUsAboutBlock',
 }

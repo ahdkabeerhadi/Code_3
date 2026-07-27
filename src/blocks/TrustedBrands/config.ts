@@ -148,6 +148,9 @@ export const TrustedBrands: Block = {
         },
       ],
     },
-    ...ctaFields('Partner With Us'),
+    ...ctaFields(
+      'Partner With Us',
+      'Interested in partnering with CODE3?',
+    ),
   ],
 }

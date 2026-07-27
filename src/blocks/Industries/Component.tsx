@@ -55,6 +55,7 @@ export const IndustriesBlock: React.FC<Props> = ({
   badge,
   title,
   items = [],
+  ctaText,
   ctaLabel,
   ctaUrl,
 }) => {
@@ -78,7 +79,7 @@ export const IndustriesBlock: React.FC<Props> = ({
           ))}
         </Reveal>
 
-        <CtaButton label={ctaLabel} url={ctaUrl} className="mt-8 inline-block" />
+        <CtaButton text={ctaText} label={ctaLabel} url={ctaUrl} className="mt-8" />
       </div>
     </section>
   )

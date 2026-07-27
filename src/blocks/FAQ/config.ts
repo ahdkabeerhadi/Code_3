@@ -36,6 +36,9 @@ export const FAQ: Block = {
         },
       ],
     },
-    ...ctaFields('Still Have Questions? Contact Us'),
+    ...ctaFields(
+      'Still Have Questions? Contact Us',
+      "Can't find the answer you're looking for?",
+    ),
   ],
 }
