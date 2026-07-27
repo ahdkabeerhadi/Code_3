@@ -25,7 +25,7 @@ export const AboutUsBannerBlock: React.FC<Props> = ({
       <div className="container mx-auto px-4 sm:px-6">
         <Reveal className="max-w-2xl mb-12">
           {title && <Eyebrow>{title}</Eyebrow>}
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-foreground">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight text-foreground">
             {subtitle}
           </h1>
           <p className="mt-4 text-gray-600 leading-relaxed">{description}</p>

@@ -75,7 +75,7 @@ export const FAQBlock: React.FC<FAQBlockProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           <Reveal className="md:col-span-1">
             {badge && <Eyebrow>{badge}</Eyebrow>}
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">{title}</h2>
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground">{title}</h2>
             {subtitle && <p className="mt-4 text-gray-600 leading-relaxed">{subtitle}</p>}
             <CtaButton label={ctaLabel} url={ctaUrl} className="mt-6 inline-block" />
           </Reveal>

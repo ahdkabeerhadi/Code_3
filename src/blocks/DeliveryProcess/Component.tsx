@@ -34,7 +34,7 @@ export const DeliveryProcessBlock: React.FC<Props> = ({
       <div className="container mx-auto px-4 sm:px-6">
         <Reveal className="max-w-2xl mb-16">
           {badge && <Eyebrow>{badge}</Eyebrow>}
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground">
             {title}
           </h2>
           {description && (

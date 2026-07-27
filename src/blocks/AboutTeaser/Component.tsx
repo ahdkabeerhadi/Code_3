@@ -31,7 +31,7 @@ export const AboutTeaserBlock: React.FC<Props> = ({
         <div className={cn('grid gap-10 items-center', hasImage && 'md:grid-cols-2')}>
           <Reveal className={cn(!hasImage && 'max-w-2xl')}>
             {badge && <Eyebrow>{badge}</Eyebrow>}
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground">
               {title}
             </h2>
             {description && (

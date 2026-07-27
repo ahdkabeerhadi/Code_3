@@ -46,7 +46,7 @@ export const BlogScrollBlock: React.FC<Props> = async ({
         <Reveal className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
             {badge && <Eyebrow>{badge}</Eyebrow>}
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground">
               {title}
             </h2>
           </div>

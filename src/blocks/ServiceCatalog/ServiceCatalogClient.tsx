@@ -46,7 +46,7 @@ export const ServiceCatalogClient: React.FC<ServiceCatalogClientProps> = ({
       <div className="container mx-auto px-4 sm:px-6">
         <Reveal className="mb-8">
           <span className="block h-[3px] w-9 bg-primary_red mb-3" />
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
             <span className="text-primary_red">{titleHighlight}</span>{' '}
             <span className="text-foreground">{title}</span>
           </h2>
