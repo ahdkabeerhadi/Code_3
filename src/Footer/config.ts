@@ -90,6 +90,17 @@ export const Footer: GlobalConfig = {
           ],
         },
         {
+          name: 'mapEmbedUrl',
+          type: 'text',
+          label: 'Google Map Embed URL',
+          defaultValue:
+            'https://maps.google.com/maps?q=Code3%20Technologies%20FZCO%2C%20Building%20A1%2C%20Dubai%20Silicon%20Oasis&t=&z=14&ie=UTF8&iwloc=&output=embed',
+          admin: {
+            description:
+              'Paste the iframe "src" URL from Google Maps: open the location on Google Maps → Share → Embed a map → Copy HTML, then take just the src="..." value.',
+          },
+        },
+        {
           name: 'workingHours',
           type: 'group',
           label: 'Working Hours',
