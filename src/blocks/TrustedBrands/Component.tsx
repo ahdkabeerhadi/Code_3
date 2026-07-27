@@ -147,11 +147,9 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
             {safeBrands.map((brand, index) => (
               <div
                 key={`${brand.name}-${index}`}
-                className="group flex items-center justify-center rounded-xl border border-border p-5 h-20 transition-colors duration-300 hover:border-primary_red"
+                className="group flex items-center justify-center rounded-xl border border-border p-5 h-24 transition-colors duration-300 hover:border-primary_red"
               >
-                <span className="font-semibold text-foreground transition-all duration-300 group-hover:scale-110 group-hover:text-primary_red">
-                  {brand.name}
-                </span>
+                <BrandLogo brand={brand} index={index} />
               </div>
             ))}
           </div>
@@ -160,11 +158,9 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
             {safeBrands.map((brand, index) => (
               <div
                 key={`${brand.name}-${index}`}
-                className="group flex flex-none snap-start items-center justify-center rounded-xl border border-border px-6 py-5 h-20 min-w-[140px] transition-colors duration-300 hover:border-primary_red"
+                className="group flex flex-none snap-start items-center justify-center rounded-xl border border-border px-6 py-5 h-24 min-w-[140px] transition-colors duration-300 hover:border-primary_red"
               >
-                <span className="whitespace-nowrap font-semibold text-foreground transition-all duration-300 group-hover:text-primary_red">
-                  {brand.name}
-                </span>
+                <BrandLogo brand={brand} index={index} />
               </div>
             ))}
           </div>
