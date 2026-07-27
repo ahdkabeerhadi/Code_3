@@ -22,7 +22,7 @@ export async function getGoogleReviews(): Promise<GoogleReview[] | null> {
     const data = await res.json()
     if (data.status !== 'OK' || !Array.isArray(data.result?.reviews)) return null
 
-    return data.result.reviews.slice(0, 3).map((r: GoogleReview) => ({
+    return data.result.reviews.map((r: GoogleReview) => ({
       author_name: r.author_name,
       rating: r.rating,
       text: r.text,
