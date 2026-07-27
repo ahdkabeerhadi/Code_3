@@ -209,10 +209,10 @@ export async function Footer() {
               <h3 className="inline-block text-xs font-semibold text-white uppercase tracking-wide mb-6 pb-2 border-b border-white/30">
                 Find Us
               </h3>
-              <div className="overflow-hidden rounded-xl border border-white/20">
+              <div className="overflow-hidden rounded-xl border-2 border-white/30">
                 <iframe
                   src={contactInfo.mapEmbedUrl}
-                  className="h-[220px] w-full grayscale invert-[92%] contrast-[90%]"
+                  className="h-[220px] w-full"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   title="CODE3 location map"
