@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { ScallopedAvatar } from '@/components/site/ScallopedAvatar'
 
 export type TestimonialCardData = {
   quote: string
@@ -88,9 +89,7 @@ export function TestimonialCard({ t }: { t: TestimonialCardData }) {
       {!isLong && <div className="mb-6" />}
 
       <div className="mt-auto flex items-center gap-3">
-        <div className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-foreground text-xs font-semibold text-white">
-          {initials(t.name)}
-        </div>
+        <ScallopedAvatar initials={initials(t.name)} className="h-10 w-10" />
         <div>
           <div className="text-sm font-semibold text-foreground">{t.name}</div>
           {t.isGoogle ? (
