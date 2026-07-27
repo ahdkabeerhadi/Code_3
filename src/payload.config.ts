@@ -72,14 +72,26 @@ export default buildConfig({
   plugins: [
     ...plugins,
     // storage-adapter-placeholder
+    // Public store: marketing/site media (logos, hero images, etc). Fine to be public — it's
+    // meant to be visible on the site anyway, and public blob URLs don't expire.
     vercelBlobStorage({
-      enabled: true,
+      enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
       clientUploads: true,
       collections: {
         [Media.slug]: true,
-        'complaint-attachments': true,
       },
       token: process.env.BLOB_READ_WRITE_TOKEN,
+    }),
+    // Separate private store: files customers attach to complaint forms. Kept on its own
+    // token/store so this data isn't reachable by direct URL the way public media is —
+    // deliberately NOT the same store as Media above.
+    vercelBlobStorage({
+      enabled: Boolean(process.env.COMPLAINTS_BLOB_TOKEN),
+      clientUploads: true,
+      collections: {
+        'complaint-attachments': true,
+      },
+      token: process.env.COMPLAINTS_BLOB_TOKEN,
     }),
   ],
   secret: process.env.PAYLOAD_SECRET,

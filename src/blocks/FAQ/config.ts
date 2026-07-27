@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { ctaFields } from '@/fields/ctaFields'
 
 export const FAQ: Block = {
   slug: 'faq',
@@ -35,5 +36,9 @@ export const FAQ: Block = {
         },
       ],
     },
+    ...ctaFields(
+      'Still Have Questions? Contact Us',
+      "Can't find the answer you're looking for?",
+    ),
   ],
 }

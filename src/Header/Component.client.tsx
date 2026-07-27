@@ -1,14 +1,15 @@
 'use client'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, Search, X } from 'lucide-react'
 
 import type { Header } from '@/payload-types'
 
 import { Logo } from '@/components/Logo/Logo'
 import { CMSLink } from '@/components/Link'
+import { CalendlyButton } from './CalendlyButton'
 
 interface NavigationPageData {
   id: string
@@ -40,6 +41,76 @@ interface SubNavigationItem {
   icon?: string | null
   description?: string | null
   openInNewTab?: boolean | null
+}
+
+const NavDropdown = ({
+  item,
+  isOpen,
+  onToggle,
+  onClose,
+}: {
+  item: NavigationItem
+  isOpen: boolean
+  onToggle: () => void
+  onClose: () => void
+}) => {
+  const subItems = item.subItems || []
+  if (subItems.length === 0) return null
+
+  return (
+    <div className="relative">
+      <button onClick={onToggle} className="hover:text-red-600 transition flex items-center gap-1">
+        {item.label}
+        <span className="text-xl font-bold transition-transform duration-300">{isOpen ? '−' : '+'}</span>
+      </button>
+      {isOpen && (
+        <div className="absolute left-1/2 top-full mt-3 w-56 -translate-x-1/2 rounded-xl border border-border bg-white py-2 shadow-lg">
+          {subItems.map((sub, i) => (
+            <Link
+              key={i}
+              href={sub.link}
+              onClick={onClose}
+              {...(sub.openInNewTab && { target: '_blank', rel: 'noopener noreferrer' })}
+              className="block px-4 py-2 text-sm text-foreground hover:bg-gray-50 hover:text-red-600 transition"
+            >
+              {sub.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+const HeaderSearchBox = ({ className = 'w-36 lg:w-44' }: { className?: string }) => {
+  const router = useRouter()
+  const [query, setQuery] = useState('')
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!query.trim()) return
+    router.push(`/search?q=${encodeURIComponent(query.trim())}`)
+  }
+
+  return (
+    <form onSubmit={onSubmit} className={`flex items-center rounded-full border border-border bg-white ${className}`}>
+      <input
+        type="search"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search..."
+        aria-label="Search"
+        className="w-full min-w-0 flex-1 bg-transparent px-4 py-1.5 text-sm text-foreground outline-none placeholder:text-gray-400"
+      />
+      <button
+        type="submit"
+        aria-label="Submit search"
+        className="flex-none pr-3 text-gray-500 hover:text-red-600 transition"
+      >
+        <Search className="h-4 w-4" />
+      </button>
+    </form>
+  )
 }
 
 const getServiceLink = (page: NavigationPageData): string => {
@@ -186,12 +257,14 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, navigationPage
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
   const pathname = usePathname()
   const [showInfraMegaMenu, setShowInfraMegaMenu] = useState(false)
-  const [showDigitalMegaMenu, setShowDigitalMegaMenu] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
+  const [openDropdownIndex, setOpenDropdownIndex] = useState<number | null>(null)
+  const [openMobileDropdownIndex, setOpenMobileDropdownIndex] = useState<number | null>(null)
   const [expandedServices, setExpandedServices] = useState<Map<string, Set<string>>>(new Map())
 
   const logo = data?.logo
   const links = data?.links
+  const calendlyUrl = data?.calendlyUrl
 
   const allNavItems = (data?.navItems || []).sort((a: NavigationItem, b: NavigationItem) => (a.order || 0) - (b.order || 0))
 
@@ -199,14 +272,8 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, navigationPage
   const infraPages = servicePages.filter(
     (p: NavigationPageData) => p.serviceCategory === 'infrastructure' && !p.isSubService,
   )
-  const digitalPages = servicePages.filter(
-    (p: NavigationPageData) => p.serviceCategory === 'digital' && !p.isSubService,
-  )
   const infraSubServices = servicePages.filter(
     (p: NavigationPageData) => p.serviceCategory === 'infrastructure' && p.isSubService,
-  )
-  const digitalSubServices = servicePages.filter(
-    (p: NavigationPageData) => p.serviceCategory === 'digital' && p.isSubService,
   )
 
   const getSubServices = (
@@ -232,7 +299,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, navigationPage
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setShowInfraMegaMenu(false)
-        setShowDigitalMegaMenu(false)
+        setOpenDropdownIndex(null)
       }
     }
     document.addEventListener('keydown', handleEscape)
@@ -241,7 +308,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, navigationPage
 
   useEffect(() => {
     setShowInfraMegaMenu(false)
-    setShowDigitalMegaMenu(false)
+    setOpenDropdownIndex(null)
   }, [pathname])
 
   const closeMobileMenu = () => {
@@ -250,18 +317,13 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, navigationPage
 
   const toggleInfraMegaMenu = () => {
     setShowInfraMegaMenu(!showInfraMegaMenu)
-    setShowDigitalMegaMenu(false)
-  }
-
-  const toggleDigitalMegaMenu = () => {
-    setShowDigitalMegaMenu(!showDigitalMegaMenu)
-    setShowInfraMegaMenu(false)
+    setOpenDropdownIndex(null)
   }
 
   return (
     <>
       <header
-        className={`bg-white/80 w-full backdrop-blur-lg max-w-[2000px] mx-auto z-50 lg:py-6 py-4 sticky top-0`}
+        className={`bg-white/80 w-full backdrop-blur-lg max-w-[2000px] mx-auto z-50 lg:py-6 py-4 sticky top-9`}
         {...(theme ? { 'data-theme': theme } : {})}
       >
         <div
@@ -283,9 +345,22 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, navigationPage
           {/* Desktop Links */}
           <div className="hidden lg:flex flex-1 justify-center space-x-8 items-center">
             {/* Dynamic Navigation Items */}
-            {allNavItems.map((item: NavigationItem, index: number) => (
-              <NavItem key={index} item={item} />
-            ))}
+            {allNavItems.map((item: NavigationItem, index: number) =>
+              item.type === 'dropdown' ? (
+                <NavDropdown
+                  key={index}
+                  item={item}
+                  isOpen={openDropdownIndex === index}
+                  onToggle={() => {
+                    setOpenDropdownIndex(openDropdownIndex === index ? null : index)
+                    setShowInfraMegaMenu(false)
+                  }}
+                  onClose={() => setOpenDropdownIndex(null)}
+                />
+              ) : (
+                <NavItem key={index} item={item} />
+              ),
+            )}
 
             {/* Infra Services Button with +/- icon */}
             {infraPages.length > 0 && (
@@ -293,25 +368,14 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, navigationPage
                 onClick={toggleInfraMegaMenu}
                 className="hover:text-red-600 transition flex items-center gap-1"
               >
-                Infra Services
+                IT Infra Services
                 <span className="text-xl font-bold transition-transform duration-300">
                   {showInfraMegaMenu ? '−' : '+'}
                 </span>
               </button>
             )}
 
-            {/* Digital Services Button with +/- icon */}
-            {digitalPages.length > 0 && (
-              <button
-                onClick={toggleDigitalMegaMenu}
-                className="hover:text-red-600 transition flex items-center gap-1"
-              >
-                Digital Services
-                <span className="text-xl font-bold transition-transform duration-300">
-                  {showDigitalMegaMenu ? '−' : '+'}
-                </span>
-              </button>
-            )}
+            <HeaderSearchBox />
 
             {/* Fallback Navigation Items */}
             {allNavItems.length === 0 && (
@@ -330,6 +394,16 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, navigationPage
             {links && links.length > 0 && (
               <div className="flex gap-4 items-center">
                 {links.map(({ link }, i) => {
+                  if (calendlyUrl && link?.label?.trim().toLowerCase() === "let's keep in touch") {
+                    return (
+                      <CalendlyButton
+                        key={i}
+                        label={link.label}
+                        url={calendlyUrl}
+                        appearance={link.appearance || undefined}
+                      />
+                    )
+                  }
                   return <CMSLink key={i} {...link} />
                 })}
               </div>
@@ -376,39 +450,65 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, navigationPage
               <div
                 className="p-6 flex-1 flex flex-col scrollbar-hide overflow-y-auto"
               >
+                <HeaderSearchBox className="mb-6 w-full" />
+
                 {/* Dynamic Navigation Items for Mobile */}
                 <div className="space-y-2">
-                  {allNavItems.map((item: NavigationItem, index: number) => (
-                    <div key={index} className="pb-2">
-                      <Link
-                        href={item.link}
-                        className="text-white text-lg font-semibold block transition-colors duration-300"
-                        onClick={closeMobileMenu}
-                      >
-                        {item.label}
-                      </Link>
-                    </div>
-                  ))}
+                  {allNavItems.map((item: NavigationItem, index: number) =>
+                    item.type === 'dropdown' ? (
+                      <div key={index} className="pb-2">
+                        <button
+                          onClick={() =>
+                            setOpenMobileDropdownIndex(openMobileDropdownIndex === index ? null : index)
+                          }
+                          className="flex items-center justify-between w-full text-left text-white text-lg font-semibold py-2"
+                        >
+                          {item.label}
+                          <span className="ml-2 text-2xl font-bold">
+                            {openMobileDropdownIndex === index ? '−' : '+'}
+                          </span>
+                        </button>
+                        <div
+                          className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                            openMobileDropdownIndex === index ? 'max-h-[1000px] opacity-100 mt-2' : 'max-h-0 opacity-0'
+                          }`}
+                        >
+                          <ul className="ml-4 space-y-3">
+                            {(item.subItems || []).map((sub, i) => (
+                              <li key={i}>
+                                <Link
+                                  href={sub.link}
+                                  className="text-white/80 text-md block transition-colors duration-300"
+                                  onClick={closeMobileMenu}
+                                  {...(sub.openInNewTab && { target: '_blank', rel: 'noopener noreferrer' })}
+                                >
+                                  {sub.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    ) : (
+                      <div key={index} className="pb-2">
+                        <Link
+                          href={item.link}
+                          className="text-white text-lg font-semibold block transition-colors duration-300"
+                          onClick={closeMobileMenu}
+                        >
+                          {item.label}
+                        </Link>
+                      </div>
+                    ),
+                  )}
                 </div>
-               
+
                 {/* Infra Services Section */}
                 {infraPages.length > 0 && (
                   <MobileServiceSection
-                    title="Infra Services"
+                    title="IT Infra Services"
                     pages={infraPages}
                     subServices={infraSubServices}
-                    getSubServices={getSubServices}
-                    onLinkClick={closeMobileMenu}
-                    expandedServices={expandedServices}
-                    setExpandedServices={setExpandedServices}
-                  />
-                )}
-
-                {digitalPages.length > 0 && (
-                  <MobileServiceSection
-                    title="Digital Services"
-                    pages={digitalPages}
-                    subServices={digitalSubServices}
                     getSubServices={getSubServices}
                     onLinkClick={closeMobileMenu}
                     expandedServices={expandedServices}
@@ -420,11 +520,28 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, navigationPage
                 <div className="pt-4 mt-auto">
                   {links && links.length > 0 && (
                     <div className="flex flex-col gap-4 items-center">
-                      {links.map(({ link }, i) => (
-                        <div key={i} onClick={closeMobileMenu} className="w-full">
-                          <CMSLink className="w-full text-center" {...link} />
-                        </div>
-                      ))}
+                      {links.map(({ link }, i) => {
+                        if (
+                          calendlyUrl &&
+                          link?.label?.trim().toLowerCase() === "let's keep in touch"
+                        ) {
+                          return (
+                            <div key={i} onClick={closeMobileMenu} className="w-full">
+                              <CalendlyButton
+                                label={link.label}
+                                url={calendlyUrl}
+                                appearance={link.appearance || undefined}
+                                className="w-full text-center"
+                              />
+                            </div>
+                          )
+                        }
+                        return (
+                          <div key={i} onClick={closeMobileMenu} className="w-full">
+                            <CMSLink className="w-full text-center" {...link} />
+                          </div>
+                        )
+                      })}
                     </div>
                   )}
                 </div>
@@ -500,74 +617,6 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, navigationPage
         </div>
       )}
 
-      {/* Digital Services Mega Menu */}
-      {showDigitalMegaMenu && (
-        <div
-          className="fixed inset-0 top-[5rem] p-16 z-40 h-[calc(100vh-5rem)] scrollbar-hide overflow-auto text-white"
-          style={{ background: 'linear-gradient(-135deg, #8b0f1f 0%, #d7213c 20%, #2d0e0e 100%)' }}
-        >
-          <div className="max-w-7xl h-full mx-auto flex gap-[6rem] justify-between">
-            {/* Logo and Header */}
-            <div className="mb-12">
-              <p className="text-lg font-semibold mb-6">
-                Complete IT, Security
-                <br />
-                & Digital Solutions for
-                <br />
-                Businesses in UAE
-              </p>
-              <h1
-                className="text-7xl font-bold tracking-wide"
-                style={{ fontFamily: 'monospace' }}
-              >
-                CODE3
-              </h1>
-            </div>
-
-            {/* Services Grid */}
-            <div className="h-full max-w-3xl scrollbar-hide overflow-auto">
-              <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-x-[4rem] gap-y-[4rem]">
-                {digitalPages
-                  .filter((page: NavigationPageData) => page && page.id && page.slug)
-                  .map((page: NavigationPageData) => {
-                    const subServices = getSubServices(page.id, digitalSubServices).filter(
-                      (sub: NavigationPageData) => sub && sub.id && sub.slug,
-                    )
-                    return (
-                      <div key={page.id}>
-                        {/* Parent Service - Now with /service prefix */}
-                        <Link
-                          href={getServiceLink(page)}
-                          className="text-xl font-bold mb-6 uppercase transition block"
-                          onClick={() => setShowDigitalMegaMenu(false)}
-                        >
-                          <h2>{page.title}</h2>
-                        </Link>
-
-                        {/* Sub Services */}
-                        {subServices.length > 0 && (
-                          <ul className="space-y-3 text-sm">
-                            {subServices.map((sub: NavigationPageData) => (
-                              <li key={sub.id}>
-                                <Link
-                                  href={getServiceLink(sub)}
-                                  className="transition"
-                                  onClick={() => setShowDigitalMegaMenu(false)}
-                                >
-                                  {sub.title}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </div>
-                    )
-                  })}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   )
 }

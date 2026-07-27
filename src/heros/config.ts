@@ -87,6 +87,23 @@ export const hero: Field = {
       relationTo: 'media',
       required: true,
     },
+    {
+      name: 'carouselImages',
+      type: 'array',
+      label: 'Additional Carousel Images',
+      admin: {
+        condition: (_, { type } = {}) => type === 'highImpact',
+        description: 'Optional extra slides shown alongside the main image above, rotating automatically.',
+      },
+      fields: [
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          required: true,
+        },
+      ],
+    },
   ],
   label: false,
 }

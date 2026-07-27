@@ -34,7 +34,7 @@ export const Footer: GlobalConfig = {
           appearances: false,
         }),
       ],
-      maxRows: 6,
+      maxRows: 20,
       admin: {
         initCollapsed: true,
         components: {
@@ -110,6 +110,17 @@ export const Footer: GlobalConfig = {
             },
           ],
         },
+      ],
+    },
+    {
+      name: 'socialLinks',
+      type: 'group',
+      label: 'Social Links',
+      fields: [
+        { name: 'twitter', type: 'text', label: 'X / Twitter URL' },
+        { name: 'facebook', type: 'text', label: 'Facebook URL' },
+        { name: 'linkedin', type: 'text', label: 'LinkedIn URL' },
+        { name: 'youtube', type: 'text', label: 'YouTube URL' },
       ],
     },
     {

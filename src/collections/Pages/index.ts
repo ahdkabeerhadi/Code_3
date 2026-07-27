@@ -36,6 +36,15 @@ import { ServicesHero } from '@/blocks/ServicesHero/config'
 import { ServicesSteps } from '@/blocks/ServicesSteps/config'
 import { ServiceDetailBanner } from '@/blocks/ServiceDetailBanner/config'
 import { ServiceOverview } from '@/blocks/ServiceOverview/config'
+import { ServiceCatalog } from '@/blocks/ServiceCatalog/config'
+import { Stats } from '@/blocks/Stats/config'
+import { Testimonials } from '@/blocks/Testimonials/config'
+import { Accreditations } from '@/blocks/Accreditations/config'
+import { Industries } from '@/blocks/Industries/config'
+import { DeliveryProcess } from '@/blocks/DeliveryProcess/config'
+import { AboutTeaser } from '@/blocks/AboutTeaser/config'
+import { BlogScroll } from '@/blocks/BlogScroll/config'
+import { ICON_PRESET_OPTIONS } from '@/components/site/icons'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -112,6 +121,20 @@ export const Pages: CollectionConfig<'pages'> = {
       },
     },
     {
+      name: 'icon',
+      type: 'select',
+      label: 'Icon (service cards)',
+      options: [...ICON_PRESET_OPTIONS],
+      admin: {
+        position: 'sidebar',
+        description:
+          'Used when this page appears as a card in a Services block. Leave unset to auto-match based on the page title.',
+        condition: (data) => {
+          return data?.serviceCategory === 'infrastructure' || data?.serviceCategory === 'digital'
+        },
+      },
+    },
+    {
       type: 'tabs',
       tabs: [
         {
@@ -145,6 +168,14 @@ export const Pages: CollectionConfig<'pages'> = {
                 ServicesSteps,
                 ServiceDetailBanner,
                 ServiceOverview,
+                ServiceCatalog,
+                Stats,
+                Testimonials,
+                Accreditations,
+                Industries,
+                DeliveryProcess,
+                AboutTeaser,
+                BlogScroll,
               ],
               required: true,
               admin: {

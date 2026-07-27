@@ -162,6 +162,52 @@ export interface Page {
    * Select a parent service if this is a sub-service. The parent must be a service page (Infrastructure or Digital).
    */
   parentService?: (string | null) | Page;
+  /**
+   * Used when this page appears as a card in a Services block. Leave unset to auto-match based on the page title.
+   */
+  icon?:
+    | (
+        | 'shield'
+        | 'server'
+        | 'cloud'
+        | 'network'
+        | 'phone'
+        | 'monitor'
+        | 'wrench'
+        | 'refresh'
+        | 'chart'
+        | 'users'
+        | 'layout'
+        | 'code'
+        | 'search'
+        | 'smartphone'
+        | 'palette'
+        | 'truck'
+        | 'camera'
+        | 'lock'
+        | 'box'
+        | 'lightbulb'
+        | 'headset'
+        | 'building'
+        | 'pin'
+        | 'database'
+        | 'settings'
+        | 'document'
+        | 'graduation'
+        | 'printer'
+        | 'tv'
+        | 'mic'
+        | 'wifi'
+        | 'handshake'
+        | 'check'
+        | 'smile'
+        | 'health'
+        | 'home'
+        | 'shoppingBag'
+        | 'factory'
+        | 'bed'
+      )
+    | null;
   hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
     richText?: {
@@ -212,6 +258,15 @@ export interface Page {
         }[]
       | null;
     media?: (string | null) | Media;
+    /**
+     * Optional extra slides shown alongside the main image above, rotating automatically.
+     */
+    carouselImages?:
+      | {
+          image: string | Media;
+          id?: string | null;
+        }[]
+      | null;
   };
   layout: (
     | CallToActionBlock
@@ -228,6 +283,15 @@ export interface Page {
           answer: string;
           id?: string | null;
         }[];
+        /**
+         * Short line shown next to the button.
+         */
+        ctaText?: string | null;
+        ctaLabel?: string | null;
+        /**
+         * Leave the label blank to hide the button entirely.
+         */
+        ctaUrl?: string | null;
         id?: string | null;
         blockName?: string | null;
         blockType: 'faq';
@@ -247,6 +311,14 @@ export interface Page {
     | ServicesStepsBlock
     | ServiceDetailBannerBlock
     | ServiceOverviewBlock
+    | ServiceCatalogBlock
+    | StatsBlock
+    | TestimonialsBlock
+    | AccreditationsBlock
+    | IndustriesBlock
+    | DeliveryProcessBlock
+    | AboutTeaserBlock
+    | BlogScrollBlock
   )[];
   meta?: {
     title?: string | null;
@@ -316,6 +388,9 @@ export interface Post {
  */
 export interface Media {
   id: string;
+  /**
+   * Paste a full image URL (https://…) to use an image hosted elsewhere instead of uploading a file. When set, this is used everywhere this media is displayed. Leave the file upload empty when using this.
+   */
   externalUrl?: string | null;
   alt?: string | null;
   caption?: {
@@ -860,6 +935,15 @@ export interface WhyChooseUsAboutBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'whyChooseUsAbout';
@@ -1011,6 +1095,10 @@ export interface AboutUsBannerBlock {
 export interface TrustedBrandsBlock {
   title: string;
   /**
+   * Marquee auto-animates in a loop; static grid wraps into rows; horizontal scroll is a single row the user scrolls manually.
+   */
+  displayStyle?: ('scroll' | 'grid' | 'horizontalScroll') | null;
+  /**
    * Control the speed of the scrolling animation
    */
   animationSpeed?: ('slow' | 'normal' | 'fast') | null;
@@ -1037,6 +1125,15 @@ export interface TrustedBrandsBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'trustedBrands';
@@ -1156,6 +1253,284 @@ export interface ServiceOverviewBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'serviceOverview';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceCatalogBlock".
+ */
+export interface ServiceCatalogBlock {
+  titleHighlight: string;
+  title: string;
+  /**
+   * Tabs are built from your published top-level pages of this category; cards under each tab come from that page's sub-services (Parent Service field).
+   */
+  serviceType: 'infrastructure' | 'digital';
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'serviceCatalog';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock".
+ */
+export interface StatsBlock {
+  stats: {
+    /**
+     * Used only when no icon image is uploaded below.
+     */
+    icon?:
+      | (
+          | 'shield'
+          | 'server'
+          | 'cloud'
+          | 'network'
+          | 'phone'
+          | 'monitor'
+          | 'wrench'
+          | 'refresh'
+          | 'chart'
+          | 'users'
+          | 'layout'
+          | 'code'
+          | 'search'
+          | 'smartphone'
+          | 'palette'
+          | 'truck'
+          | 'camera'
+          | 'lock'
+          | 'box'
+          | 'lightbulb'
+          | 'headset'
+          | 'building'
+          | 'pin'
+          | 'database'
+          | 'settings'
+          | 'document'
+          | 'graduation'
+          | 'printer'
+          | 'tv'
+          | 'mic'
+          | 'wifi'
+          | 'handshake'
+          | 'check'
+          | 'smile'
+          | 'health'
+          | 'home'
+          | 'shoppingBag'
+          | 'factory'
+          | 'bed'
+        )
+      | null;
+    iconMedia?: (string | null) | Media;
+    value: number;
+    suffix?: string | null;
+    label: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'stats';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialsBlock".
+ */
+export interface TestimonialsBlock {
+  badge?: string | null;
+  title: string;
+  /**
+   * Requires GOOGLE_PLACES_API_KEY and GOOGLE_PLACES_ID env vars. Falls back to the quotes below if not configured or the fetch fails.
+   */
+  useGoogleReviews?: boolean | null;
+  fallbackQuotes?:
+    | {
+        quote: string;
+        name: string;
+        role: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'testimonials';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccreditationsBlock".
+ */
+export interface AccreditationsBlock {
+  title: string;
+  items?:
+    | {
+        /**
+         * e.g. "Fortinet Authorized Partner", "AWS Partner – Advanced Tier Services"
+         */
+        name: string;
+        /**
+         * The official certification badge/logo. Falls back to the name as text if not set.
+         */
+        badge?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'accreditations';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndustriesBlock".
+ */
+export interface IndustriesBlock {
+  badge?: string | null;
+  title: string;
+  items?:
+    | {
+        name: string;
+        icon:
+          | 'shield'
+          | 'server'
+          | 'cloud'
+          | 'network'
+          | 'phone'
+          | 'monitor'
+          | 'wrench'
+          | 'refresh'
+          | 'chart'
+          | 'users'
+          | 'layout'
+          | 'code'
+          | 'search'
+          | 'smartphone'
+          | 'palette'
+          | 'truck'
+          | 'camera'
+          | 'lock'
+          | 'box'
+          | 'lightbulb'
+          | 'headset'
+          | 'building'
+          | 'pin'
+          | 'database'
+          | 'settings'
+          | 'document'
+          | 'graduation'
+          | 'printer'
+          | 'tv'
+          | 'mic'
+          | 'wifi'
+          | 'handshake'
+          | 'check'
+          | 'smile'
+          | 'health'
+          | 'home'
+          | 'shoppingBag'
+          | 'factory'
+          | 'bed';
+        /**
+         * Shown on the back of the card when flipped/hovered.
+         */
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'industries';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DeliveryProcessBlock".
+ */
+export interface DeliveryProcessBlock {
+  badge?: string | null;
+  title: string;
+  description?: string | null;
+  steps?:
+    | {
+        /**
+         * e.g. "STEP 01" — auto-generated from position if left blank
+         */
+        stepLabel?: string | null;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'deliveryProcess';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutTeaserBlock".
+ */
+export interface AboutTeaserBlock {
+  badge?: string | null;
+  title: string;
+  description: string;
+  linkLabel?: string | null;
+  linkUrl?: string | null;
+  /**
+   * Optional. When set, the section splits into text + image.
+   */
+  image?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'aboutTeaser';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogScrollBlock".
+ */
+export interface BlogScrollBlock {
+  badge?: string | null;
+  title: string;
+  /**
+   * Most recent published posts are pulled in automatically.
+   */
+  limit?: number | null;
+  viewAllLabel?: string | null;
+  viewAllUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blogScroll';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1281,11 +1656,20 @@ export interface Search {
   id: string;
   title?: string | null;
   priority?: number | null;
-  doc: {
-    relationTo: 'posts';
-    value: string | Post;
-  };
+  doc:
+    | {
+        relationTo: 'posts';
+        value: string | Post;
+      }
+    | {
+        relationTo: 'pages';
+        value: string | Page;
+      };
   slug?: string | null;
+  /**
+   * Copied from the source page, used to build the right URL for service pages.
+   */
+  serviceCategory?: string | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -1499,6 +1883,7 @@ export interface PagesSelect<T extends boolean = true> {
   title?: T;
   serviceCategory?: T;
   parentService?: T;
+  icon?: T;
   hero?:
     | T
     | {
@@ -1522,6 +1907,12 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        carouselImages?:
+          | T
+          | {
+              image?: T;
+              id?: T;
+            };
       };
   layout?:
     | T
@@ -1544,6 +1935,9 @@ export interface PagesSelect<T extends boolean = true> {
                     answer?: T;
                     id?: T;
                   };
+              ctaText?: T;
+              ctaLabel?: T;
+              ctaUrl?: T;
               id?: T;
               blockName?: T;
             };
@@ -1562,6 +1956,14 @@ export interface PagesSelect<T extends boolean = true> {
         servicesSteps?: T | ServicesStepsBlockSelect<T>;
         serviceDetailBanner?: T | ServiceDetailBannerBlockSelect<T>;
         serviceOverview?: T | ServiceOverviewBlockSelect<T>;
+        serviceCatalog?: T | ServiceCatalogBlockSelect<T>;
+        stats?: T | StatsBlockSelect<T>;
+        testimonials?: T | TestimonialsBlockSelect<T>;
+        accreditations?: T | AccreditationsBlockSelect<T>;
+        industries?: T | IndustriesBlockSelect<T>;
+        deliveryProcess?: T | DeliveryProcessBlockSelect<T>;
+        aboutTeaser?: T | AboutTeaserBlockSelect<T>;
+        blogScroll?: T | BlogScrollBlockSelect<T>;
       };
   meta?:
     | T
@@ -1745,6 +2147,9 @@ export interface WhyChooseUsAboutBlockSelect<T extends boolean = true> {
         description?: T;
         id?: T;
       };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
   id?: T;
   blockName?: T;
 }
@@ -1883,6 +2288,7 @@ export interface AboutUsBannerBlockSelect<T extends boolean = true> {
  */
 export interface TrustedBrandsBlockSelect<T extends boolean = true> {
   title?: T;
+  displayStyle?: T;
   animationSpeed?: T;
   pauseOnHover?: T;
   brands?:
@@ -1895,6 +2301,9 @@ export interface TrustedBrandsBlockSelect<T extends boolean = true> {
         servicePage?: T;
         id?: T;
       };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
   id?: T;
   blockName?: T;
 }
@@ -1999,6 +2408,146 @@ export interface ServiceOverviewBlockSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceCatalogBlock_select".
+ */
+export interface ServiceCatalogBlockSelect<T extends boolean = true> {
+  titleHighlight?: T;
+  title?: T;
+  serviceType?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock_select".
+ */
+export interface StatsBlockSelect<T extends boolean = true> {
+  stats?:
+    | T
+    | {
+        icon?: T;
+        iconMedia?: T;
+        value?: T;
+        suffix?: T;
+        label?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialsBlock_select".
+ */
+export interface TestimonialsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  useGoogleReviews?: T;
+  fallbackQuotes?:
+    | T
+    | {
+        quote?: T;
+        name?: T;
+        role?: T;
+        id?: T;
+      };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccreditationsBlock_select".
+ */
+export interface AccreditationsBlockSelect<T extends boolean = true> {
+  title?: T;
+  items?:
+    | T
+    | {
+        name?: T;
+        badge?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndustriesBlock_select".
+ */
+export interface IndustriesBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  items?:
+    | T
+    | {
+        name?: T;
+        icon?: T;
+        description?: T;
+        id?: T;
+      };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DeliveryProcessBlock_select".
+ */
+export interface DeliveryProcessBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  description?: T;
+  steps?:
+    | T
+    | {
+        stepLabel?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutTeaserBlock_select".
+ */
+export interface AboutTeaserBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  description?: T;
+  linkLabel?: T;
+  linkUrl?: T;
+  image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogScrollBlock_select".
+ */
+export interface BlogScrollBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  limit?: T;
+  viewAllLabel?: T;
+  viewAllUrl?: T;
   id?: T;
   blockName?: T;
 }
@@ -2402,6 +2951,7 @@ export interface SearchSelect<T extends boolean = true> {
   priority?: T;
   doc?: T;
   slug?: T;
+  serviceCategory?: T;
   meta?:
     | T
     | {
@@ -2494,12 +3044,20 @@ export interface Header {
     | {
         label: string;
         link: string;
-        type: 'internal' | 'external' | 'anchor';
+        type: 'internal' | 'external' | 'anchor' | 'dropdown';
         openInNewTab?: boolean | null;
         /**
          * Lower numbers appear first
          */
         order?: number | null;
+        subItems?:
+          | {
+              label: string;
+              link: string;
+              openInNewTab?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -2527,6 +3085,10 @@ export interface Header {
         id?: string | null;
       }[]
     | null;
+  /**
+   * If set, the header button labeled "Let's Keep In Touch" opens this Calendly link in a popup instead of navigating.
+   */
+  calendlyUrl?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2571,6 +3133,12 @@ export interface Footer {
       time: string;
     };
   };
+  socialLinks?: {
+    twitter?: string | null;
+    facebook?: string | null;
+    linkedin?: string | null;
+    youtube?: string | null;
+  };
   bottomBar: {
     copyrightText: string;
     exploreServicesText?: string | null;
@@ -2604,6 +3172,14 @@ export interface HeaderSelect<T extends boolean = true> {
         type?: T;
         openInNewTab?: T;
         order?: T;
+        subItems?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              openInNewTab?: T;
+              id?: T;
+            };
         id?: T;
       };
   links?:
@@ -2621,6 +3197,7 @@ export interface HeaderSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  calendlyUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -2664,6 +3241,14 @@ export interface FooterSelect<T extends boolean = true> {
               days?: T;
               time?: T;
             };
+      };
+  socialLinks?:
+    | T
+    | {
+        twitter?: T;
+        facebook?: T;
+        linkedin?: T;
+        youtube?: T;
       };
   bottomBar?:
     | T

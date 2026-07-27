@@ -2,10 +2,11 @@
 
 import type { TrustedBrandsBlock as TrustedBrandsBlockProps } from 'src/payload-types'
 import { cn } from '@/utilities/ui'
-import React from 'react'
+import React, { useState } from 'react'
 import type { Media as MediaType, Page } from 'src/payload-types'
 import { Media } from '@/components/Media'
 import Link from 'next/link'
+import { CtaButton } from '@/components/site/CtaButton'
 
 type Props = {
   className?: string
@@ -15,11 +16,18 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
   className,
   title,
   brands = [],
+  displayStyle = 'scroll',
   animationSpeed = 'normal',
   pauseOnHover = true,
+  ctaText,
+  ctaLabel,
+  ctaUrl,
 }) => {
   const safeBrands = brands || []
-  const duplicatedBrands = safeBrands.length > 0 ? [...safeBrands, ...safeBrands, ...safeBrands] : []
+  const isGrid = displayStyle === 'grid'
+  const isHorizontalScroll = displayStyle === 'horizontalScroll'
+  const isMarquee = !isGrid && !isHorizontalScroll
+  const duplicatedBrands = isMarquee && safeBrands.length > 0 ? [...safeBrands, ...safeBrands, ...safeBrands] : safeBrands
   const safeAnimationSpeed = animationSpeed || 'normal'
   const speedClasses = {
     slow: 'animate-scroll-slow',
@@ -63,14 +71,18 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
   }
 
   const BrandLogo = ({ brand }: { brand: Brand; index: number }) => {
-    const logoContent = brand.logo ? (
+    const [logoFailed, setLogoFailed] = useState(false)
+    const logoContent = brand.logo && !logoFailed ? (
       <Media
         resource={brand.logo}
-        imgClassName="h-5 md:h-[35px] w-auto object-contain transition-all duration-300"
+        imgClassName="h-12 md:h-16 w-auto max-w-[140px] object-contain transition-all duration-300"
+        onError={() => setLogoFailed(true)}
       />
     ) : (
-      <div className="h-8 md:h-10 w-24 md:w-32 bg-gray-200 rounded flex items-center justify-center">
-        <span className="text-gray-500 text-xs md:text-sm font-medium">{brand.name}</span>
+      <div className="h-8 md:h-10 px-2 flex items-center justify-center">
+        <span className="whitespace-nowrap text-sm md:text-base font-semibold text-foreground transition-all duration-300 group-hover:scale-110 group-hover:text-primary_red">
+          {brand.name}
+        </span>
       </div>
     )
 
@@ -107,10 +119,10 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
 
   if (duplicatedBrands.length === 0) {
     return (
-      <section className={cn('py-12 md:py-16 px-4 bg-white', className)}>
+      <section className={cn('py-8 md:py-10 px-4 bg-white', className)}>
         <div className="container mx-auto max-w-7xl">
           <div className="text-center">
-            <h2 className="text-xs md:text-sm font-semibold text-gray-800 mb-2">
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground mb-2">
               {title}
             </h2>
             <p className="text-gray-500">No brands to display</p>
@@ -121,44 +133,74 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
   }
 
   return (
-    <section className={cn('py-12 md:py-16 px-4 bg-white overflow-hidden', className)}>
+    <section className={cn('py-8 md:py-10 px-4 bg-white overflow-hidden', className)}>
       <div className="container mx-auto max-w-7xl">
         {/* Header */}
         <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-xs md:text-[20px] font-semibold text-gray-800 mb-4">
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground mb-4">
             {title}
           </h2>
         </div>
 
-        {/* Infinite Scrolling Brands Container */}
-        <div className="relative w-full">
-          {/* Gradient fade masks */}
-          <div className="absolute -left-1 top-0 w-16 md:w-24 h-full bg-gradient-to-r from-white via-white/30 to-transparent z-10 pointer-events-none"></div>
-          <div className="absolute -right-1 top-0 w-16 md:w-24 h-full bg-gradient-to-l from-white via-white/30 to-transparent z-10 pointer-events-none"></div>
-          
-          {/* Scrolling container */}
-          <div className="flex overflow-hidden">
-            <div 
-              className={cn(
-                'flex items-center gap-8 md:gap-12 lg:gap-16 xl:gap-20 whitespace-nowrap',
-                speedClasses[safeAnimationSpeed],
-                pauseOnHover && 'hover:[animation-play-state:paused]'
-              )}
-              style={{
-                width: 'max-content',
-              }}
-            >
-              {duplicatedBrands.map((brand, index) => (
-                <div 
-                  key={`${brand.name}-${index}`} 
-                  className="flex-shrink-0 flex items-center justify-center"
-                >
-                  <BrandLogo brand={brand} index={index} />
-                </div>
-              ))}
+        {isGrid ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {safeBrands.map((brand, index) => (
+              <div
+                key={`${brand.name}-${index}`}
+                className="group flex items-center justify-center rounded-xl border border-border p-5 h-20 transition-colors duration-300 hover:border-primary_red"
+              >
+                <span className="font-semibold text-foreground transition-all duration-300 group-hover:scale-110 group-hover:text-primary_red">
+                  {brand.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        ) : isHorizontalScroll ? (
+          <div className="flex gap-4 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide">
+            {safeBrands.map((brand, index) => (
+              <div
+                key={`${brand.name}-${index}`}
+                className="group flex flex-none snap-start items-center justify-center rounded-xl border border-border px-6 py-5 h-20 min-w-[140px] transition-colors duration-300 hover:border-primary_red"
+              >
+                <span className="whitespace-nowrap font-semibold text-foreground transition-all duration-300 group-hover:text-primary_red">
+                  {brand.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          /* Infinite Scrolling Brands Container */
+          <div className="relative w-full">
+            {/* Gradient fade masks */}
+            <div className="absolute -left-1 top-0 w-16 md:w-24 h-full bg-gradient-to-r from-white via-white/30 to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute -right-1 top-0 w-16 md:w-24 h-full bg-gradient-to-l from-white via-white/30 to-transparent z-10 pointer-events-none"></div>
+
+            {/* Scrolling container */}
+            <div className="flex overflow-hidden">
+              <div
+                className={cn(
+                  'flex items-center gap-8 md:gap-12 lg:gap-16 xl:gap-20 whitespace-nowrap',
+                  speedClasses[safeAnimationSpeed],
+                  pauseOnHover && 'hover:[animation-play-state:paused]'
+                )}
+                style={{
+                  width: 'max-content',
+                }}
+              >
+                {duplicatedBrands.map((brand, index) => (
+                  <div
+                    key={`${brand.name}-${index}`}
+                    className="group flex-shrink-0 flex items-center justify-center"
+                  >
+                    <BrandLogo brand={brand} index={index} />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
+
+        <CtaButton text={ctaText} label={ctaLabel} url={ctaUrl} className="mt-8 md:mt-10" />
       </div>
     </section>
   )

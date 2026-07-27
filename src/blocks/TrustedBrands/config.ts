@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { ctaFields } from '@/fields/ctaFields'
 
 export const TrustedBrands: Block = {
   slug: 'trustedBrands',
@@ -13,6 +14,20 @@ export const TrustedBrands: Block = {
       type: 'text',
       label: 'Section Title',
       required: true,
+    },
+    {
+      name: 'displayStyle',
+      type: 'select',
+      label: 'Display Style',
+      options: [
+        { label: 'Scrolling Marquee (auto-animates)', value: 'scroll' },
+        { label: 'Static Grid', value: 'grid' },
+        { label: 'Horizontal Scroll (manual, no animation)', value: 'horizontalScroll' },
+      ],
+      defaultValue: 'scroll',
+      admin: {
+        description: 'Marquee auto-animates in a loop; static grid wraps into rows; horizontal scroll is a single row the user scrolls manually.',
+      },
     },
     {
       name: 'animationSpeed',
@@ -35,6 +50,7 @@ export const TrustedBrands: Block = {
       defaultValue: 'normal',
       admin: {
         description: 'Control the speed of the scrolling animation',
+        condition: (_, siblingData) => siblingData?.displayStyle === 'scroll',
       },
     },
     {
@@ -44,6 +60,7 @@ export const TrustedBrands: Block = {
       defaultValue: true,
       admin: {
         description: 'Pause the scrolling animation when users hover over the brands',
+        condition: (_, siblingData) => siblingData?.displayStyle === 'scroll',
       },
     },
     {
@@ -51,7 +68,7 @@ export const TrustedBrands: Block = {
       type: 'array',
       label: 'Brand Logos',
       minRows: 3,
-      maxRows: 20,
+      maxRows: 60,
       fields: [
         {
           name: 'name',
@@ -131,5 +148,9 @@ export const TrustedBrands: Block = {
         },
       ],
     },
+    ...ctaFields(
+      'Partner With Us',
+      'Interested in partnering with CODE3?',
+    ),
   ],
 }
