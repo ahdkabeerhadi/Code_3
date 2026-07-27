@@ -19,11 +19,11 @@ function MailIcon() {
   )
 }
 
-function PinIcon() {
+function ClockIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-3.5 w-3.5 flex-none">
-      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-      <path d="M12 13a3 3 0 100-6 3 3 0 000 6z" />
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 3" />
     </svg>
   )
 }
@@ -34,9 +34,13 @@ export async function TopBar() {
 
   const phone = contactInfo?.phone
   const email = contactInfo?.email
-  const address = contactInfo?.address?.building
+  const workingHours = contactInfo?.workingHours
+  const hoursText =
+    workingHours?.days && workingHours?.time
+      ? `${workingHours.days} : ${workingHours.time}`
+      : workingHours?.days || workingHours?.time
 
-  if (!phone && !email && !address) return null
+  if (!phone && !email && !hoursText) return null
 
   return (
     <div className="sticky top-0 z-[60] bg-foreground text-white text-xs">
@@ -60,10 +64,10 @@ export async function TopBar() {
               {email}
             </a>
           )}
-          {address && (
+          {hoursText && (
             <span className="hidden items-center gap-1.5 whitespace-nowrap text-white/85 sm:flex">
-              <PinIcon />
-              {address}
+              <ClockIcon />
+              {hoursText}
             </span>
           )}
         </div>
