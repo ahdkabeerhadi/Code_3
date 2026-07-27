@@ -23,6 +23,13 @@ const nextConfig = {
         protocol: 'http',
       },
       {
+        // Every preview deployment gets its own unique *.vercel.app hostname (not knowable
+        // at build time), and getClientSideURL() now points media URLs at that hostname
+        // instead of production's when running on a preview — this allowlists all of them.
+        protocol: 'https',
+        hostname: '*.vercel.app',
+      },
+      {
         protocol: 'https',
         hostname: '*.public.blob.vercel-storage.com',
       },
