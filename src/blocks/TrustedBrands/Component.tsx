@@ -37,7 +37,7 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
 
   interface Brand {
     name: string
-    logo: string | MediaType
+    logo?: string | MediaType | null
     linkType?: 'none' | 'external' | 'service' | null
     url?: string | null
     servicePage?: string | Page | null

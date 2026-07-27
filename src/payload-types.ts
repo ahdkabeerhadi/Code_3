@@ -1109,7 +1109,10 @@ export interface TrustedBrandsBlock {
   brands?:
     | {
         name: string;
-        logo: string | Media;
+        /**
+         * Optional — if left blank, the brand name is shown as styled text instead.
+         */
+        logo?: (string | null) | Media;
         /**
          * Choose where this brand logo should link to
          */
