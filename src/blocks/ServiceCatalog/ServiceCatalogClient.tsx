@@ -83,7 +83,7 @@ export const ServiceCatalogClient: React.FC<ServiceCatalogClientProps> = ({
         ) : (
           <Reveal
             delayMs={140}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-t border-l border-border"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
           >
             {items.map((item, i) => {
               const cardInner = (
@@ -104,12 +104,12 @@ export const ServiceCatalogClient: React.FC<ServiceCatalogClientProps> = ({
                 <Link
                   key={`${item.title}-${i}`}
                   href={item.href}
-                  className="border-r border-b border-border p-6 hover:bg-gray-50 transition-colors"
+                  className="rounded-xl border border-border p-6 transition-colors duration-300 hover:border-primary_red hover:bg-gray-50"
                 >
                   {cardInner}
                 </Link>
               ) : (
-                <div key={`${item.title}-${i}`} className="border-r border-b border-border p-6">
+                <div key={`${item.title}-${i}`} className="rounded-xl border border-border p-6">
                   {cardInner}
                 </div>
               )
