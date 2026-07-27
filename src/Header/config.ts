@@ -101,6 +101,15 @@ export const Header: GlobalConfig = {
         maxRows: 4,
       },
     }),
+    {
+      name: 'calendlyUrl',
+      type: 'text',
+      label: 'Calendly Scheduling Link',
+      admin: {
+        description:
+          'If set, the header button labeled "Let\'s Keep In Touch" opens this Calendly link in a popup instead of navigating.',
+      },
+    },
   ],
   hooks: {
     afterChange: [revalidateHeader],

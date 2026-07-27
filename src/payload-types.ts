@@ -3050,6 +3050,10 @@ export interface Header {
         id?: string | null;
       }[]
     | null;
+  /**
+   * If set, the header button labeled "Let's Keep In Touch" opens this Calendly link in a popup instead of navigating.
+   */
+  calendlyUrl?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -3158,6 +3162,7 @@ export interface HeaderSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  calendlyUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -9,6 +9,7 @@ import type { Header } from '@/payload-types'
 
 import { Logo } from '@/components/Logo/Logo'
 import { CMSLink } from '@/components/Link'
+import { CalendlyButton } from './CalendlyButton'
 
 interface NavigationPageData {
   id: string
@@ -263,6 +264,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, navigationPage
 
   const logo = data?.logo
   const links = data?.links
+  const calendlyUrl = data?.calendlyUrl
 
   const allNavItems = (data?.navItems || []).sort((a: NavigationItem, b: NavigationItem) => (a.order || 0) - (b.order || 0))
 
@@ -392,6 +394,16 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, navigationPage
             {links && links.length > 0 && (
               <div className="flex gap-4 items-center">
                 {links.map(({ link }, i) => {
+                  if (calendlyUrl && link?.label?.trim().toLowerCase() === "let's keep in touch") {
+                    return (
+                      <CalendlyButton
+                        key={i}
+                        label={link.label}
+                        url={calendlyUrl}
+                        appearance={link.appearance || undefined}
+                      />
+                    )
+                  }
                   return <CMSLink key={i} {...link} />
                 })}
               </div>
@@ -508,11 +520,28 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, navigationPage
                 <div className="pt-4 mt-auto">
                   {links && links.length > 0 && (
                     <div className="flex flex-col gap-4 items-center">
-                      {links.map(({ link }, i) => (
-                        <div key={i} onClick={closeMobileMenu} className="w-full">
-                          <CMSLink className="w-full text-center" {...link} />
-                        </div>
-                      ))}
+                      {links.map(({ link }, i) => {
+                        if (
+                          calendlyUrl &&
+                          link?.label?.trim().toLowerCase() === "let's keep in touch"
+                        ) {
+                          return (
+                            <div key={i} onClick={closeMobileMenu} className="w-full">
+                              <CalendlyButton
+                                label={link.label}
+                                url={calendlyUrl}
+                                appearance={link.appearance || undefined}
+                                className="w-full text-center"
+                              />
+                            </div>
+                          )
+                        }
+                        return (
+                          <div key={i} onClick={closeMobileMenu} className="w-full">
+                            <CMSLink className="w-full text-center" {...link} />
+                          </div>
+                        )
+                      })}
                     </div>
                   )}
                 </div>
