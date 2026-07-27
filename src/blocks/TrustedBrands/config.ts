@@ -16,6 +16,14 @@ export const TrustedBrands: Block = {
       required: true,
     },
     {
+      name: 'subtitle',
+      type: 'text',
+      label: 'Section Subtitle',
+      admin: {
+        description: 'Optional short line shown under the title.',
+      },
+    },
+    {
       name: 'displayStyle',
       type: 'select',
       label: 'Display Style',

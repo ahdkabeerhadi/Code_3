@@ -15,6 +15,7 @@ type Props = {
 export const TrustedBrandsBlock: React.FC<Props> = ({
   className,
   title,
+  subtitle,
   brands = [],
   displayStyle = 'scroll',
   animationSpeed = 'normal',
@@ -132,6 +133,7 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
             <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground mb-2">
               {title}
             </h2>
+            {subtitle && <p className="text-gray-500 mb-2">{subtitle}</p>}
             <p className="text-gray-500">No brands to display</p>
           </div>
         </div>
@@ -144,9 +146,10 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
       <div className="container mx-auto max-w-7xl">
         {/* Header */}
         <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground mb-4">
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground mb-2">
             {title}
           </h2>
+          {subtitle && <p className="text-sm text-gray-500 md:text-base">{subtitle}</p>}
         </div>
 
         {isGrid ? (

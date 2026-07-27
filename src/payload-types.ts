@@ -1095,6 +1095,10 @@ export interface AboutUsBannerBlock {
 export interface TrustedBrandsBlock {
   title: string;
   /**
+   * Optional short line shown under the title.
+   */
+  subtitle?: string | null;
+  /**
    * Marquee auto-animates in a loop; static grid wraps into rows; horizontal scroll is a single row the user scrolls manually.
    */
   displayStyle?: ('scroll' | 'grid' | 'horizontalScroll') | null;
@@ -2291,6 +2295,7 @@ export interface AboutUsBannerBlockSelect<T extends boolean = true> {
  */
 export interface TrustedBrandsBlockSelect<T extends boolean = true> {
   title?: T;
+  subtitle?: T;
   displayStyle?: T;
   animationSpeed?: T;
   pauseOnHover?: T;
