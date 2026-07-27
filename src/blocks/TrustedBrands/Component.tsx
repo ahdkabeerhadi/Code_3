@@ -121,7 +121,7 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
       <section className={cn('py-8 md:py-10 px-4 bg-white', className)}>
         <div className="container mx-auto max-w-7xl">
           <div className="text-center">
-            <h2 className="text-xs md:text-sm font-semibold text-gray-800 mb-2">
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground mb-2">
               {title}
             </h2>
             <p className="text-gray-500">No brands to display</p>
@@ -136,7 +136,7 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
       <div className="container mx-auto max-w-7xl">
         {/* Header */}
         <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-xs md:text-[20px] font-semibold text-gray-800 mb-4">
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground mb-4">
             {title}
           </h2>
         </div>
