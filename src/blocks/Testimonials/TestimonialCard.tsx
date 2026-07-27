@@ -95,8 +95,6 @@ export function TestimonialCard({ t }: { t: TestimonialCardData }) {
           <div className="text-sm font-semibold text-foreground">{t.name}</div>
           {t.isGoogle ? (
             <div className="flex items-center gap-1 text-xs text-gray-500">
-              {t.role && <span>{t.role}</span>}
-              {t.role && <span>·</span>}
               <GoogleIcon />
               <span>Google Review</span>
             </div>
