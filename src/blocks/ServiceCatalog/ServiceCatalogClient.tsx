@@ -55,7 +55,7 @@ export const ServiceCatalogClient: React.FC<ServiceCatalogClientProps> = ({
         </Reveal>
 
         {safeCategories.length > 1 && (
-          <Reveal delayMs={80} className="flex flex-wrap gap-2.5 mb-10">
+          <Reveal delayMs={80} className="flex flex-wrap gap-2.5 mb-6">
             {safeCategories.map((cat, i) => {
               const isActive = i === activeIndex
               return (
@@ -75,6 +75,8 @@ export const ServiceCatalogClient: React.FC<ServiceCatalogClientProps> = ({
             })}
           </Reveal>
         )}
+
+        <CtaButton text={ctaText} label={ctaLabel} url={ctaUrl} className="mb-10" />
 
         {items.length === 0 ? (
           <p className="text-sm text-gray-500">
@@ -116,8 +118,6 @@ export const ServiceCatalogClient: React.FC<ServiceCatalogClientProps> = ({
             })}
           </Reveal>
         )}
-
-        <CtaButton text={ctaText} label={ctaLabel} url={ctaUrl} className="mt-10" />
       </div>
     </section>
   )
