@@ -118,6 +118,8 @@ export const ServiceCatalogClient: React.FC<ServiceCatalogClientProps> = ({
             })}
           </Reveal>
         )}
+
+        <CtaButton text={ctaText} label={ctaLabel} url={ctaUrl} className="mt-10" />
       </div>
     </section>
   )
