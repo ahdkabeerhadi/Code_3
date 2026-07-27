@@ -15,6 +15,7 @@ type Props = {
 export const TrustedBrandsBlock: React.FC<Props> = ({
   className,
   title,
+  subtitle,
   brands = [],
   displayStyle = 'scroll',
   animationSpeed = 'normal',
@@ -37,7 +38,7 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
 
   interface Brand {
     name: string
-    logo: string | MediaType
+    logo?: string | MediaType | null
     linkType?: 'none' | 'external' | 'service' | null
     url?: string | null
     servicePage?: string | Page | null
@@ -70,7 +71,7 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
     return null
   }
 
-  const BrandLogo = ({ brand }: { brand: Brand; index: number }) => {
+  const BrandLogo = ({ brand, wrap = false }: { brand: Brand; index: number; wrap?: boolean }) => {
     const [logoFailed, setLogoFailed] = useState(false)
     const logoContent = brand.logo && !logoFailed ? (
       <Media
@@ -79,8 +80,15 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
         onError={() => setLogoFailed(true)}
       />
     ) : (
-      <div className="h-8 md:h-10 px-2 flex items-center justify-center">
-        <span className="whitespace-nowrap text-sm md:text-base font-semibold text-foreground transition-all duration-300 group-hover:scale-110 group-hover:text-primary_red">
+      <div className={cn('flex items-center justify-center', wrap ? 'px-1 py-1' : 'h-8 px-2 md:h-10')}>
+        <span
+          className={cn(
+            'font-semibold uppercase tracking-wide text-gray-500 transition-all duration-300 group-hover:text-primary_red',
+            wrap
+              ? 'text-center text-xs leading-snug sm:text-sm'
+              : 'whitespace-nowrap text-sm group-hover:scale-110 md:text-base',
+          )}
+        >
           {brand.name}
         </span>
       </div>
@@ -125,6 +133,7 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
             <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground mb-2">
               {title}
             </h2>
+            {subtitle && <p className="text-gray-500 mb-2">{subtitle}</p>}
             <p className="text-gray-500">No brands to display</p>
           </div>
         </div>
@@ -137,21 +146,20 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
       <div className="container mx-auto max-w-7xl">
         {/* Header */}
         <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground mb-4">
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground mb-2">
             {title}
           </h2>
+          {subtitle && <p className="text-sm text-gray-500 md:text-base">{subtitle}</p>}
         </div>
 
         {isGrid ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {safeBrands.map((brand, index) => (
               <div
                 key={`${brand.name}-${index}`}
-                className="group flex items-center justify-center rounded-xl border border-border p-5 h-20 transition-colors duration-300 hover:border-primary_red"
+                className="group flex min-h-[6rem] items-center justify-center rounded-2xl border border-border/70 bg-gray-50/60 p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary_red/40 hover:bg-white hover:shadow-md"
               >
-                <span className="font-semibold text-foreground transition-all duration-300 group-hover:scale-110 group-hover:text-primary_red">
-                  {brand.name}
-                </span>
+                <BrandLogo brand={brand} index={index} wrap />
               </div>
             ))}
           </div>
@@ -160,11 +168,9 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
             {safeBrands.map((brand, index) => (
               <div
                 key={`${brand.name}-${index}`}
-                className="group flex flex-none snap-start items-center justify-center rounded-xl border border-border px-6 py-5 h-20 min-w-[140px] transition-colors duration-300 hover:border-primary_red"
+                className="group flex flex-none snap-start items-center justify-center rounded-2xl border border-border/70 bg-gray-50/60 px-6 py-5 h-24 min-w-[140px] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary_red/40 hover:bg-white hover:shadow-md"
               >
-                <span className="whitespace-nowrap font-semibold text-foreground transition-all duration-300 group-hover:text-primary_red">
-                  {brand.name}
-                </span>
+                <BrandLogo brand={brand} index={index} wrap />
               </div>
             ))}
           </div>

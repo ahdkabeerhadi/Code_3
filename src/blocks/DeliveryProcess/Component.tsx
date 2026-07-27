@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import type { DeliveryProcessBlock as DeliveryProcessBlockProps } from 'src/payload-types'
 import { cn } from '@/utilities/ui'
 import { Eyebrow } from '@/components/site/Eyebrow'
@@ -28,6 +28,27 @@ export const DeliveryProcessBlock: React.FC<Props> = ({
   ctaUrl,
 }) => {
   const safeSteps = steps || []
+  const timelineRef = useRef<HTMLDivElement>(null)
+  const [timelineInView, setTimelineInView] = useState(false)
+
+  useEffect(() => {
+    const el = timelineRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setTimelineInView(true)
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.2 },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   if (safeSteps.length === 0) return null
 
   return (
@@ -43,43 +64,58 @@ export const DeliveryProcessBlock: React.FC<Props> = ({
           )}
         </Reveal>
 
-        {/* Desktop: horizontal timeline */}
-        <div className="hidden md:flex items-start">
-          {safeSteps.map((step, index) => (
-            <Reveal
-              key={step.id || index}
-              delayMs={index * 100}
-              className="relative flex-1 px-4 text-left first:pl-0 last:pr-0"
-            >
-              <div className="mb-6 flex items-center">
-                <div className="relative z-[1] h-3.5 w-3.5 flex-none rounded-full border-[3px] border-primary_red bg-white" />
-                {index < safeSteps.length - 1 && (
-                  <div className="h-0.5 flex-1 bg-border" />
-                )}
-              </div>
-              <span className="mb-2 block text-xs font-semibold tracking-wider text-primary_red">
-                <StepLabel step={step} index={index} />
-              </span>
-              <h3 className="mb-2 text-base font-semibold text-foreground">{step.title}</h3>
-              <p className="text-sm leading-relaxed text-gray-600">{step.description}</p>
-            </Reveal>
-          ))}
-        </div>
-
-        {/* Mobile: vertical timeline */}
-        <div className="md:hidden relative">
-          <div className="absolute left-[6px] top-2 bottom-2 w-0.5 bg-border" />
-          <div className="space-y-8">
+        <div ref={timelineRef}>
+          {/* Desktop: horizontal timeline */}
+          <div className="hidden md:flex items-start">
             {safeSteps.map((step, index) => (
-              <Reveal key={step.id || index} delayMs={index * 80} className="relative pl-8">
-                <div className="absolute left-0 top-1.5 h-3.5 w-3.5 flex-none rounded-full border-[3px] border-primary_red bg-white" />
-                <span className="mb-1 block text-xs font-semibold tracking-wider text-primary_red">
+              <Reveal
+                key={step.id || index}
+                delayMs={index * 100}
+                className="relative flex-1 px-4 text-left first:pl-0 last:pr-0"
+              >
+                <div className="mb-6 flex items-center">
+                  <div className="relative z-[1] h-3.5 w-3.5 flex-none rounded-full border-[3px] border-primary_red bg-white" />
+                  {index < safeSteps.length - 1 && (
+                    <div className="relative h-0.5 flex-1 overflow-hidden bg-border">
+                      <div
+                        className="absolute inset-y-0 left-0 w-full origin-left bg-primary_red transition-transform duration-700 ease-out"
+                        style={{
+                          transform: timelineInView ? 'scaleX(1)' : 'scaleX(0)',
+                          transitionDelay: `${200 + index * 150}ms`,
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+                <span className="mb-2 block text-xs font-semibold tracking-wider text-primary_red">
                   <StepLabel step={step} index={index} />
                 </span>
-                <h3 className="mb-1 text-base font-semibold text-foreground">{step.title}</h3>
+                <h3 className="mb-2 text-base font-semibold text-foreground">{step.title}</h3>
                 <p className="text-sm leading-relaxed text-gray-600">{step.description}</p>
               </Reveal>
             ))}
+          </div>
+
+          {/* Mobile: vertical timeline */}
+          <div className="md:hidden relative">
+            <div className="absolute left-[6px] top-2 bottom-2 w-0.5 overflow-hidden bg-border">
+              <div
+                className="absolute inset-x-0 top-0 h-full w-full origin-top bg-primary_red transition-transform duration-[1200ms] ease-out"
+                style={{ transform: timelineInView ? 'scaleY(1)' : 'scaleY(0)' }}
+              />
+            </div>
+            <div className="space-y-8">
+              {safeSteps.map((step, index) => (
+                <Reveal key={step.id || index} delayMs={index * 80} className="relative pl-8">
+                  <div className="absolute left-0 top-1.5 h-3.5 w-3.5 flex-none rounded-full border-[3px] border-primary_red bg-white" />
+                  <span className="mb-1 block text-xs font-semibold tracking-wider text-primary_red">
+                    <StepLabel step={step} index={index} />
+                  </span>
+                  <h3 className="mb-1 text-base font-semibold text-foreground">{step.title}</h3>
+                  <p className="text-sm leading-relaxed text-gray-600">{step.description}</p>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </div>
 

@@ -1095,6 +1095,10 @@ export interface AboutUsBannerBlock {
 export interface TrustedBrandsBlock {
   title: string;
   /**
+   * Optional short line shown under the title.
+   */
+  subtitle?: string | null;
+  /**
    * Marquee auto-animates in a loop; static grid wraps into rows; horizontal scroll is a single row the user scrolls manually.
    */
   displayStyle?: ('scroll' | 'grid' | 'horizontalScroll') | null;
@@ -1109,7 +1113,10 @@ export interface TrustedBrandsBlock {
   brands?:
     | {
         name: string;
-        logo: string | Media;
+        /**
+         * Optional — if left blank, the brand name is shown as styled text instead.
+         */
+        logo?: (string | null) | Media;
         /**
          * Choose where this brand logo should link to
          */
@@ -2288,6 +2295,7 @@ export interface AboutUsBannerBlockSelect<T extends boolean = true> {
  */
 export interface TrustedBrandsBlockSelect<T extends boolean = true> {
   title?: T;
+  subtitle?: T;
   displayStyle?: T;
   animationSpeed?: T;
   pauseOnHover?: T;
@@ -3128,6 +3136,10 @@ export interface Footer {
       building: string;
       poBox: string;
     };
+    /**
+     * Paste the iframe "src" URL from Google Maps: open the location on Google Maps → Share → Embed a map → Copy HTML, then take just the src="..." value.
+     */
+    mapEmbedUrl?: string | null;
     workingHours: {
       days: string;
       time: string;
@@ -3235,6 +3247,7 @@ export interface FooterSelect<T extends boolean = true> {
               building?: T;
               poBox?: T;
             };
+        mapEmbedUrl?: T;
         workingHours?:
           | T
           | {

@@ -16,6 +16,14 @@ export const TrustedBrands: Block = {
       required: true,
     },
     {
+      name: 'subtitle',
+      type: 'text',
+      label: 'Section Subtitle',
+      admin: {
+        description: 'Optional short line shown under the title.',
+      },
+    },
+    {
       name: 'displayStyle',
       type: 'select',
       label: 'Display Style',
@@ -81,7 +89,9 @@ export const TrustedBrands: Block = {
           type: 'upload',
           relationTo: 'media',
           label: 'Brand Logo',
-          required: true,
+          admin: {
+            description: 'Optional — if left blank, the brand name is shown as styled text instead.',
+          },
         },
         {
           name: 'linkType',
