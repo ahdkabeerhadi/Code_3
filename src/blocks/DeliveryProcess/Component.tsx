@@ -5,6 +5,7 @@ import type { DeliveryProcessBlock as DeliveryProcessBlockProps } from 'src/payl
 import { cn } from '@/utilities/ui'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
+import { CtaButton } from '@/components/site/CtaButton'
 
 type Props = {
   className?: string
@@ -22,6 +23,8 @@ export const DeliveryProcessBlock: React.FC<Props> = ({
   title,
   description,
   steps = [],
+  ctaLabel,
+  ctaUrl,
 }) => {
   const safeSteps = steps || []
   if (safeSteps.length === 0) return null
@@ -78,6 +81,8 @@ export const DeliveryProcessBlock: React.FC<Props> = ({
             ))}
           </div>
         </div>
+
+        <CtaButton label={ctaLabel} url={ctaUrl} className="mt-10 inline-block" />
       </div>
     </section>
   )

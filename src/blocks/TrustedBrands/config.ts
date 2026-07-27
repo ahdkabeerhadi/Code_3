@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { ctaFields } from '@/fields/ctaFields'
 
 export const TrustedBrands: Block = {
   slug: 'trustedBrands',
@@ -147,5 +148,6 @@ export const TrustedBrands: Block = {
         },
       ],
     },
+    ...ctaFields('Partner With Us'),
   ],
 }

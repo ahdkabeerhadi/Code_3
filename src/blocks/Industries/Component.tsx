@@ -6,6 +6,7 @@ import { cn } from '@/utilities/ui'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
 import { ServiceIcon } from '@/components/site/icons'
+import { CtaButton } from '@/components/site/CtaButton'
 
 type Props = {
   className?: string
@@ -49,7 +50,14 @@ function IndustryCard({ item }: { item: IndustryItem }) {
   )
 }
 
-export const IndustriesBlock: React.FC<Props> = ({ className, badge, title, items = [] }) => {
+export const IndustriesBlock: React.FC<Props> = ({
+  className,
+  badge,
+  title,
+  items = [],
+  ctaLabel,
+  ctaUrl,
+}) => {
   const safeItems = items || []
   if (safeItems.length === 0) return null
 
@@ -69,6 +77,8 @@ export const IndustriesBlock: React.FC<Props> = ({ className, badge, title, item
             <IndustryCard key={item.id || i} item={item} />
           ))}
         </Reveal>
+
+        <CtaButton label={ctaLabel} url={ctaUrl} className="mt-8 inline-block" />
       </div>
     </section>
   )

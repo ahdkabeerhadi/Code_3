@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { ctaFields } from '@/fields/ctaFields'
 
 export const DeliveryProcess: Block = {
   slug: 'deliveryProcess',
@@ -87,5 +88,6 @@ export const DeliveryProcess: Block = {
         },
       ],
     },
+    ...ctaFields('Start Your Project'),
   ],
 }

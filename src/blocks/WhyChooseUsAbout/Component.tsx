@@ -5,6 +5,7 @@ import React from 'react'
 import { IconMedia } from '@/components/site/IconMedia'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
+import { CtaButton } from '@/components/site/CtaButton'
 
 type Props = {
   className?: string
@@ -16,6 +17,8 @@ export const WhyChooseUsAboutBlock: React.FC<Props> = ({
   title,
   subtitle,
   features = [],
+  ctaLabel,
+  ctaUrl,
 }) => {
   return (
     <section className={cn('bg-white py-7 md:py-9', className)}>
@@ -46,6 +49,8 @@ export const WhyChooseUsAboutBlock: React.FC<Props> = ({
             ))}
           </Reveal>
         )}
+
+        <CtaButton label={ctaLabel} url={ctaUrl} className="mt-6 inline-block" />
       </div>
     </section>
   )

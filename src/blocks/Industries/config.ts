@@ -1,5 +1,6 @@
 import type { Block } from 'payload'
 import { ICON_PRESET_OPTIONS } from '@/components/site/icons'
+import { ctaFields } from '@/fields/ctaFields'
 
 export const Industries: Block = {
   slug: 'industries',
@@ -50,5 +51,6 @@ export const Industries: Block = {
         },
       ],
     },
+    ...ctaFields('Find Your Industry Solution'),
   ],
 }

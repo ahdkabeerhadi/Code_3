@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { cn } from '@/utilities/ui'
 import { Reveal } from '@/components/site/Reveal'
 import { ServiceIcon } from '@/components/site/icons'
+import { CtaButton } from '@/components/site/CtaButton'
 
 export interface ServiceItemData {
   icon: string
@@ -23,6 +24,8 @@ export interface ServiceCatalogClientProps {
   titleHighlight?: string | null
   title?: string | null
   categories: ServiceCategoryData[]
+  ctaLabel?: string | null
+  ctaUrl?: string | null
 }
 
 export const ServiceCatalogClient: React.FC<ServiceCatalogClientProps> = ({
@@ -30,6 +33,8 @@ export const ServiceCatalogClient: React.FC<ServiceCatalogClientProps> = ({
   titleHighlight,
   title,
   categories,
+  ctaLabel,
+  ctaUrl,
 }) => {
   const safeCategories = categories || []
   const [activeIndex, setActiveIndex] = useState(0)
@@ -109,6 +114,8 @@ export const ServiceCatalogClient: React.FC<ServiceCatalogClientProps> = ({
             })}
           </Reveal>
         )}
+
+        <CtaButton label={ctaLabel} url={ctaUrl} className="mt-10 inline-block" />
       </div>
     </section>
   )

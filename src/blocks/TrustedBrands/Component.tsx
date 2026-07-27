@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import type { Media as MediaType, Page } from 'src/payload-types'
 import { Media } from '@/components/Media'
 import Link from 'next/link'
+import { CtaButton } from '@/components/site/CtaButton'
 
 type Props = {
   className?: string
@@ -18,6 +19,8 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
   displayStyle = 'scroll',
   animationSpeed = 'normal',
   pauseOnHover = true,
+  ctaLabel,
+  ctaUrl,
 }) => {
   const safeBrands = brands || []
   const isGrid = displayStyle === 'grid'
@@ -195,6 +198,10 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
             </div>
           </div>
         )}
+
+        <div className="text-center mt-8 md:mt-10">
+          <CtaButton label={ctaLabel} url={ctaUrl} className="inline-block" />
+        </div>
       </div>
     </section>
   )

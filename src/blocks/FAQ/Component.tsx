@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
+import { CtaButton } from '@/components/site/CtaButton'
 
 interface FAQItem {
   question: string
@@ -14,6 +15,8 @@ interface FAQBlockProps {
   subtitle?: string
   badge?: string
   faqs: FAQItem[]
+  ctaLabel?: string | null
+  ctaUrl?: string | null
   id?: string
   blockName?: string
   blockType: 'faq'
@@ -52,7 +55,14 @@ const FaqItem = ({
   )
 }
 
-export const FAQBlock: React.FC<FAQBlockProps> = ({ title, subtitle, badge = 'FAQS', faqs = [] }) => {
+export const FAQBlock: React.FC<FAQBlockProps> = ({
+  title,
+  subtitle,
+  badge = 'FAQS',
+  faqs = [],
+  ctaLabel,
+  ctaUrl,
+}) => {
   const [openIndex, setOpenIndex] = useState(0)
 
   const handleItemClick = (index: number) => {
@@ -67,6 +77,7 @@ export const FAQBlock: React.FC<FAQBlockProps> = ({ title, subtitle, badge = 'FA
             {badge && <Eyebrow>{badge}</Eyebrow>}
             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">{title}</h2>
             {subtitle && <p className="mt-4 text-gray-600 leading-relaxed">{subtitle}</p>}
+            <CtaButton label={ctaLabel} url={ctaUrl} className="mt-6 inline-block" />
           </Reveal>
 
           <Reveal delayMs={100} className="md:col-span-2">

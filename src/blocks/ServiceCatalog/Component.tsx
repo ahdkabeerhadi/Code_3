@@ -68,6 +68,8 @@ export const ServiceCatalogBlock: React.FC<ServiceCatalogBlockProps & { id?: str
         titleHighlight={props.titleHighlight}
         title={props.title}
         categories={categories}
+        ctaLabel={props.ctaLabel}
+        ctaUrl={props.ctaUrl}
       />
     </div>
   )

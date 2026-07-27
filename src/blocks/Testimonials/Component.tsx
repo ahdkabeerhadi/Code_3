@@ -5,6 +5,7 @@ import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
 import { getGoogleReviews } from './getGoogleReviews'
 import { TestimonialCard } from './TestimonialCard'
+import { CtaButton } from '@/components/site/CtaButton'
 
 type Props = {
   className?: string
@@ -37,6 +38,8 @@ export const TestimonialsBlock: React.FC<Props> = async ({
   title,
   useGoogleReviews = true,
   fallbackQuotes,
+  ctaLabel,
+  ctaUrl,
 }) => {
   const googleReviews = useGoogleReviews ? await getGoogleReviews() : null
 
@@ -83,6 +86,10 @@ export const TestimonialsBlock: React.FC<Props> = async ({
           </div>
         </div>
       </Reveal>
+
+      <div className="container mx-auto px-4 sm:px-6">
+        <CtaButton label={ctaLabel} url={ctaUrl} className="mt-8 inline-block" />
+      </div>
     </section>
   )
 }

@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { ctaFields } from '@/fields/ctaFields'
 
 export const WhyChooseUsAbout: Block = {
   slug: 'whyChooseUsAbout',
@@ -50,6 +51,7 @@ export const WhyChooseUsAbout: Block = {
         },
       ],
     },
+    ...ctaFields('Talk to Our Experts'),
   ],
   interfaceName: 'WhyChooseUsAboutBlock',
 }
