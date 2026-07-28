@@ -76,7 +76,7 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
     const logoContent = brand.logo && !logoFailed ? (
       <Media
         resource={brand.logo}
-        imgClassName="h-12 md:h-16 w-auto max-w-[140px] object-contain transition-all duration-300"
+        imgClassName="h-16 md:h-24 w-auto max-w-[180px] object-contain transition-all duration-300"
         onError={() => setLogoFailed(true)}
       />
     ) : (
@@ -157,7 +157,7 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
             {safeBrands.map((brand, index) => (
               <div
                 key={`${brand.name}-${index}`}
-                className="group flex min-h-[6rem] items-center justify-center rounded-2xl border border-border/70 bg-gray-50/60 p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary_red/40 hover:bg-white hover:shadow-md"
+                className="group flex min-h-[8rem] items-center justify-center rounded-2xl border border-border/70 bg-gray-50/60 p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary_red/40 hover:bg-white hover:shadow-md md:min-h-[9.5rem]"
               >
                 <BrandLogo brand={brand} index={index} wrap />
               </div>
@@ -168,7 +168,7 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
             {safeBrands.map((brand, index) => (
               <div
                 key={`${brand.name}-${index}`}
-                className="group flex flex-none snap-start items-center justify-center rounded-2xl border border-border/70 bg-gray-50/60 px-6 py-5 h-24 min-w-[140px] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary_red/40 hover:bg-white hover:shadow-md"
+                className="group flex flex-none snap-start items-center justify-center rounded-2xl border border-border/70 bg-gray-50/60 px-8 py-6 h-32 min-w-[180px] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary_red/40 hover:bg-white hover:shadow-md md:h-36"
               >
                 <BrandLogo brand={brand} index={index} wrap />
               </div>
