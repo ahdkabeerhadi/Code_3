@@ -35,7 +35,7 @@ export const contactForm: RequiredDataFromCollectionSlug<'forms'> = {
   createdAt: '2023-01-12T21:47:41.374Z',
   emails: [
     {
-      emailFrom: '"CODE3 Website" <info@code3.ae>',
+      emailFrom: '"CODE3 Website" <enquiries@code3.ae>',
       emailTo: 'ebin@code3.ae,deen@code3.ae',
       replyTo: '{{email}}',
       message: {
