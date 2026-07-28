@@ -1286,6 +1286,11 @@ export interface ServiceDetailBannerBlock {
   title?: string | null;
   description: string;
   showGradientLine?: boolean | null;
+  /**
+   * e.g. "Cyber Security" — shown as a small link back to the parent service category.
+   */
+  backLinkLabel?: string | null;
+  backLinkUrl?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'serviceDetailBanner';
@@ -2477,6 +2482,8 @@ export interface ServiceDetailBannerBlockSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   showGradientLine?: T;
+  backLinkLabel?: T;
+  backLinkUrl?: T;
   id?: T;
   blockName?: T;
 }
