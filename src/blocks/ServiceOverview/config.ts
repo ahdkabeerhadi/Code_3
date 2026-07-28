@@ -27,7 +27,9 @@ export const ServiceOverview: Block = {
       type: 'upload',
       relationTo: 'media',
       label: 'Image',
-      required: true,
+      admin: {
+        description: 'Optional — the overview renders full-width without one.',
+      },
     },
   ],
   interfaceName: 'ServiceOverviewBlock',

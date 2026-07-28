@@ -909,7 +909,10 @@ export interface WhyWorkWithUsBlock {
   subtitle: string;
   features?:
     | {
-        icon: string | Media;
+        /**
+         * Optional — the feature renders cleanly without one.
+         */
+        icon?: (string | null) | Media;
         title: string;
         description: string;
         colSpan: '4' | '5';
@@ -1303,7 +1306,10 @@ export interface ServiceOverviewBlock {
   badge: string;
   title: string;
   description: string;
-  image: string | Media;
+  /**
+   * Optional — the overview renders full-width without one.
+   */
+  image?: (string | null) | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'serviceOverview';

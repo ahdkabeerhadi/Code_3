@@ -1,51 +1,56 @@
 import React from 'react'
-import type { Media as MediaType, ServiceOverviewBlock } from '@/payload-types'
+import { cn } from '@/utilities/ui'
+import type { Media as MediaType } from '@/payload-types'
 import { Media } from '@/components/Media'
+import { Reveal } from '@/components/site/Reveal'
 
 interface ServiceOverviewProps {
   badge?: string
   title?: string
   description?: string
-  image?: string | MediaType
+  image?: string | MediaType | null
+  className?: string
 }
 
 const ServiceOverviewComponent: React.FC<ServiceOverviewProps> = ({
+  className,
   badge,
   title,
   description,
   image,
 }) => {
+  const hasImage = !!image
+
   return (
-    <div className="pt-10 pb-6 md:py-16 w-full px-4 sm:px-6 lg:px-8">
-      <div className="flex flex-col md:flex-row items-center rounded-2xl py-12 overflow-hidden max-w-7xl mx-auto gap-8">
-        {/* Content Section */}
-        <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-start justify-center gap-6">
-          <div className="inline-block w-max bg-primary_red border border-secondary_red text-white text-xs font-semibold px-5 py-2 rounded-full uppercase tracking-wider lg:mb-8 xl:mb-12">
-            {badge}
-          </div>
-
-          {/* Heading */}
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">{title}</h2>
-
-          {/* Description */}
-          <p className="max-w-lg text-md lg:text-xl lg:max-w-3xl text-gray-600">{description}</p>
-        </div>
-
-        {/* Image Section */}
-        <div className="flex-1 rounded-[2rem]">
-            {image && (
-              <Media
-                resource={image}
-                imgClassName="w-full h-full rounded-[2rem] object-cover"
-              />
+    <section className={cn('bg-white py-8 md:py-10', className)}>
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className={cn('flex flex-col items-start gap-6', hasImage && 'md:flex-row md:gap-8')}>
+          <Reveal className={cn('flex flex-1 flex-col items-start gap-4 text-left', !hasImage && 'lg:max-w-2xl')}>
+            {badge && (
+              <span className="inline-block w-max rounded-full border border-secondary_red bg-primary_red px-5 py-2 text-xs font-semibold uppercase tracking-wider text-white">
+                {badge}
+              </span>
             )}
+            <h2 className="text-3xl font-bold leading-tight text-gray-900 md:text-4xl">{title}</h2>
+            {description && (
+              <p className={cn('max-w-3xl text-base text-gray-600 md:text-lg', hasImage && 'max-w-lg')}>
+                {description}
+              </p>
+            )}
+          </Reveal>
+
+          {hasImage && (
+            <Reveal delayMs={100} className="flex-1">
+              <Media resource={image!} imgClassName="w-full h-full rounded-[2rem] object-cover" />
+            </Reveal>
+          )}
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 
-const ServiceOverviewBlock: React.FC<ServiceOverviewBlock> = (props) => {
+const ServiceOverviewBlock: React.FC<ServiceOverviewProps> = (props) => {
   return <ServiceOverviewComponent {...props} />
 }
 
