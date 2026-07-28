@@ -4,14 +4,13 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import React from 'react'
 import { ServiceSolutionsBlock as ServiceSolutionsClient } from './Client'
+import { getIconForServiceTitle } from '@/components/site/serviceIconMap'
 
 interface ServiceCard {
   title: string
   description: string
-  showButton: boolean
-  buttonText: string
+  icon: string
   buttonLink: string
-  gridSpan: string
   category: 'infrastructure' | 'digital'
 }
 
@@ -33,16 +32,14 @@ function mapPageToServiceCard(page: Page): ServiceCard {
     }
   }
 
-  const heroTitle = page?.hero?.HeroText
-  const heroSub = page?.hero?.subText || ''
+  const pageWithIcon = page as Page & { icon?: string | null }
 
   return {
     title: page.title || 'Service',
-    description: heroTitle || heroSub || 'Professional service tailored to your business needs.',
-    showButton: false,
-    buttonText: 'Explore Service',
+    description:
+      page.hero?.subText || page.meta?.description || 'Professional service tailored to your business needs.',
+    icon: pageWithIcon.icon || getIconForServiceTitle(page.title),
     buttonLink: slug,
-    gridSpan: '2',
     category: page.serviceCategory === 'infrastructure' ? 'infrastructure' : 'digital',
   }
 }

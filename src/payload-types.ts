@@ -1217,7 +1217,15 @@ export interface ServiceSolutionsBlock {
   badge: string;
   title: string;
   description: string;
-  headerAlignment: 'left' | 'center' | 'right';
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'serviceSolutions';
@@ -2398,7 +2406,9 @@ export interface ServiceSolutionsBlockSelect<T extends boolean = true> {
   badge?: T;
   title?: T;
   description?: T;
-  headerAlignment?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
   id?: T;
   blockName?: T;
 }
