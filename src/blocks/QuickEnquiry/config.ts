@@ -19,7 +19,7 @@ export const QuickEnquiry: Block = {
       name: 'description',
       type: 'text',
       label: 'Description',
-      defaultValue: 'Get a callback from our team within one business day.',
+      defaultValue: 'Get a callback from our team within 1 minute.',
     },
   ],
 }

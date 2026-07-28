@@ -9,6 +9,7 @@ import { cn } from '@/utilities/ui'
 type FormValues = {
   fullname: string
   email: string
+  phone: string
   message: string
 }
 
@@ -26,7 +27,7 @@ export function MiniContactForm({
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormValues>({ defaultValues: { fullname: '', email: '', message: '' } })
+  } = useForm<FormValues>({ defaultValues: { fullname: '', email: '', phone: '', message: '' } })
 
   const [isLoading, setIsLoading] = useState(false)
   const [hasSubmitted, setHasSubmitted] = useState(false)
@@ -58,6 +59,7 @@ export function MiniContactForm({
           submissionData: [
             { field: 'full-name', value: data.fullname },
             { field: 'email', value: data.email },
+            { field: 'phone', value: data.phone },
             { field: 'message', value: data.message },
           ],
         }),
@@ -124,6 +126,20 @@ export function MiniContactForm({
             className={fieldClassName}
           />
           {errors.email && <p className="mt-1 text-xs text-primary_red">A valid email is required.</p>}
+        </div>
+
+        <div>
+          <input
+            type="tel"
+            placeholder="Phone number"
+            {...register('phone', {
+              required: true,
+              pattern: /^[0-9+\s]+$/,
+              minLength: 8,
+            })}
+            className={fieldClassName}
+          />
+          {errors.phone && <p className="mt-1 text-xs text-primary_red">A valid phone number is required.</p>}
         </div>
 
         <div>
