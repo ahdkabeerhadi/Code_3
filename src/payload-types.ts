@@ -305,6 +305,8 @@ export interface Page {
     | CareersBlock
     | AboutUsBannerBlock
     | TrustedBrandsBlock
+    | PartnersDirectoryBlock
+    | QuickEnquiryBlock
     | CurrentOpeningsBlock
     | ServiceSolutionsBlock
     | ServicesHeroBlock
@@ -907,7 +909,10 @@ export interface WhyWorkWithUsBlock {
   subtitle: string;
   features?:
     | {
-        icon: string | Media;
+        /**
+         * Optional — the feature renders cleanly without one.
+         */
+        icon?: (string | null) | Media;
         title: string;
         description: string;
         colSpan: '4' | '5';
@@ -1147,6 +1152,38 @@ export interface TrustedBrandsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PartnersDirectoryBlock".
+ */
+export interface PartnersDirectoryBlock {
+  title: string;
+  subtitle?: string | null;
+  partners?:
+    | {
+        name: string;
+        /**
+         * Optional — if left blank, the partner name is shown as styled text instead.
+         */
+        logo?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'partnersDirectory';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QuickEnquiryBlock".
+ */
+export interface QuickEnquiryBlock {
+  title: string;
+  description?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'quickEnquiry';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CurrentOpeningsBlock".
  */
 export interface CurrentOpeningsBlock {
@@ -1195,7 +1232,15 @@ export interface ServiceSolutionsBlock {
   badge: string;
   title: string;
   description: string;
-  headerAlignment: 'left' | 'center' | 'right';
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'serviceSolutions';
@@ -1244,6 +1289,11 @@ export interface ServiceDetailBannerBlock {
   title?: string | null;
   description: string;
   showGradientLine?: boolean | null;
+  /**
+   * e.g. "Cyber Security" — shown as a small link back to the parent service category.
+   */
+  backLinkLabel?: string | null;
+  backLinkUrl?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'serviceDetailBanner';
@@ -1256,7 +1306,10 @@ export interface ServiceOverviewBlock {
   badge: string;
   title: string;
   description: string;
-  image: string | Media;
+  /**
+   * Optional — the overview renders full-width without one.
+   */
+  image?: (string | null) | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'serviceOverview';
@@ -1957,6 +2010,8 @@ export interface PagesSelect<T extends boolean = true> {
         careers?: T | CareersBlockSelect<T>;
         aboutUsBanner?: T | AboutUsBannerBlockSelect<T>;
         trustedBrands?: T | TrustedBrandsBlockSelect<T>;
+        partnersDirectory?: T | PartnersDirectoryBlockSelect<T>;
+        quickEnquiry?: T | QuickEnquiryBlockSelect<T>;
         currentOpenings?: T | CurrentOpeningsBlockSelect<T>;
         serviceSolutions?: T | ServiceSolutionsBlockSelect<T>;
         servicesHero?: T | ServicesHeroBlockSelect<T>;
@@ -2317,6 +2372,33 @@ export interface TrustedBrandsBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PartnersDirectoryBlock_select".
+ */
+export interface PartnersDirectoryBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  partners?:
+    | T
+    | {
+        name?: T;
+        logo?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QuickEnquiryBlock_select".
+ */
+export interface QuickEnquiryBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CurrentOpeningsBlock_select".
  */
 export interface CurrentOpeningsBlockSelect<T extends boolean = true> {
@@ -2358,7 +2440,9 @@ export interface ServiceSolutionsBlockSelect<T extends boolean = true> {
   badge?: T;
   title?: T;
   description?: T;
-  headerAlignment?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
   id?: T;
   blockName?: T;
 }
@@ -2404,6 +2488,8 @@ export interface ServiceDetailBannerBlockSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   showGradientLine?: T;
+  backLinkLabel?: T;
+  backLinkUrl?: T;
   id?: T;
   blockName?: T;
 }

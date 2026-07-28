@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { ctaFields } from '@/fields/ctaFields'
 
 export const ServiceSolutions: Block = {
   slug: 'serviceSolutions',
@@ -46,18 +47,7 @@ export const ServiceSolutions: Block = {
       label: 'Description',
       required: true,
     },
-    {
-      name: 'headerAlignment',
-      type: 'select',
-      label: 'Header Alignment',
-      options: [
-        { label: 'Left (Start)', value: 'left' },
-        { label: 'Center', value: 'center' },
-        { label: 'Right (End)', value: 'right' },
-      ],
-      defaultValue: 'left',
-      required: true,
-    },
+    ...ctaFields('Get a Free Consultation', 'Not sure where to start? Our team can help you find the right fit.'),
   ],
   interfaceName: 'ServiceSolutionsBlock',
 }

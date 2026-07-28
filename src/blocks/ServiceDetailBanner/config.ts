@@ -31,6 +31,19 @@ export const ServiceDetailBanner: Block = {
       label: 'Show Gradient Line',
       defaultValue: true,
     },
+    {
+      name: 'backLinkLabel',
+      type: 'text',
+      label: 'Back Link Label',
+      admin: {
+        description: 'e.g. "Cyber Security" — shown as a small link back to the parent service category.',
+      },
+    },
+    {
+      name: 'backLinkUrl',
+      type: 'text',
+      label: 'Back Link URL',
+    },
   ],
   interfaceName: 'ServiceDetailBannerBlock',
 }

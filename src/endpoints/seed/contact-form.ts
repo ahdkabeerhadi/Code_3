@@ -35,8 +35,9 @@ export const contactForm: RequiredDataFromCollectionSlug<'forms'> = {
   createdAt: '2023-01-12T21:47:41.374Z',
   emails: [
     {
-      emailFrom: '"Payload" \u003Cdemo@payloadcms.com\u003E',
-      emailTo: '{{email}}',
+      emailFrom: '"CODE3 Website" <enquiries@code3.ae>',
+      emailTo: 'ebin@code3.ae,deen@code3.ae',
+      replyTo: '{{email}}',
       message: {
         root: {
           type: 'root',
@@ -50,7 +51,7 @@ export const contactForm: RequiredDataFromCollectionSlug<'forms'> = {
                   format: 0,
                   mode: 'normal',
                   style: '',
-                  text: 'Your contact form submission was successfully received.',
+                  text: 'A new enquiry was just submitted on code3.ae. Log in to the CMS (Enquiries) to see the full details, or reply directly to this email to reach the customer.',
                   version: 1,
                 },
               ],
@@ -67,7 +68,7 @@ export const contactForm: RequiredDataFromCollectionSlug<'forms'> = {
           version: 1,
         },
       },
-      subject: "You've received a new message.",
+      subject: 'New enquiry from the CODE3 website',
     },
   ],
   fields: [
