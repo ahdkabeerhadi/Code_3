@@ -62,12 +62,15 @@ const NavDropdown = ({
   onClose: () => void
   techPartners?: TechPartnerData[]
 }) => {
+  const [hoveredLabel, setHoveredLabel] = useState<string | null>(null)
+
   const subItems = item.subItems || []
   if (subItems.length === 0) return null
 
   const hasTechPartnersPanel =
     techPartners.length > 0 &&
     subItems.some((s) => s.label.trim().toLowerCase() === 'technology partners')
+  const showPartnersGrid = hasTechPartnersPanel && hoveredLabel?.trim().toLowerCase() === 'technology partners'
 
   return (
     <div className="relative">
@@ -77,51 +80,68 @@ const NavDropdown = ({
       </button>
       {isOpen &&
         (hasTechPartnersPanel ? (
-          <div className="absolute left-1/2 top-full z-20 mt-3 flex w-[46rem] -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-white shadow-lg">
-            <div className="w-56 flex-none bg-foreground py-3">
+          <div className="absolute left-1/2 top-full z-20 mt-3 flex -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-white shadow-lg">
+            <div className="w-56 flex-none bg-foreground py-3" onMouseLeave={() => setHoveredLabel(null)}>
               {subItems.map((sub, i) => (
                 <Link
                   key={i}
                   href={sub.link}
                   onClick={onClose}
+                  onMouseEnter={() => setHoveredLabel(sub.label)}
                   {...(sub.openInNewTab && { target: '_blank', rel: 'noopener noreferrer' })}
-                  className="group flex items-center justify-between px-5 py-3 text-sm font-medium text-white/90 transition-colors hover:bg-primary_red hover:text-white"
+                  className={`group flex items-center justify-between px-5 py-3 text-sm font-medium transition-colors ${
+                    sub.label.trim().toLowerCase() === 'technology partners' && hoveredLabel === sub.label
+                      ? 'bg-primary_red text-white'
+                      : 'text-white/90 hover:bg-primary_red hover:text-white'
+                  }`}
                 >
                   {sub.label}
-                  <span className="opacity-0 transition-opacity group-hover:opacity-100">→</span>
+                  <span
+                    className={`transition-opacity ${
+                      sub.label.trim().toLowerCase() === 'technology partners'
+                        ? hoveredLabel === sub.label
+                          ? 'opacity-100'
+                          : 'opacity-0 group-hover:opacity-100'
+                        : 'opacity-0'
+                    }`}
+                  >
+                    →
+                  </span>
                 </Link>
               ))}
             </div>
-            <div className="flex-1 p-5">
-              <div className="grid grid-cols-6 gap-2">
-                {techPartners.map((p, i) => (
-                  <div
-                    key={i}
-                    className="flex h-14 items-center justify-center rounded-md border border-border bg-white p-1.5 transition-all duration-200 hover:scale-105 hover:border-primary_red/40 hover:shadow-sm"
-                  >
-                    {p.logoUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={p.logoUrl}
-                        alt={p.name}
-                        className="h-8 w-auto max-w-full object-contain grayscale transition-all duration-200 hover:grayscale-0"
-                      />
-                    ) : (
-                      <span className="text-center text-[10px] font-bold leading-tight text-black">
-                        {p.name}
-                      </span>
-                    )}
-                  </div>
-                ))}
+            {showPartnersGrid && (
+              <div className="w-[34rem] flex-none p-5">
+                <div className="grid grid-cols-6 gap-2">
+                  {techPartners.map((p, i) => (
+                    <div
+                      key={i}
+                      className="flex h-14 items-center justify-center rounded-md border border-border bg-white p-1.5 transition-all duration-200 hover:scale-105 hover:border-primary_red/40 hover:shadow-sm"
+                    >
+                      {p.logoUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={p.logoUrl}
+                          alt={p.name}
+                          className="h-8 w-auto max-w-full object-contain grayscale transition-all duration-200 hover:grayscale-0"
+                        />
+                      ) : (
+                        <span className="text-center text-[10px] font-bold leading-tight text-black">
+                          {p.name}
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <Link
+                  href="/technology-partners"
+                  onClick={onClose}
+                  className="mt-4 inline-block text-xs font-semibold text-primary_red hover:underline"
+                >
+                  View all technology partners →
+                </Link>
               </div>
-              <Link
-                href="/technology-partners"
-                onClick={onClose}
-                className="mt-4 inline-block text-xs font-semibold text-primary_red hover:underline"
-              >
-                View all technology partners →
-              </Link>
-            </div>
+            )}
           </div>
         ) : (
           <div className="absolute left-1/2 top-full mt-3 w-56 -translate-x-1/2 rounded-xl border border-border bg-white py-2 shadow-lg">
