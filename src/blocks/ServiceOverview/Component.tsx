@@ -19,7 +19,7 @@ const ServiceOverviewComponent: React.FC<ServiceOverviewProps> = ({
   description,
   image,
 }) => {
-  const hasImage = !!image
+  const hasImage = !!image && typeof image === 'object'
 
   return (
     <section className={cn('bg-white pt-2 pb-8 md:pt-3 md:pb-10', className)}>

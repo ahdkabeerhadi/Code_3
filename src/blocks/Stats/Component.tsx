@@ -65,7 +65,7 @@ export const StatsBlock: React.FC<Props> = ({ className, stats = [] }) => {
           {safeStats.map((stat, i) => (
             <div key={stat.id || i} className="flex flex-col items-center gap-3 px-6 py-10 text-center">
               <span className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-white/40 overflow-hidden">
-                {stat.iconMedia ? (
+                {stat.iconMedia && typeof stat.iconMedia === 'object' ? (
                   <IconMedia resource={stat.iconMedia} className="h-6 w-6 object-contain" />
                 ) : (
                   <ServiceIcon preset={stat.icon || 'check'} className="h-5 w-5 text-white" />

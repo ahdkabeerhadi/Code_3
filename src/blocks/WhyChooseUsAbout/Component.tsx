@@ -38,7 +38,7 @@ export const WhyChooseUsAboutBlock: React.FC<Props> = ({
             {features.map((feature, index) => (
               <div key={feature.id || index} className="border-r border-b border-border p-5">
                 <div className="flex items-center gap-3 mb-3">
-                  {feature.icon && (
+                  {feature.icon && typeof feature.icon === 'object' && (
                     <span className="h-11 w-11 flex-none rounded-full bg-[#FDEBEC] flex items-center justify-center overflow-hidden">
                       <IconMedia resource={feature.icon} className="w-6 h-6 object-contain" />
                     </span>

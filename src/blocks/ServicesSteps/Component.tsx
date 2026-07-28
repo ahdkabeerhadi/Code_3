@@ -78,7 +78,7 @@ const ServicesStepsComponent: React.FC<ServicesStepsProps> = ({
                             <div className={`bg-[#F3F3F3] border border-[#E0DDDD] max-w-[320px] xl:max-w-[360px] ${isEven ? 'ml-auto' : 'mr-auto'} rounded-[2rem] p-8`}>
                                 <div className="flex flex-col justify-between h-full gap-16">
                                     <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0">
-                                        {step.icon && (
+                                        {step.icon && typeof step.icon === 'object' && (
                                             <Media
                                               resource={step.icon}
                                               imgClassName="w-[62px] h-[62px] object-contain"
@@ -123,7 +123,7 @@ const ServicesStepsComponent: React.FC<ServicesStepsProps> = ({
                   <div className="bg-[#F3F3F3] border border-[#E0DDDD] w-full max-w-[16rem] rounded-[1.5rem] p-4">
                     <div className="flex flex-col justify-between h-full gap-14">
                       <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0">
-                        {step.icon && (
+                        {step.icon && typeof step.icon === 'object' && (
                             <Media
                               resource={step.icon}
                               imgClassName="w-[62px] h-[62px] object-contain"

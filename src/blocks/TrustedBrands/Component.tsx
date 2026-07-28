@@ -73,7 +73,8 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
 
   const BrandLogo = ({ brand, wrap = false }: { brand: Brand; index: number; wrap?: boolean }) => {
     const [logoFailed, setLogoFailed] = useState(false)
-    const logoContent = brand.logo && !logoFailed ? (
+    const hasResolvedLogo = brand.logo && typeof brand.logo === 'object'
+    const logoContent = hasResolvedLogo && !logoFailed ? (
       <Media
         resource={brand.logo}
         imgClassName="h-16 md:h-24 w-auto max-w-[180px] object-contain transition-all duration-300"
