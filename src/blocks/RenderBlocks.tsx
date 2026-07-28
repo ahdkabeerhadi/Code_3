@@ -18,6 +18,7 @@ import { WhyChooseUsBlock } from './WhyChooseUs/Component'
 import { CurrentOpeningsBlock } from './CurrentOpenings/Component'
 import { CareersBlock } from './CareersBanner/Component'
 import { TrustedBrandsBlock } from './TrustedBrands/Component'
+import { PartnersDirectoryBlock } from './PartnersDirectory/Component'
 import { ServicesHeroBlock } from './ServicesHero/Component'
 import { ServicesStepsBlock } from './ServicesSteps/Component'
 import { ServiceDetailBannerBlock } from './ServiceDetailBanner/Component'
@@ -54,6 +55,7 @@ const blockComponents = {
   careers: CareersBlock,
   aboutUsBanner: AboutUsBannerBlock,
   trustedBrands: TrustedBrandsBlock,
+  partnersDirectory: PartnersDirectoryBlock,
   currentOpenings: CurrentOpeningsBlock,
   serviceSolutions: ServiceSolutionsBlock,
   servicesHero: ServicesHeroBlock,

@@ -31,6 +31,7 @@ import { AboutUsBanner } from '@/blocks/AboutUsBanner/config'
 import { CurrentOpenings } from '@/blocks/CurrentOpenings/config'
 import { Careers } from '@/blocks/CareersBanner/config'
 import { TrustedBrands } from '@/blocks/TrustedBrands/config'
+import { PartnersDirectory } from '@/blocks/PartnersDirectory/config'
 import { ServiceSolutions } from '@/blocks/ServiceSolutions/config'
 import { ServicesHero } from '@/blocks/ServicesHero/config'
 import { ServicesSteps } from '@/blocks/ServicesSteps/config'
@@ -162,6 +163,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 Careers,
                 AboutUsBanner,
                 TrustedBrands,
+                PartnersDirectory,
                 CurrentOpenings,
                 ServiceSolutions,
                 ServicesHero,

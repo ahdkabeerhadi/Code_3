@@ -305,6 +305,7 @@ export interface Page {
     | CareersBlock
     | AboutUsBannerBlock
     | TrustedBrandsBlock
+    | PartnersDirectoryBlock
     | CurrentOpeningsBlock
     | ServiceSolutionsBlock
     | ServicesHeroBlock
@@ -1147,6 +1148,27 @@ export interface TrustedBrandsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PartnersDirectoryBlock".
+ */
+export interface PartnersDirectoryBlock {
+  title: string;
+  subtitle?: string | null;
+  partners?:
+    | {
+        name: string;
+        /**
+         * Optional — if left blank, the partner name is shown as styled text instead.
+         */
+        logo?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'partnersDirectory';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CurrentOpeningsBlock".
  */
 export interface CurrentOpeningsBlock {
@@ -1957,6 +1979,7 @@ export interface PagesSelect<T extends boolean = true> {
         careers?: T | CareersBlockSelect<T>;
         aboutUsBanner?: T | AboutUsBannerBlockSelect<T>;
         trustedBrands?: T | TrustedBrandsBlockSelect<T>;
+        partnersDirectory?: T | PartnersDirectoryBlockSelect<T>;
         currentOpenings?: T | CurrentOpeningsBlockSelect<T>;
         serviceSolutions?: T | ServiceSolutionsBlockSelect<T>;
         servicesHero?: T | ServicesHeroBlockSelect<T>;
@@ -2312,6 +2335,23 @@ export interface TrustedBrandsBlockSelect<T extends boolean = true> {
   ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PartnersDirectoryBlock_select".
+ */
+export interface PartnersDirectoryBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  partners?:
+    | T
+    | {
+        name?: T;
+        logo?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
