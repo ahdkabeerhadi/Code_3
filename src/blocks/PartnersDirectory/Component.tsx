@@ -64,7 +64,7 @@ function PartnerCell({
 
   return (
     <div className="group flex h-28 items-center justify-center border-b border-r border-border bg-white p-4 transition-all duration-300 hover:z-10 hover:scale-110 hover:shadow-lg md:h-32">
-      {logo && !failed ? (
+      {logo && typeof logo === 'object' && !failed ? (
         <Media
           resource={logo}
           imgClassName="h-14 w-auto max-w-[140px] object-contain grayscale transition-all duration-300 group-hover:grayscale-0 md:h-16"

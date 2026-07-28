@@ -16,7 +16,7 @@ function Card({ card }: { card: CardData }) {
   return (
     <div className="border-r border-b border-border p-6">
       <div className="flex items-center gap-3 mb-3">
-        {card.icon ? (
+        {card.icon && typeof card.icon === 'object' ? (
           <span className="h-11 w-11 flex-none rounded-full bg-[#FDEBEC] flex items-center justify-center overflow-hidden">
             <IconMedia resource={card.icon} className="w-6 h-6 object-contain" />
           </span>
