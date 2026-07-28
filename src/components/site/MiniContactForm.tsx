@@ -93,11 +93,10 @@ export function MiniContactForm({ className }: { className?: string }) {
   }
 
   return (
-    <div className={cn('rounded-2xl border border-border bg-white p-6 shadow-sm', className)}>
+    <div className={cn('rounded-2xl border border-border bg-white p-5 shadow-sm', className)}>
       <h3 className="text-base font-semibold text-foreground">Quick Enquiry</h3>
-      <p className="mt-1 text-sm text-gray-500">Get a callback from our team within one business day.</p>
 
-      <form className="mt-4 space-y-3" onSubmit={handleSubmit(onSubmit)}>
+      <form className="mt-3 space-y-2.5" onSubmit={handleSubmit(onSubmit)}>
         <div>
           <input
             type="text"
@@ -121,7 +120,7 @@ export function MiniContactForm({ className }: { className?: string }) {
         <div>
           <textarea
             placeholder="How can we help?"
-            rows={3}
+            rows={2}
             {...register('message', { required: true })}
             className={cn(fieldClassName, 'resize-none')}
           />
