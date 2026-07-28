@@ -14,10 +14,14 @@ export const QuickEnquiryBlock: React.FC<QuickEnquiryBlockProps> = ({
   className,
 }) => {
   return (
-    <section className={cn('-mt-7 bg-white pb-8 md:-mt-9 md:pb-10', className)}>
-      <div className="container mx-auto px-4 sm:px-6">
-        <MiniContactForm title={title} description={description} className="mx-auto max-w-md" />
+    <div className={cn('bg-white py-8 lg:absolute lg:inset-x-0 lg:top-0 lg:bg-transparent lg:py-0 lg:pointer-events-none', className)}>
+      <div className="container mx-auto px-4 sm:px-6 lg:flex lg:justify-end">
+        <MiniContactForm
+          title={title}
+          description={description}
+          className="mx-auto max-w-md lg:pointer-events-auto lg:mx-0 lg:mt-8 lg:w-[360px]"
+        />
       </div>
-    </section>
+    </div>
   )
 }
