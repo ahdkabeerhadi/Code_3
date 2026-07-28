@@ -24,7 +24,7 @@ export const ServiceDetailBannerBlock: React.FC<Props> = ({
   return (
     <section className={cn('bg-white py-8 md:py-10', className)}>
       <div className="container mx-auto px-4 sm:px-6">
-        <Reveal className="max-w-2xl">
+        <Reveal className="mx-auto max-w-2xl text-center">
           {(serviceBadge || serviceName) && <Eyebrow>{serviceBadge || serviceName}</Eyebrow>}
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight text-foreground">
             {title || serviceName}
