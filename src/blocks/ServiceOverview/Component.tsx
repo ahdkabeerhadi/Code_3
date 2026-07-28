@@ -33,7 +33,7 @@ const ServiceOverviewComponent: React.FC<ServiceOverviewProps> = ({
             )}
             <h2 className="text-3xl font-bold leading-tight text-gray-900 md:text-4xl">{title}</h2>
             {description && (
-              <p className={cn('max-w-3xl text-base text-gray-600 md:text-lg', hasImage && 'max-w-lg', !hasImage && 'lg:max-w-none')}>
+              <p className={cn('max-w-3xl text-base text-gray-600 md:text-lg', hasImage && 'max-w-lg', !hasImage && 'max-w-none')}>
                 {description}
               </p>
             )}
