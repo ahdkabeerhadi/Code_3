@@ -12,7 +12,15 @@ type FormValues = {
   message: string
 }
 
-export function MiniContactForm({ className }: { className?: string }) {
+export function MiniContactForm({
+  className,
+  title = 'Quick Enquiry',
+  description,
+}: {
+  className?: string
+  title?: string
+  description?: string | null
+}) {
   const {
     register,
     handleSubmit,
@@ -94,7 +102,8 @@ export function MiniContactForm({ className }: { className?: string }) {
 
   return (
     <div className={cn('rounded-2xl border border-border bg-white p-5 shadow-sm', className)}>
-      <h3 className="text-base font-semibold text-foreground">Quick Enquiry</h3>
+      <h3 className="text-base font-semibold text-foreground">{title}</h3>
+      {description && <p className="mt-1 text-sm text-gray-500">{description}</p>}
 
       <form className="mt-3 space-y-2.5" onSubmit={handleSubmit(onSubmit)}>
         <div>

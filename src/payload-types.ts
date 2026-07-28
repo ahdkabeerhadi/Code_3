@@ -306,6 +306,7 @@ export interface Page {
     | AboutUsBannerBlock
     | TrustedBrandsBlock
     | PartnersDirectoryBlock
+    | QuickEnquiryBlock
     | CurrentOpeningsBlock
     | ServiceSolutionsBlock
     | ServicesHeroBlock
@@ -1169,6 +1170,17 @@ export interface PartnersDirectoryBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QuickEnquiryBlock".
+ */
+export interface QuickEnquiryBlock {
+  title: string;
+  description?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'quickEnquiry';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CurrentOpeningsBlock".
  */
 export interface CurrentOpeningsBlock {
@@ -1988,6 +2000,7 @@ export interface PagesSelect<T extends boolean = true> {
         aboutUsBanner?: T | AboutUsBannerBlockSelect<T>;
         trustedBrands?: T | TrustedBrandsBlockSelect<T>;
         partnersDirectory?: T | PartnersDirectoryBlockSelect<T>;
+        quickEnquiry?: T | QuickEnquiryBlockSelect<T>;
         currentOpenings?: T | CurrentOpeningsBlockSelect<T>;
         serviceSolutions?: T | ServiceSolutionsBlockSelect<T>;
         servicesHero?: T | ServicesHeroBlockSelect<T>;
@@ -2360,6 +2373,16 @@ export interface PartnersDirectoryBlockSelect<T extends boolean = true> {
         logo?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QuickEnquiryBlock_select".
+ */
+export interface QuickEnquiryBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
   id?: T;
   blockName?: T;
 }

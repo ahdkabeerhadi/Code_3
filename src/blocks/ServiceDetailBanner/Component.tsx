@@ -2,7 +2,6 @@ import React from 'react'
 import { cn } from '@/utilities/ui'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
-import { MiniContactForm } from '@/components/site/MiniContactForm'
 
 interface ServiceDetailBannerBlockProps {
   serviceName?: string
@@ -23,21 +22,15 @@ export const ServiceDetailBannerBlock: React.FC<Props> = ({
   description,
 }) => {
   return (
-    <section className={cn('bg-white py-6 md:py-8', className)}>
+    <section className={cn('bg-white py-8 md:py-10', className)}>
       <div className="container mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1fr_360px]">
-          <Reveal>
-            {(serviceBadge || serviceName) && <Eyebrow>{serviceBadge || serviceName}</Eyebrow>}
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight text-foreground">
-              {title || serviceName}
-            </h1>
-            {description && <p className="mt-4 text-gray-600 leading-relaxed">{description}</p>}
-          </Reveal>
-
-          <Reveal delayMs={100}>
-            <MiniContactForm />
-          </Reveal>
-        </div>
+        <Reveal className="max-w-2xl">
+          {(serviceBadge || serviceName) && <Eyebrow>{serviceBadge || serviceName}</Eyebrow>}
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight text-foreground">
+            {title || serviceName}
+          </h1>
+          {description && <p className="mt-4 text-gray-600 leading-relaxed">{description}</p>}
+        </Reveal>
       </div>
     </section>
   )
