@@ -57,9 +57,10 @@ export function MiniContactForm({
         body: JSON.stringify({
           form: formId,
           submissionData: [
-            { field: 'full-name', value: data.fullname },
+            { field: 'fullname', value: data.fullname },
             { field: 'email', value: data.email },
             { field: 'phone', value: data.phone },
+            { field: 'subject', value: title || 'Website Enquiry' },
             { field: 'message', value: data.message },
           ],
         }),
