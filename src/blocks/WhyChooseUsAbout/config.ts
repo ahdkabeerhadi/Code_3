@@ -35,7 +35,9 @@ export const WhyChooseUsAbout: Block = {
           type: 'upload',
           relationTo: 'media',
           label: 'Icon Image',
-          required: true,
+          admin: {
+            description: 'Optional — the feature renders cleanly without one.',
+          },
         },
         {
           name: 'title',

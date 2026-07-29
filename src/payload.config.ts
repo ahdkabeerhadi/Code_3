@@ -78,7 +78,10 @@ export default buildConfig({
       enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
       clientUploads: true,
       collections: {
-        [Media.slug]: true,
+        // Serve files directly from Vercel Blob's CDN instead of proxying through
+        // Payload's own /api/media/file route - the proxy doesn't support HTTP
+        // Range requests, which breaks <video> playback/seeking on larger files.
+        [Media.slug]: { disablePayloadAccessControl: true },
       },
       token: process.env.BLOB_READ_WRITE_TOKEN,
     }),

@@ -60,7 +60,7 @@ export const Media: CollectionConfig = {
     // image to blob storage, which fails without blob write access. Use the
     // `externalUrl` field instead to reference an image without uploading.
     pasteURL: false,
-    mimeTypes: ['image/*'],
+    mimeTypes: ['image/*', 'video/*'],
     imageSizes: [
       {
         name: 'thumbnail',
