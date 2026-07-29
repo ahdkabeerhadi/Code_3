@@ -37,6 +37,7 @@ function HeroCarousel({ images }: { images: CarouselImage[] }) {
               fill
               resource={img}
               imgClassName="object-cover"
+              videoClassName="absolute inset-0 h-full w-full object-cover"
               priority={i === 0}
               onError={() => setFailed((f) => ({ ...f, [i]: true }))}
             />

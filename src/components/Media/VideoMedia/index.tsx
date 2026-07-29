@@ -16,11 +16,16 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
   useEffect(() => {
     const { current: video } = videoRef
     if (video) {
+      // React's `muted` JSX prop doesn't reliably sync to the DOM property in time
+      // for autoplay - browsers check the property, not the attribute, and block
+      // (then abort loading) an autoplay that looks unmuted at play() time.
+      video.muted = true
       const handleLoadedData = () => setIsLoading(false)
       const handleError = () => setIsLoading(false)
-      
+
       video.addEventListener('loadeddata', handleLoadedData)
       video.addEventListener('error', handleError)
+      video.play().catch(() => {})
 
       return () => {
         video.removeEventListener('loadeddata', handleLoadedData)
@@ -30,14 +35,14 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
   }, [])
 
   if (resource && typeof resource === 'object') {
-    const { filename, width, height } = resource
+    const { url, width, height, updatedAt } = resource
 
     const shimmerDataURL = `data:image/svg+xml;base64,${toBase64(
       shimmer(width || 800, height || 450)
     )}`
 
     return (
-      <div className="relative">
+      <div className="relative h-full w-full">
         {isLoading && (
           <div
             className={cn(
@@ -79,7 +84,7 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
           playsInline
           ref={videoRef}
         >
-          <source src={getMediaUrl(`/media/${filename}`)} />
+          <source src={getMediaUrl(url, updatedAt)} />
         </video>
       </div>
     )

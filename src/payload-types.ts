@@ -934,7 +934,10 @@ export interface WhyChooseUsAboutBlock {
   subtitle: string;
   features?:
     | {
-        icon: string | Media;
+        /**
+         * Optional — the feature renders cleanly without one.
+         */
+        icon?: (string | null) | Media;
         title: string;
         description: string;
         id?: string | null;
