@@ -10,14 +10,32 @@ type Props = {
   className?: string
 } & SLATableBlockProps
 
-const severityClasses = {
-  red: 'bg-red-50 text-red-700 border-red-200',
-  amber: 'bg-amber-50 text-amber-700 border-amber-200',
-  blue: 'bg-blue-50 text-blue-700 border-blue-200',
-  green: 'bg-green-50 text-green-700 border-green-200',
+const severityStyles = {
+  red: {
+    card: 'border-red-200 bg-red-50/60',
+    bar: 'bg-red-500',
+    pill: 'bg-red-500 text-white',
+    stat: 'text-red-600',
+  },
+  amber: {
+    card: 'border-amber-200 bg-amber-50/60',
+    bar: 'bg-amber-500',
+    pill: 'bg-amber-500 text-white',
+    stat: 'text-amber-600',
+  },
+  blue: {
+    card: 'border-blue-200 bg-blue-50/60',
+    bar: 'bg-blue-500',
+    pill: 'bg-blue-500 text-white',
+    stat: 'text-blue-600',
+  },
+  green: {
+    card: 'border-green-200 bg-green-50/60',
+    bar: 'bg-green-500',
+    pill: 'bg-green-500 text-white',
+    stat: 'text-green-600',
+  },
 } as const
-
-const COLUMNS = ['Priority', 'Impact', 'Remote Support', 'Onsite Support', 'Helpdesk Availability', 'Critical Issue Resolution']
 
 export const SLATableBlock: React.FC<Props> = ({
   badge,
@@ -40,77 +58,51 @@ export const SLATableBlock: React.FC<Props> = ({
           {subtitle && <p className="mt-3 text-gray-600 leading-relaxed">{subtitle}</p>}
         </Reveal>
 
-        <Reveal delayMs={100}>
-          {/* Desktop table */}
-          <div className="hidden overflow-x-auto rounded-2xl border border-border lg:block">
-            <div className="grid min-w-[900px] grid-cols-[0.8fr,1.4fr,1fr,1fr,1.1fr,1.2fr] bg-gray-50/80 text-xs font-semibold uppercase tracking-wide text-gray-500">
-              {COLUMNS.map((col) => (
-                <div key={col} className="px-4 py-3">
-                  {col}
-                </div>
-              ))}
-            </div>
-            {rows.map((row, index) => (
+        <Reveal delayMs={100} className="grid grid-cols-1 gap-5 md:grid-cols-3">
+          {rows.map((row, index) => {
+            const styles = severityStyles[row.severity || 'blue']
+            return (
               <div
                 key={row.id || index}
                 className={cn(
-                  'grid min-w-[900px] grid-cols-[0.8fr,1.4fr,1fr,1fr,1.1fr,1.2fr] items-center border-t border-border',
-                  index % 2 === 1 && 'bg-gray-50/40',
+                  'relative overflow-hidden rounded-2xl border-2 p-5 shadow-sm transition-transform duration-300 hover:-translate-y-1',
+                  styles.card,
                 )}
               >
-                <div className="px-4 py-4">
-                  <span
-                    className={cn(
-                      'inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold',
-                      severityClasses[row.severity || 'blue'],
-                    )}
-                  >
-                    {row.priority}
-                  </span>
-                </div>
-                <div className="px-4 py-4 text-sm text-gray-600">{row.impact}</div>
-                <div className="px-4 py-4 text-sm font-medium text-foreground">{row.remoteSupportTime}</div>
-                <div className="px-4 py-4 text-sm font-medium text-foreground">{row.onsiteSupportTime}</div>
-                <div className="px-4 py-4 text-sm font-medium text-foreground">{row.helpdeskAvailability}</div>
-                <div className="px-4 py-4 text-sm font-medium text-foreground">{row.resolutionTarget}</div>
-              </div>
-            ))}
-          </div>
+                <div className={cn('absolute inset-x-0 top-0 h-1.5', styles.bar)} />
 
-          {/* Mobile / tablet cards */}
-          <div className="grid grid-cols-1 gap-3 lg:hidden">
-            {rows.map((row, index) => (
-              <div key={row.id || index} className="rounded-2xl border border-border p-4">
                 <span
                   className={cn(
-                    'inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold',
-                    severityClasses[row.severity || 'blue'],
+                    'inline-flex items-center rounded-full px-3.5 py-1.5 text-xs font-bold uppercase tracking-wide',
+                    styles.pill,
                   )}
                 >
-                  {row.priority}
+                  {row.priority} Priority
                 </span>
-                <p className="mt-2 text-sm text-gray-600">{row.impact}</p>
-                <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
+
+                <p className="mt-3 text-sm text-gray-600">{row.impact}</p>
+
+                <div className="mt-5 grid grid-cols-2 gap-4 border-t border-black/5 pt-4">
                   <div>
-                    <div className="text-xs uppercase tracking-wide text-gray-400">Remote Support</div>
-                    <div className="font-medium text-foreground">{row.remoteSupportTime}</div>
+                    <div className={cn('text-2xl font-bold', styles.stat)}>{row.remoteSupportTime}</div>
+                    <div className="text-xs font-medium uppercase tracking-wide text-gray-500">Remote Support</div>
                   </div>
                   <div>
-                    <div className="text-xs uppercase tracking-wide text-gray-400">Onsite Support</div>
-                    <div className="font-medium text-foreground">{row.onsiteSupportTime}</div>
+                    <div className={cn('text-2xl font-bold', styles.stat)}>{row.onsiteSupportTime}</div>
+                    <div className="text-xs font-medium uppercase tracking-wide text-gray-500">Onsite Support</div>
                   </div>
                   <div>
-                    <div className="text-xs uppercase tracking-wide text-gray-400">Helpdesk Availability</div>
-                    <div className="font-medium text-foreground">{row.helpdeskAvailability}</div>
+                    <div className="text-sm font-semibold text-foreground">{row.helpdeskAvailability}</div>
+                    <div className="text-xs font-medium uppercase tracking-wide text-gray-500">Helpdesk</div>
                   </div>
                   <div>
-                    <div className="text-xs uppercase tracking-wide text-gray-400">Critical Issue Resolution</div>
-                    <div className="font-medium text-foreground">{row.resolutionTarget}</div>
+                    <div className="text-sm font-semibold text-foreground">{row.resolutionTarget}</div>
+                    <div className="text-xs font-medium uppercase tracking-wide text-gray-500">Resolution</div>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            )
+          })}
         </Reveal>
 
         <CtaButton text={ctaText} label={ctaLabel} url={ctaUrl} className="mt-6" />

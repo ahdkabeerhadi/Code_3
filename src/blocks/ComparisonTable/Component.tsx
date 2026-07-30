@@ -11,7 +11,7 @@ type Props = {
 
 function XIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 flex-none">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-3.5 w-3.5 flex-none">
       <path d="M18 6L6 18M6 6l12 12" />
     </svg>
   )
@@ -19,7 +19,7 @@ function XIcon() {
 
 function CheckIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 flex-none">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-3.5 w-3.5 flex-none">
       <path d="M20 6L9 17l-5-5" />
     </svg>
   )
@@ -45,31 +45,36 @@ export const ComparisonTableBlock: React.FC<Props> = ({
           {subtitle && <p className="mt-3 text-gray-600 leading-relaxed">{subtitle}</p>}
         </Reveal>
 
-        <Reveal delayMs={100} className="overflow-hidden rounded-2xl border border-border">
-          <div className="grid grid-cols-2">
-            <div className="border-b border-r border-border bg-gray-50/80 px-5 py-3 text-sm font-semibold text-gray-500">
-              {leftLabel}
-            </div>
-            <div className="border-b border-border bg-[#FDEBEC] px-5 py-3 text-sm font-semibold text-primary_red">
-              {rightLabel}
-            </div>
+        <Reveal delayMs={100} className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-0 md:rounded-2xl md:overflow-hidden md:shadow-lg">
+          {/* Typical Provider - muted */}
+          <div className="rounded-2xl bg-gray-100 p-6 md:rounded-none md:p-8">
+            <h3 className="mb-5 text-sm font-bold uppercase tracking-wide text-gray-500">{leftLabel}</h3>
+            <ul className="space-y-4">
+              {rows.map((row, index) => (
+                <li key={row.id || index} className="flex items-start gap-3 text-sm text-gray-500">
+                  <span className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-gray-300 text-gray-600">
+                    <XIcon />
+                  </span>
+                  {row.left}
+                </li>
+              ))}
+            </ul>
           </div>
-          {rows.map((row, index) => (
-            <div key={row.id || index} className={cn('grid grid-cols-2', index % 2 === 1 && 'bg-gray-50/40')}>
-              <div className="flex items-start gap-2.5 border-r border-t border-border px-5 py-4 text-sm text-gray-500">
-                <span className="mt-0.5 text-gray-400">
-                  <XIcon />
-                </span>
-                {row.left}
-              </div>
-              <div className="flex items-start gap-2.5 border-t border-border px-5 py-4 text-sm font-medium text-foreground">
-                <span className="mt-0.5 text-green-600">
-                  <CheckIcon />
-                </span>
-                {row.right}
-              </div>
-            </div>
-          ))}
+
+          {/* CODE3 - bold red */}
+          <div className="rounded-2xl bg-primary_red p-6 md:rounded-none md:p-8">
+            <h3 className="mb-5 text-sm font-bold uppercase tracking-wide text-white/80">{rightLabel}</h3>
+            <ul className="space-y-4">
+              {rows.map((row, index) => (
+                <li key={row.id || index} className="flex items-start gap-3 text-sm font-medium text-white">
+                  <span className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-white text-primary_red">
+                    <CheckIcon />
+                  </span>
+                  {row.right}
+                </li>
+              ))}
+            </ul>
+          </div>
         </Reveal>
       </div>
     </section>

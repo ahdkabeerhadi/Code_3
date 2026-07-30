@@ -11,7 +11,7 @@ type Props = {
 
 function CheckIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5 flex-none">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-4 w-4 flex-none">
       <path d="M20 6L9 17l-5-5" />
     </svg>
   )
@@ -19,7 +19,7 @@ function CheckIcon() {
 
 function FlagIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5 flex-none">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-4 w-4 flex-none">
       <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
       <path d="M4 22V3" />
     </svg>
@@ -48,12 +48,17 @@ export const QualificationBlock: React.FC<Props> = ({
         </Reveal>
 
         <Reveal delayMs={100} className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <div className="rounded-2xl border border-border p-6">
-            <h3 className="mb-4 text-lg font-semibold text-foreground">{leftHeading}</h3>
-            <ul className="space-y-3">
+          <div className="rounded-2xl border-2 border-green-200 bg-green-50/60 p-6 md:p-7">
+            <div className="mb-5 flex items-center gap-3">
+              <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-green-500 text-white">
+                <CheckIcon />
+              </span>
+              <h3 className="text-lg font-bold text-foreground">{leftHeading}</h3>
+            </div>
+            <ul className="space-y-3.5">
               {(leftItems || []).map((item, index) => (
-                <li key={item.id || index} className="flex items-start gap-3 text-sm text-gray-600">
-                  <span className="mt-0.5 text-green-600">
+                <li key={item.id || index} className="flex items-start gap-3 text-sm text-gray-700">
+                  <span className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-green-500 text-white">
                     <CheckIcon />
                   </span>
                   {item.text}
@@ -62,12 +67,17 @@ export const QualificationBlock: React.FC<Props> = ({
             </ul>
           </div>
 
-          <div className="rounded-2xl border border-border p-6">
-            <h3 className="mb-4 text-lg font-semibold text-foreground">{rightHeading}</h3>
-            <ul className="space-y-3">
+          <div className="rounded-2xl border-2 border-red-200 bg-[#FDEBEC] p-6 md:p-7">
+            <div className="mb-5 flex items-center gap-3">
+              <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-primary_red text-white">
+                <FlagIcon />
+              </span>
+              <h3 className="text-lg font-bold text-foreground">{rightHeading}</h3>
+            </div>
+            <ul className="space-y-3.5">
               {(rightItems || []).map((item, index) => (
-                <li key={item.id || index} className="flex items-start gap-3 text-sm text-gray-600">
-                  <span className="mt-0.5 text-primary_red">
+                <li key={item.id || index} className="flex items-start gap-3 text-sm text-gray-700">
+                  <span className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary_red text-white">
                     <FlagIcon />
                   </span>
                   {item.text}
