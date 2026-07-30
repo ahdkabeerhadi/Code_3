@@ -1194,6 +1194,15 @@ export interface QuickEnquiryBlock {
   promoTagline?: string | null;
   promoDescription?: string | null;
   /**
+   * Short scannable bullets shown with checkmarks, e.g. "No credit card required".
+   */
+  promoFeatures?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
    * Small disclaimer line, e.g. "No annual commitment needed for the trial."
    */
   promoNote?: string | null;
@@ -2518,6 +2527,12 @@ export interface QuickEnquiryBlockSelect<T extends boolean = true> {
   promoTitle?: T;
   promoTagline?: T;
   promoDescription?: T;
+  promoFeatures?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
   promoNote?: T;
   promoCtaLabel?: T;
   promoCtaUrl?: T;

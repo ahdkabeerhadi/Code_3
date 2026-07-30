@@ -56,6 +56,17 @@ export const QuickEnquiry: Block = {
       admin: { condition: (_, siblingData) => Boolean(siblingData?.promoEnabled) },
     },
     {
+      name: 'promoFeatures',
+      type: 'array',
+      label: 'Promo Feature Bullets',
+      maxRows: 4,
+      fields: [{ name: 'text', type: 'text', required: true }],
+      admin: {
+        description: 'Short scannable bullets shown with checkmarks, e.g. "No credit card required".',
+        condition: (_, siblingData) => Boolean(siblingData?.promoEnabled),
+      },
+    },
+    {
       name: 'promoNote',
       type: 'text',
       label: 'Promo Fine Print',
