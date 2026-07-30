@@ -154,6 +154,7 @@ export const plugins: Plugin[] = [
                 const userCountry = getFieldValue('country')
                 const userSubject = getFieldValue('subject')
                 const userMessage = getFieldValue('message')
+                const userCompanySize = getFieldValue('companySize')
 
                 // Email to Admin
                 const adminEmailHTML = generateEmailHTML({
@@ -167,6 +168,7 @@ export const plugins: Plugin[] = [
                       <tr style="border-bottom: 1px solid #e0e0e0;"><td style="padding: 10px; font-weight: bold;">Email:</td><td style="padding: 10px;">${userEmail}</td></tr>
                       <tr style="border-bottom: 1px solid #e0e0e0;"><td style="padding: 10px; font-weight: bold;">Phone:</td><td style="padding: 10px;">${userCountry} ${userPhone}</td></tr>
                       <tr style="border-bottom: 1px solid #e0e0e0;"><td style="padding: 10px; font-weight: bold;">Subject:</td><td style="padding: 10px;">${userSubject}</td></tr>
+                      ${userCompanySize !== 'N/A' ? `<tr style="border-bottom: 1px solid #e0e0e0;"><td style="padding: 10px; font-weight: bold;">Company Size:</td><td style="padding: 10px;">${userCompanySize} employees</td></tr>` : ''}
                       <tr style="border-bottom: 1px solid #e0e0e0;"><td style="padding: 10px; font-weight: bold;">Status:</td><td style="padding: 10px;">${doc.status}</td></tr>
                     </table>
                     

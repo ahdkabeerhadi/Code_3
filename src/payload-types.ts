@@ -318,6 +318,7 @@ export interface Page {
     | SLATableBlock
     | QualificationBlock
     | ComparisonTableBlock
+    | LeadCaptureFormBlock
     | TestimonialsBlock
     | AccreditationsBlock
     | IndustriesBlock
@@ -1488,6 +1489,20 @@ export interface ComparisonTableBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LeadCaptureFormBlock".
+ */
+export interface LeadCaptureFormBlock {
+  badge?: string | null;
+  title: string;
+  description?: string | null;
+  formTitle: string;
+  submitLabel: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'leadCaptureForm';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "TestimonialsBlock".
  */
 export interface TestimonialsBlock {
@@ -2109,6 +2124,7 @@ export interface PagesSelect<T extends boolean = true> {
         slaTable?: T | SLATableBlockSelect<T>;
         qualification?: T | QualificationBlockSelect<T>;
         comparisonTable?: T | ComparisonTableBlockSelect<T>;
+        leadCaptureForm?: T | LeadCaptureFormBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
         accreditations?: T | AccreditationsBlockSelect<T>;
         industries?: T | IndustriesBlockSelect<T>;
@@ -2694,6 +2710,19 @@ export interface ComparisonTableBlockSelect<T extends boolean = true> {
         right?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LeadCaptureFormBlock_select".
+ */
+export interface LeadCaptureFormBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  description?: T;
+  formTitle?: T;
+  submitLabel?: T;
   id?: T;
   blockName?: T;
 }

@@ -43,6 +43,7 @@ import { Stats } from '@/blocks/Stats/config'
 import { SLATable } from '@/blocks/SLATable/config'
 import { Qualification } from '@/blocks/Qualification/config'
 import { ComparisonTable } from '@/blocks/ComparisonTable/config'
+import { LeadCaptureForm } from '@/blocks/LeadCaptureForm/config'
 import { Testimonials } from '@/blocks/Testimonials/config'
 import { Accreditations } from '@/blocks/Accreditations/config'
 import { Industries } from '@/blocks/Industries/config'
@@ -180,6 +181,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 SLATable,
                 Qualification,
                 ComparisonTable,
+                LeadCaptureForm,
                 Testimonials,
                 Accreditations,
                 Industries,

@@ -30,6 +30,7 @@ import { StatsBlock } from './Stats/Component'
 import { SLATableBlock } from './SLATable/Component'
 import { QualificationBlock } from './Qualification/Component'
 import { ComparisonTableBlock } from './ComparisonTable/Component'
+import { LeadCaptureFormBlock } from './LeadCaptureForm/Component'
 import { TestimonialsBlock } from './Testimonials/Component'
 import { AccreditationsBlock } from './Accreditations/Component'
 import { IndustriesBlock } from './Industries/Component'
@@ -72,6 +73,7 @@ const blockComponents = {
   slaTable: SLATableBlock,
   qualification: QualificationBlock,
   comparisonTable: ComparisonTableBlock,
+  leadCaptureForm: LeadCaptureFormBlock,
   testimonials: TestimonialsBlock,
   accreditations: AccreditationsBlock,
   industries: IndustriesBlock,
