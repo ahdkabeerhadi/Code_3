@@ -8,6 +8,7 @@ import { Logo } from '@/components/Logo/Logo'
 import { Media } from '@/components/Media'
 import { ScrollToTopButton, ScrollToTopButtonMobile } from './ScrollToTopButton'
 import Link from 'next/link'
+import { unstable_cache } from 'next/cache'
 
 interface ServicePageData {
   id: string
@@ -87,6 +88,41 @@ function YoutubeIcon() {
   )
 }
 
+// Only needs to refetch when a page's slug/category/parentService/status changes -
+// piggyback on the 'pages-sitemap' tag the pages collection already revalidates on
+// every publish/unpublish, instead of refetching on every request.
+const getFooterServicePages = unstable_cache(
+  async (): Promise<ServicePageData[]> => {
+    const payload = await getPayload({ config: configPromise })
+    const servicePagesRes = await payload.find({
+      collection: 'pages',
+      depth: 0,
+      limit: 300,
+      where: {
+        and: [
+          { serviceCategory: { equals: 'infrastructure' } },
+          { _status: { equals: 'published' } },
+        ],
+      },
+    })
+
+    return (servicePagesRes.docs as Page[])
+      .filter((p) => p.slug && p.serviceCategory && p.serviceCategory !== 'none')
+      .map((p) => ({
+        id: p.id,
+        slug: p.slug as string,
+        title: p.title,
+        serviceCategory: p.serviceCategory as 'infrastructure' | 'digital',
+        parentService:
+          typeof p.parentService === 'object' && p.parentService
+            ? p.parentService.id
+            : (p.parentService as string | null) || null,
+      }))
+  },
+  ['footer-service-pages'],
+  { tags: ['pages-sitemap'] },
+)
+
 export async function Footer() {
   const footerData = (await getCachedGlobal('footer', 1)()) as Footer
 
@@ -97,31 +133,7 @@ export async function Footer() {
   const logo = footerData?.logo
   const socialLinks = footerData?.socialLinks
 
-  const payload = await getPayload({ config: configPromise })
-  const servicePagesRes = await payload.find({
-    collection: 'pages',
-    depth: 0,
-    limit: 300,
-    where: {
-      and: [
-        { serviceCategory: { equals: 'infrastructure' } },
-        { _status: { equals: 'published' } },
-      ],
-    },
-  })
-
-  const servicePages: ServicePageData[] = (servicePagesRes.docs as Page[])
-    .filter((p) => p.slug && p.serviceCategory && p.serviceCategory !== 'none')
-    .map((p) => ({
-      id: p.id,
-      slug: p.slug as string,
-      title: p.title,
-      serviceCategory: p.serviceCategory as 'infrastructure' | 'digital',
-      parentService:
-        typeof p.parentService === 'object' && p.parentService
-          ? p.parentService.id
-          : (p.parentService as string | null) || null,
-    }))
+  const servicePages = await getFooterServicePages()
 
   const parentServices = servicePages.filter((p) => !p.parentService)
   const subServices = servicePages.filter((p) => p.parentService)

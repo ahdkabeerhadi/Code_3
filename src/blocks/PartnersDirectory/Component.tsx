@@ -67,6 +67,7 @@ function PartnerCell({
       {logo && typeof logo === 'object' && !failed ? (
         <Media
           resource={logo}
+          size="140px"
           imgClassName="h-14 w-auto max-w-[140px] object-contain grayscale transition-all duration-300 group-hover:grayscale-0 md:h-16"
           onError={() => setFailed(true)}
         />
