@@ -1185,6 +1185,20 @@ export interface PartnersDirectoryBlock {
 export interface QuickEnquiryBlock {
   title: string;
   description?: string | null;
+  promoEnabled?: boolean | null;
+  promoBadge?: string | null;
+  promoTitle?: string | null;
+  /**
+   * Short line right under the title, e.g. "Yes, you heard it right."
+   */
+  promoTagline?: string | null;
+  promoDescription?: string | null;
+  /**
+   * Small disclaimer line, e.g. "No annual commitment needed for the trial."
+   */
+  promoNote?: string | null;
+  promoCtaLabel?: string | null;
+  promoCtaUrl?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'quickEnquiry';
@@ -2499,6 +2513,14 @@ export interface PartnersDirectoryBlockSelect<T extends boolean = true> {
 export interface QuickEnquiryBlockSelect<T extends boolean = true> {
   title?: T;
   description?: T;
+  promoEnabled?: T;
+  promoBadge?: T;
+  promoTitle?: T;
+  promoTagline?: T;
+  promoDescription?: T;
+  promoNote?: T;
+  promoCtaLabel?: T;
+  promoCtaUrl?: T;
   id?: T;
   blockName?: T;
 }

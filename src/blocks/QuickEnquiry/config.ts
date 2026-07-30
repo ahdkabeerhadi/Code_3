@@ -21,5 +21,62 @@ export const QuickEnquiry: Block = {
       label: 'Description',
       defaultValue: 'Get a callback from our team within 1 minute.',
     },
+    {
+      name: 'promoEnabled',
+      type: 'checkbox',
+      label: 'Show Promo Card Below Form',
+      defaultValue: false,
+    },
+    {
+      name: 'promoBadge',
+      type: 'text',
+      label: 'Promo Badge Text',
+      defaultValue: 'LIMITED TIME OFFER',
+      admin: { condition: (_, siblingData) => Boolean(siblingData?.promoEnabled) },
+    },
+    {
+      name: 'promoTitle',
+      type: 'text',
+      label: 'Promo Title',
+      admin: { condition: (_, siblingData) => Boolean(siblingData?.promoEnabled) },
+    },
+    {
+      name: 'promoTagline',
+      type: 'text',
+      label: 'Promo Tagline',
+      admin: {
+        description: 'Short line right under the title, e.g. "Yes, you heard it right."',
+        condition: (_, siblingData) => Boolean(siblingData?.promoEnabled),
+      },
+    },
+    {
+      name: 'promoDescription',
+      type: 'textarea',
+      label: 'Promo Description',
+      admin: { condition: (_, siblingData) => Boolean(siblingData?.promoEnabled) },
+    },
+    {
+      name: 'promoNote',
+      type: 'text',
+      label: 'Promo Fine Print',
+      admin: {
+        description: 'Small disclaimer line, e.g. "No annual commitment needed for the trial."',
+        condition: (_, siblingData) => Boolean(siblingData?.promoEnabled),
+      },
+    },
+    {
+      name: 'promoCtaLabel',
+      type: 'text',
+      label: 'Promo Button Label',
+      defaultValue: 'Claim Your Free Trial',
+      admin: { condition: (_, siblingData) => Boolean(siblingData?.promoEnabled) },
+    },
+    {
+      name: 'promoCtaUrl',
+      type: 'text',
+      label: 'Promo Button URL',
+      defaultValue: '/contact',
+      admin: { condition: (_, siblingData) => Boolean(siblingData?.promoEnabled) },
+    },
   ],
 }
