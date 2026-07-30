@@ -70,6 +70,15 @@ function LinkedInIcon() {
     </svg>
   )
 }
+function InstagramIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
+      <rect x="2" y="2" width="20" height="20" rx="5" />
+      <circle cx="12" cy="12" r="4.2" />
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
 function YoutubeIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
@@ -127,6 +136,7 @@ export async function Footer() {
     { url: socialLinks?.twitter, Icon: TwitterIcon, label: 'X (Twitter)' },
     { url: socialLinks?.facebook, Icon: FacebookIcon, label: 'Facebook' },
     { url: socialLinks?.linkedin, Icon: LinkedInIcon, label: 'LinkedIn' },
+    { url: socialLinks?.instagram, Icon: InstagramIcon, label: 'Instagram' },
     { url: socialLinks?.youtube, Icon: YoutubeIcon, label: 'YouTube' },
   ].filter((s) => s.url)
 

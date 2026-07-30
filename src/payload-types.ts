@@ -3238,6 +3238,7 @@ export interface Footer {
     twitter?: string | null;
     facebook?: string | null;
     linkedin?: string | null;
+    instagram?: string | null;
     youtube?: string | null;
   };
   bottomBar: {
@@ -3350,6 +3351,7 @@ export interface FooterSelect<T extends boolean = true> {
         twitter?: T;
         facebook?: T;
         linkedin?: T;
+        instagram?: T;
         youtube?: T;
       };
   bottomBar?:
