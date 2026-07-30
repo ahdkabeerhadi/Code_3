@@ -315,6 +315,7 @@ export interface Page {
     | ServiceOverviewBlock
     | ServiceCatalogBlock
     | StatsBlock
+    | SLATableBlock
     | TestimonialsBlock
     | AccreditationsBlock
     | IndustriesBlock
@@ -1405,6 +1406,40 @@ export interface StatsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SLATableBlock".
+ */
+export interface SLATableBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  rows?:
+    | {
+        /**
+         * e.g. "Critical (P1)"
+         */
+        priority: string;
+        severity: 'red' | 'amber' | 'blue' | 'green';
+        description: string;
+        responseTime: string;
+        resolutionTarget: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'slaTable';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "TestimonialsBlock".
  */
 export interface TestimonialsBlock {
@@ -2023,6 +2058,7 @@ export interface PagesSelect<T extends boolean = true> {
         serviceOverview?: T | ServiceOverviewBlockSelect<T>;
         serviceCatalog?: T | ServiceCatalogBlockSelect<T>;
         stats?: T | StatsBlockSelect<T>;
+        slaTable?: T | SLATableBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
         accreditations?: T | AccreditationsBlockSelect<T>;
         industries?: T | IndustriesBlockSelect<T>;
@@ -2537,6 +2573,30 @@ export interface StatsBlockSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SLATableBlock_select".
+ */
+export interface SLATableBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  rows?:
+    | T
+    | {
+        priority?: T;
+        severity?: T;
+        description?: T;
+        responseTime?: T;
+        resolutionTarget?: T;
+        id?: T;
+      };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
   id?: T;
   blockName?: T;
 }

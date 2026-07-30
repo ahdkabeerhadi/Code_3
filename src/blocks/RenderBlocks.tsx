@@ -27,6 +27,7 @@ import { ServiceOverviewBlock } from './ServiceOverview/Component'
 import { ServiceSolutionsBlock } from './ServiceSolutions/Components'
 import { ServiceCatalogBlock } from './ServiceCatalog/Component'
 import { StatsBlock } from './Stats/Component'
+import { SLATableBlock } from './SLATable/Component'
 import { TestimonialsBlock } from './Testimonials/Component'
 import { AccreditationsBlock } from './Accreditations/Component'
 import { IndustriesBlock } from './Industries/Component'
@@ -66,6 +67,7 @@ const blockComponents = {
   serviceOverview: ServiceOverviewBlock,
   serviceCatalog: ServiceCatalogBlock,
   stats: StatsBlock,
+  slaTable: SLATableBlock,
   testimonials: TestimonialsBlock,
   accreditations: AccreditationsBlock,
   industries: IndustriesBlock,

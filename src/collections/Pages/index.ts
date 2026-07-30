@@ -40,6 +40,7 @@ import { ServiceDetailBanner } from '@/blocks/ServiceDetailBanner/config'
 import { ServiceOverview } from '@/blocks/ServiceOverview/config'
 import { ServiceCatalog } from '@/blocks/ServiceCatalog/config'
 import { Stats } from '@/blocks/Stats/config'
+import { SLATable } from '@/blocks/SLATable/config'
 import { Testimonials } from '@/blocks/Testimonials/config'
 import { Accreditations } from '@/blocks/Accreditations/config'
 import { Industries } from '@/blocks/Industries/config'
@@ -174,6 +175,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 ServiceOverview,
                 ServiceCatalog,
                 Stats,
+                SLATable,
                 Testimonials,
                 Accreditations,
                 Industries,
