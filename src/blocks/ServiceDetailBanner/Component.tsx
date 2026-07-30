@@ -27,7 +27,7 @@ export const ServiceDetailBannerBlock: React.FC<Props> = ({
   backLinkUrl,
 }) => {
   return (
-    <section className={cn('bg-white pt-8 pb-2 md:pt-10 md:pb-3 lg:min-h-[410px]', className)}>
+    <section className={cn('bg-white pt-8 pb-2 md:pt-10 md:pb-3', className)}>
       <div className="container mx-auto px-4 sm:px-6">
         <Reveal className="max-w-2xl lg:max-w-[calc(100%-420px)]">
           {backLinkLabel && backLinkUrl && (

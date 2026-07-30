@@ -7,6 +7,7 @@ import type { Media as MediaType, Page } from 'src/payload-types'
 import { Media } from '@/components/Media'
 import Link from 'next/link'
 import { CtaButton } from '@/components/site/CtaButton'
+import { ClearQuickEnquiry } from '@/components/site/ClearQuickEnquiry'
 
 type Props = {
   className?: string
@@ -157,16 +158,19 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
         </div>
 
         {isGrid ? (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {safeBrands.map((brand, index) => (
-              <div
-                key={`${brand.name}-${index}`}
-                className="group flex min-h-[5.5rem] items-center justify-center rounded-2xl border border-border/70 bg-gray-50/60 p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary_red/40 hover:bg-white hover:shadow-md md:min-h-[6.5rem]"
-              >
-                <BrandLogo brand={brand} index={index} wrap />
-              </div>
-            ))}
-          </div>
+          <>
+            <ClearQuickEnquiry />
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+              {safeBrands.map((brand, index) => (
+                <div
+                  key={`${brand.name}-${index}`}
+                  className="group flex min-h-[5.5rem] items-center justify-center rounded-2xl border border-border/70 bg-gray-50/60 p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary_red/40 hover:bg-white hover:shadow-md md:min-h-[6.5rem]"
+                >
+                  <BrandLogo brand={brand} index={index} wrap />
+                </div>
+              ))}
+            </div>
+          </>
         ) : isHorizontalScroll ? (
           <div className="flex gap-4 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide">
             {safeBrands.map((brand, index) => (
