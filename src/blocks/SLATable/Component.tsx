@@ -11,18 +11,28 @@ type Props = {
 } & SLATableBlockProps
 
 const severityStyles = {
-  red: { card: 'border-red-200 bg-red-50/60', dot: 'bg-red-500', label: 'text-red-600', stat: 'text-red-600' },
+  red: {
+    card: 'border-red-200 bg-red-50/60',
+    bar: 'bg-red-500',
+    pill: 'bg-red-500 text-white',
+    stat: 'text-red-600',
+  },
   amber: {
     card: 'border-amber-200 bg-amber-50/60',
-    dot: 'bg-amber-500',
-    label: 'text-amber-600',
+    bar: 'bg-amber-500',
+    pill: 'bg-amber-500 text-white',
     stat: 'text-amber-600',
   },
-  blue: { card: 'border-blue-200 bg-blue-50/60', dot: 'bg-blue-500', label: 'text-blue-600', stat: 'text-blue-600' },
+  blue: {
+    card: 'border-blue-200 bg-blue-50/60',
+    bar: 'bg-blue-500',
+    pill: 'bg-blue-500 text-white',
+    stat: 'text-blue-600',
+  },
   green: {
     card: 'border-green-200 bg-green-50/60',
-    dot: 'bg-green-500',
-    label: 'text-green-600',
+    bar: 'bg-green-500',
+    pill: 'bg-green-500 text-white',
     stat: 'text-green-600',
   },
 } as const
@@ -55,32 +65,40 @@ export const SLATableBlock: React.FC<Props> = ({
               <div
                 key={row.id || index}
                 className={cn(
-                  'rounded-2xl border-2 p-5 shadow-sm transition-transform duration-300 hover:-translate-y-1',
+                  'relative overflow-hidden rounded-2xl border-2 p-5 shadow-sm transition-transform duration-300 hover:-translate-y-1',
                   styles.card,
                 )}
               >
-                <div className="flex items-center gap-2">
-                  <span className={cn('h-3 w-3 flex-none rounded-full', styles.dot)} />
-                  <span className={cn('text-sm font-bold uppercase tracking-wide', styles.label)}>
-                    {row.priority}
-                  </span>
-                </div>
+                <div className={cn('absolute inset-x-0 top-0 h-1.5', styles.bar)} />
 
-                <div className="mt-4 grid grid-cols-3 gap-3 text-center">
+                <span
+                  className={cn(
+                    'inline-flex items-center rounded-full px-3.5 py-1.5 text-xs font-bold uppercase tracking-wide',
+                    styles.pill,
+                  )}
+                >
+                  {row.priority} Priority
+                </span>
+
+                <p className="mt-3 text-sm text-gray-600">{row.impact}</p>
+
+                <div className="mt-5 grid grid-cols-2 gap-4 border-t border-black/5 pt-4">
                   <div>
-                    <div className={cn('text-xl font-bold', styles.stat)}>{row.remoteSupportTime}</div>
+                    <div className={cn('text-2xl font-bold', styles.stat)}>{row.remoteSupportTime}</div>
+                    <div className="text-xs font-medium uppercase tracking-wide text-gray-500">Remote Support</div>
                   </div>
                   <div>
-                    <div className={cn('text-xl font-bold', styles.stat)}>{row.onsiteSupportTime}</div>
+                    <div className={cn('text-2xl font-bold', styles.stat)}>{row.onsiteSupportTime}</div>
+                    <div className="text-xs font-medium uppercase tracking-wide text-gray-500">Onsite Support</div>
                   </div>
                   <div>
-                    <div className={cn('text-xl font-bold', styles.stat)}>{row.resolutionTarget}</div>
+                    <div className="text-sm font-semibold text-foreground">{row.helpdeskAvailability}</div>
+                    <div className="text-xs font-medium uppercase tracking-wide text-gray-500">Helpdesk</div>
                   </div>
-                </div>
-                <div className="mt-1.5 grid grid-cols-3 gap-3 text-center">
-                  <div className="text-xs font-medium uppercase tracking-wide text-gray-500">Remote</div>
-                  <div className="text-xs font-medium uppercase tracking-wide text-gray-500">Onsite</div>
-                  <div className="text-xs font-medium uppercase tracking-wide text-gray-500">Resolution</div>
+                  <div>
+                    <div className="text-sm font-semibold text-foreground">{row.resolutionTarget}</div>
+                    <div className="text-xs font-medium uppercase tracking-wide text-gray-500">Resolution</div>
+                  </div>
                 </div>
               </div>
             )
