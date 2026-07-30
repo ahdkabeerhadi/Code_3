@@ -15,6 +15,12 @@ const nextConfig = {
     // images directly instead, which correctly carries the viewer's Vercel auth session.
     // Production isn't protection-walled, so it keeps full optimization.
     unoptimized: process.env.VERCEL_ENV === 'preview',
+    // Next's image optimizer blocks SVG by default (it can contain scripts) - some
+    // uploaded partner/brand logos are SVGs, so allow them. The CSP still prevents
+    // any embedded script in an SVG from executing.
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL /* 'https://example.com' */].map((item) => {
         const url = new URL(item)

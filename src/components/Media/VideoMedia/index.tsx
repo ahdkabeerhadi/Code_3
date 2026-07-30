@@ -23,6 +23,14 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
       const handleLoadedData = () => setIsLoading(false)
       const handleError = () => setIsLoading(false)
 
+      // The video (via autoplay) can finish loading before this effect runs and
+      // attaches the listener below, so the 'loadeddata' event fires into the
+      // void and isLoading gets stuck true forever. Check readyState directly
+      // as a fallback for that race.
+      if (video.readyState >= 2) {
+        setIsLoading(false)
+      }
+
       video.addEventListener('loadeddata', handleLoadedData)
       video.addEventListener('error', handleError)
       video.play().catch(() => {})

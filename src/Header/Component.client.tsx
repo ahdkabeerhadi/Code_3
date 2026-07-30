@@ -460,6 +460,10 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
               </button>
             )}
 
+            <Link href="/technology-partners" className="hover:text-red-600 transition">
+              Technology Partners
+            </Link>
+
             <HeaderSearchBox />
 
             {/* Fallback Navigation Items */}
@@ -600,6 +604,16 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
                     setExpandedServices={setExpandedServices}
                   />
                 )}
+
+                <div className="pb-2">
+                  <Link
+                    href="/technology-partners"
+                    className="text-white text-lg font-semibold block transition-colors duration-300"
+                    onClick={closeMobileMenu}
+                  >
+                    Technology Partners
+                  </Link>
+                </div>
 
                 {/* Mobile Contact Button */}
                 <div className="pt-4 mt-auto">

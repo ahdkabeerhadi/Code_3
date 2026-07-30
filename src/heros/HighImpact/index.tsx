@@ -35,6 +35,7 @@ function HeroCarousel({ images }: { images: CarouselImage[] }) {
           >
             <Media
               fill
+              className="absolute inset-0 h-full w-full"
               resource={img}
               imgClassName="object-cover"
               videoClassName="absolute inset-0 h-full w-full object-cover"
