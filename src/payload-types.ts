@@ -316,6 +316,8 @@ export interface Page {
     | ServiceCatalogBlock
     | StatsBlock
     | SLATableBlock
+    | QualificationBlock
+    | ComparisonTableBlock
     | TestimonialsBlock
     | AccreditationsBlock
     | IndustriesBlock
@@ -1414,13 +1416,12 @@ export interface SLATableBlock {
   subtitle?: string | null;
   rows?:
     | {
-        /**
-         * e.g. "Critical (P1)"
-         */
-        priority: string;
+        priority: 'High' | 'Medium' | 'Low';
         severity: 'red' | 'amber' | 'blue' | 'green';
-        description: string;
-        responseTime: string;
+        impact: string;
+        remoteSupportTime: string;
+        onsiteSupportTime: string;
+        helpdeskAvailability: string;
         resolutionTarget: string;
         id?: string | null;
       }[]
@@ -1437,6 +1438,53 @@ export interface SLATableBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'slaTable';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QualificationBlock".
+ */
+export interface QualificationBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  leftHeading: string;
+  leftItems?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  rightHeading: string;
+  rightItems?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'qualification';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ComparisonTableBlock".
+ */
+export interface ComparisonTableBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  leftLabel: string;
+  rightLabel: string;
+  rows?:
+    | {
+        left: string;
+        right: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'comparisonTable';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2059,6 +2107,8 @@ export interface PagesSelect<T extends boolean = true> {
         serviceCatalog?: T | ServiceCatalogBlockSelect<T>;
         stats?: T | StatsBlockSelect<T>;
         slaTable?: T | SLATableBlockSelect<T>;
+        qualification?: T | QualificationBlockSelect<T>;
+        comparisonTable?: T | ComparisonTableBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
         accreditations?: T | AccreditationsBlockSelect<T>;
         industries?: T | IndustriesBlockSelect<T>;
@@ -2589,14 +2639,61 @@ export interface SLATableBlockSelect<T extends boolean = true> {
     | {
         priority?: T;
         severity?: T;
-        description?: T;
-        responseTime?: T;
+        impact?: T;
+        remoteSupportTime?: T;
+        onsiteSupportTime?: T;
+        helpdeskAvailability?: T;
         resolutionTarget?: T;
         id?: T;
       };
   ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QualificationBlock_select".
+ */
+export interface QualificationBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  leftHeading?: T;
+  leftItems?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  rightHeading?: T;
+  rightItems?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ComparisonTableBlock_select".
+ */
+export interface ComparisonTableBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  leftLabel?: T;
+  rightLabel?: T;
+  rows?:
+    | T
+    | {
+        left?: T;
+        right?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

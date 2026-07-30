@@ -35,12 +35,15 @@ export const SLATable: Block = {
       fields: [
         {
           name: 'priority',
-          type: 'text',
-          label: 'Priority Label',
+          type: 'select',
+          label: 'Priority',
+          options: [
+            { label: 'High', value: 'High' },
+            { label: 'Medium', value: 'Medium' },
+            { label: 'Low', value: 'Low' },
+          ],
+          defaultValue: 'Medium',
           required: true,
-          admin: {
-            description: 'e.g. "Critical (P1)"',
-          },
         },
         {
           name: 'severity',
@@ -56,21 +59,33 @@ export const SLATable: Block = {
           required: true,
         },
         {
-          name: 'description',
+          name: 'impact',
           type: 'text',
-          label: 'Impact / Description',
+          label: 'Impact',
           required: true,
         },
         {
-          name: 'responseTime',
+          name: 'remoteSupportTime',
           type: 'text',
-          label: 'Response Time',
+          label: 'Remote Support Time',
+          required: true,
+        },
+        {
+          name: 'onsiteSupportTime',
+          type: 'text',
+          label: 'Onsite Support Time',
+          required: true,
+        },
+        {
+          name: 'helpdeskAvailability',
+          type: 'text',
+          label: 'Helpdesk Availability',
           required: true,
         },
         {
           name: 'resolutionTarget',
           type: 'text',
-          label: 'Resolution Target',
+          label: 'Critical Issue Resolution',
           required: true,
         },
       ],

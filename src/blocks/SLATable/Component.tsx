@@ -17,6 +17,8 @@ const severityClasses = {
   green: 'bg-green-50 text-green-700 border-green-200',
 } as const
 
+const COLUMNS = ['Priority', 'Impact', 'Remote Support', 'Onsite Support', 'Helpdesk Availability', 'Critical Issue Resolution']
+
 export const SLATableBlock: React.FC<Props> = ({
   badge,
   className,
@@ -40,22 +42,23 @@ export const SLATableBlock: React.FC<Props> = ({
 
         <Reveal delayMs={100}>
           {/* Desktop table */}
-          <div className="hidden overflow-hidden rounded-2xl border border-border md:block">
-            <div className="grid grid-cols-[1fr,2fr,1fr,1fr] bg-gray-50/80 text-xs font-semibold uppercase tracking-wide text-gray-500">
-              <div className="px-5 py-3">Priority</div>
-              <div className="px-5 py-3">Impact</div>
-              <div className="px-5 py-3">Response Time</div>
-              <div className="px-5 py-3">Resolution Target</div>
+          <div className="hidden overflow-x-auto rounded-2xl border border-border lg:block">
+            <div className="grid min-w-[900px] grid-cols-[0.8fr,1.4fr,1fr,1fr,1.1fr,1.2fr] bg-gray-50/80 text-xs font-semibold uppercase tracking-wide text-gray-500">
+              {COLUMNS.map((col) => (
+                <div key={col} className="px-4 py-3">
+                  {col}
+                </div>
+              ))}
             </div>
             {rows.map((row, index) => (
               <div
                 key={row.id || index}
                 className={cn(
-                  'grid grid-cols-[1fr,2fr,1fr,1fr] items-center border-t border-border',
+                  'grid min-w-[900px] grid-cols-[0.8fr,1.4fr,1fr,1fr,1.1fr,1.2fr] items-center border-t border-border',
                   index % 2 === 1 && 'bg-gray-50/40',
                 )}
               >
-                <div className="px-5 py-4">
+                <div className="px-4 py-4">
                   <span
                     className={cn(
                       'inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold',
@@ -65,15 +68,17 @@ export const SLATableBlock: React.FC<Props> = ({
                     {row.priority}
                   </span>
                 </div>
-                <div className="px-5 py-4 text-sm text-gray-600">{row.description}</div>
-                <div className="px-5 py-4 text-sm font-medium text-foreground">{row.responseTime}</div>
-                <div className="px-5 py-4 text-sm font-medium text-foreground">{row.resolutionTarget}</div>
+                <div className="px-4 py-4 text-sm text-gray-600">{row.impact}</div>
+                <div className="px-4 py-4 text-sm font-medium text-foreground">{row.remoteSupportTime}</div>
+                <div className="px-4 py-4 text-sm font-medium text-foreground">{row.onsiteSupportTime}</div>
+                <div className="px-4 py-4 text-sm font-medium text-foreground">{row.helpdeskAvailability}</div>
+                <div className="px-4 py-4 text-sm font-medium text-foreground">{row.resolutionTarget}</div>
               </div>
             ))}
           </div>
 
-          {/* Mobile cards */}
-          <div className="grid grid-cols-1 gap-3 md:hidden">
+          {/* Mobile / tablet cards */}
+          <div className="grid grid-cols-1 gap-3 lg:hidden">
             {rows.map((row, index) => (
               <div key={row.id || index} className="rounded-2xl border border-border p-4">
                 <span
@@ -84,14 +89,22 @@ export const SLATableBlock: React.FC<Props> = ({
                 >
                   {row.priority}
                 </span>
-                <p className="mt-2 text-sm text-gray-600">{row.description}</p>
+                <p className="mt-2 text-sm text-gray-600">{row.impact}</p>
                 <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
                   <div>
-                    <div className="text-xs uppercase tracking-wide text-gray-400">Response</div>
-                    <div className="font-medium text-foreground">{row.responseTime}</div>
+                    <div className="text-xs uppercase tracking-wide text-gray-400">Remote Support</div>
+                    <div className="font-medium text-foreground">{row.remoteSupportTime}</div>
                   </div>
                   <div>
-                    <div className="text-xs uppercase tracking-wide text-gray-400">Resolution</div>
+                    <div className="text-xs uppercase tracking-wide text-gray-400">Onsite Support</div>
+                    <div className="font-medium text-foreground">{row.onsiteSupportTime}</div>
+                  </div>
+                  <div>
+                    <div className="text-xs uppercase tracking-wide text-gray-400">Helpdesk Availability</div>
+                    <div className="font-medium text-foreground">{row.helpdeskAvailability}</div>
+                  </div>
+                  <div>
+                    <div className="text-xs uppercase tracking-wide text-gray-400">Critical Issue Resolution</div>
                     <div className="font-medium text-foreground">{row.resolutionTarget}</div>
                   </div>
                 </div>
