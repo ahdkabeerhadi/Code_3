@@ -60,8 +60,8 @@ export const RoomPanelDemoBlock: React.FC<Props> = ({
           {subtitle && <p className="mt-3 text-gray-600 leading-relaxed">{subtitle}</p>}
         </Reveal>
 
-        <Reveal delayMs={100} className="flex max-w-2xl flex-col items-start gap-6 md:flex-row">
-          <div className="w-full flex-none overflow-hidden rounded-3xl border border-border shadow-sm md:w-[360px]">
+        <Reveal delayMs={100} className="flex flex-col items-start gap-8 md:flex-row">
+          <div className="w-full flex-none overflow-hidden rounded-3xl border border-border shadow-sm md:w-[380px]">
             <div className={cn('px-5 py-5 text-white transition-colors duration-300', tone.panel)}>
               <div className="text-xs font-semibold uppercase tracking-wide opacity-80">{roomName}</div>
               <div className="mt-1 text-2xl font-bold">{active.label}</div>
@@ -100,7 +100,7 @@ export const RoomPanelDemoBlock: React.FC<Props> = ({
             </div>
 
             {highlights && highlights.length > 0 && (
-              <ul className="mt-6 space-y-2.5 border-t border-border pt-5">
+              <ul className="mt-6 grid grid-cols-1 gap-x-8 gap-y-2.5 border-t border-border pt-5 sm:grid-cols-2">
                 {highlights.map((item, index) => (
                   <li key={item.id || index} className="flex items-start gap-2.5 text-sm text-gray-600">
                     <span className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-[#FDEBEC] text-primary_red">
