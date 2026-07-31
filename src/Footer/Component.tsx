@@ -156,7 +156,7 @@ export async function Footer() {
     <footer className="bg-primary_red text-white relative">
       {/* Top Icon Bar */}
       <div className="border-b border-white/20">
-        <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 lg:divide-x lg:divide-white/20">
+        <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_0.9fr] gap-6 lg:divide-x lg:divide-white/20">
           <div className="flex items-start gap-3 lg:pr-6">
             <PinIcon />
             <div className="text-sm">
