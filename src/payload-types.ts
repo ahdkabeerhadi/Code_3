@@ -324,6 +324,7 @@ export interface Page {
     | DowntimeEstimatorBlock
     | AssuranceStripBlock
     | ScopeChecklistBlock
+    | SpecComparisonTableBlock
     | TestimonialsBlock
     | AccreditationsBlock
     | IndustriesBlock
@@ -1661,6 +1662,45 @@ export interface ScopeChecklistBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SpecComparisonTableBlock".
+ */
+export interface SpecComparisonTableBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  columns?:
+    | {
+        /**
+         * e.g. "Infrared"
+         */
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Each value corresponds to the column at the same position - keep the order in sync with Columns above.
+   */
+  rows?:
+    | {
+        /**
+         * e.g. "Best Use Case"
+         */
+        rowLabel: string;
+        values?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'specComparisonTable';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "TestimonialsBlock".
  */
 export interface TestimonialsBlock {
@@ -2288,6 +2328,7 @@ export interface PagesSelect<T extends boolean = true> {
         downtimeEstimator?: T | DowntimeEstimatorBlockSelect<T>;
         assuranceStrip?: T | AssuranceStripBlockSelect<T>;
         scopeChecklist?: T | ScopeChecklistBlockSelect<T>;
+        specComparisonTable?: T | SpecComparisonTableBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
         accreditations?: T | AccreditationsBlockSelect<T>;
         industries?: T | IndustriesBlockSelect<T>;
@@ -2998,6 +3039,35 @@ export interface ScopeChecklistBlockSelect<T extends boolean = true> {
         id?: T;
       };
   note?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SpecComparisonTableBlock_select".
+ */
+export interface SpecComparisonTableBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  columns?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  rows?:
+    | T
+    | {
+        rowLabel?: T;
+        values?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

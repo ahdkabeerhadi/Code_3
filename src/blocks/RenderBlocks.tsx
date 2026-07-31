@@ -36,6 +36,7 @@ import { ServiceCoverageBlock } from './ServiceCoverage/Component'
 import { DowntimeEstimatorBlock } from './DowntimeEstimator/Component'
 import { AssuranceStripBlock } from './AssuranceStrip/Component'
 import { ScopeChecklistBlock } from './ScopeChecklist/Component'
+import { SpecComparisonTableBlock } from './SpecComparisonTable/Component'
 import { TestimonialsBlock } from './Testimonials/Component'
 import { AccreditationsBlock } from './Accreditations/Component'
 import { IndustriesBlock } from './Industries/Component'
@@ -84,6 +85,7 @@ const blockComponents = {
   downtimeEstimator: DowntimeEstimatorBlock,
   assuranceStrip: AssuranceStripBlock,
   scopeChecklist: ScopeChecklistBlock,
+  specComparisonTable: SpecComparisonTableBlock,
   testimonials: TestimonialsBlock,
   accreditations: AccreditationsBlock,
   industries: IndustriesBlock,
