@@ -170,7 +170,7 @@ export async function Footer() {
             <ClockIcon />
             <div className="text-sm">
               <div className="font-semibold">Working Hours</div>
-              <div className="text-white/75">
+              <div className="text-white/75 whitespace-nowrap">
                 {contactInfo?.workingHours?.days}: {contactInfo?.workingHours?.time}
               </div>
             </div>
