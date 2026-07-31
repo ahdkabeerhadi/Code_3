@@ -33,6 +33,18 @@ export const ComparisonTable: Block = {
       required: true,
     },
     {
+      name: 'middleEnabled',
+      type: 'checkbox',
+      label: 'Add a Third (Middle) Column',
+      defaultValue: false,
+    },
+    {
+      name: 'middleLabel',
+      type: 'text',
+      label: 'Middle Column Label',
+      admin: { condition: (_, siblingData) => Boolean(siblingData?.middleEnabled) },
+    },
+    {
       name: 'rightLabel',
       type: 'text',
       label: 'Right Column Label',
@@ -45,8 +57,9 @@ export const ComparisonTable: Block = {
       label: 'Comparison Rows',
       minRows: 1,
       fields: [
-        { name: 'left', type: 'text', label: 'Typical Provider', required: true },
-        { name: 'right', type: 'text', label: 'CODE3', required: true },
+        { name: 'left', type: 'text', label: 'Left Column', required: true },
+        { name: 'middle', type: 'text', label: 'Middle Column' },
+        { name: 'right', type: 'text', label: 'Right Column (CODE3)', required: true },
       ],
     },
   ],

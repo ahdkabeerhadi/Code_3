@@ -319,6 +319,8 @@ export interface Page {
     | QualificationBlock
     | ComparisonTableBlock
     | LeadCaptureFormBlock
+    | RelatedServicesBlock
+    | ServiceCoverageBlock
     | TestimonialsBlock
     | AccreditationsBlock
     | IndustriesBlock
@@ -1498,10 +1500,13 @@ export interface ComparisonTableBlock {
   title: string;
   subtitle?: string | null;
   leftLabel: string;
+  middleEnabled?: boolean | null;
+  middleLabel?: string | null;
   rightLabel: string;
   rows?:
     | {
         left: string;
+        middle?: string | null;
         right: string;
         id?: string | null;
       }[]
@@ -1523,6 +1528,45 @@ export interface LeadCaptureFormBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'leadCaptureForm';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelatedServicesBlock".
+ */
+export interface RelatedServicesBlock {
+  title: string;
+  items?:
+    | {
+        label: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'relatedServices';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceCoverageBlock".
+ */
+export interface ServiceCoverageBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  areas?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * e.g. "Onsite visits scheduled within 24-48 hours of confirmation."
+   */
+  note?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'serviceCoverage';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2148,6 +2192,8 @@ export interface PagesSelect<T extends boolean = true> {
         qualification?: T | QualificationBlockSelect<T>;
         comparisonTable?: T | ComparisonTableBlockSelect<T>;
         leadCaptureForm?: T | LeadCaptureFormBlockSelect<T>;
+        relatedServices?: T | RelatedServicesBlockSelect<T>;
+        serviceCoverage?: T | ServiceCoverageBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
         accreditations?: T | AccreditationsBlockSelect<T>;
         industries?: T | IndustriesBlockSelect<T>;
@@ -2739,11 +2785,14 @@ export interface ComparisonTableBlockSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
   leftLabel?: T;
+  middleEnabled?: T;
+  middleLabel?: T;
   rightLabel?: T;
   rows?:
     | T
     | {
         left?: T;
+        middle?: T;
         right?: T;
         id?: T;
       };
@@ -2760,6 +2809,40 @@ export interface LeadCaptureFormBlockSelect<T extends boolean = true> {
   description?: T;
   formTitle?: T;
   submitLabel?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelatedServicesBlock_select".
+ */
+export interface RelatedServicesBlockSelect<T extends boolean = true> {
+  title?: T;
+  items?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceCoverageBlock_select".
+ */
+export interface ServiceCoverageBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  areas?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  note?: T;
   id?: T;
   blockName?: T;
 }
