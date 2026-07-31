@@ -156,7 +156,7 @@ export async function Footer() {
     <footer className="bg-primary_red text-white relative">
       {/* Top Icon Bar */}
       <div className="border-b border-white/20">
-        <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:divide-x lg:divide-white/20">
+        <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 lg:divide-x lg:divide-white/20">
           <div className="flex items-start gap-3 lg:pr-6">
             <PinIcon />
             <div className="text-sm">
@@ -184,13 +184,42 @@ export async function Footer() {
               </a>
             </div>
           </div>
-          <div className="flex items-start gap-3 lg:pl-6">
+          <div className="flex items-start gap-3 lg:px-6">
             <MailIcon />
             <div className="text-sm">
               <div className="font-semibold">Mail Us</div>
               <a href={`mailto:${contactInfo?.email}`} className="text-white/75 hover:text-white transition-colors">
                 {contactInfo?.email}
               </a>
+            </div>
+          </div>
+          <div className="flex items-start gap-3 lg:pl-6">
+            <div className="text-sm">
+              <div className="font-semibold mb-2">Follow Us</div>
+              <div className="flex items-center gap-3">
+                {socialLinks?.instagram && (
+                  <a
+                    href={socialLinks.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/30 text-white hover:bg-white hover:text-primary_red transition-colors"
+                  >
+                    <InstagramIcon />
+                  </a>
+                )}
+                {socialLinks?.linkedin && (
+                  <a
+                    href={socialLinks.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/30 text-white hover:bg-white hover:text-primary_red transition-colors"
+                  >
+                    <LinkedInIcon />
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         </div>
