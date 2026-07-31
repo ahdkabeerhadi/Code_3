@@ -179,7 +179,10 @@ export async function Footer() {
             <PhoneIcon />
             <div className="text-sm">
               <div className="font-semibold">Call Us</div>
-              <a href={`tel:${contactInfo?.phone}`} className="text-white/75 hover:text-white transition-colors">
+              <a
+                href={`tel:${contactInfo?.phone}`}
+                className="text-white/75 hover:text-white transition-colors whitespace-nowrap"
+              >
                 {contactInfo?.phone}
               </a>
             </div>
