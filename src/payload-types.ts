@@ -321,6 +321,8 @@ export interface Page {
     | LeadCaptureFormBlock
     | RelatedServicesBlock
     | ServiceCoverageBlock
+    | DowntimeEstimatorBlock
+    | AssuranceStripBlock
     | TestimonialsBlock
     | AccreditationsBlock
     | IndustriesBlock
@@ -1570,6 +1572,70 @@ export interface ServiceCoverageBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DowntimeEstimatorBlock".
+ */
+export interface DowntimeEstimatorBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  workstationsLabel?: string | null;
+  serversLabel?: string | null;
+  /**
+   * Ordered smallest to largest. The first tier whose limits fit the entered counts is used; if none fit, the last tier is used as the fallback (e.g. "scoped after assessment").
+   */
+  tiers?:
+    | {
+        /**
+         * e.g. "Small Office"
+         */
+        label: string;
+        /**
+         * Upper limit of workstations for this tier to apply.
+         */
+        maxWorkstations: number;
+        /**
+         * Upper limit of servers for this tier to apply.
+         */
+        maxServers: number;
+        /**
+         * e.g. "Typically a single weekend"
+         */
+        estimate: string;
+        id?: string | null;
+      }[]
+    | null;
+  disclaimer?: string | null;
+  ctaLabel?: string | null;
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'downtimeEstimator';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AssuranceStripBlock".
+ */
+export interface AssuranceStripBlock {
+  items?:
+    | {
+        icon: 'shield' | 'tag' | 'document' | 'camera' | 'check';
+        /**
+         * e.g. "Fully Insured Transport"
+         */
+        title: string;
+        /**
+         * Short one-line note.
+         */
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'assuranceStrip';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "TestimonialsBlock".
  */
 export interface TestimonialsBlock {
@@ -2194,6 +2260,8 @@ export interface PagesSelect<T extends boolean = true> {
         leadCaptureForm?: T | LeadCaptureFormBlockSelect<T>;
         relatedServices?: T | RelatedServicesBlockSelect<T>;
         serviceCoverage?: T | ServiceCoverageBlockSelect<T>;
+        downtimeEstimator?: T | DowntimeEstimatorBlockSelect<T>;
+        assuranceStrip?: T | AssuranceStripBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
         accreditations?: T | AccreditationsBlockSelect<T>;
         industries?: T | IndustriesBlockSelect<T>;
@@ -2843,6 +2911,47 @@ export interface ServiceCoverageBlockSelect<T extends boolean = true> {
         id?: T;
       };
   note?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DowntimeEstimatorBlock_select".
+ */
+export interface DowntimeEstimatorBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  workstationsLabel?: T;
+  serversLabel?: T;
+  tiers?:
+    | T
+    | {
+        label?: T;
+        maxWorkstations?: T;
+        maxServers?: T;
+        estimate?: T;
+        id?: T;
+      };
+  disclaimer?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AssuranceStripBlock_select".
+ */
+export interface AssuranceStripBlockSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        text?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

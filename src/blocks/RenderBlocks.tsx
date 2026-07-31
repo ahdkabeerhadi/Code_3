@@ -33,6 +33,8 @@ import { ComparisonTableBlock } from './ComparisonTable/Component'
 import { LeadCaptureFormBlock } from './LeadCaptureForm/Component'
 import { RelatedServicesBlock } from './RelatedServices/Component'
 import { ServiceCoverageBlock } from './ServiceCoverage/Component'
+import { DowntimeEstimatorBlock } from './DowntimeEstimator/Component'
+import { AssuranceStripBlock } from './AssuranceStrip/Component'
 import { TestimonialsBlock } from './Testimonials/Component'
 import { AccreditationsBlock } from './Accreditations/Component'
 import { IndustriesBlock } from './Industries/Component'
@@ -78,6 +80,8 @@ const blockComponents = {
   leadCaptureForm: LeadCaptureFormBlock,
   relatedServices: RelatedServicesBlock,
   serviceCoverage: ServiceCoverageBlock,
+  downtimeEstimator: DowntimeEstimatorBlock,
+  assuranceStrip: AssuranceStripBlock,
   testimonials: TestimonialsBlock,
   accreditations: AccreditationsBlock,
   industries: IndustriesBlock,
