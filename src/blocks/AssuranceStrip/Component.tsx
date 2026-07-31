@@ -67,7 +67,8 @@ export const AssuranceStripBlock: React.FC<Props> = ({ className, items = [] }) 
       <div className="container mx-auto px-4 sm:px-6">
         <Reveal
           className={cn(
-            'grid grid-cols-1 gap-3 rounded-2xl border border-border bg-gray-50/60 p-5 sm:grid-cols-2',
+            'grid grid-cols-1 gap-3 rounded-2xl border border-border bg-gray-50/60 p-5',
+            items.length >= 2 && 'sm:grid-cols-2',
             items.length >= 3 && 'lg:grid-cols-3',
             items.length >= 4 && 'lg:grid-cols-4',
           )}

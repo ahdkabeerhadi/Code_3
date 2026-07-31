@@ -325,6 +325,8 @@ export interface Page {
     | AssuranceStripBlock
     | ScopeChecklistBlock
     | SpecComparisonTableBlock
+    | RoomPanelDemoBlock
+    | CategorizedIntegrationsBlock
     | TestimonialsBlock
     | AccreditationsBlock
     | IndustriesBlock
@@ -1701,6 +1703,65 @@ export interface SpecComparisonTableBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoomPanelDemoBlock".
+ */
+export interface RoomPanelDemoBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  roomName: string;
+  /**
+   * e.g. "Tap a status to preview the panel"
+   */
+  hint?: string | null;
+  states?:
+    | {
+        /**
+         * e.g. "Available"
+         */
+        label: string;
+        tone: 'green' | 'red' | 'amber';
+        /**
+         * e.g. "Free until 2:00 PM"
+         */
+        statusText: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'roomPanelDemo';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CategorizedIntegrationsBlock".
+ */
+export interface CategorizedIntegrationsBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  groups?:
+    | {
+        /**
+         * e.g. "Video Conferencing"
+         */
+        heading: string;
+        items?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'categorizedIntegrations';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "TestimonialsBlock".
  */
 export interface TestimonialsBlock {
@@ -2329,6 +2390,8 @@ export interface PagesSelect<T extends boolean = true> {
         assuranceStrip?: T | AssuranceStripBlockSelect<T>;
         scopeChecklist?: T | ScopeChecklistBlockSelect<T>;
         specComparisonTable?: T | SpecComparisonTableBlockSelect<T>;
+        roomPanelDemo?: T | RoomPanelDemoBlockSelect<T>;
+        categorizedIntegrations?: T | CategorizedIntegrationsBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
         accreditations?: T | AccreditationsBlockSelect<T>;
         industries?: T | IndustriesBlockSelect<T>;
@@ -3061,6 +3124,51 @@ export interface SpecComparisonTableBlockSelect<T extends boolean = true> {
     | {
         rowLabel?: T;
         values?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoomPanelDemoBlock_select".
+ */
+export interface RoomPanelDemoBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  roomName?: T;
+  hint?: T;
+  states?:
+    | T
+    | {
+        label?: T;
+        tone?: T;
+        statusText?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CategorizedIntegrationsBlock_select".
+ */
+export interface CategorizedIntegrationsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  groups?:
+    | T
+    | {
+        heading?: T;
+        items?:
           | T
           | {
               text?: T;

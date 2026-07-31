@@ -50,6 +50,8 @@ import { DowntimeEstimator } from '@/blocks/DowntimeEstimator/config'
 import { AssuranceStrip } from '@/blocks/AssuranceStrip/config'
 import { ScopeChecklist } from '@/blocks/ScopeChecklist/config'
 import { SpecComparisonTable } from '@/blocks/SpecComparisonTable/config'
+import { RoomPanelDemo } from '@/blocks/RoomPanelDemo/config'
+import { CategorizedIntegrations } from '@/blocks/CategorizedIntegrations/config'
 import { Testimonials } from '@/blocks/Testimonials/config'
 import { Accreditations } from '@/blocks/Accreditations/config'
 import { Industries } from '@/blocks/Industries/config'
@@ -194,6 +196,8 @@ export const Pages: CollectionConfig<'pages'> = {
                 AssuranceStrip,
                 ScopeChecklist,
                 SpecComparisonTable,
+                RoomPanelDemo,
+                CategorizedIntegrations,
                 Testimonials,
                 Accreditations,
                 Industries,
