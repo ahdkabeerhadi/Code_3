@@ -327,6 +327,7 @@ export interface Page {
     | SpecComparisonTableBlock
     | RoomPanelDemoBlock
     | CategorizedIntegrationsBlock
+    | RoomSizeCardsBlock
     | TestimonialsBlock
     | AccreditationsBlock
     | IndustriesBlock
@@ -1771,6 +1772,45 @@ export interface CategorizedIntegrationsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoomSizeCardsBlock".
+ */
+export interface RoomSizeCardsBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * List from smallest to largest — the size bar on each card fills more as you go down the list.
+   */
+  tiers?:
+    | {
+        /**
+         * e.g. "Huddle Rooms"
+         */
+        label: string;
+        minCapacity: number;
+        /**
+         * Leave blank for the top tier to show "X+"
+         */
+        maxCapacity?: number | null;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'roomSizeCards';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "TestimonialsBlock".
  */
 export interface TestimonialsBlock {
@@ -2401,6 +2441,7 @@ export interface PagesSelect<T extends boolean = true> {
         specComparisonTable?: T | SpecComparisonTableBlockSelect<T>;
         roomPanelDemo?: T | RoomPanelDemoBlockSelect<T>;
         categorizedIntegrations?: T | CategorizedIntegrationsBlockSelect<T>;
+        roomSizeCards?: T | RoomSizeCardsBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
         accreditations?: T | AccreditationsBlockSelect<T>;
         industries?: T | IndustriesBlockSelect<T>;
@@ -3191,6 +3232,29 @@ export interface CategorizedIntegrationsBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoomSizeCardsBlock_select".
+ */
+export interface RoomSizeCardsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  tiers?:
+    | T
+    | {
+        label?: T;
+        minCapacity?: T;
+        maxCapacity?: T;
+        description?: T;
+        id?: T;
+      };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
   id?: T;
   blockName?: T;
 }
