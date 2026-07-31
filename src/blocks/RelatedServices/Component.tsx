@@ -12,22 +12,24 @@ export const RelatedServicesBlock: React.FC<Props> = ({ className, title, items 
   if (!items || items.length === 0) return null
 
   return (
-    <section className={cn('bg-gray-50/80 py-6', className)}>
-      <div className="container mx-auto flex flex-col gap-3 px-4 sm:px-6 md:flex-row md:items-center md:gap-6">
+    <section className={cn('bg-gray-50/80 py-8 md:py-10', className)}>
+      <div className="container mx-auto flex flex-col gap-4 px-4 sm:px-6 md:flex-row md:items-center md:gap-8">
         {title && (
-          <span className="flex-none text-sm font-semibold uppercase tracking-wide text-gray-500">{title}</span>
+          <span className="flex-none text-base font-semibold uppercase tracking-wide text-gray-500 md:text-lg">
+            {title}
+          </span>
         )}
-        <div className="flex flex-wrap gap-2.5">
+        <div className="flex flex-wrap gap-3">
           {items.map((item, index) => (
             <Link
               key={item.id || index}
               href={item.url}
-              className="group inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-foreground transition-colors duration-200 hover:border-primary_red/40 hover:text-primary_red"
+              className="group inline-flex items-center gap-2 rounded-full border border-border bg-white px-5 py-3 text-base font-medium text-foreground shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary_red/40 hover:text-primary_red hover:shadow-md"
             >
               {item.label}
               <svg
-                width="12"
-                height="12"
+                width="14"
+                height="14"
                 viewBox="0 0 16 16"
                 fill="none"
                 className="flex-none transition-transform duration-200 group-hover:translate-x-0.5"
