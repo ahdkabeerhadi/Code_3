@@ -26,14 +26,68 @@ function FlagIcon() {
   )
 }
 
+const toneStyles = {
+  positive: {
+    card: 'border-green-200 bg-green-50/60',
+    badge: 'bg-green-500',
+    Icon: CheckIcon,
+  },
+  negative: {
+    card: 'border-red-200 bg-[#FDEBEC]',
+    badge: 'bg-primary_red',
+    Icon: FlagIcon,
+  },
+} as const
+
+function QualificationColumn({
+  heading,
+  tone,
+  items,
+}: {
+  heading?: string | null
+  tone: 'positive' | 'negative'
+  items: { text: string; id?: string | null }[]
+}) {
+  const styles = toneStyles[tone]
+  const { Icon } = styles
+
+  return (
+    <div className={cn('rounded-2xl border-2 p-6 md:p-7', styles.card)}>
+      <div className="mb-5 flex items-center gap-3">
+        <span className={cn('flex h-10 w-10 flex-none items-center justify-center rounded-full text-white', styles.badge)}>
+          <Icon />
+        </span>
+        <h3 className="text-lg font-bold text-foreground">{heading}</h3>
+      </div>
+      <ul className="space-y-3.5">
+        {items.map((item, index) => (
+          <li key={item.id || index} className="flex items-start gap-3 text-sm text-gray-700">
+            <span
+              className={cn(
+                'mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full text-white',
+                styles.badge,
+              )}
+            >
+              <Icon />
+            </span>
+            {item.text}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
 export const QualificationBlock: React.FC<Props> = ({
   badge,
   className,
   title,
   subtitle,
   leftHeading,
+  leftTone,
   leftItems = [],
   rightHeading,
+  rightTone,
   rightItems = [],
 }) => {
   if ((!leftItems || leftItems.length === 0) && (!rightItems || rightItems.length === 0)) return null
@@ -48,43 +102,8 @@ export const QualificationBlock: React.FC<Props> = ({
         </Reveal>
 
         <Reveal delayMs={100} className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <div className="rounded-2xl border-2 border-green-200 bg-green-50/60 p-6 md:p-7">
-            <div className="mb-5 flex items-center gap-3">
-              <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-green-500 text-white">
-                <CheckIcon />
-              </span>
-              <h3 className="text-lg font-bold text-foreground">{leftHeading}</h3>
-            </div>
-            <ul className="space-y-3.5">
-              {(leftItems || []).map((item, index) => (
-                <li key={item.id || index} className="flex items-start gap-3 text-sm text-gray-700">
-                  <span className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-green-500 text-white">
-                    <CheckIcon />
-                  </span>
-                  {item.text}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="rounded-2xl border-2 border-red-200 bg-[#FDEBEC] p-6 md:p-7">
-            <div className="mb-5 flex items-center gap-3">
-              <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-primary_red text-white">
-                <FlagIcon />
-              </span>
-              <h3 className="text-lg font-bold text-foreground">{rightHeading}</h3>
-            </div>
-            <ul className="space-y-3.5">
-              {(rightItems || []).map((item, index) => (
-                <li key={item.id || index} className="flex items-start gap-3 text-sm text-gray-700">
-                  <span className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary_red text-white">
-                    <FlagIcon />
-                  </span>
-                  {item.text}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <QualificationColumn heading={leftHeading} tone={leftTone || 'positive'} items={leftItems || []} />
+          <QualificationColumn heading={rightHeading} tone={rightTone || 'negative'} items={rightItems || []} />
         </Reveal>
       </div>
     </section>

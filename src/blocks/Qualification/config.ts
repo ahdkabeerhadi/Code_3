@@ -33,6 +33,17 @@ export const Qualification: Block = {
       required: true,
     },
     {
+      name: 'leftTone',
+      type: 'select',
+      label: 'Left Column Tone',
+      options: [
+        { label: 'Positive (green check)', value: 'positive' },
+        { label: 'Negative (red flag)', value: 'negative' },
+      ],
+      defaultValue: 'positive',
+      required: true,
+    },
+    {
       name: 'leftItems',
       type: 'array',
       label: 'Left Column Items',
@@ -44,6 +55,17 @@ export const Qualification: Block = {
       type: 'text',
       label: 'Right Column Heading',
       defaultValue: 'Operational Challenges',
+      required: true,
+    },
+    {
+      name: 'rightTone',
+      type: 'select',
+      label: 'Right Column Tone',
+      options: [
+        { label: 'Positive (green check)', value: 'positive' },
+        { label: 'Negative (red flag)', value: 'negative' },
+      ],
+      defaultValue: 'negative',
       required: true,
     },
     {

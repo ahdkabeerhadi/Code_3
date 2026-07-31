@@ -1476,6 +1476,7 @@ export interface QualificationBlock {
   title: string;
   subtitle?: string | null;
   leftHeading: string;
+  leftTone: 'positive' | 'negative';
   leftItems?:
     | {
         text: string;
@@ -1483,6 +1484,7 @@ export interface QualificationBlock {
       }[]
     | null;
   rightHeading: string;
+  rightTone: 'positive' | 'negative';
   rightItems?:
     | {
         text: string;
@@ -2828,6 +2830,7 @@ export interface QualificationBlockSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
   leftHeading?: T;
+  leftTone?: T;
   leftItems?:
     | T
     | {
@@ -2835,6 +2838,7 @@ export interface QualificationBlockSelect<T extends boolean = true> {
         id?: T;
       };
   rightHeading?: T;
+  rightTone?: T;
   rightItems?:
     | T
     | {
