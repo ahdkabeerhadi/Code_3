@@ -43,8 +43,8 @@ export const RoomPanelDemoBlock: React.FC<Props> = ({ badge, className, title, s
           {subtitle && <p className="mt-3 text-gray-600 leading-relaxed">{subtitle}</p>}
         </Reveal>
 
-        <Reveal delayMs={100} className="grid grid-cols-1 items-start gap-6 md:grid-cols-[minmax(0,360px)_1fr]">
-          <div className="overflow-hidden rounded-3xl border border-border shadow-sm">
+        <Reveal delayMs={100} className="flex max-w-2xl flex-col items-start gap-6 md:flex-row">
+          <div className="w-full flex-none overflow-hidden rounded-3xl border border-border shadow-sm md:w-[360px]">
             <div className={cn('px-5 py-5 text-white transition-colors duration-300', tone.panel)}>
               <div className="text-xs font-semibold uppercase tracking-wide opacity-80">{roomName}</div>
               <div className="mt-1 text-2xl font-bold">{active.label}</div>
@@ -59,7 +59,7 @@ export const RoomPanelDemoBlock: React.FC<Props> = ({ badge, className, title, s
             </div>
           </div>
 
-          <div>
+          <div className="w-full flex-1 pt-1">
             {hint && <p className="mb-3 text-sm text-gray-500">{hint}</p>}
             <div className="flex flex-wrap gap-2">
               {states.map((s, index) => {
