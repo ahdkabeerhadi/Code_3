@@ -36,7 +36,13 @@ export const WhyChooseUsAboutBlock: React.FC<Props> = ({
             <ClearQuickEnquiry />
             <Reveal
               delayMs={100}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t border-l border-border"
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-2 border-t border-l border-border',
+                features.length === 1 && 'lg:grid-cols-1',
+                features.length === 2 && 'lg:grid-cols-2',
+                features.length === 3 && 'lg:grid-cols-3',
+                features.length >= 4 && 'lg:grid-cols-4',
+              )}
             >
               {features.map((feature, index) => (
                 <div key={feature.id || index} className="border-r border-b border-border p-5">
