@@ -1217,6 +1217,10 @@ export interface QuickEnquiryBlock {
   promoNote?: string | null;
   promoCtaLabel?: string | null;
   promoCtaUrl?: string | null;
+  /**
+   * Shown below the form (and below the promo card, if enabled). Fills the empty space in the sidebar column — portrait or square images work best, matching the ~360px form width.
+   */
+  sidebarImage?: (string | null) | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'quickEnquiry';
@@ -2834,6 +2838,7 @@ export interface QuickEnquiryBlockSelect<T extends boolean = true> {
   promoNote?: T;
   promoCtaLabel?: T;
   promoCtaUrl?: T;
+  sidebarImage?: T;
   id?: T;
   blockName?: T;
 }

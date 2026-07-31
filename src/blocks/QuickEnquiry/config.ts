@@ -89,5 +89,15 @@ export const QuickEnquiry: Block = {
       defaultValue: '/contact',
       admin: { condition: (_, siblingData) => Boolean(siblingData?.promoEnabled) },
     },
+    {
+      name: 'sidebarImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Sidebar Image (optional)',
+      admin: {
+        description:
+          'Shown below the form (and below the promo card, if enabled). Fills the empty space in the sidebar column — portrait or square images work best, matching the ~360px form width.',
+      },
+    },
   ],
 }

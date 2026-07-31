@@ -2,6 +2,8 @@ import React from 'react'
 import Link from 'next/link'
 import { cn } from '@/utilities/ui'
 import { MiniContactForm } from '@/components/site/MiniContactForm'
+import { Media } from '@/components/Media'
+import type { Media as MediaType } from '@/payload-types'
 
 interface QuickEnquiryBlockProps {
   title?: string
@@ -16,6 +18,7 @@ interface QuickEnquiryBlockProps {
   promoNote?: string | null
   promoCtaLabel?: string | null
   promoCtaUrl?: string | null
+  sidebarImage?: (string | null) | MediaType
 }
 
 function GiftIcon() {
@@ -49,6 +52,7 @@ export const QuickEnquiryBlock: React.FC<QuickEnquiryBlockProps> = ({
   promoNote,
   promoCtaLabel,
   promoCtaUrl,
+  sidebarImage,
 }) => {
   return (
     <div
@@ -116,6 +120,12 @@ export const QuickEnquiryBlock: React.FC<QuickEnquiryBlockProps> = ({
               </Link>
             )}
             {promoNote && <p className="relative mt-2.5 text-center text-xs font-medium text-white/60">{promoNote}</p>}
+          </div>
+        )}
+
+        {sidebarImage && (
+          <div className="mx-auto mt-4 max-w-md overflow-hidden rounded-2xl lg:pointer-events-auto lg:mx-0 lg:w-[360px]">
+            <Media resource={sidebarImage} imgClassName="h-auto w-full object-cover" />
           </div>
         )}
       </div>
