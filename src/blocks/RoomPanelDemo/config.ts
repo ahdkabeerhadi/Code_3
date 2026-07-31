@@ -39,6 +39,13 @@ export const RoomPanelDemo: Block = {
       admin: { description: 'e.g. "Tap a status to preview the panel"' },
     },
     {
+      name: 'highlights',
+      type: 'array',
+      label: 'Panel Highlights',
+      admin: { description: 'Short hardware/feature notes shown next to the demo, e.g. "7\\" touch display".' },
+      fields: [{ name: 'text', type: 'text', required: true }],
+    },
+    {
       name: 'states',
       type: 'array',
       label: 'Panel States',

@@ -26,7 +26,24 @@ function ClockIcon() {
   )
 }
 
-export const RoomPanelDemoBlock: React.FC<Props> = ({ badge, className, title, subtitle, roomName, hint, states = [] }) => {
+function CheckIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 flex-none">
+      <path d="M20 6L9 17l-5-5" />
+    </svg>
+  )
+}
+
+export const RoomPanelDemoBlock: React.FC<Props> = ({
+  badge,
+  className,
+  title,
+  subtitle,
+  roomName,
+  hint,
+  highlights = [],
+  states = [],
+}) => {
   const [activeIndex, setActiveIndex] = useState(0)
 
   if (!states || states.length === 0) return null
@@ -81,6 +98,19 @@ export const RoomPanelDemoBlock: React.FC<Props> = ({ badge, className, title, s
                 )
               })}
             </div>
+
+            {highlights && highlights.length > 0 && (
+              <ul className="mt-6 space-y-2.5 border-t border-border pt-5">
+                {highlights.map((item, index) => (
+                  <li key={item.id || index} className="flex items-start gap-2.5 text-sm text-gray-600">
+                    <span className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-[#FDEBEC] text-primary_red">
+                      <CheckIcon />
+                    </span>
+                    {item.text}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </Reveal>
       </div>

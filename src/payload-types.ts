@@ -1714,6 +1714,15 @@ export interface RoomPanelDemoBlock {
    * e.g. "Tap a status to preview the panel"
    */
   hint?: string | null;
+  /**
+   * Short hardware/feature notes shown next to the demo, e.g. "7\" touch display".
+   */
+  highlights?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
   states?:
     | {
         /**
@@ -3144,6 +3153,12 @@ export interface RoomPanelDemoBlockSelect<T extends boolean = true> {
   subtitle?: T;
   roomName?: T;
   hint?: T;
+  highlights?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
   states?:
     | T
     | {
