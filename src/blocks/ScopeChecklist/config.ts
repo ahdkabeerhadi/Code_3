@@ -30,7 +30,15 @@ export const ScopeChecklist: Block = {
       type: 'array',
       label: 'Items',
       minRows: 1,
-      fields: [{ name: 'text', type: 'text', required: true }],
+      fields: [
+        { name: 'text', type: 'text', required: true },
+        {
+          name: 'url',
+          type: 'text',
+          label: 'Link URL (optional)',
+          admin: { description: 'If set, this item links to the given URL, e.g. "/service/cyber-security".' },
+        },
+      ],
     },
     {
       name: 'note',

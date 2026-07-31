@@ -1652,6 +1652,10 @@ export interface ScopeChecklistBlock {
   items?:
     | {
         text: string;
+        /**
+         * If set, this item links to the given URL, e.g. "/service/cyber-security".
+         */
+        url?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -3149,6 +3153,7 @@ export interface ScopeChecklistBlockSelect<T extends boolean = true> {
     | T
     | {
         text?: T;
+        url?: T;
         id?: T;
       };
   note?: T;

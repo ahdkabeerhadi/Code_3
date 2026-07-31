@@ -1,6 +1,7 @@
 import type { ScopeChecklistBlock as ScopeChecklistBlockProps } from 'src/payload-types'
 
 import { cn } from '@/utilities/ui'
+import Link from 'next/link'
 import React from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
@@ -30,17 +31,37 @@ export const ScopeChecklistBlock: React.FC<Props> = ({ badge, className, title, 
         </Reveal>
 
         <Reveal delayMs={100} className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-          {items.map((item, index) => (
-            <div
-              key={item.id || index}
-              className="flex items-center gap-2.5 rounded-xl border border-border bg-gray-50/60 px-4 py-3"
-            >
-              <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-[#FDEBEC] text-primary_red">
-                <CheckIcon />
-              </span>
-              <span className="text-sm font-medium text-foreground">{item.text}</span>
-            </div>
-          ))}
+          {items.map((item, index) => {
+            const content = (
+              <>
+                <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-[#FDEBEC] text-primary_red">
+                  <CheckIcon />
+                </span>
+                <span className="text-sm font-medium text-foreground">{item.text}</span>
+              </>
+            )
+
+            if (item.url) {
+              return (
+                <Link
+                  key={item.id || index}
+                  href={item.url}
+                  className="flex items-center gap-2.5 rounded-xl border border-border bg-gray-50/60 px-4 py-3 transition-colors hover:border-primary_red/40 hover:bg-[#FDEBEC]/40"
+                >
+                  {content}
+                </Link>
+              )
+            }
+
+            return (
+              <div
+                key={item.id || index}
+                className="flex items-center gap-2.5 rounded-xl border border-border bg-gray-50/60 px-4 py-3"
+              >
+                {content}
+              </div>
+            )
+          })}
         </Reveal>
 
         {note && <p className="mt-5 text-sm text-gray-500">{note}</p>}
