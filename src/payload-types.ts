@@ -323,6 +323,7 @@ export interface Page {
     | ServiceCoverageBlock
     | DowntimeEstimatorBlock
     | AssuranceStripBlock
+    | ScopeChecklistBlock
     | TestimonialsBlock
     | AccreditationsBlock
     | IndustriesBlock
@@ -1638,6 +1639,28 @@ export interface AssuranceStripBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ScopeChecklistBlock".
+ */
+export interface ScopeChecklistBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  items?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * e.g. "Also fully customizable based on your business needs and requirements."
+   */
+  note?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'scopeChecklist';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "TestimonialsBlock".
  */
 export interface TestimonialsBlock {
@@ -2264,6 +2287,7 @@ export interface PagesSelect<T extends boolean = true> {
         serviceCoverage?: T | ServiceCoverageBlockSelect<T>;
         downtimeEstimator?: T | DowntimeEstimatorBlockSelect<T>;
         assuranceStrip?: T | AssuranceStripBlockSelect<T>;
+        scopeChecklist?: T | ScopeChecklistBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
         accreditations?: T | AccreditationsBlockSelect<T>;
         industries?: T | IndustriesBlockSelect<T>;
@@ -2956,6 +2980,24 @@ export interface AssuranceStripBlockSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ScopeChecklistBlock_select".
+ */
+export interface ScopeChecklistBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  items?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  note?: T;
   id?: T;
   blockName?: T;
 }
