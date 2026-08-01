@@ -84,7 +84,13 @@ export const RoomSizeCardsBlock: React.FC<Props> = ({ badge, className, title, s
           {subtitle && <p className="mt-3 text-gray-600 leading-relaxed">{subtitle}</p>}
         </Reveal>
 
-        <Reveal delayMs={100} className={cn('grid grid-cols-1 gap-4', GRID_COLS[tiers.length] || 'sm:grid-cols-2 lg:grid-cols-4')}>
+        <Reveal
+          delayMs={100}
+          className={cn(
+            'grid grid-cols-1 gap-4 lg:pr-28',
+            GRID_COLS[tiers.length] || 'sm:grid-cols-2 lg:grid-cols-4',
+          )}
+        >
           {tiers.map((tier, index) => {
             const progress = tiers.length > 1 ? index / (tiers.length - 1) : 1
             const capacityLabel = tier.maxCapacity ? `${tier.minCapacity}-${tier.maxCapacity}` : `${tier.minCapacity}+`
