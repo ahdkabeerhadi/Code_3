@@ -1802,10 +1802,6 @@ export interface RoomSizeCardsBlock {
         maxCapacity?: number | null;
         description: string;
         /**
-         * Short use-case tag, e.g. "Quick huddles & 1:1 calls"
-         */
-        bestFor?: string | null;
-        /**
          * If set, the whole card links here, e.g. "/service/meeting-room-solutions"
          */
         url?: string | null;
@@ -3268,7 +3264,6 @@ export interface RoomSizeCardsBlockSelect<T extends boolean = true> {
         minCapacity?: T;
         maxCapacity?: T;
         description?: T;
-        bestFor?: T;
         url?: T;
         id?: T;
       };

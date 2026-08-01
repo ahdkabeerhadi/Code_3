@@ -45,12 +45,6 @@ export const RoomSizeCards: Block = {
         },
         { name: 'description', type: 'textarea', required: true },
         {
-          name: 'bestFor',
-          type: 'text',
-          label: 'Best For (optional)',
-          admin: { description: 'Short use-case tag, e.g. "Quick huddles & 1:1 calls"' },
-        },
-        {
           name: 'url',
           type: 'text',
           label: 'Link URL (optional)',
