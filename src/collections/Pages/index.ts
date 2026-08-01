@@ -150,6 +150,20 @@ export const Pages: CollectionConfig<'pages'> = {
       },
     },
     {
+      name: 'navOrder',
+      type: 'number',
+      label: 'Navigation Order',
+      defaultValue: 0,
+      admin: {
+        position: 'sidebar',
+        description:
+          'Controls display order in the IT Infra Services mega-menu and footer service columns. Lower numbers appear first.',
+        condition: (data) => {
+          return data?.serviceCategory === 'infrastructure' || data?.serviceCategory === 'digital'
+        },
+      },
+    },
+    {
       type: 'tabs',
       tabs: [
         {

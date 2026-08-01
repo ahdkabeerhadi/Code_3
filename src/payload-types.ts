@@ -208,6 +208,10 @@ export interface Page {
         | 'bed'
       )
     | null;
+  /**
+   * Controls display order in the IT Infra Services mega-menu and footer service columns. Lower numbers appear first.
+   */
+  navOrder?: number | null;
   hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
     richText?: {
@@ -2365,6 +2369,7 @@ export interface PagesSelect<T extends boolean = true> {
   serviceCategory?: T;
   parentService?: T;
   icon?: T;
+  navOrder?: T;
   hero?:
     | T
     | {

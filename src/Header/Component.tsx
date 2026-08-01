@@ -35,6 +35,7 @@ const getNavData = unstable_cache(
       collection: 'pages',
       depth: 2,
       limit: 200,
+      sort: ['navOrder', 'title'],
       where: {
         serviceCategory: {
           in: ['infrastructure', 'digital'],

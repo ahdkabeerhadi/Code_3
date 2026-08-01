@@ -98,6 +98,7 @@ const getFooterServicePages = unstable_cache(
       collection: 'pages',
       depth: 0,
       limit: 300,
+      sort: ['navOrder', 'title'],
       where: {
         and: [
           { serviceCategory: { equals: 'infrastructure' } },
