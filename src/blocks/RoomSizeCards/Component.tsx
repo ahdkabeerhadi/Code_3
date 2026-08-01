@@ -14,7 +14,7 @@ type Props = {
 const GRID_COLS: Record<number, string> = {
   2: 'sm:grid-cols-2',
   3: 'sm:grid-cols-2 lg:grid-cols-3',
-  4: 'sm:grid-cols-2 lg:grid-cols-4',
+  4: 'sm:grid-cols-2',
   5: 'sm:grid-cols-2 lg:grid-cols-5',
   6: 'sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6',
 }
