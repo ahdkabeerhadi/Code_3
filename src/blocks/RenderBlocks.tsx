@@ -27,6 +27,19 @@ import { ServiceOverviewBlock } from './ServiceOverview/Component'
 import { ServiceSolutionsBlock } from './ServiceSolutions/Components'
 import { ServiceCatalogBlock } from './ServiceCatalog/Component'
 import { StatsBlock } from './Stats/Component'
+import { SLATableBlock } from './SLATable/Component'
+import { QualificationBlock } from './Qualification/Component'
+import { ComparisonTableBlock } from './ComparisonTable/Component'
+import { LeadCaptureFormBlock } from './LeadCaptureForm/Component'
+import { RelatedServicesBlock } from './RelatedServices/Component'
+import { ServiceCoverageBlock } from './ServiceCoverage/Component'
+import { DowntimeEstimatorBlock } from './DowntimeEstimator/Component'
+import { AssuranceStripBlock } from './AssuranceStrip/Component'
+import { ScopeChecklistBlock } from './ScopeChecklist/Component'
+import { SpecComparisonTableBlock } from './SpecComparisonTable/Component'
+import { RoomPanelDemoBlock } from './RoomPanelDemo/Component'
+import { CategorizedIntegrationsBlock } from './CategorizedIntegrations/Component'
+import { RoomSizeCardsBlock } from './RoomSizeCards/Component'
 import { TestimonialsBlock } from './Testimonials/Component'
 import { AccreditationsBlock } from './Accreditations/Component'
 import { IndustriesBlock } from './Industries/Component'
@@ -66,6 +79,19 @@ const blockComponents = {
   serviceOverview: ServiceOverviewBlock,
   serviceCatalog: ServiceCatalogBlock,
   stats: StatsBlock,
+  slaTable: SLATableBlock,
+  qualification: QualificationBlock,
+  comparisonTable: ComparisonTableBlock,
+  leadCaptureForm: LeadCaptureFormBlock,
+  relatedServices: RelatedServicesBlock,
+  serviceCoverage: ServiceCoverageBlock,
+  downtimeEstimator: DowntimeEstimatorBlock,
+  assuranceStrip: AssuranceStripBlock,
+  scopeChecklist: ScopeChecklistBlock,
+  specComparisonTable: SpecComparisonTableBlock,
+  roomPanelDemo: RoomPanelDemoBlock,
+  categorizedIntegrations: CategorizedIntegrationsBlock,
+  roomSizeCards: RoomSizeCardsBlock,
   testimonials: TestimonialsBlock,
   accreditations: AccreditationsBlock,
   industries: IndustriesBlock,

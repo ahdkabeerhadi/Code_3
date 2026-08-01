@@ -6,28 +6,40 @@ import { getClientSideURL } from '@/utilities/getURL'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
 
+const COMPANY_SIZE_OPTIONS = ['0-9', '10-24', '25-49', '50-100', '100+'] as const
+
 type FormValues = {
   fullname: string
   email: string
   phone: string
   message: string
+  companySize: string
 }
 
 export function MiniContactForm({
   className,
   title = 'Quick Enquiry',
   description,
+  showCompanySize = false,
+  submitLabel = 'Send Enquiry',
+  messagePlaceholder = 'How can we help?',
 }: {
   className?: string
   title?: string
   description?: string | null
+  /** Adds a required "Company Size" dropdown, used to qualify leads. */
+  showCompanySize?: boolean
+  submitLabel?: string
+  messagePlaceholder?: string
 }) {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormValues>({ defaultValues: { fullname: '', email: '', phone: '', message: '' } })
+  } = useForm<FormValues>({
+    defaultValues: { fullname: '', email: '', phone: '', message: '', companySize: '' },
+  })
 
   const [isLoading, setIsLoading] = useState(false)
   const [hasSubmitted, setHasSubmitted] = useState(false)
@@ -62,6 +74,7 @@ export function MiniContactForm({
             { field: 'phone', value: data.phone },
             { field: 'subject', value: title || 'Website Enquiry' },
             { field: 'message', value: data.message },
+            ...(showCompanySize ? [{ field: 'companySize', value: data.companySize }] : []),
           ],
         }),
       })
@@ -143,9 +156,29 @@ export function MiniContactForm({
           {errors.phone && <p className="mt-1 text-xs text-primary_red">A valid phone number is required.</p>}
         </div>
 
+        {showCompanySize && (
+          <div>
+            <select
+              defaultValue=""
+              {...register('companySize', { required: true })}
+              className={cn(fieldClassName, 'text-gray-900')}
+            >
+              <option value="" disabled>
+                Company size
+              </option>
+              {COMPANY_SIZE_OPTIONS.map((size) => (
+                <option key={size} value={size}>
+                  {size} employees
+                </option>
+              ))}
+            </select>
+            {errors.companySize && <p className="mt-1 text-xs text-primary_red">Please select your company size.</p>}
+          </div>
+        )}
+
         <div>
           <textarea
-            placeholder="How can we help?"
+            placeholder={messagePlaceholder}
             rows={2}
             {...register('message', { required: true })}
             className={cn(fieldClassName, 'resize-none')}
@@ -156,7 +189,7 @@ export function MiniContactForm({
         {error && <p className="text-xs text-primary_red">{error}</p>}
 
         <Button type="submit" variant="default" disabled={isLoading} className="w-full disabled:opacity-50">
-          {isLoading ? 'Sending...' : 'Send Enquiry'}
+          {isLoading ? 'Sending...' : submitLabel}
         </Button>
       </form>
     </div>

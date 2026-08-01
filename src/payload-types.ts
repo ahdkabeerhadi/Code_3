@@ -208,6 +208,10 @@ export interface Page {
         | 'bed'
       )
     | null;
+  /**
+   * Controls display order in the IT Infra Services mega-menu and footer service columns. Lower numbers appear first.
+   */
+  navOrder?: number | null;
   hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
     richText?: {
@@ -315,6 +319,19 @@ export interface Page {
     | ServiceOverviewBlock
     | ServiceCatalogBlock
     | StatsBlock
+    | SLATableBlock
+    | QualificationBlock
+    | ComparisonTableBlock
+    | LeadCaptureFormBlock
+    | RelatedServicesBlock
+    | ServiceCoverageBlock
+    | DowntimeEstimatorBlock
+    | AssuranceStripBlock
+    | ScopeChecklistBlock
+    | SpecComparisonTableBlock
+    | RoomPanelDemoBlock
+    | CategorizedIntegrationsBlock
+    | RoomSizeCardsBlock
     | TestimonialsBlock
     | AccreditationsBlock
     | IndustriesBlock
@@ -1181,6 +1198,33 @@ export interface PartnersDirectoryBlock {
 export interface QuickEnquiryBlock {
   title: string;
   description?: string | null;
+  promoEnabled?: boolean | null;
+  promoBadge?: string | null;
+  promoTitle?: string | null;
+  /**
+   * Short line right under the title, e.g. "Yes, you heard it right."
+   */
+  promoTagline?: string | null;
+  promoDescription?: string | null;
+  /**
+   * Short scannable bullets shown with checkmarks, e.g. "No credit card required".
+   */
+  promoFeatures?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Small disclaimer line, e.g. "No annual commitment needed for the trial."
+   */
+  promoNote?: string | null;
+  promoCtaLabel?: string | null;
+  promoCtaUrl?: string | null;
+  /**
+   * Shown below the form (and below the promo card, if enabled). Fills the empty space in the sidebar column — portrait or square images work best, matching the ~360px form width.
+   */
+  sidebarImage?: (string | null) | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'quickEnquiry';
@@ -1402,6 +1446,384 @@ export interface StatsBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'stats';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SLATableBlock".
+ */
+export interface SLATableBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  rows?:
+    | {
+        priority: 'High' | 'Medium' | 'Low';
+        severity: 'red' | 'amber' | 'blue' | 'green';
+        impact: string;
+        remoteSupportTime: string;
+        onsiteSupportTime: string;
+        helpdeskAvailability: string;
+        resolutionTarget: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'slaTable';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QualificationBlock".
+ */
+export interface QualificationBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  leftHeading: string;
+  leftTone: 'positive' | 'negative';
+  leftItems?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  rightHeading: string;
+  rightTone: 'positive' | 'negative';
+  rightItems?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'qualification';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ComparisonTableBlock".
+ */
+export interface ComparisonTableBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  leftLabel: string;
+  middleEnabled?: boolean | null;
+  middleLabel?: string | null;
+  rightLabel: string;
+  rows?:
+    | {
+        left: string;
+        middle?: string | null;
+        right: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'comparisonTable';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LeadCaptureFormBlock".
+ */
+export interface LeadCaptureFormBlock {
+  badge?: string | null;
+  title: string;
+  description?: string | null;
+  formTitle: string;
+  submitLabel: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'leadCaptureForm';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelatedServicesBlock".
+ */
+export interface RelatedServicesBlock {
+  title: string;
+  items?:
+    | {
+        label: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'relatedServices';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceCoverageBlock".
+ */
+export interface ServiceCoverageBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  areas?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * e.g. "Onsite visits scheduled within 24-48 hours of confirmation."
+   */
+  note?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'serviceCoverage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DowntimeEstimatorBlock".
+ */
+export interface DowntimeEstimatorBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  workstationsLabel?: string | null;
+  serversLabel?: string | null;
+  /**
+   * Ordered smallest to largest. The first tier whose limits fit the entered counts is used; if none fit, the last tier is used as the fallback (e.g. "scoped after assessment").
+   */
+  tiers?:
+    | {
+        /**
+         * e.g. "Small Office"
+         */
+        label: string;
+        /**
+         * Upper limit of workstations for this tier to apply.
+         */
+        maxWorkstations: number;
+        /**
+         * Upper limit of servers for this tier to apply.
+         */
+        maxServers: number;
+        /**
+         * e.g. "Typically a single weekend"
+         */
+        estimate: string;
+        id?: string | null;
+      }[]
+    | null;
+  disclaimer?: string | null;
+  ctaLabel?: string | null;
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'downtimeEstimator';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AssuranceStripBlock".
+ */
+export interface AssuranceStripBlock {
+  items?:
+    | {
+        icon: 'shield' | 'tag' | 'document' | 'camera' | 'check';
+        /**
+         * e.g. "Fully Insured Transport"
+         */
+        title: string;
+        /**
+         * Short one-line note.
+         */
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'assuranceStrip';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ScopeChecklistBlock".
+ */
+export interface ScopeChecklistBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  items?:
+    | {
+        text: string;
+        /**
+         * If set, this item links to the given URL, e.g. "/service/cyber-security".
+         */
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * e.g. "Also fully customizable based on your business needs and requirements."
+   */
+  note?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'scopeChecklist';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SpecComparisonTableBlock".
+ */
+export interface SpecComparisonTableBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  columns?:
+    | {
+        /**
+         * e.g. "Infrared"
+         */
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Each value corresponds to the column at the same position - keep the order in sync with Columns above.
+   */
+  rows?:
+    | {
+        /**
+         * e.g. "Best Use Case"
+         */
+        rowLabel: string;
+        values?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'specComparisonTable';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoomPanelDemoBlock".
+ */
+export interface RoomPanelDemoBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  roomName: string;
+  /**
+   * e.g. "Tap a status to preview the panel"
+   */
+  hint?: string | null;
+  /**
+   * Short hardware/feature notes shown next to the demo, e.g. "7\" touch display".
+   */
+  highlights?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  states?:
+    | {
+        /**
+         * e.g. "Available"
+         */
+        label: string;
+        tone: 'green' | 'red' | 'amber';
+        /**
+         * e.g. "Free until 2:00 PM"
+         */
+        statusText: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'roomPanelDemo';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CategorizedIntegrationsBlock".
+ */
+export interface CategorizedIntegrationsBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  groups?:
+    | {
+        /**
+         * e.g. "Video Conferencing"
+         */
+        heading: string;
+        items?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'categorizedIntegrations';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoomSizeCardsBlock".
+ */
+export interface RoomSizeCardsBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * List from smallest to largest — the size bar on each card fills more as you go down the list.
+   */
+  tiers?:
+    | {
+        /**
+         * e.g. "Huddle Rooms"
+         */
+        label: string;
+        minCapacity: number;
+        /**
+         * Leave blank for the top tier to show "X+"
+         */
+        maxCapacity?: number | null;
+        description: string;
+        /**
+         * If set, the whole card links here, e.g. "/service/meeting-room-solutions"
+         */
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'roomSizeCards';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1947,6 +2369,7 @@ export interface PagesSelect<T extends boolean = true> {
   serviceCategory?: T;
   parentService?: T;
   icon?: T;
+  navOrder?: T;
   hero?:
     | T
     | {
@@ -2023,6 +2446,19 @@ export interface PagesSelect<T extends boolean = true> {
         serviceOverview?: T | ServiceOverviewBlockSelect<T>;
         serviceCatalog?: T | ServiceCatalogBlockSelect<T>;
         stats?: T | StatsBlockSelect<T>;
+        slaTable?: T | SLATableBlockSelect<T>;
+        qualification?: T | QualificationBlockSelect<T>;
+        comparisonTable?: T | ComparisonTableBlockSelect<T>;
+        leadCaptureForm?: T | LeadCaptureFormBlockSelect<T>;
+        relatedServices?: T | RelatedServicesBlockSelect<T>;
+        serviceCoverage?: T | ServiceCoverageBlockSelect<T>;
+        downtimeEstimator?: T | DowntimeEstimatorBlockSelect<T>;
+        assuranceStrip?: T | AssuranceStripBlockSelect<T>;
+        scopeChecklist?: T | ScopeChecklistBlockSelect<T>;
+        specComparisonTable?: T | SpecComparisonTableBlockSelect<T>;
+        roomPanelDemo?: T | RoomPanelDemoBlockSelect<T>;
+        categorizedIntegrations?: T | CategorizedIntegrationsBlockSelect<T>;
+        roomSizeCards?: T | RoomSizeCardsBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
         accreditations?: T | AccreditationsBlockSelect<T>;
         industries?: T | IndustriesBlockSelect<T>;
@@ -2397,6 +2833,21 @@ export interface PartnersDirectoryBlockSelect<T extends boolean = true> {
 export interface QuickEnquiryBlockSelect<T extends boolean = true> {
   title?: T;
   description?: T;
+  promoEnabled?: T;
+  promoBadge?: T;
+  promoTitle?: T;
+  promoTagline?: T;
+  promoDescription?: T;
+  promoFeatures?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  promoNote?: T;
+  promoCtaLabel?: T;
+  promoCtaUrl?: T;
+  sidebarImage?: T;
   id?: T;
   blockName?: T;
 }
@@ -2537,6 +2988,293 @@ export interface StatsBlockSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SLATableBlock_select".
+ */
+export interface SLATableBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  rows?:
+    | T
+    | {
+        priority?: T;
+        severity?: T;
+        impact?: T;
+        remoteSupportTime?: T;
+        onsiteSupportTime?: T;
+        helpdeskAvailability?: T;
+        resolutionTarget?: T;
+        id?: T;
+      };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QualificationBlock_select".
+ */
+export interface QualificationBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  leftHeading?: T;
+  leftTone?: T;
+  leftItems?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  rightHeading?: T;
+  rightTone?: T;
+  rightItems?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ComparisonTableBlock_select".
+ */
+export interface ComparisonTableBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  leftLabel?: T;
+  middleEnabled?: T;
+  middleLabel?: T;
+  rightLabel?: T;
+  rows?:
+    | T
+    | {
+        left?: T;
+        middle?: T;
+        right?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LeadCaptureFormBlock_select".
+ */
+export interface LeadCaptureFormBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  description?: T;
+  formTitle?: T;
+  submitLabel?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelatedServicesBlock_select".
+ */
+export interface RelatedServicesBlockSelect<T extends boolean = true> {
+  title?: T;
+  items?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceCoverageBlock_select".
+ */
+export interface ServiceCoverageBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  areas?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  note?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DowntimeEstimatorBlock_select".
+ */
+export interface DowntimeEstimatorBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  workstationsLabel?: T;
+  serversLabel?: T;
+  tiers?:
+    | T
+    | {
+        label?: T;
+        maxWorkstations?: T;
+        maxServers?: T;
+        estimate?: T;
+        id?: T;
+      };
+  disclaimer?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AssuranceStripBlock_select".
+ */
+export interface AssuranceStripBlockSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        text?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ScopeChecklistBlock_select".
+ */
+export interface ScopeChecklistBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  items?:
+    | T
+    | {
+        text?: T;
+        url?: T;
+        id?: T;
+      };
+  note?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SpecComparisonTableBlock_select".
+ */
+export interface SpecComparisonTableBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  columns?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  rows?:
+    | T
+    | {
+        rowLabel?: T;
+        values?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoomPanelDemoBlock_select".
+ */
+export interface RoomPanelDemoBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  roomName?: T;
+  hint?: T;
+  highlights?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  states?:
+    | T
+    | {
+        label?: T;
+        tone?: T;
+        statusText?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CategorizedIntegrationsBlock_select".
+ */
+export interface CategorizedIntegrationsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  groups?:
+    | T
+    | {
+        heading?: T;
+        items?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoomSizeCardsBlock_select".
+ */
+export interface RoomSizeCardsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  tiers?:
+    | T
+    | {
+        label?: T;
+        minCapacity?: T;
+        maxCapacity?: T;
+        description?: T;
+        url?: T;
+        id?: T;
+      };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
   id?: T;
   blockName?: T;
 }
@@ -3238,6 +3976,7 @@ export interface Footer {
     twitter?: string | null;
     facebook?: string | null;
     linkedin?: string | null;
+    instagram?: string | null;
     youtube?: string | null;
   };
   bottomBar: {
@@ -3350,6 +4089,7 @@ export interface FooterSelect<T extends boolean = true> {
         twitter?: T;
         facebook?: T;
         linkedin?: T;
+        instagram?: T;
         youtube?: T;
       };
   bottomBar?:

@@ -1,0 +1,116 @@
+import type { ComparisonTableBlock as ComparisonTableBlockProps } from 'src/payload-types'
+
+import { cn } from '@/utilities/ui'
+import React from 'react'
+import { Eyebrow } from '@/components/site/Eyebrow'
+import { Reveal } from '@/components/site/Reveal'
+
+type Props = {
+  className?: string
+} & ComparisonTableBlockProps
+
+function XIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-3.5 w-3.5 flex-none">
+      <path d="M18 6L6 18M6 6l12 12" />
+    </svg>
+  )
+}
+
+function DashIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-3.5 w-3.5 flex-none">
+      <path d="M5 12h14" />
+    </svg>
+  )
+}
+
+function CheckIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-3.5 w-3.5 flex-none">
+      <path d="M20 6L9 17l-5-5" />
+    </svg>
+  )
+}
+
+export const ComparisonTableBlock: React.FC<Props> = ({
+  badge,
+  className,
+  title,
+  subtitle,
+  leftLabel,
+  middleEnabled,
+  middleLabel,
+  rightLabel,
+  rows = [],
+}) => {
+  if (!rows || rows.length === 0) return null
+  const showMiddle = Boolean(middleEnabled && middleLabel)
+
+  return (
+    <section className={cn('bg-white py-7 md:py-9', className)}>
+      <div className="container mx-auto px-4 sm:px-6">
+        <Reveal className="max-w-2xl mb-6">
+          {badge && <Eyebrow>{badge}</Eyebrow>}
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground">{title}</h2>
+          {subtitle && <p className="mt-3 text-gray-600 leading-relaxed">{subtitle}</p>}
+        </Reveal>
+
+        <Reveal
+          delayMs={100}
+          className={cn(
+            'grid grid-cols-1 gap-4 md:gap-0 md:rounded-2xl md:overflow-hidden md:shadow-lg',
+            showMiddle ? 'md:grid-cols-3' : 'md:grid-cols-2',
+          )}
+        >
+          {/* Left - muted (worst option) */}
+          <div className="rounded-2xl bg-gray-100 p-6 md:rounded-none md:p-8">
+            <h3 className="mb-5 text-sm font-bold uppercase tracking-wide text-gray-500">{leftLabel}</h3>
+            <ul className="space-y-4">
+              {rows.map((row, index) => (
+                <li key={row.id || index} className="flex items-start gap-3 text-sm text-gray-500">
+                  <span className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-gray-300 text-gray-600">
+                    <XIcon />
+                  </span>
+                  {row.left}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Middle - partial credit (optional) */}
+          {showMiddle && (
+            <div className="rounded-2xl bg-amber-50 p-6 md:rounded-none md:p-8">
+              <h3 className="mb-5 text-sm font-bold uppercase tracking-wide text-amber-700">{middleLabel}</h3>
+              <ul className="space-y-4">
+                {rows.map((row, index) => (
+                  <li key={row.id || index} className="flex items-start gap-3 text-sm text-amber-800">
+                    <span className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-amber-200 text-amber-700">
+                      <DashIcon />
+                    </span>
+                    {row.middle}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Right - CODE3 (bold red, best option) */}
+          <div className="rounded-2xl bg-primary_red p-6 md:rounded-none md:p-8">
+            <h3 className="mb-5 text-sm font-bold uppercase tracking-wide text-white/80">{rightLabel}</h3>
+            <ul className="space-y-4">
+              {rows.map((row, index) => (
+                <li key={row.id || index} className="flex items-start gap-3 text-sm font-medium text-white">
+                  <span className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-white text-primary_red">
+                    <CheckIcon />
+                  </span>
+                  {row.right}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  )
+}

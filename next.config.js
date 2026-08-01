@@ -15,6 +15,16 @@ const nextConfig = {
     // images directly instead, which correctly carries the viewer's Vercel auth session.
     // Production isn't protection-walled, so it keeps full optimization.
     unoptimized: process.env.VERCEL_ENV === 'preview',
+    // Serve modern formats when the browser supports them - meaningfully smaller
+    // than JPEG/PNG at the same visual quality.
+    formats: ['image/avif', 'image/webp'],
+    // Must list every quality value passed to <Image quality={...}> (Next 15
+    // requires an explicit allowlist). 82 is ImageMedia's default.
+    qualities: [75, 82, 100],
+    // Every media URL is cache-busted with the asset's updatedAt timestamp
+    // (see getMediaUrl), so a stale cached optimized image is never served -
+    // safe to cache aggressively.
+    minimumCacheTTL: 2678400,
     // Next's image optimizer blocks SVG by default (it can contain scripts) - some
     // uploaded partner/brand logos are SVGs, so allow them. The CSP still prevents
     // any embedded script in an SVG from executing.

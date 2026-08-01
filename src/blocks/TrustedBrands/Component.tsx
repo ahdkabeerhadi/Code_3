@@ -78,6 +78,7 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
     const logoContent = hasResolvedLogo && !logoFailed ? (
       <Media
         resource={brand.logo}
+        size="180px"
         imgClassName={cn(
           'w-auto max-w-[180px] object-contain transition-all duration-300',
           wrap ? 'h-14 md:h-20' : 'h-16 md:h-24',

@@ -40,6 +40,19 @@ import { ServiceDetailBanner } from '@/blocks/ServiceDetailBanner/config'
 import { ServiceOverview } from '@/blocks/ServiceOverview/config'
 import { ServiceCatalog } from '@/blocks/ServiceCatalog/config'
 import { Stats } from '@/blocks/Stats/config'
+import { SLATable } from '@/blocks/SLATable/config'
+import { Qualification } from '@/blocks/Qualification/config'
+import { ComparisonTable } from '@/blocks/ComparisonTable/config'
+import { LeadCaptureForm } from '@/blocks/LeadCaptureForm/config'
+import { RelatedServices } from '@/blocks/RelatedServices/config'
+import { ServiceCoverage } from '@/blocks/ServiceCoverage/config'
+import { DowntimeEstimator } from '@/blocks/DowntimeEstimator/config'
+import { AssuranceStrip } from '@/blocks/AssuranceStrip/config'
+import { ScopeChecklist } from '@/blocks/ScopeChecklist/config'
+import { SpecComparisonTable } from '@/blocks/SpecComparisonTable/config'
+import { RoomPanelDemo } from '@/blocks/RoomPanelDemo/config'
+import { CategorizedIntegrations } from '@/blocks/CategorizedIntegrations/config'
+import { RoomSizeCards } from '@/blocks/RoomSizeCards/config'
 import { Testimonials } from '@/blocks/Testimonials/config'
 import { Accreditations } from '@/blocks/Accreditations/config'
 import { Industries } from '@/blocks/Industries/config'
@@ -137,6 +150,20 @@ export const Pages: CollectionConfig<'pages'> = {
       },
     },
     {
+      name: 'navOrder',
+      type: 'number',
+      label: 'Navigation Order',
+      defaultValue: 0,
+      admin: {
+        position: 'sidebar',
+        description:
+          'Controls display order in the IT Infra Services mega-menu and footer service columns. Lower numbers appear first.',
+        condition: (data) => {
+          return data?.serviceCategory === 'infrastructure' || data?.serviceCategory === 'digital'
+        },
+      },
+    },
+    {
       type: 'tabs',
       tabs: [
         {
@@ -174,6 +201,19 @@ export const Pages: CollectionConfig<'pages'> = {
                 ServiceOverview,
                 ServiceCatalog,
                 Stats,
+                SLATable,
+                Qualification,
+                ComparisonTable,
+                LeadCaptureForm,
+                RelatedServices,
+                ServiceCoverage,
+                DowntimeEstimator,
+                AssuranceStrip,
+                ScopeChecklist,
+                SpecComparisonTable,
+                RoomPanelDemo,
+                CategorizedIntegrations,
+                RoomSizeCards,
                 Testimonials,
                 Accreditations,
                 Industries,

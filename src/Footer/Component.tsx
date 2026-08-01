@@ -8,6 +8,7 @@ import { Logo } from '@/components/Logo/Logo'
 import { Media } from '@/components/Media'
 import { ScrollToTopButton, ScrollToTopButtonMobile } from './ScrollToTopButton'
 import Link from 'next/link'
+import { unstable_cache } from 'next/cache'
 
 interface ServicePageData {
   id: string
@@ -70,6 +71,15 @@ function LinkedInIcon() {
     </svg>
   )
 }
+function InstagramIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
+      <rect x="2" y="2" width="20" height="20" rx="5" />
+      <circle cx="12" cy="12" r="4.2" />
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
 function YoutubeIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
@@ -77,6 +87,42 @@ function YoutubeIcon() {
     </svg>
   )
 }
+
+// Only needs to refetch when a page's slug/category/parentService/status changes -
+// piggyback on the 'pages-sitemap' tag the pages collection already revalidates on
+// every publish/unpublish, instead of refetching on every request.
+const getFooterServicePages = unstable_cache(
+  async (): Promise<ServicePageData[]> => {
+    const payload = await getPayload({ config: configPromise })
+    const servicePagesRes = await payload.find({
+      collection: 'pages',
+      depth: 0,
+      limit: 300,
+      sort: ['navOrder', 'title'],
+      where: {
+        and: [
+          { serviceCategory: { equals: 'infrastructure' } },
+          { _status: { equals: 'published' } },
+        ],
+      },
+    })
+
+    return (servicePagesRes.docs as Page[])
+      .filter((p) => p.slug && p.serviceCategory && p.serviceCategory !== 'none')
+      .map((p) => ({
+        id: p.id,
+        slug: p.slug as string,
+        title: p.title,
+        serviceCategory: p.serviceCategory as 'infrastructure' | 'digital',
+        parentService:
+          typeof p.parentService === 'object' && p.parentService
+            ? p.parentService.id
+            : (p.parentService as string | null) || null,
+      }))
+  },
+  ['footer-service-pages'],
+  { tags: ['pages-sitemap'] },
+)
 
 export async function Footer() {
   const footerData = (await getCachedGlobal('footer', 1)()) as Footer
@@ -88,31 +134,7 @@ export async function Footer() {
   const logo = footerData?.logo
   const socialLinks = footerData?.socialLinks
 
-  const payload = await getPayload({ config: configPromise })
-  const servicePagesRes = await payload.find({
-    collection: 'pages',
-    depth: 0,
-    limit: 300,
-    where: {
-      and: [
-        { serviceCategory: { equals: 'infrastructure' } },
-        { _status: { equals: 'published' } },
-      ],
-    },
-  })
-
-  const servicePages: ServicePageData[] = (servicePagesRes.docs as Page[])
-    .filter((p) => p.slug && p.serviceCategory && p.serviceCategory !== 'none')
-    .map((p) => ({
-      id: p.id,
-      slug: p.slug as string,
-      title: p.title,
-      serviceCategory: p.serviceCategory as 'infrastructure' | 'digital',
-      parentService:
-        typeof p.parentService === 'object' && p.parentService
-          ? p.parentService.id
-          : (p.parentService as string | null) || null,
-    }))
+  const servicePages = await getFooterServicePages()
 
   const parentServices = servicePages.filter((p) => !p.parentService)
   const subServices = servicePages.filter((p) => p.parentService)
@@ -127,6 +149,7 @@ export async function Footer() {
     { url: socialLinks?.twitter, Icon: TwitterIcon, label: 'X (Twitter)' },
     { url: socialLinks?.facebook, Icon: FacebookIcon, label: 'Facebook' },
     { url: socialLinks?.linkedin, Icon: LinkedInIcon, label: 'LinkedIn' },
+    { url: socialLinks?.instagram, Icon: InstagramIcon, label: 'Instagram' },
     { url: socialLinks?.youtube, Icon: YoutubeIcon, label: 'YouTube' },
   ].filter((s) => s.url)
 
@@ -134,7 +157,7 @@ export async function Footer() {
     <footer className="bg-primary_red text-white relative">
       {/* Top Icon Bar */}
       <div className="border-b border-white/20">
-        <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:divide-x lg:divide-white/20">
+        <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_0.9fr] gap-6 lg:divide-x lg:divide-white/20">
           <div className="flex items-start gap-3 lg:pr-6">
             <PinIcon />
             <div className="text-sm">
@@ -148,7 +171,7 @@ export async function Footer() {
             <ClockIcon />
             <div className="text-sm">
               <div className="font-semibold">Working Hours</div>
-              <div className="text-white/75">
+              <div className="text-white/75 whitespace-nowrap">
                 {contactInfo?.workingHours?.days}: {contactInfo?.workingHours?.time}
               </div>
             </div>
@@ -157,18 +180,50 @@ export async function Footer() {
             <PhoneIcon />
             <div className="text-sm">
               <div className="font-semibold">Call Us</div>
-              <a href={`tel:${contactInfo?.phone}`} className="text-white/75 hover:text-white transition-colors">
+              <a
+                href={`tel:${contactInfo?.phone}`}
+                className="text-white/75 hover:text-white transition-colors whitespace-nowrap"
+              >
                 {contactInfo?.phone}
               </a>
             </div>
           </div>
-          <div className="flex items-start gap-3 lg:pl-6">
+          <div className="flex items-start gap-3 lg:px-6">
             <MailIcon />
             <div className="text-sm">
               <div className="font-semibold">Mail Us</div>
               <a href={`mailto:${contactInfo?.email}`} className="text-white/75 hover:text-white transition-colors">
                 {contactInfo?.email}
               </a>
+            </div>
+          </div>
+          <div className="flex items-start gap-3 lg:pl-6">
+            <div className="text-sm">
+              <div className="font-semibold mb-2">Follow Us</div>
+              <div className="flex items-center gap-3">
+                {socialLinks?.instagram && (
+                  <a
+                    href={socialLinks.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/30 text-white hover:bg-white hover:text-primary_red transition-colors"
+                  >
+                    <InstagramIcon />
+                  </a>
+                )}
+                {socialLinks?.linkedin && (
+                  <a
+                    href={socialLinks.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/30 text-white hover:bg-white hover:text-primary_red transition-colors"
+                  >
+                    <LinkedInIcon />
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         </div>

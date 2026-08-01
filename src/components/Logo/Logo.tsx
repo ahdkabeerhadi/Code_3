@@ -91,6 +91,7 @@ export const Logo = (props: LogoProps) => {
           alt={alt}
           loading={loading}
           priority={priority === 'high'}
+          size={`${Math.max(width, height) * 2}px`}
           onError={() => setLogoFailed(true)}
         />
       </div>
