@@ -44,6 +44,18 @@ export const RoomSizeCards: Block = {
           admin: { description: 'Leave blank for the top tier to show "X+"' },
         },
         { name: 'description', type: 'textarea', required: true },
+        {
+          name: 'bestFor',
+          type: 'text',
+          label: 'Best For (optional)',
+          admin: { description: 'Short use-case tag, e.g. "Quick huddles & 1:1 calls"' },
+        },
+        {
+          name: 'url',
+          type: 'text',
+          label: 'Link URL (optional)',
+          admin: { description: 'If set, the whole card links here, e.g. "/service/meeting-room-solutions"' },
+        },
       ],
     },
     ...ctaFields('Talk to Our Experts', 'Want to see how we can support your business?'),
