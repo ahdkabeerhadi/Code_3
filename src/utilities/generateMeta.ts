@@ -4,6 +4,7 @@ import type { Media, Page, Post, Config } from '../payload-types'
 
 import { mergeOpenGraph } from './mergeOpenGraph'
 import { getServerSideURL } from './getURL'
+import { getSiteVerification } from './getSiteVerification'
 
 const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   const serverUrl = getServerSideURL()
@@ -42,9 +43,7 @@ export const generateMeta = async (args: {
       title,
       url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
     }),
-    verification: {
-      google: '3weeUMiLT2YYr4-b07O4UECbKv9pc19Jlh5lbvha_-0',
-    },
+    verification: getSiteVerification(),
     title,
   }
 }
