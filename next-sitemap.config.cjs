@@ -14,6 +14,17 @@ module.exports = {
         userAgent: '*',
         disallow: '/admin/*',
       },
+      // OpenAI - ChatGPT
+      { userAgent: 'GPTBot', allow: '/', disallow: '/admin/*' },
+      { userAgent: 'OAI-SearchBot', allow: '/', disallow: '/admin/*' },
+      { userAgent: 'ChatGPT-User', allow: '/', disallow: '/admin/*' },
+      // Anthropic - Claude
+      { userAgent: 'ClaudeBot', allow: '/', disallow: '/admin/*' },
+      { userAgent: 'Claude-Web', allow: '/', disallow: '/admin/*' },
+      { userAgent: 'anthropic-ai', allow: '/', disallow: '/admin/*' },
+      // Google - Gemini / AI features (separate from standard Googlebot search indexing)
+      { userAgent: 'Google-Extended', allow: '/', disallow: '/admin/*' },
+      { userAgent: 'Googlebot', allow: '/', disallow: '/admin/*' },
     ],
     additionalSitemaps: [`${SITE_URL}/pages-sitemap.xml`, `${SITE_URL}/posts-sitemap.xml`],
   },

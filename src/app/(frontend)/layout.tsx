@@ -10,6 +10,7 @@ import { Header } from '@/Header/Component'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import { getSiteVerification } from '@/utilities/getSiteVerification'
 import { draftMode } from 'next/headers'
 import { caMechano } from '@/fonts'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
@@ -56,7 +57,5 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     creator: '@payloadcms',
   },
-  verification: {
-    google: '3weeUMiLT2YYr4-b07O4UECbKv9pc19Jlh5lbvha_-0',
-  },
+  verification: getSiteVerification(),
 }
