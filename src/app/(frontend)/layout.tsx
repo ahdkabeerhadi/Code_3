@@ -18,6 +18,8 @@ import { PhoneButton } from '@/components/PhoneButton'
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
 
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-WJKX5PV5'
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
   return (
@@ -32,7 +34,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
       <body>
-        <GoogleTagManager gtmId="GTM-WSS42XRC" />
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
+        <GoogleTagManager gtmId={GTM_ID} />
         <Providers>
           <AdminBar
             adminBarProps={{
