@@ -2,6 +2,7 @@ import { HeaderClient } from './Component.client'
 import { TopBar } from './TopBar'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { getMediaUrl } from '@/utilities/getMediaUrl'
+import { getLocale, type Locale } from '@/utilities/getLocale'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { unstable_cache } from 'next/cache'
@@ -27,14 +28,17 @@ interface NavigationPageData {
 // Both queries only need to refetch when a page's slug/category/parentService/status
 // changes - piggyback on the 'pages-sitemap' tag the pages collection already
 // revalidates on every publish/unpublish, instead of refetching on every request.
-const getNavData = unstable_cache(
-  async () => {
+// Locale is part of the cache key so English and Arabic requests don't collide.
+const getNavData = (locale: Locale) =>
+  unstable_cache(
+    async () => {
     const payload = await getPayload({ config: configPromise })
 
     const pagesRes = await payload.find({
       collection: 'pages',
       depth: 2,
       limit: 200,
+      locale,
       sort: ['navOrder', 'title'],
       where: {
         serviceCategory: {
@@ -90,14 +94,15 @@ const getNavData = unstable_cache(
     }
 
     return { navigationPages, techPartners }
-  },
-  ['header-nav-data'],
-  { tags: ['pages-sitemap'] },
-)
+    },
+    ['header-nav-data', locale],
+    { tags: ['pages-sitemap'] },
+  )
 
 export async function Header() {
-  const headerData = await getCachedGlobal('header', 1)()
-  const { navigationPages, techPartners } = await getNavData()
+  const locale = await getLocale()
+  const headerData = await getCachedGlobal('header', 1, locale)()
+  const { navigationPages, techPartners } = await getNavData(locale)()
 
   return (
     <>

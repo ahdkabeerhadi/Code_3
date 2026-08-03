@@ -86,6 +86,11 @@
   body {
     @apply bg-background text-foreground min-h-[100vh] flex flex-col font-sans;
   }
+
+  /* Arabic script isn't covered by Open Sauce Sans - swap to Noto Sans Arabic in RTL */
+  [dir='rtl'] body {
+    font-family: var(--font-arabic), 'Open Sauce Sans', sans-serif;
+  }
 }
 
 /* ============================= */
@@ -280,6 +285,10 @@
 /* Align the Zoho SalesIQ chat bubble with our phone/WhatsApp buttons stacked above it */
 #zsiq_float {
   right: 24px !important;
+}
+[dir='rtl'] #zsiq_float {
+  left: 24px !important;
+  right: auto !important;
 }
 
 /* ============================= */

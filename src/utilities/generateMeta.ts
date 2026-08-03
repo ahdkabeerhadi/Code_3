@@ -20,6 +20,20 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   return url
 }
 
+// Posts only ever have a `content` field, Pages only ever have `layout` - used to
+// tell them apart since generateMeta accepts either.
+const getCanonicalBasePath = (doc: Partial<Page> | Partial<Post> | null): string => {
+  if (!doc?.slug) return '/'
+  if ('layout' in doc) {
+    if (doc.slug === 'home') return '/'
+    const page = doc as Partial<Page>
+    return page.serviceCategory && page.serviceCategory !== 'none'
+      ? `/service/${doc.slug}`
+      : `/${doc.slug}`
+  }
+  return `/posts/${doc.slug}`
+}
+
 export const generateMeta = async (args: {
   doc: Partial<Page> | Partial<Post> | null
 }): Promise<Metadata> => {
@@ -28,6 +42,9 @@ export const generateMeta = async (args: {
   const ogImage = getImageURL(doc?.meta?.image)
 
   const title = doc?.meta?.title || 'Code 3'
+
+  const basePath = getCanonicalBasePath(doc)
+  const arPath = basePath === '/' ? '/ar' : `/ar${basePath}`
 
   return {
     description: doc?.meta?.description,
@@ -43,6 +60,13 @@ export const generateMeta = async (args: {
       title,
       url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
     }),
+    alternates: {
+      canonical: basePath,
+      languages: {
+        en: basePath,
+        ar: arPath,
+      },
+    },
     verification: getSiteVerification(),
     title,
   }

@@ -52,11 +52,13 @@ export const hero: Field = {
         },
       }),
       label: false,
+      localized: true,
     },
     {
       name: "HeroText",
       type: "text",
       required: true,
+      localized: true,
       admin: {
         description: "Text to display in the hero section",
         placeholder: "Enter hero text here",
@@ -67,11 +69,12 @@ export const hero: Field = {
       name: 'subText',
       type: 'text',
       required: false,
+      localized: true,
       admin: {
         description: 'Subtext to display in the hero section',
         placeholder: 'Enter subtext here',
       },
-      label: 'Subtext', 
+      label: 'Subtext',
     },
     linkGroup({
       overrides: {

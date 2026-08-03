@@ -162,6 +162,24 @@ const NavDropdown = ({
   )
 }
 
+function LocaleToggle({ className = '' }: { className?: string }) {
+  const pathname = usePathname()
+  const isArabic = pathname === '/ar' || pathname.startsWith('/ar/')
+  const targetPath = isArabic
+    ? pathname.replace(/^\/ar/, '') || '/'
+    : `/ar${pathname === '/' ? '' : pathname}`
+
+  return (
+    <Link
+      href={targetPath}
+      className={`text-sm font-semibold hover:text-red-600 transition ${className}`}
+      aria-label={isArabic ? 'Switch to English' : 'التبديل إلى العربية'}
+    >
+      {isArabic ? 'EN' : 'العربية'}
+    </Link>
+  )
+}
+
 const HeaderSearchBox = ({ className = 'w-36 lg:w-44' }: { className?: string }) => {
   const router = useRouter()
   const [query, setQuery] = useState('')
@@ -185,7 +203,7 @@ const HeaderSearchBox = ({ className = 'w-36 lg:w-44' }: { className?: string })
       <button
         type="submit"
         aria-label="Submit search"
-        className="flex-none pr-3 text-gray-500 hover:text-red-600 transition"
+        className="flex-none pe-3 text-gray-500 hover:text-red-600 transition"
       >
         <Search className="h-4 w-4" />
       </button>
@@ -258,10 +276,10 @@ const MobileServiceSection = ({
     <div className="w-full pb-3">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full text-left focus:outline-none transition-all duration-300"
+        className="flex items-center justify-between w-full text-start focus:outline-none transition-all duration-300"
       >
         <span className="text-lg font-semibold text-white">{title}</span>
-        <span className="ml-2 text-2xl font-bold text-white transition-transform duration-300">
+        <span className="ms-2 text-2xl font-bold text-white transition-transform duration-300">
           {isOpen ? '−' : '+'}
         </span>
       </button>
@@ -282,7 +300,7 @@ const MobileServiceSection = ({
 
               return (
                 <div key={page.id} className="space-y-2">
-                  <div className="flex items-center justify-between ml-4">
+                  <div className="flex items-center justify-between ms-4">
                     <Link
                       href={getServiceLink(page)}
                       className="text-white font-medium transition-colors duration-300 flex-1"
@@ -293,7 +311,7 @@ const MobileServiceSection = ({
                     {hasSubServices && (
                       <button
                         onClick={() => toggleService(page.id)}
-                        className="ml-2 text-xl font-bold text-white transition-transform duration-300"
+                        className="ms-2 text-xl font-bold text-white transition-transform duration-300"
                       >
                         {isExpanded ? '−' : '+'}
                       </button>
@@ -306,7 +324,7 @@ const MobileServiceSection = ({
                     }`}
                   >
                     {hasSubServices && (
-                      <ul className="ml-8 space-y-2">
+                      <ul className="ms-8 space-y-2">
                         {pageSubs
                           .filter((sub: NavigationPageData) => sub && sub.id && sub.slug)
                           .map((sub: NavigationPageData) => (
@@ -427,7 +445,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
           </div>
 
           {/* Desktop Links */}
-          <div className="hidden lg:flex flex-1 justify-center space-x-8 items-center">
+          <div className="hidden lg:flex flex-1 justify-center space-x-8 rtl:space-x-reverse items-center">
             {/* Dynamic Navigation Items */}
             {allNavItems.map((item: NavigationItem, index: number) =>
               item.type === 'dropdown' ? (
@@ -480,6 +498,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
           </div>
 
           <div className="hidden lg:flex items-center gap-4">
+            <LocaleToggle />
             {links && links.length > 0 && (
               <div className="flex gap-4 items-center">
                 {links.map(({ link }, i) => {
@@ -501,7 +520,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
           </div>
 
           {/* Mobile Hamburger */}
-          <div className="lg:hidden flex items-center space-x-2">
+          <div className="lg:hidden flex items-center space-x-2 rtl:space-x-reverse">
             <button onClick={() => setShowMobileMenu(!showMobileMenu)} aria-label="Toggle menu">
               {showMobileMenu ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -540,6 +559,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
                 className="p-6 flex-1 flex flex-col scrollbar-hide overflow-y-auto"
               >
                 <HeaderSearchBox className="mb-6 w-full" />
+                <LocaleToggle className="mb-6 text-white" />
 
                 {/* Dynamic Navigation Items for Mobile */}
                 <div className="space-y-2">
@@ -550,10 +570,10 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
                           onClick={() =>
                             setOpenMobileDropdownIndex(openMobileDropdownIndex === index ? null : index)
                           }
-                          className="flex items-center justify-between w-full text-left text-white text-lg font-semibold py-2"
+                          className="flex items-center justify-between w-full text-start text-white text-lg font-semibold py-2"
                         >
                           {item.label}
-                          <span className="ml-2 text-2xl font-bold">
+                          <span className="ms-2 text-2xl font-bold">
                             {openMobileDropdownIndex === index ? '−' : '+'}
                           </span>
                         </button>
@@ -562,7 +582,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
                             openMobileDropdownIndex === index ? 'max-h-[1000px] opacity-100 mt-2' : 'max-h-0 opacity-0'
                           }`}
                         >
-                          <ul className="ml-4 space-y-3">
+                          <ul className="ms-4 space-y-3">
                             {(item.subItems || []).map((sub, i) => (
                               <li key={i}>
                                 <Link

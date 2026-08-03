@@ -9,15 +9,18 @@ export const FAQ: Block = {
       type: 'text',
       required: true,
       defaultValue: 'Frequently asked questions',
+      localized: true,
     },
     {
       name: 'subtitle',
       type: 'text',
+      localized: true,
     },
     {
       name: 'badge',
       type: 'text',
       defaultValue: 'FAQS',
+      localized: true,
     },
     {
       name: 'faqs',
@@ -27,11 +30,13 @@ export const FAQ: Block = {
         {
           name: 'question',
           type: 'text',
+          localized: true,
           required: true,
         },
         {
           name: 'answer',
           type: 'textarea',
+          localized: true,
           required: true,
         },
       ],

@@ -13,6 +13,7 @@ export const AboutTeaser: Block = {
       type: 'text',
       label: 'Badge Text',
       defaultValue: 'ABOUT US',
+      localized: true,
     },
     {
       name: 'title',
@@ -20,6 +21,7 @@ export const AboutTeaser: Block = {
       label: 'Title',
       required: true,
       defaultValue: 'Your trusted technology partner across the UAE',
+      localized: true,
     },
     {
       name: 'description',
@@ -28,12 +30,14 @@ export const AboutTeaser: Block = {
       required: true,
       defaultValue:
         'CODE3 has spent over a decade helping businesses build, secure, and modernize their IT infrastructure — from network foundations to full digital transformation.',
+      localized: true,
     },
     {
       name: 'linkLabel',
       type: 'text',
       label: 'Link Label',
       defaultValue: 'More About Us',
+      localized: true,
     },
     {
       name: 'linkUrl',
