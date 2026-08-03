@@ -8,18 +8,21 @@ export const ServiceOverview: Block = {
       type: 'text',
       label: 'Badge Text',
       defaultValue: 'SERVICES OVERVIEW',
+      localized: true,
       required: true,
     },
     {
       name: 'title',
       type: 'text',
       label: 'Title',
+      localized: true,
       required: true,
     },
     {
       name: 'description',
       type: 'textarea',
       label: 'Description',
+      localized: true,
       required: true,
     },
     {

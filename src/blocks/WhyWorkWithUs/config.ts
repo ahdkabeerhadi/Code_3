@@ -8,18 +8,21 @@ export const WhyWorkWithUs: Block = {
       type: 'text',
       label: 'Badge Text',
       defaultValue: 'WHY WORK WITH US',
+      localized: true,
       required: true,
     },
     {
       name: 'title',
       type: 'text',
       label: 'Main Title',
+      localized: true,
       required: true,
     },
     {
       name: 'subtitle',
       type: 'textarea',
       label: 'Subtitle',
+      localized: true,
       required: true,
     },
     {
@@ -42,12 +45,14 @@ export const WhyWorkWithUs: Block = {
           name: 'title',
           type: 'text',
           label: 'Feature Title',
+          localized: true,
           required: true,
         },
         {
           name: 'description',
           type: 'textarea',
           label: 'Feature Description',
+          localized: true,
           required: true,
         },
         {
