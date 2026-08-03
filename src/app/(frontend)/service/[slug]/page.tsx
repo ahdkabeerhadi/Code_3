@@ -10,6 +10,7 @@ import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { getLocale } from '@/utilities/getLocale'
 import type { Page } from '@/payload-types'
 
 export async function generateStaticParams() {
@@ -46,10 +47,12 @@ type Args = {
 export default async function ServicePage({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug } = await paramsPromise
-  const url = '/service/' + slug
+  const locale = await getLocale()
+  const url = (locale === 'ar' ? '/ar' : '') + '/service/' + slug
 
   const page = await queryServicePageBySlug({
     slug,
+    locale,
   })
 
   if (!page) {
@@ -74,40 +77,45 @@ export default async function ServicePage({ params: paramsPromise }: Args) {
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { slug } = await paramsPromise
+  const locale = await getLocale()
   const page = await queryServicePageBySlug({
     slug,
+    locale,
   })
 
   return generateMeta({ doc: page })
 }
 
-const queryServicePageBySlug = cache(async ({ slug }: { slug: string }): Promise<Page | null> => {
-  const { isEnabled: draft } = await draftMode()
+const queryServicePageBySlug = cache(
+  async ({ slug, locale }: { slug: string; locale: 'en' | 'ar' }): Promise<Page | null> => {
+    const { isEnabled: draft } = await draftMode()
 
-  const payload = await getPayload({ config: configPromise })
+    const payload = await getPayload({ config: configPromise })
 
-  const result = await payload.find({
-    collection: 'pages',
-    depth: 2,
-    draft,
-    limit: 1,
-    pagination: false,
-    overrideAccess: draft,
-    where: {
-      and: [
-        {
-          slug: {
-            equals: slug,
+    const result = await payload.find({
+      collection: 'pages',
+      depth: 2,
+      draft,
+      limit: 1,
+      locale,
+      pagination: false,
+      overrideAccess: draft,
+      where: {
+        and: [
+          {
+            slug: {
+              equals: slug,
+            },
           },
-        },
-        {
-          serviceCategory: {
-            not_equals: 'none',
+          {
+            serviceCategory: {
+              not_equals: 'none',
+            },
           },
-        },
-      ],
-    },
-  })
+        ],
+      },
+    })
 
-  return (result.docs?.[0] as Page) || null
-})
+    return (result.docs?.[0] as Page) || null
+  },
+)

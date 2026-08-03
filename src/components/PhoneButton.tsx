@@ -6,10 +6,12 @@ const PHONE_NUMBER = '+971505042547'
 
 export function PhoneButton() {
   const [visible, setVisible] = useState(false)
+  const [isRtl, setIsRtl] = useState(false)
 
   // Small delay so it doesn't pop in before the page settles
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 600)
+    setIsRtl(document.documentElement.dir === 'rtl')
     return () => clearTimeout(t)
   }, [])
 
@@ -20,7 +22,7 @@ export function PhoneButton() {
       style={{
         position: 'fixed',
         bottom: '155px',
-        right: '24px',
+        ...(isRtl ? { left: '24px' } : { right: '24px' }),
         zIndex: 9999,
         width: '58px',
         height: '58px',

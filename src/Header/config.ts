@@ -28,6 +28,7 @@ export const Header: GlobalConfig = {
           name: 'label',
           type: 'text',
           label: 'Label',
+          localized: true,
           required: true,
         },
         {
@@ -78,6 +79,7 @@ export const Header: GlobalConfig = {
               name: 'label',
               type: 'text',
               label: 'Label',
+              localized: true,
               required: true,
             },
             {

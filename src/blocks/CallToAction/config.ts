@@ -16,12 +16,14 @@ export const CallToAction: Block = {
       name: 'title',
       type: 'text',
       label: 'Title',
+      localized: true,
       required: false,
     },
     {
       name: 'description',
       type: 'textarea',
       label: 'Description',
+      localized: true,
       required: false,
     },
     linkGroup({

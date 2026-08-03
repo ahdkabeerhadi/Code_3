@@ -15,6 +15,7 @@ export const Industries: Block = {
       type: 'text',
       label: 'Badge Text',
       defaultValue: 'INDUSTRIES WE SERVE',
+      localized: true,
     },
     {
       name: 'title',
@@ -22,6 +23,7 @@ export const Industries: Block = {
       label: 'Title',
       required: true,
       defaultValue: 'Industries We Serve',
+      localized: true,
     },
     {
       name: 'items',
@@ -33,6 +35,7 @@ export const Industries: Block = {
           name: 'name',
           type: 'text',
           label: 'Industry Name',
+          localized: true,
           required: true,
         },
         {
@@ -45,6 +48,7 @@ export const Industries: Block = {
           name: 'description',
           type: 'textarea',
           label: 'Description',
+          localized: true,
           admin: {
             description: 'Shown on the back of the card when flipped/hovered.',
           },

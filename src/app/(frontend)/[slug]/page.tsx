@@ -13,6 +13,7 @@ import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { getLocale } from '@/utilities/getLocale'
 import type { Page } from '@/payload-types'
 
 export async function generateStaticParams() {
@@ -62,12 +63,14 @@ type Args = {
 export default async function Page({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = 'home' } = await paramsPromise
-  const url = '/' + slug
+  const locale = await getLocale()
+  const url = (locale === 'ar' ? '/ar' : '') + '/' + slug
 
   let page: Page | null
 
   page = await queryPageBySlug({
     slug,
+    locale,
   })
 
   // Remove this code once your website is seeded
@@ -97,14 +100,17 @@ export default async function Page({ params: paramsPromise }: Args) {
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { slug = 'home' } = await paramsPromise
+  const locale = await getLocale()
   const page = await queryPageBySlug({
     slug,
+    locale,
   })
 
   return generateMeta({ doc: page })
 }
 
-const queryPageBySlug = cache(async ({ slug }: { slug: string }): Promise<Page | null> => {
+const queryPageBySlug = cache(
+  async ({ slug, locale }: { slug: string; locale: 'en' | 'ar' }): Promise<Page | null> => {
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config: configPromise })
@@ -114,6 +120,7 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }): Promise<Page |
     depth: 1,
     draft,
     limit: 1,
+    locale,
     pagination: false,
     overrideAccess: draft,
     where: {
@@ -142,4 +149,5 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }): Promise<Page |
   })
 
   return (result.docs?.[0] as Page) || null
-})
+  },
+)

@@ -13,12 +13,14 @@ export const TrustedBrands: Block = {
       name: 'title',
       type: 'text',
       label: 'Section Title',
+      localized: true,
       required: true,
     },
     {
       name: 'subtitle',
       type: 'text',
       label: 'Section Subtitle',
+      localized: true,
       admin: {
         description: 'Optional short line shown under the title.',
       },

@@ -6,6 +6,7 @@ export const ctaFields = (defaultLabel: string, defaultText?: string): Field[] =
     type: 'text',
     label: 'CTA Banner Text',
     defaultValue: defaultText,
+    localized: true,
     admin: {
       description: 'Short line shown next to the button.',
     },
@@ -15,6 +16,7 @@ export const ctaFields = (defaultLabel: string, defaultText?: string): Field[] =
     type: 'text',
     label: 'CTA Button Label',
     defaultValue: defaultLabel,
+    localized: true,
   },
   {
     name: 'ctaUrl',

@@ -14,6 +14,7 @@ export const ServiceCatalog: Block = {
       type: 'text',
       label: 'Title (highlighted part)',
       defaultValue: 'Our Services',
+      localized: true,
       required: true,
     },
     {
@@ -21,6 +22,7 @@ export const ServiceCatalog: Block = {
       type: 'text',
       label: 'Title (plain part)',
       defaultValue: '& Solutions',
+      localized: true,
       required: true,
     },
     {

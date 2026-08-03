@@ -23,6 +23,7 @@ export const Footer: GlobalConfig = {
       type: 'textarea',
       label: 'Company Description',
       defaultValue: 'From technology infrastructure to digital growth, we deliver end-to-end solutions that help your business run smarter and grow faster.',
+      localized: true,
       required: true,
     },
     {
@@ -110,6 +111,7 @@ export const Footer: GlobalConfig = {
               type: 'text',
               label: 'Days',
               defaultValue: 'Mo—Fri',
+              localized: true,
               required: true,
             },
             {
@@ -117,6 +119,7 @@ export const Footer: GlobalConfig = {
               type: 'text',
               label: 'Time',
               defaultValue: '9am—6pm',
+              localized: true,
               required: true,
             },
           ],
@@ -145,6 +148,7 @@ export const Footer: GlobalConfig = {
           type: 'text',
           label: 'Copyright Text',
           defaultValue: '© 2025 — Copyright',
+          localized: true,
           required: true,
         },
         {
@@ -152,6 +156,7 @@ export const Footer: GlobalConfig = {
           type: 'text',
           label: 'Explore Services Text',
           defaultValue: 'Explore our services',
+          localized: true,
         },
         {
           name: 'exploreServicesImage',

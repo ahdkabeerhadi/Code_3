@@ -69,6 +69,14 @@ export default buildConfig({
   collections: [Pages, Posts, Media, Categories, Users, Complaints, ComplaintAttachments],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer, RegisterComplaint],
+  localization: {
+    locales: [
+      { code: 'en', label: 'English' },
+      { code: 'ar', label: 'Arabic', rtl: true },
+    ],
+    defaultLocale: 'en',
+    fallback: true,
+  },
   plugins: [
     ...plugins,
     // storage-adapter-placeholder

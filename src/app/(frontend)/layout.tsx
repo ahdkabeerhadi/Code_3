@@ -11,8 +11,9 @@ import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { getSiteVerification } from '@/utilities/getSiteVerification'
+import { getLocale } from '@/utilities/getLocale'
 import { draftMode } from 'next/headers'
-import { caMechano } from '@/fonts'
+import { caMechano, notoSansArabic } from '@/fonts'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { PhoneButton } from '@/components/PhoneButton'
 import './globals.css'
@@ -22,10 +23,12 @@ const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-WJKX5PV5'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
+  const locale = await getLocale()
   return (
     <html
-      className={cn(GeistSans.variable, GeistMono.variable, caMechano.variable)}
-      lang="en"
+      className={cn(GeistSans.variable, GeistMono.variable, caMechano.variable, notoSansArabic.variable)}
+      lang={locale}
+      dir={locale === 'ar' ? 'rtl' : 'ltr'}
       suppressHydrationWarning
     >
       <head>

@@ -9,6 +9,7 @@ import { Media } from '@/components/Media'
 import { ScrollToTopButton, ScrollToTopButtonMobile } from './ScrollToTopButton'
 import Link from 'next/link'
 import { unstable_cache } from 'next/cache'
+import { getLocale } from '@/utilities/getLocale'
 
 interface ServicePageData {
   id: string
@@ -91,41 +92,44 @@ function YoutubeIcon() {
 // Only needs to refetch when a page's slug/category/parentService/status changes -
 // piggyback on the 'pages-sitemap' tag the pages collection already revalidates on
 // every publish/unpublish, instead of refetching on every request.
-const getFooterServicePages = unstable_cache(
-  async (): Promise<ServicePageData[]> => {
-    const payload = await getPayload({ config: configPromise })
-    const servicePagesRes = await payload.find({
-      collection: 'pages',
-      depth: 0,
-      limit: 300,
-      sort: ['navOrder', 'title'],
-      where: {
-        and: [
-          { serviceCategory: { equals: 'infrastructure' } },
-          { _status: { equals: 'published' } },
-        ],
-      },
-    })
+const getFooterServicePages = (locale: 'en' | 'ar') =>
+  unstable_cache(
+    async (): Promise<ServicePageData[]> => {
+      const payload = await getPayload({ config: configPromise })
+      const servicePagesRes = await payload.find({
+        collection: 'pages',
+        depth: 0,
+        limit: 300,
+        locale,
+        sort: ['navOrder', 'title'],
+        where: {
+          and: [
+            { serviceCategory: { equals: 'infrastructure' } },
+            { _status: { equals: 'published' } },
+          ],
+        },
+      })
 
-    return (servicePagesRes.docs as Page[])
-      .filter((p) => p.slug && p.serviceCategory && p.serviceCategory !== 'none')
-      .map((p) => ({
-        id: p.id,
-        slug: p.slug as string,
-        title: p.title,
-        serviceCategory: p.serviceCategory as 'infrastructure' | 'digital',
-        parentService:
-          typeof p.parentService === 'object' && p.parentService
-            ? p.parentService.id
-            : (p.parentService as string | null) || null,
-      }))
-  },
-  ['footer-service-pages'],
-  { tags: ['pages-sitemap'] },
-)
+      return (servicePagesRes.docs as Page[])
+        .filter((p) => p.slug && p.serviceCategory && p.serviceCategory !== 'none')
+        .map((p) => ({
+          id: p.id,
+          slug: p.slug as string,
+          title: p.title,
+          serviceCategory: p.serviceCategory as 'infrastructure' | 'digital',
+          parentService:
+            typeof p.parentService === 'object' && p.parentService
+              ? p.parentService.id
+              : (p.parentService as string | null) || null,
+        }))
+    },
+    ['footer-service-pages', locale],
+    { tags: ['pages-sitemap'] },
+  )
 
 export async function Footer() {
-  const footerData = (await getCachedGlobal('footer', 1)()) as Footer
+  const locale = await getLocale()
+  const footerData = (await getCachedGlobal('footer', 1, locale)()) as Footer
 
   const navItems = footerData?.navItems || []
   const description = footerData?.description
@@ -134,7 +138,7 @@ export async function Footer() {
   const logo = footerData?.logo
   const socialLinks = footerData?.socialLinks
 
-  const servicePages = await getFooterServicePages()
+  const servicePages = await getFooterServicePages(locale)()
 
   const parentServices = servicePages.filter((p) => !p.parentService)
   const subServices = servicePages.filter((p) => p.parentService)
@@ -158,7 +162,7 @@ export async function Footer() {
       {/* Top Icon Bar */}
       <div className="border-b border-white/20">
         <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_0.9fr] gap-6 lg:divide-x lg:divide-white/20">
-          <div className="flex items-start gap-3 lg:pr-6">
+          <div className="flex items-start gap-3 lg:pe-6">
             <PinIcon />
             <div className="text-sm">
               <div className="font-semibold">Address</div>
@@ -197,7 +201,7 @@ export async function Footer() {
               </a>
             </div>
           </div>
-          <div className="flex items-start gap-3 lg:pl-6">
+          <div className="flex items-start gap-3 lg:ps-6">
             <div className="text-sm">
               <div className="font-semibold mb-2">Follow Us</div>
               <div className="flex items-center gap-3">

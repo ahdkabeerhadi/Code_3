@@ -14,6 +14,7 @@ export const Testimonials: Block = {
       type: 'text',
       label: 'Badge Text',
       defaultValue: 'CLIENT VOICES',
+      localized: true,
     },
     {
       name: 'title',
@@ -21,6 +22,7 @@ export const Testimonials: Block = {
       label: 'Title',
       required: true,
       defaultValue: 'Trusted by IT managers, directors, and operations leaders',
+      localized: true,
     },
     {
       name: 'useGoogleReviews',
@@ -41,6 +43,7 @@ export const Testimonials: Block = {
         {
           name: 'quote',
           type: 'textarea',
+          localized: true,
           required: true,
         },
         {
@@ -51,6 +54,7 @@ export const Testimonials: Block = {
         {
           name: 'role',
           type: 'text',
+          localized: true,
           required: true,
         },
       ],

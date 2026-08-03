@@ -14,6 +14,7 @@ export const DeliveryProcess: Block = {
       type: 'text',
       label: 'Badge Text',
       defaultValue: 'OUR DELIVERY PROCESS',
+      localized: true,
     },
     {
       name: 'title',
@@ -21,6 +22,7 @@ export const DeliveryProcess: Block = {
       label: 'Title',
       required: true,
       defaultValue: 'A proven approach to delivering technology excellence',
+      localized: true,
     },
     {
       name: 'description',
@@ -28,6 +30,7 @@ export const DeliveryProcess: Block = {
       label: 'Description',
       defaultValue:
         'From initial consultation to ongoing support — every solution is strategically designed, seamlessly implemented, and continuously optimized.',
+      localized: true,
     },
     {
       name: 'steps',
@@ -40,6 +43,7 @@ export const DeliveryProcess: Block = {
           name: 'stepLabel',
           type: 'text',
           label: 'Step Label',
+          localized: true,
           admin: {
             description: 'e.g. "STEP 01" — auto-generated from position if left blank',
           },
@@ -48,12 +52,14 @@ export const DeliveryProcess: Block = {
           name: 'title',
           type: 'text',
           label: 'Title',
+          localized: true,
           required: true,
         },
         {
           name: 'description',
           type: 'textarea',
           label: 'Description',
+          localized: true,
           required: true,
         },
       ],

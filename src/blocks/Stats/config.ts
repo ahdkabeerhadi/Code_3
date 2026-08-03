@@ -44,6 +44,7 @@ export const Stats: Block = {
         {
           name: 'label',
           type: 'text',
+          localized: true,
           required: true,
         },
       ],

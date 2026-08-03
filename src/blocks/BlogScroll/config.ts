@@ -13,6 +13,7 @@ export const BlogScroll: Block = {
       type: 'text',
       label: 'Badge Text',
       defaultValue: 'FROM THE BLOG',
+      localized: true,
     },
     {
       name: 'title',
@@ -20,6 +21,7 @@ export const BlogScroll: Block = {
       label: 'Title',
       required: true,
       defaultValue: 'Latest Insights & Updates',
+      localized: true,
     },
     {
       name: 'limit',
@@ -37,6 +39,7 @@ export const BlogScroll: Block = {
       type: 'text',
       label: 'View All Link Label',
       defaultValue: 'View All Posts',
+      localized: true,
     },
     {
       name: 'viewAllUrl',

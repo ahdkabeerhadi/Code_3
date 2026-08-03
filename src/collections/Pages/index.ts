@@ -75,6 +75,9 @@ export const Pages: CollectionConfig<'pages'> = {
   defaultPopulate: {
     title: true,
     slug: true,
+    // Needed so internal richText links (e.g. from blog posts) can tell whether a
+    // linked page is a service page and route to /service/{slug} instead of /{slug}.
+    serviceCategory: true,
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
@@ -104,6 +107,7 @@ export const Pages: CollectionConfig<'pages'> = {
     {
       name: 'title',
       type: 'text',
+      localized: true,
       required: true,
     },
     {

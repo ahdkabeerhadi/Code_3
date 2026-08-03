@@ -114,7 +114,7 @@ export interface Config {
     footer: FooterSelect<false> | FooterSelect<true>;
     'register-complaint': RegisterComplaintSelect<false> | RegisterComplaintSelect<true>;
   };
-  locale: null;
+  locale: 'en' | 'ar';
   user: User & {
     collection: 'users';
   };
