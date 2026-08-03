@@ -1,7 +1,12 @@
-const SITE_URL =
+// Strip any trailing slash - NEXT_PUBLIC_SERVER_URL is set to "https://www.code3.ae/"
+// (with a trailing slash) in Vercel, and appending "/pages-sitemap.xml" etc. to that
+// produced double-slash URLs (e.g. ".../ae//pages-sitemap.xml") that Google's sitemap
+// fetcher refuses to follow.
+const SITE_URL = (
   process.env.NEXT_PUBLIC_SERVER_URL ||
   process.env.VERCEL_PROJECT_PRODUCTION_URL ||
   'https://example.com'
+).replace(/\/+$/, '')
 
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
