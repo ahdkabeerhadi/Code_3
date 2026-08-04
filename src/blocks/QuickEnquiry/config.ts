@@ -13,6 +13,7 @@ export const QuickEnquiry: Block = {
       type: 'text',
       label: 'Title',
       defaultValue: 'Quick Enquiry',
+      localized: true,
       required: true,
     },
     {
@@ -20,6 +21,7 @@ export const QuickEnquiry: Block = {
       type: 'text',
       label: 'Description',
       defaultValue: 'Get a callback from our team within 1 minute.',
+      localized: true,
     },
     {
       name: 'promoEnabled',
@@ -32,18 +34,21 @@ export const QuickEnquiry: Block = {
       type: 'text',
       label: 'Promo Badge Text',
       defaultValue: 'LIMITED TIME OFFER',
+      localized: true,
       admin: { condition: (_, siblingData) => Boolean(siblingData?.promoEnabled) },
     },
     {
       name: 'promoTitle',
       type: 'text',
       label: 'Promo Title',
+      localized: true,
       admin: { condition: (_, siblingData) => Boolean(siblingData?.promoEnabled) },
     },
     {
       name: 'promoTagline',
       type: 'text',
       label: 'Promo Tagline',
+      localized: true,
       admin: {
         description: 'Short line right under the title, e.g. "Yes, you heard it right."',
         condition: (_, siblingData) => Boolean(siblingData?.promoEnabled),
@@ -53,6 +58,7 @@ export const QuickEnquiry: Block = {
       name: 'promoDescription',
       type: 'textarea',
       label: 'Promo Description',
+      localized: true,
       admin: { condition: (_, siblingData) => Boolean(siblingData?.promoEnabled) },
     },
     {
@@ -60,7 +66,7 @@ export const QuickEnquiry: Block = {
       type: 'array',
       label: 'Promo Feature Bullets',
       maxRows: 4,
-      fields: [{ name: 'text', type: 'text', required: true }],
+      fields: [{ name: 'text', type: 'text', localized: true, required: true }],
       admin: {
         description: 'Short scannable bullets shown with checkmarks, e.g. "No credit card required".',
         condition: (_, siblingData) => Boolean(siblingData?.promoEnabled),
@@ -70,6 +76,7 @@ export const QuickEnquiry: Block = {
       name: 'promoNote',
       type: 'text',
       label: 'Promo Fine Print',
+      localized: true,
       admin: {
         description: 'Small disclaimer line, e.g. "No annual commitment needed for the trial."',
         condition: (_, siblingData) => Boolean(siblingData?.promoEnabled),
@@ -80,6 +87,7 @@ export const QuickEnquiry: Block = {
       type: 'text',
       label: 'Promo Button Label',
       defaultValue: 'Claim Your Free Trial',
+      localized: true,
       admin: { condition: (_, siblingData) => Boolean(siblingData?.promoEnabled) },
     },
     {

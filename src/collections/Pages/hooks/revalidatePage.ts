@@ -4,6 +4,14 @@ import { revalidatePath, revalidateTag } from 'next/cache'
 
 import type { Page } from '../../../payload-types'
 
+// Service pages are served under /service/[slug] (see generatePreviewPath), so the
+// revalidated path must match or the live route never picks up published changes.
+const getPagePath = (doc: Pick<Page, 'slug' | 'serviceCategory'>) => {
+  if (doc.slug === 'home') return '/'
+  const isServicePage = !!doc.serviceCategory && doc.serviceCategory !== 'none'
+  return isServicePage ? `/service/${doc.slug}` : `/${doc.slug}`
+}
+
 export const revalidatePage: CollectionAfterChangeHook<Page> = ({
   doc,
   previousDoc,
@@ -11,7 +19,7 @@ export const revalidatePage: CollectionAfterChangeHook<Page> = ({
 }) => {
   if (!context.disableRevalidate) {
     if (doc._status === 'published') {
-      const path = doc.slug === 'home' ? '/' : `/${doc.slug}`
+      const path = getPagePath(doc)
 
       payload.logger.info(`Revalidating page at path: ${path}`)
 
@@ -21,7 +29,7 @@ export const revalidatePage: CollectionAfterChangeHook<Page> = ({
 
     // If the page was previously published, we need to revalidate the old path
     if (previousDoc?._status === 'published' && doc._status !== 'published') {
-      const oldPath = previousDoc.slug === 'home' ? '/' : `/${previousDoc.slug}`
+      const oldPath = getPagePath(previousDoc)
 
       payload.logger.info(`Revalidating old page at path: ${oldPath}`)
 
