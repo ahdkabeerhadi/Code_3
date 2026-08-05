@@ -5,7 +5,8 @@ import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
-import React, { cache } from 'react'
+import { unstable_cache } from 'next/cache'
+import React from 'react'
 import RichText from '@/components/RichText'
 
 import type { Post } from '@/payload-types'
@@ -47,7 +48,7 @@ export default async function Post({ params: paramsPromise }: Args) {
   const { slug = '' } = await paramsPromise
   const locale = await getLocale()
   const url = (locale === 'ar' ? '/ar' : '') + '/posts/' + slug
-  const post = await queryPostBySlug({ slug, locale })
+  const post = await queryPostBySlug({ slug, locale, draft })
 
   if (!post) return <PayloadRedirects url={url} />
 
@@ -78,16 +79,23 @@ export default async function Post({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
+  const { isEnabled: draft } = await draftMode()
   const { slug = '' } = await paramsPromise
   const locale = await getLocale()
-  const post = await queryPostBySlug({ slug, locale })
+  const post = await queryPostBySlug({ slug, locale, draft })
 
   return generateMeta({ doc: post })
 }
 
-const queryPostBySlug = cache(async ({ slug, locale }: { slug: string; locale: 'en' | 'ar' }) => {
-  const { isEnabled: draft } = await draftMode()
-
+const fetchPostBySlug = async ({
+  slug,
+  locale,
+  draft,
+}: {
+  slug: string
+  locale: 'en' | 'ar'
+  draft: boolean
+}) => {
   const payload = await getPayload({ config: configPromise })
 
   const result = await payload.find({
@@ -105,4 +113,15 @@ const queryPostBySlug = cache(async ({ slug, locale }: { slug: string; locale: '
   })
 
   return result.docs?.[0] || null
-})
+}
+
+// Draft/preview requests always read fresh so editors see live content;
+// published requests go through a cross-request cache keyed by slug+locale
+// and invalidated by revalidatePost's `post_${slug}` tag.
+const queryPostBySlug = async (args: { slug: string; locale: 'en' | 'ar'; draft: boolean }) => {
+  if (args.draft) return fetchPostBySlug(args)
+
+  return unstable_cache(() => fetchPostBySlug(args), ['post', args.slug, args.locale], {
+    tags: [`post_${args.slug}`],
+  })()
+}
