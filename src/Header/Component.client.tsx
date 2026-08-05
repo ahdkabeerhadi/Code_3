@@ -172,7 +172,12 @@ function LocaleToggle({ className = '' }: { className?: string }) {
     <div
       className={`inline-flex items-center rounded-full border border-foreground bg-background p-0.5 text-xs font-semibold sm:text-sm ${className}`}
     >
-      <Link
+      {/* Plain <a> tags (not next/link) so switching locale always forces a full
+          page navigation. Middleware rewrites both /ar and non-/ar paths to the
+          same underlying route, so Next's client-side soft navigation can reuse
+          the previous locale's cached RSC payload and appear "stuck" until a
+          hard reload — this sidesteps that entirely. */}
+      <a
         href={enPath}
         aria-current={!isArabic ? 'page' : undefined}
         aria-label="Switch to English"
@@ -181,8 +186,8 @@ function LocaleToggle({ className = '' }: { className?: string }) {
         }`}
       >
         EN
-      </Link>
-      <Link
+      </a>
+      <a
         href={arPath}
         aria-current={isArabic ? 'page' : undefined}
         aria-label="التبديل إلى العربية"
@@ -191,7 +196,7 @@ function LocaleToggle({ className = '' }: { className?: string }) {
         }`}
       >
         العربية
-      </Link>
+      </a>
     </div>
   )
 }
