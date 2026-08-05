@@ -35,6 +35,7 @@ export function PostCard({ post }: { post: BlogScrollPost }) {
           <Media
             resource={post.heroImage!}
             fill
+            size="320px"
             imgClassName="object-cover transition-transform duration-300 group-hover:scale-105"
             onError={() => setImageFailed(true)}
           />

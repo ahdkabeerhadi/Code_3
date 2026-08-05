@@ -51,7 +51,13 @@ export const AboutUsBannerBlock: React.FC<Props> = ({
                   imageData.hasMarginBottom && 'self-start',
                 )}
               >
-                <Media resource={imageData.image} fill imgClassName="object-cover" priority={index === 0} />
+                <Media
+                  resource={imageData.image}
+                  fill
+                  size="50vw"
+                  imgClassName="object-cover"
+                  priority={index === 0}
+                />
               </div>
             )
           })}
@@ -69,7 +75,13 @@ export const AboutUsBannerBlock: React.FC<Props> = ({
                   imageData.aspectRatio || 'aspect-4/3',
                 )}
               >
-                <Media resource={imageData.image} fill imgClassName="object-cover" priority={index === 0} />
+                <Media
+                  resource={imageData.image}
+                  fill
+                  size="100vw"
+                  imgClassName="object-cover"
+                  priority={index === 0}
+                />
               </div>
             )
           })}

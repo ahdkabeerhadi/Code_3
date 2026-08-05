@@ -51,7 +51,12 @@ export const CareersBlock: React.FC<Props> = ({
                 key={index}
                 className="relative aspect-square overflow-hidden rounded-2xl border border-border"
               >
-                <Media resource={teamMember.image!} fill imgClassName="object-cover" />
+                <Media
+                  resource={teamMember.image!}
+                  fill
+                  size="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                  imgClassName="object-cover"
+                />
               </div>
             ))}
           </Reveal>
