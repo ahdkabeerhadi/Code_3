@@ -2,6 +2,7 @@
 import type { ServiceSolutionsBlock as ServiceSolutionsBlockProps, Page } from 'src/payload-types'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
+import { unstable_cache } from 'next/cache'
 import React from 'react'
 import { ServiceSolutionsBlock as ServiceSolutionsClient } from './Client'
 import { getIconForServiceTitle } from '@/components/site/serviceIconMap'
@@ -44,12 +45,84 @@ function mapPageToServiceCard(page: Page): ServiceCard {
   }
 }
 
+const fetchChildServicePages = async (parentId: string) => {
+  const payload = await getPayload({ config: configPromise })
+  const result = await payload.find({
+    collection: 'pages',
+    depth: 1,
+    limit: 50,
+    where: {
+      and: [
+        {
+          parentService: {
+            equals: parentId,
+          },
+        },
+        {
+          _status: {
+            equals: 'published',
+          },
+        },
+      ],
+    },
+  })
+  return result.docs || []
+}
+
+const fetchTopLevelServicePages = async (serviceType: string) => {
+  const payload = await getPayload({ config: configPromise })
+  const result = await payload.find({
+    collection: 'pages',
+    depth: 1,
+    limit: 50,
+    where: {
+      and: [
+        {
+          serviceCategory: {
+            equals: serviceType,
+          },
+        },
+        {
+          or: [
+            {
+              parentService: {
+                equals: null,
+              },
+            },
+            {
+              parentService: {
+                exists: false,
+              },
+            },
+          ],
+        },
+        {
+          _status: {
+            equals: 'published',
+          },
+        },
+      ],
+    },
+  })
+  return result.docs || []
+}
+
+const getCachedChildServicePages = (parentId: string) =>
+  unstable_cache(() => fetchChildServicePages(parentId), ['service-solutions-children', parentId], {
+    tags: ['pages-sitemap'],
+  })()
+
+const getCachedTopLevelServicePages = (serviceType: string) =>
+  unstable_cache(
+    () => fetchTopLevelServicePages(serviceType),
+    ['service-solutions-top-level', serviceType],
+    { tags: ['pages-sitemap'] },
+  )()
+
 export const ServiceSolutionsBlock: React.FC<ServiceSolutionsBlockExtendedProps> = async (
   props,
 ) => {
   const { id, serviceType = 'infrastructure', currentPage, ...rest } = props
-
-  const payload = await getPayload({ config: configPromise })
 
   const currentPageWithParent = currentPage as Page & {
     parentService?: string | { id: string } | null
@@ -72,65 +145,10 @@ export const ServiceSolutionsBlock: React.FC<ServiceSolutionsBlockExtendedProps>
       currentPage?.serviceCategory === 'digital') &&
     !currentPageParentServiceId
 
-  let pages: Page[] = []
-
-  if (isServiceDetailPage && currentPage?.id) {
-    const result = await payload.find({
-      collection: 'pages',
-      depth: 1,
-      limit: 50,
-      where: {
-        and: [
-          {
-            parentService: {
-              equals: currentPage.id,
-            },
-          },
-          {
-            _status: {
-              equals: 'published',
-            },
-          },
-        ],
-      },
-    })
-    pages = result.docs || []
-  } else {
-    const result = await payload.find({
-      collection: 'pages',
-      depth: 1,
-      limit: 50,
-      where: {
-        and: [
-          {
-            serviceCategory: {
-              equals: serviceType,
-            },
-          },
-          {
-            or: [
-              {
-                parentService: {
-                  equals: null,
-                },
-              },
-              {
-                parentService: {
-                  exists: false,
-                },
-              },
-            ],
-          },
-          {
-            _status: {
-              equals: 'published',
-            },
-          },
-        ],
-      },
-    })
-    pages = result.docs || []
-  }
+  const pages: Page[] =
+    isServiceDetailPage && currentPage?.id
+      ? await getCachedChildServicePages(currentPage.id)
+      : await getCachedTopLevelServicePages(serviceType)
 
   const filteredPages = pages.filter((p) => p.id !== currentPage?.id)
   const services = filteredPages.map(mapPageToServiceCard)

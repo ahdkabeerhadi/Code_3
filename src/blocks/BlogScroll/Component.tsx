@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
+import { unstable_cache } from 'next/cache'
 import type { BlogScrollBlock as BlogScrollBlockProps } from 'src/payload-types'
 import { cn } from '@/utilities/ui'
 import { Eyebrow } from '@/components/site/Eyebrow'
@@ -12,20 +13,13 @@ type Props = {
   className?: string
 } & BlogScrollBlockProps
 
-export const BlogScrollBlock: React.FC<Props> = async ({
-  className,
-  badge,
-  title,
-  limit,
-  viewAllLabel,
-  viewAllUrl,
-}) => {
+const fetchRecentPosts = async (limit: number) => {
   const payload = await getPayload({ config: configPromise })
 
   const result = await payload.find({
     collection: 'posts',
     depth: 1,
-    limit: limit || 8,
+    limit,
     sort: '-publishedAt',
     where: { _status: { equals: 'published' } },
     select: {
@@ -37,7 +31,23 @@ export const BlogScrollBlock: React.FC<Props> = async ({
     },
   })
 
-  const posts = result.docs
+  return result.docs
+}
+
+const getCachedRecentPosts = (limit: number) =>
+  unstable_cache(() => fetchRecentPosts(limit), ['blog-scroll', String(limit)], {
+    tags: ['posts-sitemap'],
+  })()
+
+export const BlogScrollBlock: React.FC<Props> = async ({
+  className,
+  badge,
+  title,
+  limit,
+  viewAllLabel,
+  viewAllUrl,
+}) => {
+  const posts = await getCachedRecentPosts(limit || 8)
   if (posts.length === 0) return null
 
   return (
