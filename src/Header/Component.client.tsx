@@ -165,22 +165,38 @@ const NavDropdown = ({
 function LocaleToggle({ className = '' }: { className?: string }) {
   const pathname = usePathname()
   const isArabic = pathname === '/ar' || pathname.startsWith('/ar/')
-  const targetPath = isArabic
-    ? pathname.replace(/^\/ar/, '') || '/'
-    : `/ar${pathname === '/' ? '' : pathname}`
+  const enPath = isArabic ? pathname.replace(/^\/ar/, '') || '/' : pathname
+  const arPath = isArabic ? pathname : `/ar${pathname === '/' ? '' : pathname}`
 
   return (
-    <Link
-      href={targetPath}
-      className={`text-sm font-semibold hover:text-red-600 transition ${className}`}
-      aria-label={isArabic ? 'Switch to English' : 'التبديل إلى العربية'}
+    <div
+      className={`inline-flex items-center rounded-full border border-foreground bg-background p-0.5 text-xs font-semibold sm:text-sm ${className}`}
     >
-      {isArabic ? 'EN' : 'العربية'}
-    </Link>
+      <Link
+        href={enPath}
+        aria-current={!isArabic ? 'page' : undefined}
+        aria-label="Switch to English"
+        className={`rounded-full px-3 py-1 transition-all duration-300 ${
+          !isArabic ? 'bg-primary_red text-white' : 'text-foreground hover:text-primary_red'
+        }`}
+      >
+        EN
+      </Link>
+      <Link
+        href={arPath}
+        aria-current={isArabic ? 'page' : undefined}
+        aria-label="التبديل إلى العربية"
+        className={`rounded-full px-3 py-1 transition-all duration-300 ${
+          isArabic ? 'bg-primary_red text-white' : 'text-foreground hover:text-primary_red'
+        }`}
+      >
+        العربية
+      </Link>
+    </div>
   )
 }
 
-const HeaderSearchBox = ({ className = 'w-36 lg:w-44' }: { className?: string }) => {
+const HeaderSearchBox = ({ className = 'w-28 lg:w-36' }: { className?: string }) => {
   const router = useRouter()
   const [query, setQuery] = useState('')
 
@@ -445,7 +461,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
           </div>
 
           {/* Desktop Links */}
-          <div className="hidden lg:flex flex-1 justify-center space-x-8 rtl:space-x-reverse items-center">
+          <div className="hidden lg:flex flex-1 min-w-0 justify-center space-x-5 rtl:space-x-reverse items-center">
             {/* Dynamic Navigation Items */}
             {allNavItems.map((item: NavigationItem, index: number) =>
               item.type === 'dropdown' ? (
@@ -469,7 +485,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
             {infraPages.length > 0 && (
               <button
                 onClick={toggleInfraMegaMenu}
-                className="hover:text-red-600 transition flex items-center gap-1"
+                className="hover:text-red-600 transition flex items-center gap-1 whitespace-nowrap"
               >
                 IT Infra Services
                 <span className="text-xl font-bold transition-transform duration-300">
@@ -478,7 +494,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
               </button>
             )}
 
-            <Link href="/technology-partners" className="hover:text-red-600 transition">
+            <Link href="/technology-partners" className="hover:text-red-600 transition whitespace-nowrap">
               Technology Partners
             </Link>
 
@@ -497,7 +513,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
             )}
           </div>
 
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex flex-shrink-0 items-center gap-3">
             <LocaleToggle />
             {links && links.length > 0 && (
               <div className="flex gap-4 items-center">
@@ -559,7 +575,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
                 className="p-6 flex-1 flex flex-col scrollbar-hide overflow-y-auto"
               >
                 <HeaderSearchBox className="mb-6 w-full" />
-                <LocaleToggle className="mb-6 text-white" />
+                <LocaleToggle className="mb-6" />
 
                 {/* Dynamic Navigation Items for Mobile */}
                 <div className="space-y-2">
