@@ -1,12 +1,12 @@
 import type { ServiceCatalogBlock as ServiceCatalogBlockProps, Page } from 'src/payload-types'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
+import { unstable_cache } from 'next/cache'
 import React from 'react'
 import { ServiceCatalogClient, type ServiceCategoryData } from './ServiceCatalogClient'
 import { getIconForServiceTitle } from '@/components/site/serviceIconMap'
 
-export const ServiceCatalogBlock: React.FC<ServiceCatalogBlockProps & { id?: string }> = async (props) => {
-  const { id, serviceType = 'infrastructure' } = props
+const fetchServiceCatalog = async (serviceType: string) => {
   const payload = await getPayload({ config: configPromise })
 
   const [topLevelResult, subServiceResult] = await Promise.all([
@@ -61,6 +61,18 @@ export const ServiceCatalogBlock: React.FC<ServiceCatalogBlockProps & { id?: str
       })),
     }
   })
+
+  return categories
+}
+
+const getCachedServiceCatalog = (serviceType: string) =>
+  unstable_cache(() => fetchServiceCatalog(serviceType), ['service-catalog', serviceType], {
+    tags: ['pages-sitemap'],
+  })()
+
+export const ServiceCatalogBlock: React.FC<ServiceCatalogBlockProps & { id?: string }> = async (props) => {
+  const { id, serviceType = 'infrastructure' } = props
+  const categories = await getCachedServiceCatalog(serviceType)
 
   return (
     <div id={`block-${id}`}>

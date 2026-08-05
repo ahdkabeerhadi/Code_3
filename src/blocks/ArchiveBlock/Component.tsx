@@ -2,10 +2,39 @@ import type { Post, ArchiveBlock as ArchiveBlockProps } from '@/payload-types'
 
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
+import { unstable_cache } from 'next/cache'
 import React, { Suspense } from 'react'
 import RichText from '@/components/RichText'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
+
+const fetchArchivePosts = async (categoryIds: string[], limit: number) => {
+  const payload = await getPayload({ config: configPromise })
+
+  const fetchedPosts = await payload.find({
+    collection: 'posts',
+    depth: 1,
+    limit,
+    ...(categoryIds.length > 0
+      ? {
+          where: {
+            categories: {
+              in: categoryIds,
+            },
+          },
+        }
+      : {}),
+  })
+
+  return fetchedPosts.docs
+}
+
+const getCachedArchivePosts = (categoryIds: string[], limit: number) =>
+  unstable_cache(
+    () => fetchArchivePosts(categoryIds, limit),
+    ['archive-block', categoryIds.join(','), String(limit)],
+    { tags: ['posts-sitemap'] },
+  )()
 
 export const ArchiveBlock: React.FC<
   ArchiveBlockProps & {
@@ -19,29 +48,12 @@ export const ArchiveBlock: React.FC<
   let posts: Post[] = []
 
   if (populateBy === 'collection') {
-    const payload = await getPayload({ config: configPromise })
-
-    const flattenedCategories = categories?.map((category) => {
+    const flattenedCategories = (categories?.map((category) => {
       if (typeof category === 'object') return category.id
       else return category
-    })
+    }) || []) as string[]
 
-    const fetchedPosts = await payload.find({
-      collection: 'posts',
-      depth: 1,
-      limit,
-      ...(flattenedCategories && flattenedCategories.length > 0
-        ? {
-            where: {
-              categories: {
-                in: flattenedCategories,
-              },
-            },
-          }
-        : {}),
-    })
-
-    posts = fetchedPosts.docs
+    posts = await getCachedArchivePosts(flattenedCategories, limit)
   } else {
     if (selectedDocs?.length) {
       const filteredSelectedPosts = selectedDocs.map((post) => {
