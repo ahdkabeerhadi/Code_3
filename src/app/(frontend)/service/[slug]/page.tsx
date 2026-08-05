@@ -4,7 +4,8 @@ import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
-import React, { cache } from 'react'
+import { unstable_cache } from 'next/cache'
+import React from 'react'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
@@ -53,6 +54,7 @@ export default async function ServicePage({ params: paramsPromise }: Args) {
   const page = await queryServicePageBySlug({
     slug,
     locale,
+    draft,
   })
 
   if (!page) {
@@ -76,46 +78,67 @@ export default async function ServicePage({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
+  const { isEnabled: draft } = await draftMode()
   const { slug } = await paramsPromise
   const locale = await getLocale()
   const page = await queryServicePageBySlug({
     slug,
     locale,
+    draft,
   })
 
   return generateMeta({ doc: page })
 }
 
-const queryServicePageBySlug = cache(
-  async ({ slug, locale }: { slug: string; locale: 'en' | 'ar' }): Promise<Page | null> => {
-    const { isEnabled: draft } = await draftMode()
+const fetchServicePageBySlug = async ({
+  slug,
+  locale,
+  draft,
+}: {
+  slug: string
+  locale: 'en' | 'ar'
+  draft: boolean
+}): Promise<Page | null> => {
+  const payload = await getPayload({ config: configPromise })
 
-    const payload = await getPayload({ config: configPromise })
-
-    const result = await payload.find({
-      collection: 'pages',
-      depth: 2,
-      draft,
-      limit: 1,
-      locale,
-      pagination: false,
-      overrideAccess: draft,
-      where: {
-        and: [
-          {
-            slug: {
-              equals: slug,
-            },
+  const result = await payload.find({
+    collection: 'pages',
+    depth: 2,
+    draft,
+    limit: 1,
+    locale,
+    pagination: false,
+    overrideAccess: draft,
+    where: {
+      and: [
+        {
+          slug: {
+            equals: slug,
           },
-          {
-            serviceCategory: {
-              not_equals: 'none',
-            },
+        },
+        {
+          serviceCategory: {
+            not_equals: 'none',
           },
-        ],
-      },
-    })
+        },
+      ],
+    },
+  })
 
-    return (result.docs?.[0] as Page) || null
-  },
-)
+  return (result.docs?.[0] as Page) || null
+}
+
+// Draft/preview requests always read fresh so editors see live content;
+// published requests go through a cross-request cache keyed by slug+locale
+// and invalidated by revalidatePage's `page_${slug}` tag.
+const queryServicePageBySlug = async (args: {
+  slug: string
+  locale: 'en' | 'ar'
+  draft: boolean
+}): Promise<Page | null> => {
+  if (args.draft) return fetchServicePageBySlug(args)
+
+  return unstable_cache(() => fetchServicePageBySlug(args), ['service-page', args.slug, args.locale], {
+    tags: [`page_${args.slug}`],
+  })()
+}

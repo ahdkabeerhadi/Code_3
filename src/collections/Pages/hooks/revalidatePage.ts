@@ -25,6 +25,7 @@ export const revalidatePage: CollectionAfterChangeHook<Page> = ({
 
       revalidatePath(path)
       revalidateTag('pages-sitemap')
+      revalidateTag(`page_${doc.slug}`)
     }
 
     // If the page was previously published, we need to revalidate the old path
@@ -35,6 +36,7 @@ export const revalidatePage: CollectionAfterChangeHook<Page> = ({
 
       revalidatePath(oldPath)
       revalidateTag('pages-sitemap')
+      revalidateTag(`page_${previousDoc.slug}`)
     }
   }
   return doc
@@ -45,6 +47,7 @@ export const revalidateDelete: CollectionAfterDeleteHook<Page> = ({ doc, req: { 
     const path = doc?.slug === 'home' ? '/' : `/${doc?.slug}`
     revalidatePath(path)
     revalidateTag('pages-sitemap')
+    if (doc?.slug) revalidateTag(`page_${doc.slug}`)
   }
 
   return doc

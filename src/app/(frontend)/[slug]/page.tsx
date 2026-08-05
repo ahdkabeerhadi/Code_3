@@ -5,7 +5,8 @@ import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
-import React, { cache } from 'react'
+import { unstable_cache } from 'next/cache'
+import React from 'react'
 import { homeStatic } from '@/endpoints/seed/home-static'
 
 import { RenderBlocks } from '@/blocks/RenderBlocks'
@@ -71,6 +72,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   page = await queryPageBySlug({
     slug,
     locale,
+    draft,
   })
 
   // Remove this code once your website is seeded
@@ -99,20 +101,27 @@ export default async function Page({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
+  const { isEnabled: draft } = await draftMode()
   const { slug = 'home' } = await paramsPromise
   const locale = await getLocale()
   const page = await queryPageBySlug({
     slug,
     locale,
+    draft,
   })
 
   return generateMeta({ doc: page })
 }
 
-const queryPageBySlug = cache(
-  async ({ slug, locale }: { slug: string; locale: 'en' | 'ar' }): Promise<Page | null> => {
-  const { isEnabled: draft } = await draftMode()
-
+const fetchPageBySlug = async ({
+  slug,
+  locale,
+  draft,
+}: {
+  slug: string
+  locale: 'en' | 'ar'
+  draft: boolean
+}): Promise<Page | null> => {
   const payload = await getPayload({ config: configPromise })
 
   const result = await payload.find({
@@ -149,5 +158,19 @@ const queryPageBySlug = cache(
   })
 
   return (result.docs?.[0] as Page) || null
-  },
-)
+}
+
+// Draft/preview requests always read fresh so editors see live content;
+// published requests go through a cross-request cache keyed by slug+locale
+// and invalidated by revalidatePage's `page_${slug}` tag.
+const queryPageBySlug = async (args: {
+  slug: string
+  locale: 'en' | 'ar'
+  draft: boolean
+}): Promise<Page | null> => {
+  if (args.draft) return fetchPageBySlug(args)
+
+  return unstable_cache(() => fetchPageBySlug(args), ['page', args.slug, args.locale], {
+    tags: [`page_${args.slug}`],
+  })()
+}
