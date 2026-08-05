@@ -78,6 +78,7 @@ export const AboutTeaserBlock: React.FC<Props> = ({
               <Media
                 resource={image!}
                 fill
+                size="(max-width: 768px) 100vw, 50vw"
                 imgClassName="object-cover"
                 onError={() => setImageFailed(true)}
               />
