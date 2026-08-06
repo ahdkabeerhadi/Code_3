@@ -6,7 +6,7 @@ import { useDeviceCart } from '@/providers/DeviceCart'
 import { DeviceEnquiryForm } from './DeviceEnquiryForm'
 
 export function CartDrawer() {
-  const { items, removeItem, clear, isOpen, closeCart } = useDeviceCart()
+  const { items, removeItem, updateQuantity, clear, isOpen, closeCart } = useDeviceCart()
   const [showForm, setShowForm] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
@@ -48,7 +48,7 @@ export function CartDrawer() {
         ) : showForm ? (
           <div className="mt-6">
             <DeviceEnquiryForm
-              deviceNames={items.map((i) => i.title)}
+              deviceNames={items.map((i) => `${i.title} (x${i.quantity})`)}
               onSuccess={() => {
                 setSubmitted(true)
                 clear()
@@ -67,12 +67,31 @@ export function CartDrawer() {
                     <p className="text-sm font-semibold text-foreground">{item.title}</p>
                     <p className="text-xs text-gray-500">{item.brand}</p>
                   </div>
-                  <button
-                    onClick={() => removeItem(item.id)}
-                    className="text-xs text-primary_red hover:underline"
-                  >
-                    Remove
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center rounded-full border border-border">
+                      <button
+                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                        className="px-2 py-0.5 text-sm text-gray-500 hover:text-foreground"
+                        aria-label="Decrease quantity"
+                      >
+                        −
+                      </button>
+                      <span className="w-5 text-center text-xs font-semibold">{item.quantity}</span>
+                      <button
+                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        className="px-2 py-0.5 text-sm text-gray-500 hover:text-foreground"
+                        aria-label="Increase quantity"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <button
+                      onClick={() => removeItem(item.id)}
+                      className="text-xs text-primary_red hover:underline"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </li>
               ))}
             </ul>

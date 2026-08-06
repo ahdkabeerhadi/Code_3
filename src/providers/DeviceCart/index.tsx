@@ -6,12 +6,14 @@ export type CartDevice = {
   id: string
   title: string
   brand: string
+  quantity: number
 }
 
 type DeviceCartContextValue = {
   items: CartDevice[]
-  addItem: (device: CartDevice) => void
+  addItem: (device: Omit<CartDevice, 'quantity'>, quantity?: number) => void
   removeItem: (id: string) => void
+  updateQuantity: (id: string, quantity: number) => void
   clear: () => void
   isInCart: (id: string) => boolean
   isOpen: boolean
@@ -43,12 +45,18 @@ export function DeviceCartProvider({ children }: { children: React.ReactNode }) 
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
   }, [items, hydrated])
 
-  const addItem = useCallback((device: CartDevice) => {
-    setItems((prev) => (prev.some((i) => i.id === device.id) ? prev : [...prev, device]))
+  const addItem = useCallback((device: Omit<CartDevice, 'quantity'>, quantity = 1) => {
+    setItems((prev) =>
+      prev.some((i) => i.id === device.id) ? prev : [...prev, { ...device, quantity }],
+    )
   }, [])
 
   const removeItem = useCallback((id: string) => {
     setItems((prev) => prev.filter((i) => i.id !== id))
+  }, [])
+
+  const updateQuantity = useCallback((id: string, quantity: number) => {
+    setItems((prev) => prev.map((i) => (i.id === id ? { ...i, quantity: Math.max(1, quantity) } : i)))
   }, [])
 
   const clear = useCallback(() => setItems([]), [])
@@ -60,13 +68,14 @@ export function DeviceCartProvider({ children }: { children: React.ReactNode }) 
       items,
       addItem,
       removeItem,
+      updateQuantity,
       clear,
       isInCart,
       isOpen,
       openCart: () => setIsOpen(true),
       closeCart: () => setIsOpen(false),
     }),
-    [items, addItem, removeItem, clear, isInCart, isOpen],
+    [items, addItem, removeItem, updateQuantity, clear, isInCart, isOpen],
   )
 
   return <DeviceCartContext.Provider value={value}>{children}</DeviceCartContext.Provider>
