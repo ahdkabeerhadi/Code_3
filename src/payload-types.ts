@@ -333,6 +333,7 @@ export interface Page {
     | SpecComparisonTableBlock
     | RoomPanelDemoBlock
     | CategorizedIntegrationsBlock
+    | DeviceBrandShowcaseBlock
     | RoomSizeCardsBlock
     | TestimonialsBlock
     | AccreditationsBlock
@@ -1786,6 +1787,18 @@ export interface CategorizedIntegrationsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DeviceBrandShowcaseBlock".
+ */
+export interface DeviceBrandShowcaseBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'deviceBrandShowcase';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "RoomSizeCardsBlock".
  */
 export interface RoomSizeCardsBlock {
@@ -2030,6 +2043,10 @@ export interface Device {
   category?:
     | ('Video Bar' | 'Camera' | 'Speakerphone' | 'Headset' | 'Conference Phone' | 'Collaboration Display')
     | null;
+  /**
+   * Which room size this device is designed for.
+   */
+  roomSize: 'Huddle' | 'Small/Medium' | 'Large';
   image?: (string | null) | Media;
   shortDescription?: string | null;
   specs?:
@@ -2491,6 +2508,7 @@ export interface PagesSelect<T extends boolean = true> {
         specComparisonTable?: T | SpecComparisonTableBlockSelect<T>;
         roomPanelDemo?: T | RoomPanelDemoBlockSelect<T>;
         categorizedIntegrations?: T | CategorizedIntegrationsBlockSelect<T>;
+        deviceBrandShowcase?: T | DeviceBrandShowcaseBlockSelect<T>;
         roomSizeCards?: T | RoomSizeCardsBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
         accreditations?: T | AccreditationsBlockSelect<T>;
@@ -3289,6 +3307,17 @@ export interface CategorizedIntegrationsBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DeviceBrandShowcaseBlock_select".
+ */
+export interface DeviceBrandShowcaseBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "RoomSizeCardsBlock_select".
  */
 export interface RoomSizeCardsBlockSelect<T extends boolean = true> {
@@ -3572,6 +3601,7 @@ export interface DevicesSelect<T extends boolean = true> {
   title?: T;
   brand?: T;
   category?: T;
+  roomSize?: T;
   image?: T;
   shortDescription?: T;
   specs?:

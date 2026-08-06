@@ -17,52 +17,43 @@ export function DeviceCard({
   const inCart = isInCart(device.id)
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-shadow hover:shadow-md">
-      <div className="relative aspect-square w-full bg-gray-50">
+    <div className="flex flex-col overflow-hidden rounded-xl border border-border bg-white shadow-sm transition-shadow hover:shadow-md">
+      <div className="relative aspect-[4/3] w-full bg-gray-50">
         {device.image && typeof device.image === 'object' ? (
-          <Media resource={device.image} fill size="(max-width: 640px) 100vw, 320px" imgClassName="object-contain p-6" />
+          <Media resource={device.image} fill size="(max-width: 640px) 50vw, 220px" imgClassName="object-contain p-3" />
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-xs font-semibold uppercase tracking-wider text-gray-400">
+          <div className="flex h-full w-full items-center justify-center text-[10px] font-semibold uppercase tracking-wider text-gray-400">
             {device.brand}
           </div>
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-4">
-        <span className="text-xs font-semibold uppercase tracking-wide text-primary_red">
+      <div className="flex flex-1 flex-col p-3">
+        <span className="text-[10px] font-semibold uppercase tracking-wide text-primary_red">
           {device.brand}
-          {device.category ? ` · ${device.category}` : ''}
+          {device.roomSize ? ` · ${device.roomSize}` : ''}
         </span>
-        <h3 className="mt-1 text-base font-semibold text-foreground">{device.title}</h3>
-        {device.shortDescription && (
-          <p className="mt-1.5 text-sm leading-relaxed text-gray-600">{device.shortDescription}</p>
-        )}
-
-        {device.specs && device.specs.length > 0 && (
-          <ul className="mt-3 space-y-1">
-            {device.specs.map((s, i) => (
-              <li key={i} className="flex items-start gap-1.5 text-xs text-gray-500">
-                <span className="mt-1 h-1 w-1 flex-none rounded-full bg-gray-400" />
-                {s.spec}
-              </li>
-            ))}
-          </ul>
-        )}
-
+        <h3 className="mt-0.5 text-sm font-semibold leading-snug text-foreground">{device.title}</h3>
         {device.priceLabel && (
-          <p className="mt-3 text-sm font-semibold text-foreground">{device.priceLabel}</p>
+          <p className="mt-1 text-xs font-medium text-gray-500">{device.priceLabel}</p>
         )}
 
-        <div className="mt-4 flex flex-col gap-2">
+        <div className="mt-2.5 flex gap-1.5">
           <Button
             variant={inCart ? 'outline' : 'default'}
             size="sm"
+            className="flex-1 px-2 text-xs"
             onClick={() => (inCart ? removeItem(device.id) : addItem({ id: device.id, title: device.title, brand: device.brand }))}
           >
-            {inCart ? 'Added to Quote' : 'Add to Quote Cart'}
+            {inCart ? 'Added' : 'Add to Cart'}
           </Button>
-          <Button variant="outline" size="sm" onClick={() => onEnquireNow(device)}>
-            Enquire Now
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex-1 px-2 text-xs"
+            onClick={() => onEnquireNow(device)}
+          >
+            Enquire
           </Button>
         </div>
       </div>

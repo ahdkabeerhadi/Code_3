@@ -39,6 +39,7 @@ import { ScopeChecklistBlock } from './ScopeChecklist/Component'
 import { SpecComparisonTableBlock } from './SpecComparisonTable/Component'
 import { RoomPanelDemoBlock } from './RoomPanelDemo/Component'
 import { CategorizedIntegrationsBlock } from './CategorizedIntegrations/Component'
+import { DeviceBrandShowcaseBlock } from './DeviceBrandShowcase/Component'
 import { RoomSizeCardsBlock } from './RoomSizeCards/Component'
 import { TestimonialsBlock } from './Testimonials/Component'
 import { AccreditationsBlock } from './Accreditations/Component'
@@ -91,6 +92,7 @@ const blockComponents = {
   specComparisonTable: SpecComparisonTableBlock,
   roomPanelDemo: RoomPanelDemoBlock,
   categorizedIntegrations: CategorizedIntegrationsBlock,
+  deviceBrandShowcase: DeviceBrandShowcaseBlock,
   roomSizeCards: RoomSizeCardsBlock,
   testimonials: TestimonialsBlock,
   accreditations: AccreditationsBlock,

@@ -14,7 +14,7 @@ export const Devices: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'brand', 'category'],
+    defaultColumns: ['title', 'brand', 'roomSize', 'category'],
     hidden: ({ user }) => user?.role !== 'admin',
   },
   hooks: {
@@ -44,6 +44,15 @@ export const Devices: CollectionConfig = {
         'Conference Phone',
         'Collaboration Display',
       ],
+    },
+    {
+      name: 'roomSize',
+      type: 'select',
+      required: true,
+      options: ['Huddle', 'Small/Medium', 'Large'],
+      admin: {
+        description: 'Which room size this device is designed for.',
+      },
     },
     {
       name: 'image',

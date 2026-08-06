@@ -7,7 +7,7 @@ import { DeviceCard } from './DeviceCard'
 import { CartDrawer } from './CartDrawer'
 import { EnquiryModal } from './EnquiryModal'
 
-const BRAND_ORDER: Device['brand'][] = ['Yealink', 'Logitech', 'Jabra', 'Cisco', 'Poly']
+const ROOM_SIZE_ORDER = ['Huddle', 'Small/Medium', 'Large']
 
 function CartFloatingButton() {
   const { items, openCart } = useDeviceCart()
@@ -27,19 +27,23 @@ function CartFloatingButton() {
   )
 }
 
-function DeviceCatalogInner({ devices }: { devices: Device[] }) {
-  const [activeBrand, setActiveBrand] = useState<string>('All')
+function DeviceCatalogInner({
+  devices,
+  title,
+  subtitle,
+}: {
+  devices: Device[]
+  title: string
+  subtitle: string
+}) {
   const [enquiringDevice, setEnquiringDevice] = useState<Device | null>(null)
 
-  const brands = useMemo(() => {
-    const present = new Set(devices.map((d) => d.brand))
-    return ['All', ...BRAND_ORDER.filter((b) => present.has(b))]
+  const groups = useMemo(() => {
+    return ROOM_SIZE_ORDER.map((size) => ({
+      size,
+      devices: devices.filter((d) => d.roomSize === size),
+    })).filter((g) => g.devices.length > 0)
   }, [devices])
-
-  const filteredDevices = useMemo(
-    () => (activeBrand === 'All' ? devices : devices.filter((d) => d.brand === activeBrand)),
-    [devices, activeBrand],
-  )
 
   return (
     <div className="container mx-auto px-4 py-10 sm:px-6">
@@ -48,39 +52,24 @@ function DeviceCatalogInner({ devices }: { devices: Device[] }) {
           Video Conferencing Devices
         </span>
         <h1 className="mt-2 text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
-          Shop Video Conferencing Devices
+          {title}
         </h1>
-        <p className="mt-3 text-gray-600">
-          Genuine hardware from Yealink, Logitech, Jabra, Cisco, and Poly. Add devices to your quote
-          cart or enquire about a single device — our team will follow up with pricing and
-          availability.
-        </p>
+        <p className="mt-3 text-gray-600">{subtitle}</p>
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-2">
-        {brands.map((brand) => (
-          <button
-            key={brand}
-            onClick={() => setActiveBrand(brand)}
-            className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
-              activeBrand === brand
-                ? 'border-primary_red bg-primary_red text-white'
-                : 'border-border bg-white text-foreground hover:border-primary_red/40'
-            }`}
-          >
-            {brand}
-          </button>
-        ))}
-      </div>
-
-      {filteredDevices.length === 0 ? (
-        <p className="mt-10 text-sm text-gray-500">No devices available for this brand yet.</p>
+      {groups.length === 0 ? (
+        <p className="mt-10 text-sm text-gray-500">No devices available yet.</p>
       ) : (
-        <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredDevices.map((device) => (
-            <DeviceCard key={device.id} device={device} onEnquireNow={setEnquiringDevice} />
-          ))}
-        </div>
+        groups.map((group) => (
+          <div key={group.size} className="mt-10">
+            <h2 className="mb-4 text-lg font-semibold text-foreground">{group.size} Rooms</h2>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              {group.devices.map((device) => (
+                <DeviceCard key={device.id} device={device} onEnquireNow={setEnquiringDevice} />
+              ))}
+            </div>
+          </div>
+        ))
       )}
 
       <CartFloatingButton />
@@ -95,10 +84,18 @@ function DeviceCatalogInner({ devices }: { devices: Device[] }) {
   )
 }
 
-export function DeviceCatalogClient({ devices }: { devices: Device[] }) {
+export function DeviceCatalogClient({
+  devices,
+  title,
+  subtitle,
+}: {
+  devices: Device[]
+  title: string
+  subtitle: string
+}) {
   return (
     <DeviceCartProvider>
-      <DeviceCatalogInner devices={devices} />
+      <DeviceCatalogInner devices={devices} title={title} subtitle={subtitle} />
     </DeviceCartProvider>
   )
 }
