@@ -29,9 +29,6 @@ export function DeviceCard({ device }: { device: Device }) {
           {device.roomSize ? ` · ${device.roomSize}` : ''}
         </span>
         <h3 className="mt-0.5 text-sm font-semibold leading-snug text-foreground">{device.title}</h3>
-        {device.priceLabel && (
-          <p className="mt-1 text-xs font-medium text-gray-500">{device.priceLabel}</p>
-        )}
 
         <div className="mt-2.5 flex gap-1.5">
           <Button

@@ -2041,24 +2041,52 @@ export interface Device {
   title: string;
   brand: 'Yealink' | 'Logitech' | 'Jabra' | 'Cisco' | 'Poly';
   category?:
-    | ('Video Bar' | 'Camera' | 'Speakerphone' | 'Headset' | 'Conference Phone' | 'Collaboration Display')
+    | (
+        | 'Video Bar'
+        | 'Camera'
+        | 'Room System'
+        | 'Microphone'
+        | 'Speaker'
+        | 'Touch Controller'
+        | 'Codec'
+        | 'Interactive Display'
+        | 'Personal Device'
+      )
     | null;
   /**
-   * Which room size this device is designed for.
+   * Which room size this device is designed for (leave blank for accessories that aren't room-size specific, e.g. mics, controllers).
    */
-  roomSize: 'Huddle' | 'Small/Medium' | 'Large';
+  roomSize?: ('Huddle' | 'Small/Medium' | 'Large') | null;
+  /**
+   * Main/fallback image, also used on device cards.
+   */
   image?: (string | null) | Media;
-  shortDescription?: string | null;
-  specs?:
+  gallery?:
     | {
-        spec?: string | null;
+        image: string | Media;
         id?: string | null;
       }[]
     | null;
-  /**
-   * e.g. "Starting from AED 1,499" or "Contact for pricing"
-   */
-  priceLabel?: string | null;
+  shortDescription?: string | null;
+  keyFeatures?:
+    | {
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  specGroups?:
+    | {
+        label: string;
+        specs?:
+          | {
+              spec: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
   featured?: boolean | null;
   slug?: string | null;
   slugLock?: boolean | null;
@@ -3605,14 +3633,32 @@ export interface DevicesSelect<T extends boolean = true> {
   category?: T;
   roomSize?: T;
   image?: T;
-  shortDescription?: T;
-  specs?:
+  gallery?:
     | T
     | {
-        spec?: T;
+        image?: T;
         id?: T;
       };
-  priceLabel?: T;
+  shortDescription?: T;
+  keyFeatures?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  specGroups?:
+    | T
+    | {
+        label?: T;
+        specs?:
+          | T
+          | {
+              spec?: T;
+              id?: T;
+            };
+        id?: T;
+      };
   featured?: T;
   slug?: T;
   slugLock?: T;

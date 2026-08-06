@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation'
 import React from 'react'
 import { DeviceCartProvider } from '@/providers/DeviceCart'
 import { DeviceHero } from '@/components/DeviceCatalog/DeviceHero'
-import { DeviceServiceOverview } from '@/components/DeviceCatalog/DeviceServiceOverview'
+import { DeviceDetails } from '@/components/DeviceCatalog/DeviceDetails'
 import { RelatedDeviceProducts } from '@/components/DeviceCatalog/RelatedDeviceProducts'
 import { CartDrawer } from '@/components/DeviceCatalog/CartDrawer'
 import { CartFloatingButton } from '@/components/DeviceCatalog/CartFloatingButton'
@@ -14,7 +14,7 @@ import { SetLightHeader } from '@/components/DeviceCatalog/SetLightHeader'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import {
   getCachedDeviceBySlug,
-  getCachedRelatedDevices,
+  getCachedOtherBrandDevices,
   getCachedReusedBlocks,
 } from '@/components/DeviceCatalog/getDeviceDetailData'
 
@@ -38,8 +38,8 @@ export default async function DeviceDetailPage({ params: paramsPromise }: Args) 
   const device = await getCachedDeviceBySlug(slug)
   if (!device) notFound()
 
-  const [relatedDevices, reusedBlocks] = await Promise.all([
-    getCachedRelatedDevices(device.brand, device.id),
+  const [otherBrandDevices, reusedBlocks] = await Promise.all([
+    getCachedOtherBrandDevices(device.brand),
     getCachedReusedBlocks(),
   ])
 
@@ -48,8 +48,8 @@ export default async function DeviceDetailPage({ params: paramsPromise }: Args) 
       <article className="relative">
         <SetLightHeader />
         <DeviceHero device={device} />
-        <DeviceServiceOverview device={device} />
-        <RelatedDeviceProducts devices={relatedDevices} brand={device.brand} />
+        <DeviceDetails device={device} />
+        <RelatedDeviceProducts devices={otherBrandDevices} />
         <RenderBlocks blocks={reusedBlocks} />
         <CartFloatingButton />
         <CartDrawer />
