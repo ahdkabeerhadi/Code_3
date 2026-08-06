@@ -23,6 +23,9 @@ export function LocaleLinkGuard() {
       const anchor = (event.target as HTMLElement)?.closest?.('a')
       if (!anchor) return
       if (anchor.target && anchor.target !== '_self') return
+      // The EN/AR locale toggle deliberately links to the unprefixed path to
+      // switch back to English — must not be redirected back into /ar.
+      if (anchor.hasAttribute('data-locale-link')) return
 
       const href = anchor.getAttribute('href')
       if (!href) return

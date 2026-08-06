@@ -3,6 +3,7 @@
 import React, { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { getClientSideURL } from '@/utilities/getURL'
+import { reportContactConversion } from '@/utilities/reportConversion'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
 
@@ -88,6 +89,7 @@ export function MiniContactForm({
 
       setHasSubmitted(true)
       setIsLoading(false)
+      reportContactConversion()
     } catch {
       setError('Something went wrong. Please try again.')
       setIsLoading(false)

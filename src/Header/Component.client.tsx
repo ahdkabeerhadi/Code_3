@@ -179,6 +179,7 @@ function LocaleToggle({ className = '' }: { className?: string }) {
           hard reload — this sidesteps that entirely. */}
       <a
         href={enPath}
+        data-locale-link="en"
         aria-current={!isArabic ? 'page' : undefined}
         aria-label="Switch to English"
         className={`rounded-full px-3 py-1 transition-all duration-300 ${

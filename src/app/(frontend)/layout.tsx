@@ -3,6 +3,7 @@ import { cn } from '@/utilities/ui'
 import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
 import React from 'react'
+import Script from 'next/script'
 import { GoogleTagManager } from '@next/third-parties/google'
 import { AdminBar } from '@/components/AdminBar'
 import { Footer } from '@/Footer/Component'
@@ -21,6 +22,8 @@ import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-WJKX5PV5'
+const GOOGLE_ADS_ID = 'AW-18303563361'
+const GOOGLE_ADS_CONTACT_CONVERSION_LABEL = 'AW-18303563361/EyDvCJOg69scEOHs6JdE'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
@@ -36,6 +39,36 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+        {/* Google tag (gtag.js) for Google Ads conversion tracking */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-ads-gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GOOGLE_ADS_ID}');
+          `}
+        </Script>
+        {/* Event snippet for Contact conversion page */}
+        <Script id="gtag-report-conversion" strategy="afterInteractive">
+          {`
+            function gtag_report_conversion(url) {
+              var callback = function () {
+                if (typeof(url) != 'undefined') {
+                  window.location = url;
+                }
+              };
+              gtag('event', 'conversion', {
+                  'send_to': '${GOOGLE_ADS_CONTACT_CONVERSION_LABEL}',
+                  'event_callback': callback
+              });
+              return false;
+            }
+          `}
+        </Script>
       </head>
       <body>
         <noscript>
