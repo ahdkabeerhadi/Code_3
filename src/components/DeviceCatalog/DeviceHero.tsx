@@ -22,8 +22,12 @@ function ImageGallery({ device }: { device: Device }) {
   const activeImage = images[activeIndex]
 
   return (
-    <div>
-      <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-border bg-gray-50">
+    // h-full + flex-col so the main photo fills whatever height the right
+    // column naturally takes up (matching it), with the thumbnail strip
+    // pinned below at a fixed size rather than growing the whole column
+    // taller than the surrounding content.
+    <div className="flex h-full min-h-[320px] flex-col">
+      <div className="relative min-h-0 w-full flex-1 overflow-hidden rounded-2xl border border-border bg-gray-50">
         {activeImage ? (
           <Media
             resource={activeImage}
@@ -39,7 +43,7 @@ function ImageGallery({ device }: { device: Device }) {
       </div>
 
       {images.length > 1 && (
-        <div className="mt-3 flex gap-2">
+        <div className="mt-3 flex flex-none gap-2">
           {images.map((img, i) => (
             <button
               key={img.id || i}
