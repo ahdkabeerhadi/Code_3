@@ -1,0 +1,114 @@
+import type { CollectionConfig } from 'payload'
+
+import { anyone } from '../../access/anyone'
+import { authenticated } from '../../access/authenticated'
+import { slugField } from '@/fields/slug'
+import { revalidateDevice, revalidateDeviceDelete } from './hooks/revalidateDevices'
+
+export const Devices: CollectionConfig = {
+  slug: 'devices',
+  access: {
+    create: authenticated,
+    delete: authenticated,
+    read: anyone,
+    update: authenticated,
+  },
+  admin: {
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'brand', 'roomSize', 'category'],
+    hidden: ({ user }) => user?.role !== 'admin',
+  },
+  hooks: {
+    afterChange: [revalidateDevice],
+    afterDelete: [revalidateDeviceDelete],
+  },
+  fields: [
+    {
+      name: 'title',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'brand',
+      type: 'select',
+      required: true,
+      options: ['Yealink', 'Logitech', 'Jabra', 'Cisco', 'Poly'],
+    },
+    {
+      name: 'category',
+      type: 'select',
+      options: [
+        'Video Bar',
+        'Camera',
+        'Room System',
+        'Microphone',
+        'Speaker',
+        'Touch Controller',
+        'Codec',
+        'Interactive Display',
+        'Personal Device',
+      ],
+    },
+    {
+      name: 'roomSize',
+      type: 'select',
+      options: ['Huddle', 'Small/Medium', 'Large'],
+      admin: {
+        description: 'Which room size this device is designed for (leave blank for accessories that aren\'t room-size specific, e.g. mics, controllers).',
+      },
+    },
+    {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Main/fallback image, also used on device cards.',
+      },
+    },
+    {
+      name: 'gallery',
+      type: 'array',
+      label: 'Image Gallery',
+      fields: [
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          required: true,
+        },
+      ],
+    },
+    {
+      name: 'shortDescription',
+      type: 'textarea',
+    },
+    {
+      name: 'keyFeatures',
+      type: 'array',
+      label: 'Top 5 Key Features',
+      fields: [
+        { name: 'title', type: 'text', required: true },
+        { name: 'description', type: 'textarea', required: true },
+      ],
+    },
+    {
+      name: 'specGroups',
+      type: 'array',
+      label: 'Detailed Technical Specifications',
+      fields: [
+        { name: 'label', type: 'text', required: true },
+        {
+          name: 'specs',
+          type: 'array',
+          fields: [{ name: 'spec', type: 'text', required: true }],
+        },
+      ],
+    },
+    {
+      name: 'featured',
+      type: 'checkbox',
+      defaultValue: false,
+    },
+    ...slugField(),
+  ],
+}

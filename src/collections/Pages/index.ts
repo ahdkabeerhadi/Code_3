@@ -52,6 +52,7 @@ import { ScopeChecklist } from '@/blocks/ScopeChecklist/config'
 import { SpecComparisonTable } from '@/blocks/SpecComparisonTable/config'
 import { RoomPanelDemo } from '@/blocks/RoomPanelDemo/config'
 import { CategorizedIntegrations } from '@/blocks/CategorizedIntegrations/config'
+import { DeviceBrandShowcase } from '@/blocks/DeviceBrandShowcase/config'
 import { RoomSizeCards } from '@/blocks/RoomSizeCards/config'
 import { Testimonials } from '@/blocks/Testimonials/config'
 import { Accreditations } from '@/blocks/Accreditations/config'
@@ -217,6 +218,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 SpecComparisonTable,
                 RoomPanelDemo,
                 CategorizedIntegrations,
+                DeviceBrandShowcase,
                 RoomSizeCards,
                 Testimonials,
                 Accreditations,

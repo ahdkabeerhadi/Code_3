@@ -71,6 +71,7 @@ export interface Config {
     posts: Post;
     media: Media;
     categories: Category;
+    devices: Device;
     users: User;
     complaints: Complaint;
     'complaint-attachments': ComplaintAttachment;
@@ -89,6 +90,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    devices: DevicesSelect<false> | DevicesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     complaints: ComplaintsSelect<false> | ComplaintsSelect<true>;
     'complaint-attachments': ComplaintAttachmentsSelect<false> | ComplaintAttachmentsSelect<true>;
@@ -331,6 +333,7 @@ export interface Page {
     | SpecComparisonTableBlock
     | RoomPanelDemoBlock
     | CategorizedIntegrationsBlock
+    | DeviceBrandShowcaseBlock
     | RoomSizeCardsBlock
     | TestimonialsBlock
     | AccreditationsBlock
@@ -1784,6 +1787,18 @@ export interface CategorizedIntegrationsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DeviceBrandShowcaseBlock".
+ */
+export interface DeviceBrandShowcaseBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'deviceBrandShowcase';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "RoomSizeCardsBlock".
  */
 export interface RoomSizeCardsBlock {
@@ -2016,6 +2031,67 @@ export interface BlogScrollBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'blogScroll';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "devices".
+ */
+export interface Device {
+  id: string;
+  title: string;
+  brand: 'Yealink' | 'Logitech' | 'Jabra' | 'Cisco' | 'Poly';
+  category?:
+    | (
+        | 'Video Bar'
+        | 'Camera'
+        | 'Room System'
+        | 'Microphone'
+        | 'Speaker'
+        | 'Touch Controller'
+        | 'Codec'
+        | 'Interactive Display'
+        | 'Personal Device'
+      )
+    | null;
+  /**
+   * Which room size this device is designed for (leave blank for accessories that aren't room-size specific, e.g. mics, controllers).
+   */
+  roomSize?: ('Huddle' | 'Small/Medium' | 'Large') | null;
+  /**
+   * Main/fallback image, also used on device cards.
+   */
+  image?: (string | null) | Media;
+  gallery?:
+    | {
+        image: string | Media;
+        id?: string | null;
+      }[]
+    | null;
+  shortDescription?: string | null;
+  keyFeatures?:
+    | {
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  specGroups?:
+    | {
+        label: string;
+        specs?:
+          | {
+              spec: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  featured?: boolean | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2287,6 +2363,10 @@ export interface PayloadLockedDocument {
         value: string | Category;
       } | null)
     | ({
+        relationTo: 'devices';
+        value: string | Device;
+      } | null)
+    | ({
         relationTo: 'users';
         value: string | User;
       } | null)
@@ -2458,6 +2538,7 @@ export interface PagesSelect<T extends boolean = true> {
         specComparisonTable?: T | SpecComparisonTableBlockSelect<T>;
         roomPanelDemo?: T | RoomPanelDemoBlockSelect<T>;
         categorizedIntegrations?: T | CategorizedIntegrationsBlockSelect<T>;
+        deviceBrandShowcase?: T | DeviceBrandShowcaseBlockSelect<T>;
         roomSizeCards?: T | RoomSizeCardsBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
         accreditations?: T | AccreditationsBlockSelect<T>;
@@ -3256,6 +3337,17 @@ export interface CategorizedIntegrationsBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DeviceBrandShowcaseBlock_select".
+ */
+export interface DeviceBrandShowcaseBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "RoomSizeCardsBlock_select".
  */
 export interface RoomSizeCardsBlockSelect<T extends boolean = true> {
@@ -3528,6 +3620,48 @@ export interface CategoriesSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "devices_select".
+ */
+export interface DevicesSelect<T extends boolean = true> {
+  title?: T;
+  brand?: T;
+  category?: T;
+  roomSize?: T;
+  image?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  shortDescription?: T;
+  keyFeatures?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  specGroups?:
+    | T
+    | {
+        label?: T;
+        specs?:
+          | T
+          | {
+              spec?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  featured?: T;
+  slug?: T;
+  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
 }
