@@ -16,6 +16,7 @@ import { draftMode } from 'next/headers'
 import { caMechano, notoSansArabic } from '@/fonts'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { PhoneButton } from '@/components/PhoneButton'
+import { LocaleLinkGuard } from '@/components/LocaleLinkGuard'
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
 
@@ -47,6 +48,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </noscript>
         <GoogleTagManager gtmId={GTM_ID} />
         <Providers>
+          <LocaleLinkGuard />
           <AdminBar
             adminBarProps={{
               preview: isEnabled,
