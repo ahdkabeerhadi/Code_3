@@ -72,6 +72,18 @@ const nextConfig = {
   },
   reactStrictMode: true,
   redirects,
+  experimental: {
+    // Every dynamic route's rendered output depends on the x-locale header set by
+    // middleware, but the client Router Cache keys entries by the post-rewrite
+    // pathname only (both /ar/x and /x resolve to the same route internally) - so
+    // without this, a soft navigation can silently reuse a cached page from the
+    // wrong locale. Forcing dynamic entries to always be treated as stale makes
+    // every client-side navigation re-fetch, which correctly re-applies the
+    // request's locale every time.
+    staleTimes: {
+      dynamic: 0,
+    },
+  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })
