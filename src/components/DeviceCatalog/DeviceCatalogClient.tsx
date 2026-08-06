@@ -1,31 +1,13 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import type { Device } from '@/payload-types'
-import { DeviceCartProvider, useDeviceCart } from '@/providers/DeviceCart'
+import { DeviceCartProvider } from '@/providers/DeviceCart'
 import { DeviceCard } from './DeviceCard'
 import { CartDrawer } from './CartDrawer'
-import { EnquiryModal } from './EnquiryModal'
+import { CartFloatingButton } from './CartFloatingButton'
 
 const ROOM_SIZE_ORDER = ['Huddle', 'Small/Medium', 'Large']
-
-function CartFloatingButton() {
-  const { items, openCart } = useDeviceCart()
-  if (items.length === 0) return null
-
-  return (
-    <button
-      onClick={openCart}
-      aria-label="Open quote cart"
-      className="fixed bottom-24 right-6 z-40 flex items-center gap-2 rounded-full bg-primary_red px-5 py-3 text-sm font-semibold text-white shadow-xl transition-transform hover:scale-105 active:scale-95"
-    >
-      Quote Cart
-      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-xs font-bold text-primary_red">
-        {items.length}
-      </span>
-    </button>
-  )
-}
 
 function DeviceCatalogInner({
   devices,
@@ -36,8 +18,6 @@ function DeviceCatalogInner({
   title: string
   subtitle: string
 }) {
-  const [enquiringDevice, setEnquiringDevice] = useState<Device | null>(null)
-
   const groups = useMemo(() => {
     return ROOM_SIZE_ORDER.map((size) => ({
       size,
@@ -65,7 +45,7 @@ function DeviceCatalogInner({
             <h2 className="mb-4 text-lg font-semibold text-foreground">{group.size} Rooms</h2>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {group.devices.map((device) => (
-                <DeviceCard key={device.id} device={device} onEnquireNow={setEnquiringDevice} />
+                <DeviceCard key={device.id} device={device} />
               ))}
             </div>
           </div>
@@ -74,12 +54,6 @@ function DeviceCatalogInner({
 
       <CartFloatingButton />
       <CartDrawer />
-      {enquiringDevice && (
-        <EnquiryModal
-          deviceNames={[enquiringDevice.title]}
-          onClose={() => setEnquiringDevice(null)}
-        />
-      )}
     </div>
   )
 }

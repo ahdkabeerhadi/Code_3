@@ -2060,6 +2060,8 @@ export interface Device {
    */
   priceLabel?: string | null;
   featured?: boolean | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -3612,6 +3614,8 @@ export interface DevicesSelect<T extends boolean = true> {
       };
   priceLabel?: T;
   featured?: T;
+  slug?: T;
+  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
 }

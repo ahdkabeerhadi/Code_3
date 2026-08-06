@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
+import { slugField } from '@/fields/slug'
 import { revalidateDevice, revalidateDeviceDelete } from './hooks/revalidateDevices'
 
 export const Devices: CollectionConfig = {
@@ -85,5 +86,6 @@ export const Devices: CollectionConfig = {
       type: 'checkbox',
       defaultValue: false,
     },
+    ...slugField(),
   ],
 }

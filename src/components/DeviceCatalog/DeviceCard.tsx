@@ -1,18 +1,13 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
 import type { Device } from '@/payload-types'
 import { Media } from '@/components/Media'
 import { Button } from '@/components/ui/button'
 import { useDeviceCart } from '@/providers/DeviceCart'
 
-export function DeviceCard({
-  device,
-  onEnquireNow,
-}: {
-  device: Device
-  onEnquireNow: (device: Device) => void
-}) {
+export function DeviceCard({ device }: { device: Device }) {
   const { addItem, removeItem, isInCart } = useDeviceCart()
   const inCart = isInCart(device.id)
 
@@ -47,13 +42,8 @@ export function DeviceCard({
           >
             {inCart ? 'Added' : 'Add to Cart'}
           </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="flex-1 px-2 text-xs"
-            onClick={() => onEnquireNow(device)}
-          >
-            Enquire
+          <Button variant="outline" size="sm" className="flex-1 px-2 text-xs" asChild>
+            <Link href={`/service/device/${device.slug}`}>View Details</Link>
           </Button>
         </div>
       </div>
