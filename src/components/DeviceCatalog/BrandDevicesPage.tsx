@@ -1,22 +1,35 @@
 import type { Metadata } from 'next'
 import React from 'react'
 import type { Device } from '@/payload-types'
+import { DeviceCartProvider } from '@/providers/DeviceCart'
+import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { getCachedBrandDevices } from './getBrandDevices'
-import { DeviceCatalogClient } from './DeviceCatalogClient'
+import { getCachedReusedBlocks } from './getDeviceDetailData'
+import { BrandHero } from './BrandHero'
+import { BrandServiceOverview } from './BrandServiceOverview'
+import { DeviceGroupedGrid } from './DeviceGroupedGrid'
+import { CartDrawer } from './CartDrawer'
+import { CartFloatingButton } from './CartFloatingButton'
 import { SetLightHeader } from './SetLightHeader'
 
 export async function BrandDevicesPageContent({ brand }: { brand: Device['brand'] }) {
-  const devices = await getCachedBrandDevices(brand)
+  const [devices, reusedBlocks] = await Promise.all([
+    getCachedBrandDevices(brand),
+    getCachedReusedBlocks(),
+  ])
 
   return (
-    <article className="relative pt-8">
-      <SetLightHeader />
-      <DeviceCatalogClient
-        devices={devices}
-        title={`${brand} Video Conferencing Devices`}
-        subtitle={`Genuine ${brand} video conferencing hardware for huddle, small/medium, and large rooms. Add devices to your quote cart or enquire directly for pricing and availability.`}
-      />
-    </article>
+    <DeviceCartProvider>
+      <article className="relative">
+        <SetLightHeader />
+        <BrandHero brand={brand} />
+        <BrandServiceOverview brand={brand} />
+        <DeviceGroupedGrid devices={devices} />
+        <RenderBlocks blocks={reusedBlocks} />
+        <CartFloatingButton />
+        <CartDrawer />
+      </article>
+    </DeviceCartProvider>
   )
 }
 
