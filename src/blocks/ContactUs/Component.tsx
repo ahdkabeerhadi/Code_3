@@ -6,6 +6,7 @@ import { cn } from '@/utilities/ui'
 import React, { useCallback, useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { getClientSideURL } from '@/utilities/getURL'
+import { reportContactConversion } from '@/utilities/reportConversion'
 import { SuccessModal } from './SuccessModale'
 import { Button } from '@/components/ui/button'
 import { Eyebrow } from '@/components/site/Eyebrow'
@@ -143,6 +144,7 @@ export const ContactUsBlock: React.FC<Props> = ({
           page_url: window.location.href,
         })
       }
+      reportContactConversion()
     } catch (err) {
       console.warn(err)
       setIsLoading(false)

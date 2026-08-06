@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from 'react'
 import { Button, type ButtonProps } from '@/components/ui/button'
+import { reportContactConversion } from '@/utilities/reportConversion'
 
 declare global {
   interface Window {
@@ -12,6 +13,26 @@ declare global {
 }
 
 const CALENDLY_SCRIPT_SRC = 'https://assets.calendly.com/assets/external/widget.js'
+
+// CalendlyButton can render more than once at a time (desktop nav + mobile
+// menu), so this listener is registered once module-wide rather than per
+// instance — otherwise a single completed booking would report as multiple
+// conversions.
+let calendlyConversionListenerAttached = false
+function ensureCalendlyConversionListener() {
+  if (calendlyConversionListenerAttached) return
+  calendlyConversionListenerAttached = true
+  window.addEventListener('message', (event) => {
+    if (event.origin !== 'https://calendly.com') return
+    if (
+      typeof event.data === 'object' &&
+      event.data !== null &&
+      (event.data as { event?: string }).event === 'calendly.event_scheduled'
+    ) {
+      reportContactConversion()
+    }
+  })
+}
 
 function loadCalendlyScript(): Promise<void> {
   return new Promise((resolve) => {
@@ -58,6 +79,7 @@ export function CalendlyButton({
     // Start loading the script as soon as this button mounts, so it's ready by the
     // time a real visitor clicks — don't wait for Next's lazyOnload idle window.
     loadingRef.current = loadCalendlyScript()
+    ensureCalendlyConversionListener()
   }, [])
 
   const openPopup = async () => {
