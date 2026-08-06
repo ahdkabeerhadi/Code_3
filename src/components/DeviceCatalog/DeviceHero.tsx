@@ -64,7 +64,7 @@ function ImageGallery({ device }: { device: Device }) {
 export function DeviceHero({ device }: { device: Device }) {
   const [quantity, setQuantity] = useState(1)
   const [showEnquiry, setShowEnquiry] = useState(false)
-  const { addItem, isInCart } = useDeviceCart()
+  const { items, addItem, isInCart, openCart } = useDeviceCart()
   const inCart = isInCart(device.id)
 
   // Model/SKU-style identifier derived from the title (e.g. "Yealink UVC86
@@ -79,7 +79,35 @@ export function DeviceHero({ device }: { device: Device }) {
           <ImageGallery device={device} />
 
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
+            <div className="flex justify-end">
+              <button
+                onClick={openCart}
+                className="flex items-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-xs font-semibold text-foreground transition-colors hover:border-primary_red hover:text-primary_red"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-4 w-4"
+                >
+                  <circle cx="9" cy="21" r="1" />
+                  <circle cx="20" cy="21" r="1" />
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                </svg>
+                Quote Cart
+                {items.length > 0 && (
+                  <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-primary_red px-1 text-[10px] text-white">
+                    {items.length}
+                  </span>
+                )}
+              </button>
+            </div>
+
+            <h1 className="mt-3 text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
               {device.title}
             </h1>
 

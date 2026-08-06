@@ -6,7 +6,6 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { getCachedBrandDevices } from './getBrandDevices'
 import { getCachedReusedBlocks } from './getDeviceDetailData'
 import { BrandHero } from './BrandHero'
-import { BrandServiceOverview } from './BrandServiceOverview'
 import { DeviceGroupedGrid } from './DeviceGroupedGrid'
 import { CartDrawer } from './CartDrawer'
 import { CartFloatingButton } from './CartFloatingButton'
@@ -23,7 +22,6 @@ export async function BrandDevicesPageContent({ brand }: { brand: Device['brand'
       <article className="relative">
         <SetLightHeader />
         <BrandHero brand={brand} />
-        <BrandServiceOverview brand={brand} />
         <DeviceGroupedGrid devices={devices} />
         <RenderBlocks blocks={reusedBlocks} />
         <CartFloatingButton />

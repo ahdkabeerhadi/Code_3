@@ -9,12 +9,12 @@ import { DeviceHero } from '@/components/DeviceCatalog/DeviceHero'
 import { DeviceDetails } from '@/components/DeviceCatalog/DeviceDetails'
 import { RelatedDeviceProducts } from '@/components/DeviceCatalog/RelatedDeviceProducts'
 import { CartDrawer } from '@/components/DeviceCatalog/CartDrawer'
-import { CartFloatingButton } from '@/components/DeviceCatalog/CartFloatingButton'
 import { SetLightHeader } from '@/components/DeviceCatalog/SetLightHeader'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import {
   getCachedDeviceBySlug,
   getCachedOtherBrandDevices,
+  getCachedAllOtherDevices,
   getCachedReusedBlocks,
 } from '@/components/DeviceCatalog/getDeviceDetailData'
 
@@ -38,8 +38,9 @@ export default async function DeviceDetailPage({ params: paramsPromise }: Args) 
   const device = await getCachedDeviceBySlug(slug)
   if (!device) notFound()
 
-  const [otherBrandDevices, reusedBlocks] = await Promise.all([
+  const [otherBrandDevices, allOtherDevices, reusedBlocks] = await Promise.all([
     getCachedOtherBrandDevices(device.brand),
+    getCachedAllOtherDevices(device.id),
     getCachedReusedBlocks(),
   ])
 
@@ -49,9 +50,8 @@ export default async function DeviceDetailPage({ params: paramsPromise }: Args) 
         <SetLightHeader />
         <DeviceHero device={device} />
         <DeviceDetails device={device} />
-        <RelatedDeviceProducts devices={otherBrandDevices} />
+        <RelatedDeviceProducts devices={otherBrandDevices} moreDevices={allOtherDevices} />
         <RenderBlocks blocks={reusedBlocks} />
-        <CartFloatingButton />
         <CartDrawer />
       </article>
     </DeviceCartProvider>

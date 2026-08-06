@@ -49,6 +49,26 @@ export const getCachedOtherBrandDevices = (excludeBrand: Device['brand']) =>
     tags: ['devices-catalog'],
   })()
 
+// Expanded "More" view - every device across all 5 brands (including the
+// current device's own brand), excluding just the device being viewed.
+const fetchAllOtherDevices = async (excludeId: string) => {
+  const payload = await getPayload({ config: configPromise })
+  const result = await payload.find({
+    collection: 'devices',
+    depth: 1,
+    limit: 60,
+    sort: 'brand',
+    pagination: false,
+    where: { id: { not_equals: excludeId } },
+  })
+  return result.docs
+}
+
+export const getCachedAllOtherDevices = (excludeId: string) =>
+  unstable_cache(() => fetchAllOtherDevices(excludeId), ['all-other-devices', excludeId], {
+    tags: ['devices-catalog'],
+  })()
+
 // Reuses the generic company-wide sections already authored on the Video
 // Conferencing Solutions page (You Might Also Need, Stats, Our Clients,
 // Technology Partners, Client Voices, FAQs) instead of duplicating that
