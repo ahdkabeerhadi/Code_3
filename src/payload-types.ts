@@ -71,6 +71,7 @@ export interface Config {
     posts: Post;
     media: Media;
     categories: Category;
+    devices: Device;
     users: User;
     complaints: Complaint;
     'complaint-attachments': ComplaintAttachment;
@@ -89,6 +90,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    devices: DevicesSelect<false> | DevicesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     complaints: ComplaintsSelect<false> | ComplaintsSelect<true>;
     'complaint-attachments': ComplaintAttachmentsSelect<false> | ComplaintAttachmentsSelect<true>;
@@ -2019,6 +2021,33 @@ export interface BlogScrollBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "devices".
+ */
+export interface Device {
+  id: string;
+  title: string;
+  brand: 'Yealink' | 'Logitech' | 'Jabra' | 'Cisco' | 'Poly';
+  category?:
+    | ('Video Bar' | 'Camera' | 'Speakerphone' | 'Headset' | 'Conference Phone' | 'Collaboration Display')
+    | null;
+  image?: (string | null) | Media;
+  shortDescription?: string | null;
+  specs?:
+    | {
+        spec?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * e.g. "Starting from AED 1,499" or "Contact for pricing"
+   */
+  priceLabel?: string | null;
+  featured?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "complaints".
  */
 export interface Complaint {
@@ -2285,6 +2314,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'categories';
         value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'devices';
+        value: string | Device;
       } | null)
     | ({
         relationTo: 'users';
@@ -3528,6 +3561,27 @@ export interface CategoriesSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "devices_select".
+ */
+export interface DevicesSelect<T extends boolean = true> {
+  title?: T;
+  brand?: T;
+  category?: T;
+  image?: T;
+  shortDescription?: T;
+  specs?:
+    | T
+    | {
+        spec?: T;
+        id?: T;
+      };
+  priceLabel?: T;
+  featured?: T;
   updatedAt?: T;
   createdAt?: T;
 }
