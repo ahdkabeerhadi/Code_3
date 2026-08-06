@@ -24,6 +24,7 @@ import { getServerSideURL } from '@/utilities/getURL'
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-WJKX5PV5'
 const GOOGLE_ADS_ID = 'AW-18303563361'
 const GOOGLE_ADS_CONTACT_CONVERSION_LABEL = 'AW-18303563361/EyDvCJOg69scEOHs6JdE'
+const CLARITY_PROJECT_ID = 'xy1owi92ov'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
@@ -67,6 +68,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               });
               return false;
             }
+          `}
+        </Script>
+        {/* Microsoft Clarity heatmaps + session recordings */}
+        <Script id="microsoft-clarity" strategy="afterInteractive">
+          {`
+            (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "${CLARITY_PROJECT_ID}");
           `}
         </Script>
       </head>
