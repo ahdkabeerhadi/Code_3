@@ -110,13 +110,11 @@ export interface Config {
     header: Header;
     footer: Footer;
     'register-complaint': RegisterComplaint;
-    brandDevicePages: BrandDevicePage;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     'register-complaint': RegisterComplaintSelect<false> | RegisterComplaintSelect<true>;
-    brandDevicePages: BrandDevicePagesSelect<false> | BrandDevicePagesSelect<true>;
   };
   locale: 'en' | 'ar';
   user: User & {
@@ -336,6 +334,8 @@ export interface Page {
     | RoomPanelDemoBlock
     | CategorizedIntegrationsBlock
     | DeviceBrandShowcaseBlock
+    | BrandDeviceGridBlock
+    | DeviceEnquiryBlock
     | RoomSizeCardsBlock
     | TestimonialsBlock
     | AccreditationsBlock
@@ -1811,6 +1811,33 @@ export interface DeviceBrandShowcaseBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BrandDeviceGridBlock".
+ */
+export interface BrandDeviceGridBlock {
+  /**
+   * Which brand's devices (from the Devices collection) to list here.
+   */
+  brand: 'Yealink' | 'Logitech' | 'Jabra' | 'Cisco' | 'Poly';
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'brandDeviceGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DeviceEnquiryBlock".
+ */
+export interface DeviceEnquiryBlock {
+  heading: string;
+  /**
+   * Included in the submitted enquiry, e.g. "Yealink Video Conferencing Devices".
+   */
+  deviceLabel: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'deviceEnquiry';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "RoomSizeCardsBlock".
  */
 export interface RoomSizeCardsBlock {
@@ -2551,6 +2578,8 @@ export interface PagesSelect<T extends boolean = true> {
         roomPanelDemo?: T | RoomPanelDemoBlockSelect<T>;
         categorizedIntegrations?: T | CategorizedIntegrationsBlockSelect<T>;
         deviceBrandShowcase?: T | DeviceBrandShowcaseBlockSelect<T>;
+        brandDeviceGrid?: T | BrandDeviceGridBlockSelect<T>;
+        deviceEnquiry?: T | DeviceEnquiryBlockSelect<T>;
         roomSizeCards?: T | RoomSizeCardsBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
         accreditations?: T | AccreditationsBlockSelect<T>;
@@ -3369,6 +3398,25 @@ export interface DeviceBrandShowcaseBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BrandDeviceGridBlock_select".
+ */
+export interface BrandDeviceGridBlockSelect<T extends boolean = true> {
+  brand?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DeviceEnquiryBlock_select".
+ */
+export interface DeviceEnquiryBlockSelect<T extends boolean = true> {
+  heading?: T;
+  deviceLabel?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "RoomSizeCardsBlock_select".
  */
 export interface RoomSizeCardsBlockSelect<T extends boolean = true> {
@@ -4154,42 +4202,6 @@ export interface RegisterComplaint {
   createdAt?: string | null;
 }
 /**
- * Hero content for each of the 5 brand device pages (Yealink, Logitech, Jabra, Cisco, Poly). Product listings themselves are managed in the Devices collection.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "brandDevicePages".
- */
-export interface BrandDevicePage {
-  id: string;
-  yealink?: {
-    title?: string | null;
-    subtitle?: string | null;
-    enquiryHeading?: string | null;
-  };
-  logitech?: {
-    title?: string | null;
-    subtitle?: string | null;
-    enquiryHeading?: string | null;
-  };
-  jabra?: {
-    title?: string | null;
-    subtitle?: string | null;
-    enquiryHeading?: string | null;
-  };
-  cisco?: {
-    title?: string | null;
-    subtitle?: string | null;
-    enquiryHeading?: string | null;
-  };
-  poly?: {
-    title?: string | null;
-    subtitle?: string | null;
-    enquiryHeading?: string | null;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
@@ -4299,50 +4311,6 @@ export interface FooterSelect<T extends boolean = true> {
  * via the `definition` "register-complaint_select".
  */
 export interface RegisterComplaintSelect<T extends boolean = true> {
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "brandDevicePages_select".
- */
-export interface BrandDevicePagesSelect<T extends boolean = true> {
-  yealink?:
-    | T
-    | {
-        title?: T;
-        subtitle?: T;
-        enquiryHeading?: T;
-      };
-  logitech?:
-    | T
-    | {
-        title?: T;
-        subtitle?: T;
-        enquiryHeading?: T;
-      };
-  jabra?:
-    | T
-    | {
-        title?: T;
-        subtitle?: T;
-        enquiryHeading?: T;
-      };
-  cisco?:
-    | T
-    | {
-        title?: T;
-        subtitle?: T;
-        enquiryHeading?: T;
-      };
-  poly?:
-    | T
-    | {
-        title?: T;
-        subtitle?: T;
-        enquiryHeading?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

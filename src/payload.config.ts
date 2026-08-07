@@ -21,7 +21,6 @@ import { getServerSideURL } from './utilities/getURL'
 import { Complaints } from './collections/Complaints'
 import { ComplaintAttachments } from './collections/ComplaintAttachments'
 import { RegisterComplaint } from './globals/RegisterComplaint'
-import { BrandDevicePages } from './globals/BrandDevicePages/config'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 
 const filename = fileURLToPath(import.meta.url)
@@ -70,7 +69,7 @@ export default buildConfig({
   }),
   collections: [Pages, Posts, Media, Categories, Devices, Users, Complaints, ComplaintAttachments],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer, RegisterComplaint, BrandDevicePages],
+  globals: [Header, Footer, RegisterComplaint],
   localization: {
     locales: [
       { code: 'en', label: 'English' },
