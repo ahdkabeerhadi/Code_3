@@ -1103,6 +1103,11 @@ export interface CareersBlock {
   subtitle: string;
   description?: string | null;
   buttonText?: string | null;
+  cultureBadge?: string | null;
+  cultureHeading?: string | null;
+  cultureDescription?: string | null;
+  cultureLinkText?: string | null;
+  cultureLinkHref?: string | null;
   teamImages?:
     | {
         image: string | Media;
@@ -2987,6 +2992,11 @@ export interface CareersBlockSelect<T extends boolean = true> {
   subtitle?: T;
   description?: T;
   buttonText?: T;
+  cultureBadge?: T;
+  cultureHeading?: T;
+  cultureDescription?: T;
+  cultureLinkText?: T;
+  cultureLinkHref?: T;
   teamImages?:
     | T
     | {
