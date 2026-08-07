@@ -1793,6 +1793,16 @@ export interface DeviceBrandShowcaseBlock {
   badge?: string | null;
   title: string;
   subtitle?: string | null;
+  /**
+   * Optional logo for each brand card. Any brand left empty falls back to showing its name as text.
+   */
+  brandLogos?: {
+    yealink?: (string | null) | Media;
+    logitech?: (string | null) | Media;
+    jabra?: (string | null) | Media;
+    cisco?: (string | null) | Media;
+    poly?: (string | null) | Media;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'deviceBrandShowcase';
@@ -3343,6 +3353,15 @@ export interface DeviceBrandShowcaseBlockSelect<T extends boolean = true> {
   badge?: T;
   title?: T;
   subtitle?: T;
+  brandLogos?:
+    | T
+    | {
+        yealink?: T;
+        logitech?: T;
+        jabra?: T;
+        cisco?: T;
+        poly?: T;
+      };
   id?: T;
   blockName?: T;
 }

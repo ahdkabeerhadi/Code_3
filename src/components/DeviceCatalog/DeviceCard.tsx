@@ -12,7 +12,7 @@ export function DeviceCard({ device }: { device: Device }) {
   const inCart = isInCart(device.id)
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary_red/30 hover:shadow-lg">
+    <div className="group flex w-full max-w-[280px] flex-col justify-self-center overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary_red/30 hover:shadow-lg">
       <div className="relative aspect-[1/1] w-full bg-gray-50">
         {device.image && typeof device.image === 'object' ? (
           <Media resource={device.image} fill size="(max-width: 640px) 50vw, 260px" imgClassName="object-contain p-4" />

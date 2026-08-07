@@ -10,7 +10,13 @@ type Props = {
   className?: string
 } & DeviceBrandShowcaseBlockProps
 
-export const DeviceBrandShowcaseBlock: React.FC<Props> = ({ badge, className, title, subtitle }) => {
+export const DeviceBrandShowcaseBlock: React.FC<Props> = ({
+  badge,
+  className,
+  title,
+  subtitle,
+  brandLogos,
+}) => {
   return (
     <section className={cn('bg-white py-7 md:py-9', className)}>
       <div className="container mx-auto px-4 sm:px-6">
@@ -21,7 +27,7 @@ export const DeviceBrandShowcaseBlock: React.FC<Props> = ({ badge, className, ti
         </Reveal>
 
         <Reveal delayMs={100}>
-          <BrandHubCards />
+          <BrandHubCards logos={brandLogos} />
         </Reveal>
       </div>
     </section>
