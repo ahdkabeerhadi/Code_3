@@ -12,19 +12,23 @@ export const Careers: Block = {
       type: 'text',
       required: true,
       defaultValue: 'CAREERS',
+      localized: true,
     },
     {
       name: 'subtitle',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'description',
       type: 'textarea',
+      localized: true,
     },
     {
       name: 'buttonText',
       type: 'text',
+      localized: true,
     },
     {
       name: 'teamImages',
