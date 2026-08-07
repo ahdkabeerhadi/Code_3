@@ -55,6 +55,7 @@ import { CategorizedIntegrations } from '@/blocks/CategorizedIntegrations/config
 import { DeviceBrandShowcase } from '@/blocks/DeviceBrandShowcase/config'
 import { BrandDeviceGrid } from '@/blocks/BrandDeviceGrid/config'
 import { DeviceEnquiry } from '@/blocks/DeviceEnquiry/config'
+import { ImageContent } from '@/blocks/ImageContent/config'
 import { RoomSizeCards } from '@/blocks/RoomSizeCards/config'
 import { Testimonials } from '@/blocks/Testimonials/config'
 import { Accreditations } from '@/blocks/Accreditations/config'
@@ -223,6 +224,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 DeviceBrandShowcase,
                 BrandDeviceGrid,
                 DeviceEnquiry,
+                ImageContent,
                 RoomSizeCards,
                 Testimonials,
                 Accreditations,
