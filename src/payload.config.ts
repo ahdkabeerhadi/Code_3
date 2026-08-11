@@ -99,6 +99,10 @@ export default buildConfig({
     vercelBlobStorage({
       enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
       clientUploads: true,
+      // Without this, re-uploading a file whose name already exists in the store
+      // (e.g. replacing "About Us Image 2.png") fails outright instead of just
+      // storing the new upload under a unique path.
+      addRandomSuffix: true,
       collections: {
         // Serve files directly from Vercel Blob's CDN instead of proxying through
         // Payload's own /api/media/file route - the proxy doesn't support HTTP
@@ -113,6 +117,9 @@ export default buildConfig({
     vercelBlobStorage({
       enabled: Boolean(process.env.COMPLAINTS_BLOB_TOKEN),
       clientUploads: true,
+      // Two applicants both naming their resume "resume.pdf" would otherwise collide
+      // and fail the second upload outright.
+      addRandomSuffix: true,
       collections: {
         'complaint-attachments': true,
         'job-application-attachments': true,
