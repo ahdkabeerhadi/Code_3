@@ -1,5 +1,27 @@
 import { isAdmin } from '@/access/isAdmin'
 import { CollectionConfig } from 'payload'
+import nodemailer from 'nodemailer'
+
+// Sent from hr@code3.ae rather than the shared enquiries@code3.ae account so the
+// sender display name (set on the hr@ mailbox itself in Zoho) reads as HR/Careers
+// instead of "Enquiries" - Zoho enforces the authenticating account's own display
+// name regardless of the From header, so a distinct account is the only way to
+// get a distinct name.
+const hrTransporter =
+  process.env.HR_SMTP_USER && process.env.HR_SMTP_PASS
+    ? nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: 587,
+        secure: false,
+        auth: {
+          user: process.env.HR_SMTP_USER,
+          pass: process.env.HR_SMTP_PASS,
+        },
+        tls: {
+          rejectUnauthorized: true,
+        },
+      })
+    : null
 
 export const JobApplications: CollectionConfig = {
   slug: 'job-applications',
@@ -55,12 +77,23 @@ export const JobApplications: CollectionConfig = {
               },
             })
 
-            await req.payload.sendEmail({
-              from: `"CODE3 Careers" <${process.env.SMTP_USER || 'enquiries@code3.ae'}>`,
-              to: 'hr@code3.ae',
-              subject: `New Application: ${doc.jobTitle} - ${doc.name}`,
-              html: adminEmailHTML,
-            })
+            const hrFrom = `"CODE3 Careers" <${process.env.HR_SMTP_USER || process.env.SMTP_USER || 'enquiries@code3.ae'}>`
+
+            if (hrTransporter) {
+              await hrTransporter.sendMail({
+                from: hrFrom,
+                to: 'hr@code3.ae',
+                subject: `New Application: ${doc.jobTitle} - ${doc.name}`,
+                html: adminEmailHTML,
+              })
+            } else {
+              await req.payload.sendEmail({
+                from: hrFrom,
+                to: 'hr@code3.ae',
+                subject: `New Application: ${doc.jobTitle} - ${doc.name}`,
+                html: adminEmailHTML,
+              })
+            }
 
             if (doc.email) {
               const applicantEmailHTML = generateEmailHTML({
@@ -73,12 +106,21 @@ export const JobApplications: CollectionConfig = {
                 `,
               })
 
-              await req.payload.sendEmail({
-                from: `"CODE3 Careers" <${process.env.SMTP_USER || 'enquiries@code3.ae'}>`,
-                to: doc.email,
-                subject: `Application Received - ${doc.jobTitle}`,
-                html: applicantEmailHTML,
-              })
+              if (hrTransporter) {
+                await hrTransporter.sendMail({
+                  from: hrFrom,
+                  to: doc.email,
+                  subject: `Application Received - ${doc.jobTitle}`,
+                  html: applicantEmailHTML,
+                })
+              } else {
+                await req.payload.sendEmail({
+                  from: hrFrom,
+                  to: doc.email,
+                  subject: `Application Received - ${doc.jobTitle}`,
+                  html: applicantEmailHTML,
+                })
+              }
             }
           } catch (err) {
             console.error('Error sending job application emails:', err)
