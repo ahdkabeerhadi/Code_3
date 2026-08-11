@@ -16,7 +16,9 @@ export async function getGoogleReviews(): Promise<GoogleReview[] | null> {
       placeId,
     )}&fields=reviews&reviews_sort=newest&key=${apiKey}`
 
-    const res = await fetch(url, { next: { revalidate: 3600 } })
+    // Without a timeout, a slow/hanging Google Places API response blocks the
+    // entire page's server render - cap it so a bad external call can't do that.
+    const res = await fetch(url, { next: { revalidate: 3600 }, signal: AbortSignal.timeout(4000) })
     if (!res.ok) return null
 
     const data = await res.json()
