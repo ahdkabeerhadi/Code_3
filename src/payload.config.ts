@@ -120,6 +120,12 @@ export default buildConfig({
       // Two applicants both naming their resume "resume.pdf" would otherwise collide
       // and fail the second upload outright.
       addRandomSuffix: true,
+      // The underlying Vercel Blob store is configured as private. The plugin's
+      // types only advertise 'public' (its own comment says private support is
+      // still "planned"), but it just forwards this value to @vercel/blob's put(),
+      // which already supports 'private' - the type is simply stale.
+      // @ts-expect-error - see comment above; 'private' is a valid runtime value
+      access: 'private',
       collections: {
         'complaint-attachments': true,
         'job-application-attachments': true,
