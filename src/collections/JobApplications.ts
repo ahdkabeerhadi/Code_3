@@ -56,6 +56,7 @@ export const JobApplications: CollectionConfig = {
             })
 
             await req.payload.sendEmail({
+              from: `"CODE3 Careers" <${process.env.SMTP_USER || 'enquiries@code3.ae'}>`,
               to: 'hr@code3.ae',
               subject: `New Application: ${doc.jobTitle} - ${doc.name}`,
               html: adminEmailHTML,
@@ -73,6 +74,7 @@ export const JobApplications: CollectionConfig = {
               })
 
               await req.payload.sendEmail({
+                from: `"CODE3 Careers" <${process.env.SMTP_USER || 'enquiries@code3.ae'}>`,
                 to: doc.email,
                 subject: `Application Received - ${doc.jobTitle}`,
                 html: applicantEmailHTML,
