@@ -33,7 +33,7 @@ export const ImageContentBlock: React.FC<Props> = ({
             )}
           </Reveal>
 
-          <Reveal delayMs={100} className={cn(heading && 'md:-mt-20', imageRight && 'md:order-1')}>
+          <Reveal delayMs={100} className={cn(heading && 'md:-mt-8', imageRight && 'md:order-1')}>
             {heading && (
               <h1 className="mb-4 text-2xl font-semibold tracking-tight text-primary_red md:text-3xl lg:text-4xl">
                 {heading}
