@@ -1417,6 +1417,14 @@ export interface ServiceDetailBannerBlock {
    */
   backLinkLabel?: string | null;
   backLinkUrl?: string | null;
+  /**
+   * Optional card shown on the right side of the banner. Leave the heading empty to hide it entirely.
+   */
+  cardBadge?: string | null;
+  cardHeading?: string | null;
+  cardDescription?: string | null;
+  cardLinkText?: string | null;
+  cardLinkHref?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'serviceDetailBanner';
@@ -3223,6 +3231,11 @@ export interface ServiceDetailBannerBlockSelect<T extends boolean = true> {
   showGradientLine?: T;
   backLinkLabel?: T;
   backLinkUrl?: T;
+  cardBadge?: T;
+  cardHeading?: T;
+  cardDescription?: T;
+  cardLinkText?: T;
+  cardLinkHref?: T;
   id?: T;
   blockName?: T;
 }
