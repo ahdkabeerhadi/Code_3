@@ -133,7 +133,7 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
 
   if (duplicatedBrands.length === 0) {
     return (
-      <section className={cn('py-8 md:py-10 px-4 bg-white', className)}>
+      <section className={cn('pt-12 pb-8 md:pt-16 md:pb-10 px-4 bg-white', className)}>
         <div className="container mx-auto max-w-7xl">
           <div className="text-center">
             <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground mb-2">
@@ -148,7 +148,7 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
   }
 
   return (
-    <section className={cn('py-8 md:py-10 px-4 bg-white overflow-hidden', className)}>
+    <section className={cn('pt-12 pb-8 md:pt-16 md:pb-10 px-4 bg-white overflow-hidden', className)}>
       <div className="container mx-auto max-w-7xl">
         {/* Header */}
         <div className="text-center mb-8 md:mb-12">
