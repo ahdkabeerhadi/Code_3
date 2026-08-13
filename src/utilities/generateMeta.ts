@@ -69,5 +69,6 @@ export const generateMeta = async (args: {
     },
     verification: getSiteVerification(),
     title,
+    keywords: doc?.meta?.keywords || undefined,
   }
 }

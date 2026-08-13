@@ -258,6 +258,16 @@ export const Pages: CollectionConfig<'pages'> = {
             }),
 
             MetaDescriptionField({}),
+            {
+              name: 'keywords',
+              type: 'text',
+              label: 'Keywords',
+              localized: true,
+              admin: {
+                description:
+                  "Comma-separated target keywords for this page. Doesn't affect Google ranking (search engines ignore the meta keywords tag), but useful for tracking what this page is optimized for.",
+              },
+            },
             PreviewField({
               // if the generateUrl function is configured
               hasGenerateFn: true,
