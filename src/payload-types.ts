@@ -356,6 +356,10 @@ export interface Page {
      */
     image?: (string | null) | Media;
     description?: string | null;
+    /**
+     * Comma-separated target keywords for this page. Doesn't affect Google ranking (search engines ignore the meta keywords tag), but useful for tracking what this page is optimized for.
+     */
+    keywords?: string | null;
   };
   publishedAt?: string | null;
   slug?: string | null;
@@ -396,6 +400,10 @@ export interface Post {
      */
     image?: (string | null) | Media;
     description?: string | null;
+    /**
+     * Comma-separated target keywords for this post. Doesn't affect Google ranking (search engines ignore the meta keywords tag), but useful for tracking what this post is optimized for.
+     */
+    keywords?: string | null;
   };
   publishedAt?: string | null;
   authors?: (string | User)[] | null;
@@ -2734,6 +2742,7 @@ export interface PagesSelect<T extends boolean = true> {
         title?: T;
         image?: T;
         description?: T;
+        keywords?: T;
       };
   publishedAt?: T;
   slug?: T;
@@ -3723,6 +3732,7 @@ export interface PostsSelect<T extends boolean = true> {
         title?: T;
         image?: T;
         description?: T;
+        keywords?: T;
       };
   publishedAt?: T;
   authors?: T;
