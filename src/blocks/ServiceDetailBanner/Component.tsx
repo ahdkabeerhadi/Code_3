@@ -41,7 +41,7 @@ export const ServiceDetailBannerBlock: React.FC<Props> = ({
   return (
     <section className={cn('bg-white pt-8 pb-2 md:pt-10 md:pb-3', className)}>
       <div className="container mx-auto px-4 sm:px-6">
-        <div className={cn('grid gap-10', showCard && 'lg:grid-cols-[1fr_360px] lg:items-center')}>
+        <div className={cn('grid gap-10', showCard && 'lg:grid-cols-[1fr_360px] lg:items-start')}>
           <Reveal className={cn('max-w-2xl', !showCard && 'lg:max-w-[calc(100%-420px)]')}>
             {backLinkLabel && backLinkUrl && (
               <Link
