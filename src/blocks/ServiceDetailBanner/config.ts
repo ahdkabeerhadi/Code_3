@@ -49,6 +49,38 @@ export const ServiceDetailBanner: Block = {
       type: 'text',
       label: 'Back Link URL',
     },
+    {
+      name: 'cardBadge',
+      type: 'text',
+      label: 'Side Card Badge (optional)',
+      localized: true,
+      admin: {
+        description: 'Optional card shown on the right side of the banner. Leave the heading empty to hide it entirely.',
+      },
+    },
+    {
+      name: 'cardHeading',
+      type: 'text',
+      label: 'Side Card Heading (optional)',
+      localized: true,
+    },
+    {
+      name: 'cardDescription',
+      type: 'textarea',
+      label: 'Side Card Description (optional)',
+      localized: true,
+    },
+    {
+      name: 'cardLinkText',
+      type: 'text',
+      label: 'Side Card Link Text (optional)',
+      localized: true,
+    },
+    {
+      name: 'cardLinkHref',
+      type: 'text',
+      label: 'Side Card Link URL (optional)',
+    },
   ],
   interfaceName: 'ServiceDetailBannerBlock',
 }
