@@ -70,7 +70,7 @@ export function DeviceEnquiryForm({
         }
 
         setIsLoading(false)
-        reportContactConversion()
+        reportContactConversion('device_enquiry')
         onSuccess?.()
       } catch {
         setError('Something went wrong. Please try again.')

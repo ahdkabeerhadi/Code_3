@@ -89,7 +89,7 @@ export function MiniContactForm({
 
       setHasSubmitted(true)
       setIsLoading(false)
-      reportContactConversion()
+      reportContactConversion('mini_contact_form')
     } catch {
       setError('Something went wrong. Please try again.')
       setIsLoading(false)

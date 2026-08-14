@@ -29,7 +29,7 @@ function ensureCalendlyConversionListener() {
       event.data !== null &&
       (event.data as { event?: string }).event === 'calendly.event_scheduled'
     ) {
-      reportContactConversion()
+      reportContactConversion('calendly_scheduled')
     }
   })
 }

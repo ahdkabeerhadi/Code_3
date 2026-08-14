@@ -135,16 +135,7 @@ export const ContactUsBlock: React.FC<Props> = ({
       setIsLoading(false)
       setShowSuccessModal(true)
       setHasSubmitted(true)
-
-      // Push success event to Google Tag Manager dataLayer
-      if (typeof window !== 'undefined' && window.dataLayer) {
-        window.dataLayer.push({
-          event: 'form_submission_success',
-          form_type: 'contact_form',
-          page_url: window.location.href,
-        })
-      }
-      reportContactConversion()
+      reportContactConversion('contact_form')
     } catch (err) {
       console.warn(err)
       setIsLoading(false)
