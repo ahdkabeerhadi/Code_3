@@ -375,6 +375,9 @@ export interface Page {
 export interface Post {
   id: string;
   title: string;
+  /**
+   * Thumbnail shown on blog listing cards only - the post page itself always uses a plain brand-red hero, this image is never shown there.
+   */
   heroImage?: (string | null) | Media;
   content: {
     root: {
