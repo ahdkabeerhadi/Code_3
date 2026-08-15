@@ -85,6 +85,10 @@ export const Posts: CollectionConfig<'posts'> = {
               name: 'heroImage',
               type: 'upload',
               relationTo: 'media',
+              admin: {
+                description:
+                  'Thumbnail shown on blog listing cards only - the post page itself always uses a plain brand-red hero, this image is never shown there.',
+              },
             },
             {
               name: 'content',
