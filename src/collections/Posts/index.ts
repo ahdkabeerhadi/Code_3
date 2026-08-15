@@ -85,6 +85,10 @@ export const Posts: CollectionConfig<'posts'> = {
               name: 'heroImage',
               type: 'upload',
               relationTo: 'media',
+              admin: {
+                description:
+                  'Optional - leave empty to use the plain brand-red background. If set, this must be a background photo only: the page already overlays the title, category, author, and date on top of it, so avoid images with text, logos, or graphics baked in (they will collide with that overlay).',
+              },
             },
             {
               name: 'content',
