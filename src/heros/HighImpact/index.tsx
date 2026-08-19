@@ -63,7 +63,7 @@ function HeroBackground({ images }: { images: CarouselImage[] }) {
             <Media
               fill
               resource={img}
-              imgClassName="object-cover"
+              imgClassName="hero-image-drift object-cover"
               videoClassName="absolute inset-0 h-full w-full object-cover"
               priority={i === 0}
               onError={() => setFailed((f) => ({ ...f, [i]: true }))}
@@ -100,15 +100,15 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
           <span className="hero-beam text-primary_red" style={{ left: '46%', width: '3px' }} />
           <span
             className="hero-beam text-amber-400"
-            style={{ left: '62%', width: '2px', animationDelay: '-5s', animationDuration: '18s' }}
+            style={{ left: '62%', width: '2px', animationDelay: '-3s', animationDuration: '11s' }}
           />
           <span
             className="hero-beam text-primary_red"
-            style={{ left: '78%', width: '4px', animationDelay: '-10s', animationDuration: '13s' }}
+            style={{ left: '78%', width: '4px', animationDelay: '-6s', animationDuration: '8s' }}
           />
           <span
             className="hero-beam text-amber-400"
-            style={{ left: '92%', width: '2px', animationDelay: '-3s', animationDuration: '20s' }}
+            style={{ left: '92%', width: '2px', animationDelay: '-2s', animationDuration: '12s' }}
           />
         </div>
       )}
