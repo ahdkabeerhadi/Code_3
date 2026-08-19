@@ -87,11 +87,11 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
   ) as CarouselImage[]
 
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-br from-white via-white to-[#f7ecec] min-h-[720px]">
+    <section className="relative w-full overflow-hidden bg-gradient-to-br from-white via-white to-[#f7ecec] min-h-[460px]">
       {images.length > 0 && (
         <div className="absolute inset-0">
           <HeroBackground images={images} />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,white_0%,white_32%,rgba(255,255,255,0.75)_45%,transparent_62%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,white_0%,white_58%,rgba(255,255,255,0.8)_70%,transparent_88%)] sm:bg-[linear-gradient(90deg,white_0%,white_32%,rgba(255,255,255,0.75)_45%,transparent_62%)]" />
         </div>
       )}
 
@@ -124,21 +124,21 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
         </div>
       )}
 
-      <div className="relative container mx-auto px-4 sm:px-6 pt-16 pb-52 sm:pb-36 md:pt-20 md:pb-40">
+      <div className="relative container mx-auto px-4 sm:px-6 pt-8 pb-32 sm:pb-24 md:pt-10 md:pb-14">
         <div className="max-w-xl">
-          <Eyebrow>IT Infrastructure · Cybersecurity · Digital Growth</Eyebrow>
+          <Eyebrow className="mb-2">IT Infrastructure · Cybersecurity · Digital Growth</Eyebrow>
           {HeroText && (
-            <h1 className="uppercase font-black leading-[0.95] tracking-tight text-[clamp(2.5rem,6vw,4.5rem)] text-foreground text-wrap-balance">
+            <h1 className="uppercase font-black leading-[0.97] tracking-tight text-[clamp(1.75rem,4.2vw,3rem)] text-foreground text-wrap-balance">
               <AccentHeading text={HeroText} />
             </h1>
           )}
           {subText && (
-            <p className="mt-6 text-base md:text-lg leading-relaxed text-gray-600 max-w-lg">
+            <p className="mt-3 text-sm md:text-base leading-relaxed text-gray-600 max-w-lg">
               {subText}
             </p>
           )}
           {Array.isArray(links) && links.length > 0 && (
-            <ul className="mt-8 flex w-full flex-col sm:flex-row gap-3">
+            <ul className="mt-5 flex w-full flex-col sm:flex-row gap-3">
               {links.map(({ link }, i) => (
                 <li key={i}>
                   <CMSLink {...link} size="default" className="w-full sm:w-auto" />
@@ -150,14 +150,14 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
       </div>
 
       {images.length > 0 && (
-        <div className="absolute z-20 left-4 right-4 bottom-8 sm:left-6 sm:right-auto sm:bottom-10 max-w-2xl rounded-2xl bg-white/95 backdrop-blur-sm shadow-[0_18px_50px_-15px_rgba(0,0,0,0.25)] px-5 py-5 sm:px-6">
-          <div className="grid grid-cols-2 sm:flex sm:flex-nowrap sm:justify-between gap-x-4 gap-y-5">
+        <div className="absolute z-20 left-4 right-4 bottom-4 sm:left-6 sm:right-auto sm:bottom-6 max-w-2xl rounded-2xl bg-white/95 backdrop-blur-sm shadow-[0_18px_50px_-15px_rgba(0,0,0,0.25)] px-4 py-3 sm:px-5 sm:py-4">
+          <div className="grid grid-cols-2 sm:flex sm:flex-nowrap sm:justify-between gap-x-4 gap-y-3">
             {HERO_FEATURES.map((f) => (
-              <div key={f.label} className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary_red/10">
-                  <ServiceIcon preset={f.icon} className="h-[18px] w-[18px] text-primary_red" />
+              <div key={f.label} className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary_red/10">
+                  <ServiceIcon preset={f.icon} className="h-[15px] w-[15px] text-primary_red" />
                 </span>
-                <span className="text-xs sm:text-[13px] font-medium leading-tight text-foreground">
+                <span className="text-[11px] sm:text-xs font-medium leading-tight text-foreground">
                   {f.label}
                 </span>
               </div>
