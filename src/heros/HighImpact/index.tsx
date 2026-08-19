@@ -87,7 +87,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
   ) as CarouselImage[]
 
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-br from-white via-white to-[#f7ecec] min-h-[460px]">
+    <section className="relative w-full overflow-hidden bg-gradient-to-br from-white via-white to-[#f7ecec] min-h-[520px]">
       {images.length > 0 && (
         <div className="absolute inset-0">
           <HeroBackground images={images} />
@@ -150,7 +150,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
       </div>
 
       {images.length > 0 && (
-        <div className="absolute z-20 left-4 right-4 bottom-4 sm:left-6 sm:right-auto sm:bottom-6 max-w-2xl rounded-2xl bg-white/95 backdrop-blur-sm shadow-[0_18px_50px_-15px_rgba(0,0,0,0.25)] px-4 py-3 sm:px-5 sm:py-4">
+        <div className="absolute z-20 left-4 right-4 bottom-10 sm:left-6 sm:right-auto sm:bottom-12 max-w-2xl rounded-2xl bg-white/95 backdrop-blur-sm shadow-[0_18px_50px_-15px_rgba(0,0,0,0.25)] px-4 py-3 sm:px-5 sm:py-4">
           <div className="grid grid-cols-2 sm:flex sm:flex-nowrap sm:justify-between gap-x-4 gap-y-3">
             {HERO_FEATURES.map((f) => (
               <div key={f.label} className="flex items-center gap-2 sm:gap-2.5 min-w-0">
