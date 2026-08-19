@@ -90,7 +90,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
           <HeroBackground images={images} />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,white_0%,white_58%,rgba(255,255,255,0.8)_70%,transparent_88%)] sm:bg-[linear-gradient(90deg,white_0%,white_32%,rgba(255,255,255,0.75)_45%,transparent_62%)]" />
           <div className="absolute inset-0 bg-gradient-to-t from-primary_red/25 via-transparent to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-l from-primary_red/15 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-l from-primary_red/8 via-transparent to-transparent" />
         </div>
       )}
 
@@ -117,9 +117,9 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
           className="pointer-events-none absolute left-[35%] top-0 bottom-0 z-10 hidden sm:flex items-end gap-4"
           aria-hidden="true"
         >
-          <span className="w-9 sm:w-12 h-[38%] rounded-t-full bg-gradient-to-t from-red-600/10 via-red-500/70 to-red-400/95 shadow-[0_0_40px_rgba(233,30,36,0.35)]" />
-          <span className="w-9 sm:w-12 h-[68%] rounded-t-full bg-gradient-to-t from-red-600/10 via-red-500/80 to-red-400 shadow-[0_0_40px_rgba(233,30,36,0.4)]" />
-          <span className="w-9 sm:w-12 h-[52%] rounded-t-full bg-gradient-to-t from-red-600/10 via-red-500/75 to-red-400/95 shadow-[0_0_40px_rgba(233,30,36,0.35)]" />
+          <span className="w-9 sm:w-12 h-[58%] rounded-t-full bg-gradient-to-t from-red-600/10 via-red-500/70 to-red-400/95" />
+          <span className="w-9 sm:w-12 h-[89%] rounded-t-full bg-gradient-to-t from-red-600/10 via-red-500/80 to-red-400" />
+          <span className="w-9 sm:w-12 h-[70%] rounded-t-full bg-gradient-to-t from-red-600/10 via-red-500/75 to-red-400/95" />
         </div>
       )}
 
