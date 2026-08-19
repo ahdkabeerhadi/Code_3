@@ -18,21 +18,18 @@ const HERO_FEATURES = [
   { icon: 'headset' as const, label: '24/7 Managed IT Support' },
 ]
 
-// Renders HeroText uppercased with one key word picked out in brand red,
-// matching the reference's black/red/black headline treatment. Falls back
-// to a plain heading if the word isn't present, so this never breaks if
-// the copy changes.
+// Renders HeroText uppercased with the second word picked out in brand
+// red, matching the reference's TECHNOLOGY / SOLUTIONS (red) / THAT DRIVE
+// TOMORROW treatment. Falls back to a plain heading for short strings.
 function AccentHeading({ text }: { text: string }) {
-  const accentWord = 'Solution'
-  const idx = text.indexOf(accentWord)
-  if (idx === -1) {
+  const words = text.split(' ')
+  if (words.length < 2) {
     return <>{text}</>
   }
   return (
     <>
-      {text.slice(0, idx)}
-      <span className="text-primary_red">{text.slice(idx, idx + accentWord.length)}</span>
-      {text.slice(idx + accentWord.length)}
+      {words[0]} <span className="text-primary_red">{words[1]}</span>{' '}
+      {words.slice(2).join(' ')}
     </>
   )
 }
@@ -92,6 +89,8 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
         <div className="absolute inset-0">
           <HeroBackground images={images} />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,white_0%,white_58%,rgba(255,255,255,0.8)_70%,transparent_88%)] sm:bg-[linear-gradient(90deg,white_0%,white_32%,rgba(255,255,255,0.75)_45%,transparent_62%)]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-primary_red/25 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-l from-primary_red/15 via-transparent to-transparent" />
         </div>
       )}
 
@@ -115,16 +114,16 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
 
       {images.length > 0 && (
         <div
-          className="pointer-events-none absolute left-[36%] bottom-0 z-10 flex items-end gap-3 sm:gap-4 opacity-90"
+          className="pointer-events-none absolute left-[35%] top-0 bottom-0 z-10 hidden sm:flex items-end gap-4"
           aria-hidden="true"
         >
-          <span className="w-9 sm:w-11 h-[32%] rounded-t-full bg-gradient-to-t from-transparent via-primary_red/80 to-red-400" />
-          <span className="w-9 sm:w-11 h-[55%] rounded-t-full bg-gradient-to-t from-transparent via-primary_red/80 to-red-400" />
-          <span className="w-9 sm:w-11 h-[42%] rounded-t-full bg-gradient-to-t from-transparent via-primary_red/80 to-red-400" />
+          <span className="w-9 sm:w-12 h-[38%] rounded-t-full bg-gradient-to-t from-red-600/10 via-red-500/70 to-red-400/95 shadow-[0_0_40px_rgba(233,30,36,0.35)]" />
+          <span className="w-9 sm:w-12 h-[68%] rounded-t-full bg-gradient-to-t from-red-600/10 via-red-500/80 to-red-400 shadow-[0_0_40px_rgba(233,30,36,0.4)]" />
+          <span className="w-9 sm:w-12 h-[52%] rounded-t-full bg-gradient-to-t from-red-600/10 via-red-500/75 to-red-400/95 shadow-[0_0_40px_rgba(233,30,36,0.35)]" />
         </div>
       )}
 
-      <div className="relative container mx-auto px-4 sm:px-6 pt-8 pb-32 sm:pb-24 md:pt-10 md:pb-14">
+      <div className="relative z-30 container mx-auto px-4 sm:px-6 pt-8 pb-32 sm:pb-24 md:pt-10 md:pb-14">
         <div className="max-w-xl">
           <Eyebrow className="mb-2">IT Infrastructure · Cybersecurity · Digital Growth</Eyebrow>
           {HeroText && (
