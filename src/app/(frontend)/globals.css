@@ -266,6 +266,45 @@
   }
 }
 
+@keyframes hero-beam-drift {
+  0% {
+    transform: translate3d(-18%, -8%, 0) rotate(18deg);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate3d(8%, 4%, 0) rotate(18deg);
+    opacity: 0.6;
+  }
+  82% {
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(30%, 12%, 0) rotate(18deg);
+    opacity: 0;
+  }
+}
+
+.hero-beam {
+  position: absolute;
+  top: -25%;
+  height: 170%;
+  background: linear-gradient(180deg, transparent 0%, currentColor 45%, currentColor 55%, transparent 100%);
+  filter: blur(7px);
+  animation: hero-beam-drift 15s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-beam {
+    animation: none;
+    opacity: 0.35;
+    transform: rotate(18deg);
+  }
+}
+
 
 .shimmer-wrapper {
   animation-duration: 1.2s;
