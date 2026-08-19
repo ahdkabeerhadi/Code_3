@@ -11,21 +11,29 @@ import { cn } from '@/utilities/ui'
 
 type CarouselImage = Page['hero']['media']
 
-// Mirrors the homepage's "stats" layout block further down the page -
-// keep these two in sync if those numbers ever change.
-const HERO_STATS = [
-  { icon: 'users' as const, value: '30+', label: 'Experienced Professionals' },
-  { icon: 'handshake' as const, value: '50+', label: 'Technology Partners' },
-  { icon: 'check' as const, value: '1500+', label: 'Projects Delivered' },
-  { icon: 'smile' as const, value: '400+', label: 'Satisfied Customers' },
+const HERO_FEATURES = [
+  { icon: 'shield' as const, label: 'Enterprise-Grade Cybersecurity' },
+  { icon: 'cloud' as const, label: 'Scalable Cloud Solutions' },
+  { icon: 'network' as const, label: 'Reliable Network Infrastructure' },
+  { icon: 'headset' as const, label: '24/7 Managed IT Support' },
 ]
 
-function ArrowIcon() {
+// Renders HeroText uppercased with one key word picked out in brand red,
+// matching the reference's black/red/black headline treatment. Falls back
+// to a plain heading if the word isn't present, so this never breaks if
+// the copy changes.
+function AccentHeading({ text }: { text: string }) {
+  const accentWord = 'Solution'
+  const idx = text.indexOf(accentWord)
+  if (idx === -1) {
+    return <>{text}</>
+  }
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="7" y1="17" x2="17" y2="7" />
-      <polyline points="7 7 17 7 17 17" />
-    </svg>
+    <>
+      {text.slice(0, idx)}
+      <span className="text-primary_red">{text.slice(idx, idx + accentWord.length)}</span>
+      {text.slice(idx + accentWord.length)}
+    </>
   )
 }
 
@@ -64,7 +72,7 @@ function HeroBackground({ images }: { images: CarouselImage[] }) {
         ),
       )}
       {images.length > 1 && (
-        <div className="absolute bottom-6 right-6 z-10 flex gap-1.5">
+        <div className="absolute bottom-4 right-4 z-10 flex gap-1.5">
           {images.map((_, i) => (
             <button
               key={i}
@@ -72,7 +80,7 @@ function HeroBackground({ images }: { images: CarouselImage[] }) {
               aria-label={`Show background ${i + 1}`}
               className={cn(
                 'h-1.5 rounded-full transition-all duration-300',
-                i === index ? 'w-5 bg-white' : 'w-1.5 bg-white/40',
+                i === index ? 'w-5 bg-white' : 'w-1.5 bg-white/50',
               )}
             />
           ))}
@@ -94,82 +102,64 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
   ) as CarouselImage[]
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#0b0908]">
-      <div className="absolute inset-0">
-        <HeroBackground images={images} />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0b0908] via-[#0b0908]/85 to-[#0b0908]/45" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0b0908] via-[#0b0908]/20 to-transparent" />
-      </div>
-
-      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-        <span className="hero-beam text-primary_red" style={{ left: '8%', width: '3px' }} />
-        <span
-          className="hero-beam text-amber-400"
-          style={{ left: '38%', width: '2px', animationDelay: '-5s', animationDuration: '18s' }}
-        />
-        <span
-          className="hero-beam text-primary_red"
-          style={{ left: '64%', width: '4px', animationDelay: '-10s', animationDuration: '13s' }}
-        />
-        <span
-          className="hero-beam text-amber-400"
-          style={{ left: '86%', width: '2px', animationDelay: '-3s', animationDuration: '20s' }}
-        />
-      </div>
-
-      <div className="relative container mx-auto px-4 sm:px-6 pt-28 pb-14 md:pt-36 md:pb-16 lg:pt-44 lg:pb-20">
-        <div className="max-w-2xl">
-          <Eyebrow className="text-primary_red">IT Infrastructure · Cybersecurity · Digital Growth</Eyebrow>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.08] tracking-tight text-white text-wrap-balance">
-            {HeroText}
-          </h1>
-          {subText && (
-            <p className="mt-5 text-base md:text-lg leading-relaxed text-white/65 max-w-xl">
-              {subText}
-            </p>
-          )}
-          {Array.isArray(links) && links.length > 0 && (
-            <ul className="mt-8 flex w-full flex-col sm:flex-row gap-3">
-              {links.map(({ link }, i) => {
-                const isPrimary = link.appearance !== 'outline'
-                return (
+    <section className="relative w-full overflow-hidden bg-gradient-to-br from-white via-white to-[#f7ecec]">
+      <div className="relative container mx-auto px-4 sm:px-6 pt-10 pb-16 md:pt-14 md:pb-20 lg:pt-16 lg:pb-24">
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] gap-10 lg:gap-14 items-center">
+          <div>
+            <Eyebrow>IT Infrastructure · Cybersecurity · Digital Growth</Eyebrow>
+            {HeroText && (
+              <h1 className="uppercase font-black leading-[0.95] tracking-tight text-[clamp(2.5rem,6vw,4.5rem)] text-foreground text-wrap-balance">
+                <AccentHeading text={HeroText} />
+              </h1>
+            )}
+            {subText && (
+              <p className="mt-6 text-base md:text-lg leading-relaxed text-gray-600 max-w-lg">
+                {subText}
+              </p>
+            )}
+            {Array.isArray(links) && links.length > 0 && (
+              <ul className="mt-8 flex w-full flex-col sm:flex-row gap-3">
+                {links.map(({ link }, i) => (
                   <li key={i}>
-                    <CMSLink
-                      {...link}
-                      size="default"
-                      className={cn(
-                        'w-full sm:w-auto',
-                        isPrimary
-                          ? 'bg-white text-[#0b0908] hover:bg-white/90 pl-6 pr-1.5 py-1.5 h-auto'
-                          : 'border-white/35 bg-transparent text-white hover:bg-white/10',
-                      )}
-                    >
-                      {isPrimary && (
-                        <span className="ml-2 flex h-8 w-8 items-center justify-center rounded-full bg-primary_red text-white [&_svg]:h-4 [&_svg]:w-4">
-                          <ArrowIcon />
-                        </span>
-                      )}
-                    </CMSLink>
+                    <CMSLink {...link} size="default" className="w-full sm:w-auto" />
                   </li>
-                )
-              })}
-            </ul>
-          )}
-        </div>
+                ))}
+              </ul>
+            )}
+          </div>
 
-        <div className="mt-16 md:mt-20 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-          {HERO_STATS.map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm px-5 py-5 flex items-center gap-3"
-            >
-              <ServiceIcon preset={stat.icon} className="h-6 w-6 shrink-0 text-primary_red" />
-              <div>
-                <div className="text-xl md:text-2xl font-semibold text-white">{stat.value}</div>
-                <div className="mt-0.5 text-xs text-white/55 leading-tight">{stat.label}</div>
+          <div className="relative">
+            {images.length > 0 && (
+              <div className="relative w-full aspect-[4/3] sm:aspect-[16/11] rounded-[28px] overflow-hidden">
+                <HeroBackground images={images} />
+                <div
+                  className="pointer-events-none absolute left-[4%] bottom-0 z-10 flex items-end gap-2.5 sm:gap-3 opacity-80 mix-blend-plus-lighter"
+                  aria-hidden="true"
+                >
+                  <span className="w-7 sm:w-9 h-[30%] rounded-t-full bg-gradient-to-t from-transparent via-primary_red to-red-400" />
+                  <span className="w-7 sm:w-9 h-[52%] rounded-t-full bg-gradient-to-t from-transparent via-primary_red to-red-400" />
+                  <span className="w-7 sm:w-9 h-[40%] rounded-t-full bg-gradient-to-t from-transparent via-primary_red to-red-400" />
+                </div>
               </div>
-            </div>
-          ))}
+            )}
+
+            {images.length > 0 && (
+              <div className="absolute -bottom-6 inset-x-4 sm:inset-x-6 rounded-2xl bg-white/95 backdrop-blur-sm shadow-[0_18px_50px_-15px_rgba(0,0,0,0.25)] px-5 py-5 sm:px-6">
+                <div className="grid grid-cols-2 sm:flex sm:flex-nowrap sm:justify-between gap-x-4 gap-y-5">
+                  {HERO_FEATURES.map((f) => (
+                    <div key={f.label} className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary_red/10">
+                        <ServiceIcon preset={f.icon} className="h-[18px] w-[18px] text-primary_red" />
+                      </span>
+                      <span className="text-xs sm:text-[13px] font-medium leading-tight text-foreground">
+                        {f.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>
