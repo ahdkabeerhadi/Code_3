@@ -49,6 +49,9 @@ import { ServiceCoverage } from '@/blocks/ServiceCoverage/config'
 import { DowntimeEstimator } from '@/blocks/DowntimeEstimator/config'
 import { AssuranceStrip } from '@/blocks/AssuranceStrip/config'
 import { ScopeChecklist } from '@/blocks/ScopeChecklist/config'
+import { BusinessNeeds } from '@/blocks/BusinessNeeds/config'
+import { SubServicesNav } from '@/blocks/SubServicesNav/config'
+import { RoomClassification } from '@/blocks/RoomClassification/config'
 import { SpecComparisonTable } from '@/blocks/SpecComparisonTable/config'
 import { RoomPanelDemo } from '@/blocks/RoomPanelDemo/config'
 import { CategorizedIntegrations } from '@/blocks/CategorizedIntegrations/config'
@@ -232,6 +235,9 @@ export const Pages: CollectionConfig<'pages'> = {
                 DeliveryProcess,
                 AboutTeaser,
                 BlogScroll,
+                BusinessNeeds,
+                SubServicesNav,
+                RoomClassification,
               ],
               required: true,
               admin: {

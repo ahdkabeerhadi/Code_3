@@ -19,6 +19,7 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
   subtitle,
   brands = [],
   displayStyle = 'scroll',
+  gridColumns = '4',
   animationSpeed = 'normal',
   pauseOnHover = true,
   ctaText,
@@ -161,7 +162,7 @@ export const TrustedBrandsBlock: React.FC<Props> = ({
         {isGrid ? (
           <>
             <ClearQuickEnquiry />
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            <div className={cn('grid grid-cols-2 gap-4', gridColumns === '5' ? 'sm:grid-cols-5' : 'sm:grid-cols-4')}>
               {safeBrands.map((brand, index) => (
                 <div
                   key={`${brand.name}-${index}`}
