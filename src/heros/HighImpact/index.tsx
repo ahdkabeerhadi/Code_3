@@ -81,7 +81,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({
       <div className="container mx-auto px-4 sm:px-6 pt-8 pb-12 md:pt-10 md:pb-16 lg:pt-12 lg:pb-20">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 lg:items-stretch">
           <div className="flex flex-col justify-center">
-            <Eyebrow>IT Infrastructure · Cybersecurity · Digital Growth</Eyebrow>
+            <Eyebrow>IT Solutions & Technology Services</Eyebrow>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-tight text-foreground">
               {HeroText}
             </h1>

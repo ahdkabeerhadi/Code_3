@@ -348,6 +348,9 @@ export interface Page {
     | DeliveryProcessBlock
     | AboutTeaserBlock
     | BlogScrollBlock
+    | BusinessNeedsBlock
+    | SubServicesNavBlock
+    | RoomClassificationBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1200,6 +1203,10 @@ export interface TrustedBrandsBlock {
    * Marquee auto-animates in a loop; static grid wraps into rows; horizontal scroll is a single row the user scrolls manually.
    */
   displayStyle?: ('scroll' | 'grid' | 'horizontalScroll') | null;
+  /**
+   * Only used when Display Style is Static Grid.
+   */
+  gridColumns?: ('4' | '5') | null;
   /**
    * Control the speed of the scrolling animation
    */
@@ -2185,6 +2192,79 @@ export interface BlogScrollBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BusinessNeedsBlock".
+ */
+export interface BusinessNeedsBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  items?:
+    | {
+        question: string;
+        description: string;
+        linkLabel: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'businessNeeds';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SubServicesNavBlock".
+ */
+export interface SubServicesNavBlock {
+  /**
+   * Leave blank to auto-generate "Explore More in [Parent Category]". Links (parent page + sibling sub-services) are pulled automatically from the Parent Service field — no manual list to maintain.
+   */
+  title?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'subServicesNav';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoomClassificationBlock".
+ */
+export interface RoomClassificationBlock {
+  badge?: string | null;
+  title: string;
+  /**
+   * e.g. "Experience the seamless integration of Yealink devices with Microsoft Teams Rooms..." — bold key phrases inline.
+   */
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  rooms?:
+    | {
+        /**
+         * e.g. "Standard Meeting Room"
+         */
+        label: string;
+        image: string | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'roomClassification';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -2746,6 +2826,9 @@ export interface PagesSelect<T extends boolean = true> {
         deliveryProcess?: T | DeliveryProcessBlockSelect<T>;
         aboutTeaser?: T | AboutTeaserBlockSelect<T>;
         blogScroll?: T | BlogScrollBlockSelect<T>;
+        businessNeeds?: T | BusinessNeedsBlockSelect<T>;
+        subServicesNav?: T | SubServicesNavBlockSelect<T>;
+        roomClassification?: T | RoomClassificationBlockSelect<T>;
       };
   meta?:
     | T
@@ -3081,6 +3164,7 @@ export interface TrustedBrandsBlockSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
   displayStyle?: T;
+  gridColumns?: T;
   animationSpeed?: T;
   pauseOnHover?: T;
   brands?:
@@ -3729,6 +3813,53 @@ export interface BlogScrollBlockSelect<T extends boolean = true> {
   limit?: T;
   viewAllLabel?: T;
   viewAllUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BusinessNeedsBlock_select".
+ */
+export interface BusinessNeedsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  items?:
+    | T
+    | {
+        question?: T;
+        description?: T;
+        linkLabel?: T;
+        url?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SubServicesNavBlock_select".
+ */
+export interface SubServicesNavBlockSelect<T extends boolean = true> {
+  title?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoomClassificationBlock_select".
+ */
+export interface RoomClassificationBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  description?: T;
+  rooms?:
+    | T
+    | {
+        label?: T;
+        image?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

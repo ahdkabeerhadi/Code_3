@@ -13,17 +13,20 @@ export const RoomPanelDemo: Block = {
       type: 'text',
       label: 'Badge Text',
       defaultValue: 'LIVE DEMO',
+      localized: true,
     },
     {
       name: 'title',
       type: 'text',
       label: 'Title',
       required: true,
+      localized: true,
     },
     {
       name: 'subtitle',
       type: 'textarea',
       label: 'Subtitle',
+      localized: true,
     },
     {
       name: 'roomName',
@@ -31,19 +34,21 @@ export const RoomPanelDemo: Block = {
       label: 'Demo Room Name',
       defaultValue: 'Boardroom A',
       required: true,
+      localized: true,
     },
     {
       name: 'hint',
       type: 'text',
       label: 'Interaction Hint',
       admin: { description: 'e.g. "Tap a status to preview the panel"' },
+      localized: true,
     },
     {
       name: 'highlights',
       type: 'array',
       label: 'Panel Highlights',
       admin: { description: 'Short hardware/feature notes shown next to the demo, e.g. "7\\" touch display".' },
-      fields: [{ name: 'text', type: 'text', required: true }],
+      fields: [{ name: 'text', type: 'text', required: true, localized: true }],
     },
     {
       name: 'states',
@@ -52,7 +57,7 @@ export const RoomPanelDemo: Block = {
       minRows: 2,
       maxRows: 4,
       fields: [
-        { name: 'label', type: 'text', required: true, admin: { description: 'e.g. "Available"' } },
+        { name: 'label', type: 'text', required: true, localized: true, admin: { description: 'e.g. "Available"' } },
         {
           name: 'tone',
           type: 'select',
@@ -64,8 +69,8 @@ export const RoomPanelDemo: Block = {
             { label: 'Amber (Booked)', value: 'amber' },
           ],
         },
-        { name: 'statusText', type: 'text', required: true, admin: { description: 'e.g. "Free until 2:00 PM"' } },
-        { name: 'description', type: 'textarea', required: true },
+        { name: 'statusText', type: 'text', required: true, localized: true, admin: { description: 'e.g. "Free until 2:00 PM"' } },
+        { name: 'description', type: 'textarea', required: true, localized: true },
       ],
     },
   ],

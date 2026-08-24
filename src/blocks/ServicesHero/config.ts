@@ -9,12 +9,14 @@ export const ServicesHero: Block = {
       label: 'Title',
       defaultValue: 'OUR SERVICES',
       required: true,
+      localized: true,
     },
     {
       name: 'subtitle',
       type: 'text',
       label: 'Subtitle',
       required: true,
+      localized: true,
     },
     {
       name: 'image1',

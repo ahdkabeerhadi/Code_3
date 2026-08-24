@@ -40,6 +40,20 @@ export const TrustedBrands: Block = {
       },
     },
     {
+      name: 'gridColumns',
+      type: 'select',
+      label: 'Grid Columns (Desktop)',
+      options: [
+        { label: '4 columns', value: '4' },
+        { label: '5 columns', value: '5' },
+      ],
+      defaultValue: '4',
+      admin: {
+        description: 'Only used when Display Style is Static Grid.',
+        condition: (_, siblingData) => siblingData?.displayStyle === 'grid',
+      },
+    },
+    {
       name: 'animationSpeed',
       type: 'select',
       label: 'Animation Speed',

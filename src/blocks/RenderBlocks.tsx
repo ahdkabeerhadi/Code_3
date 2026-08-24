@@ -50,6 +50,9 @@ import { IndustriesBlock } from './Industries/Component'
 import { DeliveryProcessBlock } from './DeliveryProcess/Component'
 import { AboutTeaserBlock } from './AboutTeaser/Component'
 import { BlogScrollBlock } from './BlogScroll/Component'
+import { BusinessNeedsBlock } from './BusinessNeeds/Component'
+import { SubServicesNavBlock } from './SubServicesNav/Component'
+import { RoomClassificationBlock } from './RoomClassification/Component'
 
 interface BlockProps {
   disableInnerContainer?: boolean
@@ -106,6 +109,9 @@ const blockComponents = {
   deliveryProcess: DeliveryProcessBlock,
   aboutTeaser: AboutTeaserBlock,
   blogScroll: BlogScrollBlock,
+  businessNeeds: BusinessNeedsBlock,
+  subServicesNav: SubServicesNavBlock,
+  roomClassification: RoomClassificationBlock,
 }
 
 export const RenderBlocks: React.FC<{

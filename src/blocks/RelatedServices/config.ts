@@ -14,6 +14,7 @@ export const RelatedServices: Block = {
       label: 'Title',
       defaultValue: 'You Might Also Need',
       required: true,
+      localized: true,
     },
     {
       name: 'items',
@@ -22,7 +23,7 @@ export const RelatedServices: Block = {
       minRows: 1,
       maxRows: 6,
       fields: [
-        { name: 'label', type: 'text', required: true },
+        { name: 'label', type: 'text', required: true, localized: true },
         { name: 'url', type: 'text', required: true },
       ],
     },

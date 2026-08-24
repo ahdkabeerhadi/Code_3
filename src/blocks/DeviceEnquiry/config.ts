@@ -13,6 +13,7 @@ export const DeviceEnquiry: Block = {
       type: 'text',
       label: 'Heading',
       required: true,
+      localized: true,
     },
     {
       name: 'deviceLabel',

@@ -1,14 +1,17 @@
 import type { Block } from 'payload'
 
-export const ServicesSteps: Block = {
-  slug: 'servicesSteps',
+export const BusinessNeeds: Block = {
+  slug: 'businessNeeds',
+  interfaceName: 'BusinessNeedsBlock',
+  labels: {
+    singular: 'Business Needs Block',
+    plural: 'Business Needs Blocks',
+  },
   fields: [
     {
       name: 'badge',
       type: 'text',
       label: 'Badge Text',
-      defaultValue: 'Steps',
-      required: true,
       localized: true,
     },
     {
@@ -22,45 +25,43 @@ export const ServicesSteps: Block = {
       name: 'subtitle',
       type: 'textarea',
       label: 'Subtitle',
-      required: true,
       localized: true,
     },
     {
-      name: 'steps',
+      name: 'items',
       type: 'array',
-      label: 'Steps',
-      minRows: 1,
-      maxRows: 10,
+      label: 'Scenarios',
+      minRows: 2,
+      maxRows: 8,
       fields: [
         {
-          name: 'stepNumber',
+          name: 'question',
           type: 'text',
-          label: 'Step Number',
-          required: true,
-        },
-        {
-          name: 'title',
-          type: 'text',
-          label: 'Step Title',
-          required: true,
+          label: 'Scenario (e.g. "We Need Ongoing IT Support")',
           localized: true,
+          required: true,
         },
         {
           name: 'description',
           type: 'textarea',
-          label: 'Step Description',
-          required: true,
+          label: 'Description',
           localized: true,
+          required: true,
         },
         {
-          name: 'icon',
-          type: 'upload',
-          relationTo: 'media',
-          label: 'Image Icon',
+          name: 'linkLabel',
+          type: 'text',
+          label: 'Link Label (e.g. "Explore Managed IT")',
+          localized: true,
+          required: true,
+        },
+        {
+          name: 'url',
+          type: 'text',
+          label: 'Link URL',
           required: true,
         },
       ],
     },
   ],
-  interfaceName: 'ServicesStepsBlock',
 }

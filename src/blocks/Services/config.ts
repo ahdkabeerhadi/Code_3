@@ -9,18 +9,21 @@ export const Services: Block = {
       label: 'Badge Text',
       defaultValue: 'OUR SERVICES',
       required: true,
+      localized: true,
     },
     {
       name: 'title',
       type: 'text',
       label: 'Main Title',
       required: true,
+      localized: true,
     },
     {
       name: 'subtitle',
       type: 'textarea',
       label: 'Subtitle',
       required: true,
+      localized: true,
     },
     {
       name: 'maxServices',

@@ -13,17 +13,20 @@ export const CategorizedIntegrations: Block = {
       type: 'text',
       label: 'Badge Text',
       defaultValue: 'INTEGRATIONS',
+      localized: true,
     },
     {
       name: 'title',
       type: 'text',
       label: 'Title',
       required: true,
+      localized: true,
     },
     {
       name: 'subtitle',
       type: 'textarea',
       label: 'Subtitle',
+      localized: true,
     },
     {
       name: 'groups',
@@ -33,12 +36,12 @@ export const CategorizedIntegrations: Block = {
       minRows: 1,
       maxRows: 4,
       fields: [
-        { name: 'heading', type: 'text', required: true, admin: { description: 'e.g. "Video Conferencing"' } },
+        { name: 'heading', type: 'text', required: true, localized: true, admin: { description: 'e.g. "Video Conferencing"' } },
         {
           name: 'items',
           type: 'array',
           minRows: 1,
-          fields: [{ name: 'text', type: 'text', required: true }],
+          fields: [{ name: 'text', type: 'text', required: true, localized: true }],
         },
       ],
     },

@@ -13,6 +13,7 @@ export const DowntimeEstimator: Block = {
       type: 'text',
       label: 'Badge Text',
       defaultValue: 'PLAN YOUR MOVE',
+      localized: true,
     },
     {
       name: 'title',
@@ -20,23 +21,27 @@ export const DowntimeEstimator: Block = {
       label: 'Title',
       required: true,
       defaultValue: 'Estimate Your Move Window',
+      localized: true,
     },
     {
       name: 'subtitle',
       type: 'textarea',
       label: 'Subtitle',
+      localized: true,
     },
     {
       name: 'workstationsLabel',
       type: 'text',
       label: 'Workstations Input Label',
       defaultValue: 'Number of workstations',
+      localized: true,
     },
     {
       name: 'serversLabel',
       type: 'text',
       label: 'Servers Input Label',
       defaultValue: 'Number of servers',
+      localized: true,
     },
     {
       name: 'tiers',
@@ -49,7 +54,7 @@ export const DowntimeEstimator: Block = {
           'Ordered smallest to largest. The first tier whose limits fit the entered counts is used; if none fit, the last tier is used as the fallback (e.g. "scoped after assessment").',
       },
       fields: [
-        { name: 'label', type: 'text', required: true, admin: { description: 'e.g. "Small Office"' } },
+        { name: 'label', type: 'text', required: true, localized: true, admin: { description: 'e.g. "Small Office"' } },
         {
           name: 'maxWorkstations',
           type: 'number',
@@ -62,7 +67,7 @@ export const DowntimeEstimator: Block = {
           required: true,
           admin: { description: 'Upper limit of servers for this tier to apply.' },
         },
-        { name: 'estimate', type: 'text', required: true, admin: { description: 'e.g. "Typically a single weekend"' } },
+        { name: 'estimate', type: 'text', required: true, localized: true, admin: { description: 'e.g. "Typically a single weekend"' } },
       ],
     },
     {
@@ -70,12 +75,14 @@ export const DowntimeEstimator: Block = {
       type: 'text',
       label: 'Disclaimer',
       defaultValue: 'This is an estimate only. Your exact timeline is confirmed after a site assessment.',
+      localized: true,
     },
     {
       name: 'ctaLabel',
       type: 'text',
       label: 'CTA Button Label',
       defaultValue: 'Get an Accurate Quote',
+      localized: true,
     },
     {
       name: 'ctaUrl',
