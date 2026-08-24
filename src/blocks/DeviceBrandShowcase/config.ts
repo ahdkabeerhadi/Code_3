@@ -13,6 +13,7 @@ export const DeviceBrandShowcase: Block = {
       type: 'text',
       label: 'Badge Text',
       defaultValue: 'SHOP BY BRAND',
+      localized: true,
     },
     {
       name: 'title',
@@ -20,6 +21,7 @@ export const DeviceBrandShowcase: Block = {
       label: 'Title',
       required: true,
       defaultValue: 'Shop Video Conferencing Devices',
+      localized: true,
     },
     {
       name: 'subtitle',
@@ -27,6 +29,7 @@ export const DeviceBrandShowcase: Block = {
       label: 'Subtitle',
       defaultValue:
         'Genuine hardware from Yealink, Logitech, Jabra, Cisco, and Poly. Choose a brand to browse devices by room size.',
+      localized: true,
     },
     {
       name: 'brandLogos',

@@ -14,6 +14,7 @@ export const Accreditations: Block = {
       label: 'Section Title',
       required: true,
       defaultValue: 'Accreditations & Certifications',
+      localized: true,
     },
     {
       name: 'items',

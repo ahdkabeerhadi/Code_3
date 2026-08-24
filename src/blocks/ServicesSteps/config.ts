@@ -9,18 +9,21 @@ export const ServicesSteps: Block = {
       label: 'Badge Text',
       defaultValue: 'Steps',
       required: true,
+      localized: true,
     },
     {
       name: 'title',
       type: 'text',
       label: 'Title',
       required: true,
+      localized: true,
     },
     {
       name: 'subtitle',
       type: 'textarea',
       label: 'Subtitle',
       required: true,
+      localized: true,
     },
     {
       name: 'steps',
@@ -40,12 +43,14 @@ export const ServicesSteps: Block = {
           type: 'text',
           label: 'Step Title',
           required: true,
+          localized: true,
         },
         {
           name: 'description',
           type: 'textarea',
           label: 'Step Description',
           required: true,
+          localized: true,
         },
         {
           name: 'icon',

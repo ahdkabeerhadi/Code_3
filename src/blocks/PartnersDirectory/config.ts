@@ -14,11 +14,13 @@ export const PartnersDirectory: Block = {
       label: 'Section Title',
       defaultValue: 'Our Technology Partners',
       required: true,
+      localized: true,
     },
     {
       name: 'subtitle',
       type: 'text',
       label: 'Section Subtitle',
+      localized: true,
     },
     {
       name: 'partners',

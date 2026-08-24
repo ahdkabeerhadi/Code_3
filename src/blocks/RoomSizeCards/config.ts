@@ -14,17 +14,20 @@ export const RoomSizeCards: Block = {
       type: 'text',
       label: 'Badge Text',
       defaultValue: 'ROOM SIZES',
+      localized: true,
     },
     {
       name: 'title',
       type: 'text',
       label: 'Title',
       required: true,
+      localized: true,
     },
     {
       name: 'subtitle',
       type: 'textarea',
       label: 'Subtitle',
+      localized: true,
     },
     {
       name: 'tiers',
@@ -36,14 +39,14 @@ export const RoomSizeCards: Block = {
       minRows: 2,
       maxRows: 6,
       fields: [
-        { name: 'label', type: 'text', required: true, admin: { description: 'e.g. "Huddle Rooms"' } },
+        { name: 'label', type: 'text', required: true, localized: true, admin: { description: 'e.g. "Huddle Rooms"' } },
         { name: 'minCapacity', type: 'number', required: true },
         {
           name: 'maxCapacity',
           type: 'number',
           admin: { description: 'Leave blank for the top tier to show "X+"' },
         },
-        { name: 'description', type: 'textarea', required: true },
+        { name: 'description', type: 'textarea', required: true, localized: true },
         {
           name: 'url',
           type: 'text',

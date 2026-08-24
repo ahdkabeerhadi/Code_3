@@ -13,6 +13,7 @@ export const LeadCaptureForm: Block = {
       type: 'text',
       label: 'Badge Text',
       defaultValue: 'GET A CALL BACK',
+      localized: true,
     },
     {
       name: 'title',
@@ -20,12 +21,14 @@ export const LeadCaptureForm: Block = {
       label: 'Title',
       required: true,
       defaultValue: 'Get a Call Back',
+      localized: true,
     },
     {
       name: 'description',
       type: 'textarea',
       label: 'Description',
       defaultValue: 'Share a few details and our team will call you back within one business day.',
+      localized: true,
     },
     {
       name: 'formTitle',
@@ -33,6 +36,7 @@ export const LeadCaptureForm: Block = {
       label: 'Form Card Title',
       defaultValue: 'Request a Call Back',
       required: true,
+      localized: true,
     },
     {
       name: 'submitLabel',
@@ -40,6 +44,7 @@ export const LeadCaptureForm: Block = {
       label: 'Submit Button Label',
       defaultValue: 'Request a Call Back',
       required: true,
+      localized: true,
     },
   ],
 }

@@ -13,17 +13,20 @@ export const Qualification: Block = {
       type: 'text',
       label: 'Badge Text',
       defaultValue: 'IS THIS RIGHT FOR YOU?',
+      localized: true,
     },
     {
       name: 'title',
       type: 'text',
       label: 'Title',
       required: true,
+      localized: true,
     },
     {
       name: 'subtitle',
       type: 'textarea',
       label: 'Subtitle',
+      localized: true,
     },
     {
       name: 'leftHeading',
@@ -31,6 +34,7 @@ export const Qualification: Block = {
       label: 'Left Column Heading',
       defaultValue: 'Business Fit',
       required: true,
+      localized: true,
     },
     {
       name: 'leftTone',
@@ -48,7 +52,7 @@ export const Qualification: Block = {
       type: 'array',
       label: 'Left Column Items',
       minRows: 1,
-      fields: [{ name: 'text', type: 'text', required: true }],
+      fields: [{ name: 'text', type: 'text', required: true, localized: true }],
     },
     {
       name: 'rightHeading',
@@ -56,6 +60,7 @@ export const Qualification: Block = {
       label: 'Right Column Heading',
       defaultValue: 'Operational Challenges',
       required: true,
+      localized: true,
     },
     {
       name: 'rightTone',
@@ -73,7 +78,7 @@ export const Qualification: Block = {
       type: 'array',
       label: 'Right Column Items',
       minRows: 1,
-      fields: [{ name: 'text', type: 'text', required: true }],
+      fields: [{ name: 'text', type: 'text', required: true, localized: true }],
     },
   ],
 }

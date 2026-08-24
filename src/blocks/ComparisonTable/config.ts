@@ -13,17 +13,20 @@ export const ComparisonTable: Block = {
       type: 'text',
       label: 'Badge Text',
       defaultValue: 'WHY IT MATTERS',
+      localized: true,
     },
     {
       name: 'title',
       type: 'text',
       label: 'Title',
       required: true,
+      localized: true,
     },
     {
       name: 'subtitle',
       type: 'textarea',
       label: 'Subtitle',
+      localized: true,
     },
     {
       name: 'leftLabel',
@@ -31,6 +34,7 @@ export const ComparisonTable: Block = {
       label: 'Left Column Label',
       defaultValue: 'Typical Provider',
       required: true,
+      localized: true,
     },
     {
       name: 'middleEnabled',
@@ -43,6 +47,7 @@ export const ComparisonTable: Block = {
       type: 'text',
       label: 'Middle Column Label',
       admin: { condition: (_, siblingData) => Boolean(siblingData?.middleEnabled) },
+      localized: true,
     },
     {
       name: 'rightLabel',
@@ -50,6 +55,7 @@ export const ComparisonTable: Block = {
       label: 'Right Column Label',
       defaultValue: 'CODE3 360° AMC',
       required: true,
+      localized: true,
     },
     {
       name: 'rows',
@@ -57,9 +63,9 @@ export const ComparisonTable: Block = {
       label: 'Comparison Rows',
       minRows: 1,
       fields: [
-        { name: 'left', type: 'text', label: 'Left Column', required: true },
-        { name: 'middle', type: 'text', label: 'Middle Column' },
-        { name: 'right', type: 'text', label: 'Right Column (CODE3)', required: true },
+        { name: 'left', type: 'text', label: 'Left Column', required: true, localized: true },
+        { name: 'middle', type: 'text', label: 'Middle Column', localized: true },
+        { name: 'right', type: 'text', label: 'Right Column (CODE3)', required: true, localized: true },
       ],
     },
   ],

@@ -13,17 +13,20 @@ export const ScopeChecklist: Block = {
       type: 'text',
       label: 'Badge Text',
       defaultValue: "WHAT'S COVERED",
+      localized: true,
     },
     {
       name: 'title',
       type: 'text',
       label: 'Title',
       required: true,
+      localized: true,
     },
     {
       name: 'subtitle',
       type: 'textarea',
       label: 'Subtitle',
+      localized: true,
     },
     {
       name: 'items',
@@ -31,7 +34,7 @@ export const ScopeChecklist: Block = {
       label: 'Items',
       minRows: 1,
       fields: [
-        { name: 'text', type: 'text', required: true },
+        { name: 'text', type: 'text', required: true, localized: true },
         {
           name: 'url',
           type: 'text',
@@ -45,6 +48,7 @@ export const ScopeChecklist: Block = {
       type: 'text',
       label: 'Fine Print',
       admin: { description: 'e.g. "Also fully customizable based on your business needs and requirements."' },
+      localized: true,
     },
   ],
 }

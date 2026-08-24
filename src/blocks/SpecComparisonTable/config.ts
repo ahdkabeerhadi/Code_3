@@ -12,17 +12,20 @@ export const SpecComparisonTable: Block = {
       name: 'badge',
       type: 'text',
       label: 'Badge Text',
+      localized: true,
     },
     {
       name: 'title',
       type: 'text',
       label: 'Title',
       required: true,
+      localized: true,
     },
     {
       name: 'subtitle',
       type: 'textarea',
       label: 'Subtitle',
+      localized: true,
     },
     {
       name: 'columns',
@@ -31,7 +34,7 @@ export const SpecComparisonTable: Block = {
       labels: { singular: 'Column', plural: 'Columns' },
       minRows: 2,
       maxRows: 4,
-      fields: [{ name: 'label', type: 'text', required: true, admin: { description: 'e.g. "Infrared"' } }],
+      fields: [{ name: 'label', type: 'text', required: true, localized: true, admin: { description: 'e.g. "Infrared"' } }],
     },
     {
       name: 'rows',
@@ -42,13 +45,13 @@ export const SpecComparisonTable: Block = {
         description: 'Each value corresponds to the column at the same position - keep the order in sync with Columns above.',
       },
       fields: [
-        { name: 'rowLabel', type: 'text', required: true, admin: { description: 'e.g. "Best Use Case"' } },
+        { name: 'rowLabel', type: 'text', required: true, localized: true, admin: { description: 'e.g. "Best Use Case"' } },
         {
           name: 'values',
           type: 'array',
           minRows: 2,
           maxRows: 4,
-          fields: [{ name: 'text', type: 'text', required: true }],
+          fields: [{ name: 'text', type: 'text', required: true, localized: true }],
         },
       ],
     },

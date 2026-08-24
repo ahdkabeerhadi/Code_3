@@ -9,18 +9,21 @@ export const WhyChooseUs: Block = {
       label: 'Badge Text',
       defaultValue: 'WHY CHOOSE US',
       required: true,
+      localized: true,
     },
     {
       name: 'title',
       type: 'text',
-      label: 'Main Title',  
+      label: 'Main Title',
       required: true,
+      localized: true,
     },
     {
       name: 'subtitle',
       type: 'textarea',
       label: 'Subtitle',
       required: true,
+      localized: true,
     },
     {
       name: 'features',
@@ -34,12 +37,14 @@ export const WhyChooseUs: Block = {
           type: 'text',
           label: 'Feature Title',
           required: true,
+          localized: true,
         },
         {
           name: 'description',
           type: 'textarea',
           label: 'Feature Description',
           required: true,
+          localized: true,
         },
         {
           name: 'image',
