@@ -5,8 +5,10 @@ export const beforeSyncWithSearch: BeforeSync = async ({ req, originalDoc, searc
     doc: { relationTo: collection },
   } = searchDoc
 
-  const { slug, id, categories, title, meta, serviceCategory } = originalDoc
+  const { slug, id, categories, title, meta, serviceCategory, shortDescription, image } = originalDoc
 
+  // Devices don't have the SEO plugin's `meta` group or a `serviceCategory` field —
+  // fall back to their own title/description/image fields so they still sync searchably.
   const modifiedDoc: DocToSync = {
     ...searchDoc,
     slug,
@@ -14,8 +16,8 @@ export const beforeSyncWithSearch: BeforeSync = async ({ req, originalDoc, searc
     meta: {
       ...meta,
       title: meta?.title || title,
-      image: meta?.image?.id || meta?.image,
-      description: meta?.description,
+      image: meta?.image?.id || meta?.image || (typeof image === 'object' ? image?.id : image),
+      description: meta?.description || shortDescription,
     },
     categories: [],
   }

@@ -34,7 +34,23 @@ export const SpecComparisonTable: Block = {
       labels: { singular: 'Column', plural: 'Columns' },
       minRows: 2,
       maxRows: 4,
-      fields: [{ name: 'label', type: 'text', required: true, localized: true, admin: { description: 'e.g. "Infrared"' } }],
+      fields: [
+        { name: 'label', type: 'text', required: true, localized: true, admin: { description: 'e.g. "Infrared"' } },
+        {
+          name: 'highlight',
+          type: 'checkbox',
+          label: 'Highlight this column',
+          defaultValue: false,
+          admin: { description: 'Visually emphasize this column, e.g. a "Most Popular" plan.' },
+        },
+        {
+          name: 'highlightLabel',
+          type: 'text',
+          label: 'Highlight Badge Text',
+          defaultValue: 'Most Popular',
+          admin: { condition: (_, siblingData) => !!siblingData?.highlight },
+        },
+      ],
     },
     {
       name: 'rows',
