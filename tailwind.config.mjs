@@ -123,7 +123,7 @@ const config = {
         secondary_red: '#FF3B4B',
       },
       fontFamily: {
-        sans: ['"Open Sauce Sans"', 'sans-serif'],
+        sans: ['var(--font-open-sauce)', 'sans-serif'],
         mono: ['var(--font-geist-mono)'],
         mechano: ['var(--font-ca-mechano)', 'sans-serif'],
       },

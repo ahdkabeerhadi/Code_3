@@ -5,11 +5,17 @@ const BUMPS = 12
 const BUMP_RADIUS = 9
 const CENTER_RADIUS = 34
 
+// Rounded to a fixed precision so the server-rendered and client-hydrated
+// markup serialize identically - raw floats from Math.cos/sin can differ in
+// their last decimal digit between environments, which React treats as a
+// hydration mismatch (harmless visually, but forces a wasted re-render).
+const round = (n: number) => Math.round(n * 1000) / 1000
+
 const bumpPoints = Array.from({ length: BUMPS }, (_, i) => {
   const angle = (i / BUMPS) * Math.PI * 2
   return {
-    cx: 50 + CENTER_RADIUS * Math.cos(angle),
-    cy: 50 + CENTER_RADIUS * Math.sin(angle),
+    cx: round(50 + CENTER_RADIUS * Math.cos(angle)),
+    cy: round(50 + CENTER_RADIUS * Math.sin(angle)),
   }
 })
 

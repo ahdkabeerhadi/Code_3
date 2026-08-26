@@ -17,26 +17,65 @@ function Counter({ target, suffix }: { target: number; suffix?: string | null })
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return
-          const duration = 1400
-          const start = performance.now()
-          const tick = (now: number) => {
-            const p = Math.min((now - start) / duration, 1)
-            const eased = 1 - Math.pow(1 - p, 3)
-            setValue(Math.round(eased * target))
-            if (p < 1) requestAnimationFrame(tick)
-          }
-          requestAnimationFrame(tick)
-          observer.unobserve(entry.target)
-        })
-      },
-      { threshold: 0.5 },
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
+
+    let started = false
+    const runCounter = () => {
+      if (started) return
+      started = true
+      const duration = 1400
+      const start = performance.now()
+      const tick = (now: number) => {
+        const p = Math.min((now - start) / duration, 1)
+        const eased = 1 - Math.pow(1 - p, 3)
+        setValue(Math.round(eased * target))
+        if (p < 1) requestAnimationFrame(tick)
+      }
+      requestAnimationFrame(tick)
+    }
+
+    // Some ad-blocking/privacy extensions stub out IntersectionObserver so it
+    // never calls back. Fall back to an immediate visibility check plus a
+    // short timer so the counter still animates instead of staying at 0.
+    const isInViewport = () => {
+      const rect = el.getBoundingClientRect()
+      return rect.top < window.innerHeight && rect.bottom > 0
+    }
+
+    let observer: IntersectionObserver | undefined
+    if (typeof IntersectionObserver !== 'undefined') {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return
+            runCounter()
+            observer?.unobserve(entry.target)
+          })
+        },
+        { threshold: 0.5 },
+      )
+      observer.observe(el)
+    }
+
+    const removeFallbackListeners = () => {
+      window.removeEventListener('scroll', checkFallback)
+      window.removeEventListener('resize', checkFallback)
+    }
+    function checkFallback() {
+      if (started) return removeFallbackListeners()
+      if (isInViewport()) {
+        runCounter()
+        removeFallbackListeners()
+      }
+    }
+    const fallbackTimer = window.setTimeout(checkFallback, 800)
+    window.addEventListener('scroll', checkFallback, { passive: true })
+    window.addEventListener('resize', checkFallback)
+
+    return () => {
+      observer?.disconnect()
+      window.clearTimeout(fallbackTimer)
+      removeFallbackListeners()
+    }
   }, [target])
 
   return (

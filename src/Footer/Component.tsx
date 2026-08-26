@@ -7,6 +7,7 @@ import { CMSLink } from '@/components/Link'
 import { Logo } from '@/components/Logo/Logo'
 import { Media } from '@/components/Media'
 import { ScrollToTopButton, ScrollToTopButtonMobile } from './ScrollToTopButton'
+import { MapFacade } from './MapFacade'
 import Link from 'next/link'
 import { unstable_cache } from 'next/cache'
 import { getLocale } from '@/utilities/getLocale'
@@ -269,13 +270,7 @@ export async function Footer() {
                 Find Us
               </h3>
               <div className="overflow-hidden rounded-xl border-2 border-white/30">
-                <iframe
-                  src={contactInfo.mapEmbedUrl}
-                  className="h-[220px] w-full"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="CODE3 location map"
-                />
+                <MapFacade src={contactInfo.mapEmbedUrl} />
               </div>
             </div>
           )}

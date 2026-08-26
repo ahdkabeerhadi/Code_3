@@ -14,7 +14,7 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { getSiteVerification } from '@/utilities/getSiteVerification'
 import { getLocale } from '@/utilities/getLocale'
 import { draftMode } from 'next/headers'
-import { caMechano, notoSansArabic } from '@/fonts'
+import { caMechano, notoSansArabic, openSauceSans } from '@/fonts'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { PhoneButton } from '@/components/PhoneButton'
 import { LocaleLinkGuard } from '@/components/LocaleLinkGuard'
@@ -29,7 +29,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale = await getLocale()
   return (
     <html
-      className={cn(GeistSans.variable, GeistMono.variable, caMechano.variable, notoSansArabic.variable)}
+      className={cn(
+        GeistSans.variable,
+        GeistMono.variable,
+        caMechano.variable,
+        notoSansArabic.variable,
+        openSauceSans.variable,
+      )}
       lang={locale}
       dir={locale === 'ar' ? 'rtl' : 'ltr'}
       suppressHydrationWarning
