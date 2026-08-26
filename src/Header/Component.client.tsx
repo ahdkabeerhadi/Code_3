@@ -869,7 +869,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
                             onClick={() => setShowProductsMenu(false)}
                             className="rounded-xl border border-white/15 p-3 transition-colors duration-200 hover:border-white/40 hover:bg-white/5 flex gap-3 items-center"
                           >
-                            <span className="h-16 w-16 flex-none rounded-lg bg-white/10 overflow-hidden flex items-center justify-center">
+                            <span className="h-16 w-16 flex-none rounded-lg bg-white overflow-hidden flex items-center justify-center">
                               {d.imageUrl ? (
                                 // eslint-disable-next-line @next/next/no-img-element
                                 <img src={d.imageUrl} alt={d.title} className="h-full w-full object-contain p-1" />

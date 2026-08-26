@@ -135,7 +135,10 @@ export async function Header() {
       brand: d.brand,
       roomSize: d.roomSize,
       category: d.category,
-      imageUrl: d.image && typeof d.image === 'object' && d.image.url ? getMediaUrl(d.image.url, d.image.updatedAt) : null,
+      imageUrl:
+        d.image && typeof d.image === 'object'
+          ? d.image.externalUrl || (d.image.url ? getMediaUrl(d.image.url, d.image.updatedAt) : null)
+          : null,
     }))
   })
 
