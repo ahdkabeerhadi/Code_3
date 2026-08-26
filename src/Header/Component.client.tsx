@@ -6,12 +6,10 @@ import React, { useEffect, useState } from 'react'
 import { Menu, Search, X } from 'lucide-react'
 
 import type { Header } from '@/payload-types'
-import type { DeviceCardData } from './Component'
 
 import { Logo } from '@/components/Logo/Logo'
 import { CMSLink } from '@/components/Link'
 import { CalendlyButton } from './CalendlyButton'
-import { ServiceIcon } from '@/components/site/icons'
 
 interface NavigationPageData {
   id: string
@@ -20,8 +18,6 @@ interface NavigationPageData {
   serviceCategory: 'none' | 'infrastructure' | 'digital' | null | undefined
   parentService: string | null
   isSubService: boolean
-  icon: string
-  description: string | null
 }
 
 interface TechPartnerData {
@@ -29,13 +25,10 @@ interface TechPartnerData {
   logoUrl?: string | null
 }
 
-const DEVICE_BRANDS = ['Yealink', 'Logitech', 'Jabra', 'Cisco', 'Poly'] as const
-
 interface HeaderClientProps {
   data: Header
   navigationPages?: NavigationPageData[]
   techPartners?: TechPartnerData[]
-  devicesByBrand?: Record<string, DeviceCardData[]>
 }
 
 interface NavigationItem {
@@ -383,15 +376,11 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
   data,
   navigationPages = [],
   techPartners = [],
-  devicesByBrand = {},
 }) => {
   const [theme, setTheme] = useState<string | null>(null)
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
   const pathname = usePathname()
   const [showInfraMegaMenu, setShowInfraMegaMenu] = useState(false)
-  const [activeInfraCategory, setActiveInfraCategory] = useState(0)
-  const [showProductsMenu, setShowProductsMenu] = useState(false)
-  const [activeProductBrand, setActiveProductBrand] = useState(0)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [openDropdownIndex, setOpenDropdownIndex] = useState<number | null>(null)
   const [openMobileDropdownIndex, setOpenMobileDropdownIndex] = useState<number | null>(null)
@@ -434,7 +423,6 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setShowInfraMegaMenu(false)
-        setShowProductsMenu(false)
         setOpenDropdownIndex(null)
       }
     }
@@ -444,10 +432,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
 
   useEffect(() => {
     setShowInfraMegaMenu(false)
-    setShowProductsMenu(false)
     setOpenDropdownIndex(null)
-    setActiveInfraCategory(0)
-    setActiveProductBrand(0)
   }, [pathname])
 
   const closeMobileMenu = () => {
@@ -456,13 +441,6 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
 
   const toggleInfraMegaMenu = () => {
     setShowInfraMegaMenu(!showInfraMegaMenu)
-    setShowProductsMenu(false)
-    setOpenDropdownIndex(null)
-  }
-
-  const toggleProductsMenu = () => {
-    setShowProductsMenu(!showProductsMenu)
-    setShowInfraMegaMenu(false)
     setOpenDropdownIndex(null)
   }
 
@@ -522,18 +500,9 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
               </button>
             )}
 
-            {/* Products Button with +/- icon */}
-            {DEVICE_BRANDS.some((b) => (devicesByBrand[b] || []).length > 0) && (
-              <button
-                onClick={toggleProductsMenu}
-                className="hover:text-red-600 transition flex items-center gap-1 whitespace-nowrap"
-              >
-                Products
-                <span className="text-xl font-bold transition-transform duration-300">
-                  {showProductsMenu ? '−' : '+'}
-                </span>
-              </button>
-            )}
+            <Link href="/technology-partners" className="hover:text-red-600 transition whitespace-nowrap">
+              Technology Partners
+            </Link>
 
             <HeaderSearchBox />
 
@@ -678,10 +647,15 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
                   />
                 )}
 
-                {/* Products Section */}
-                {DEVICE_BRANDS.some((b) => (devicesByBrand[b] || []).length > 0) && (
-                  <MobileProductSection devicesByBrand={devicesByBrand} onLinkClick={closeMobileMenu} />
-                )}
+                <div className="pb-2">
+                  <Link
+                    href="/technology-partners"
+                    className="text-white text-lg font-semibold block transition-colors duration-300"
+                    onClick={closeMobileMenu}
+                  >
+                    Technology Partners
+                  </Link>
+                </div>
 
                 {/* Mobile Contact Button */}
                 <div className="pt-4 mt-auto">
@@ -719,255 +693,71 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
       </header>
 
       {/* Infra Services Mega Menu */}
-      {showInfraMegaMenu &&
-        (() => {
-          const validInfraPages = infraPages.filter((page: NavigationPageData) => page && page.id && page.slug)
-          const activePage = validInfraPages[activeInfraCategory] || validInfraPages[0]
-          const activeSubServices = activePage
-            ? getSubServices(activePage.id, infraSubServices).filter(
-                (sub: NavigationPageData) => sub && sub.id && sub.slug,
-              )
-            : []
+      {showInfraMegaMenu && (
+        <div
+          className="fixed inset-0 top-[5rem] p-16 z-40 h-[calc(100vh-5rem)] scrollbar-hide overflow-auto text-white"
+          style={{ background: 'linear-gradient(-135deg, #8b0f1f 0%, #d7213c 20%, #2d0e0e 100%)' }}
+        >
+          <div className="max-w-7xl h-full mx-auto flex gap-[6rem] justify-between">
+            {/* Logo and Header */}
+            <div className="mb-12">
+              <p className="text-lg font-semibold mb-6">
+                Complete IT, Security
+                <br />
+                & Infrastructure Solutions for
+                <br />
+                Businesses in UAE
+              </p>
+              <h1 className="text-7xl font-bold tracking-wide" style={{ fontFamily: 'monospace' }}>
+                CODE3
+              </h1>
+            </div>
 
-          return (
-            <div
-              className="fixed inset-x-0 top-[5rem] z-40 max-h-[calc(100vh-5rem)] overflow-auto text-white"
-              style={{ background: 'linear-gradient(-135deg, #8b0f1f 0%, #d7213c 20%, #2d0e0e 100%)' }}
-            >
-              <div className="max-w-7xl mx-auto px-16 py-12 relative">
-                <button
-                  type="button"
-                  onClick={() => setShowInfraMegaMenu(false)}
-                  aria-label="Close menu"
-                  className="absolute end-6 top-6 text-white/70 hover:text-white transition"
-                >
-                  <X className="h-6 w-6" />
-                </button>
-
-                <p className="text-sm font-semibold mb-8 text-white/80">
-                  Complete IT, Security &amp; Infrastructure Solutions for Businesses in UAE
-                </p>
-
-                <div className="flex gap-12">
-                  {/* Left rail: parent categories */}
-                  <div className="w-64 flex-none border-e border-white/15 pe-6 space-y-1">
-                    {validInfraPages.map((page: NavigationPageData, index: number) => {
-                      const isActive = index === activeInfraCategory
-                      return (
-                        <button
-                          key={page.id}
-                          type="button"
-                          onClick={() => setActiveInfraCategory(index)}
-                          className={`w-full text-start px-4 py-3 rounded-lg text-sm font-semibold transition-colors duration-200 ${
-                            isActive ? 'bg-white/15 text-white' : 'text-white/70 hover:bg-white/5 hover:text-white'
-                          }`}
+            {/* Services Grid */}
+            <div className="h-full max-w-3xl scrollbar-hide overflow-auto">
+              <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-x-[4rem] gap-y-[4rem]">
+                {infraPages
+                  .filter((page: NavigationPageData) => page && page.id && page.slug)
+                  .map((page: NavigationPageData) => {
+                    const subServices = getSubServices(page.id, infraSubServices).filter(
+                      (sub: NavigationPageData) => sub && sub.id && sub.slug,
+                    )
+                    return (
+                      <div key={page.id}>
+                        {/* Parent Service - Now with /service prefix */}
+                        <Link
+                          href={getServiceLink(page)}
+                          className="text-xl font-bold mb-6 uppercase transition block"
+                          onClick={() => setShowInfraMegaMenu(false)}
                         >
-                          {page.title}
-                        </button>
-                      )
-                    })}
-                  </div>
+                          <h2>{page.title}</h2>
+                        </Link>
 
-                  {/* Right grid: active category's sub-services */}
-                  <div className="flex-1 min-w-0">
-                    {activePage && (
-                      <Link
-                        href={getServiceLink(activePage)}
-                        onClick={() => setShowInfraMegaMenu(false)}
-                        className="inline-block text-xl font-bold mb-6 hover:text-white/80 transition"
-                      >
-                        {activePage.title}
-                      </Link>
-                    )}
-
-                    {activeSubServices.length === 0 ? (
-                      <p className="text-sm text-white/60">No sub-services published under this category yet.</p>
-                    ) : (
-                      <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-5">
-                        {activeSubServices.map((sub: NavigationPageData) => (
-                          <Link
-                            key={sub.id}
-                            href={getServiceLink(sub)}
-                            onClick={() => setShowInfraMegaMenu(false)}
-                            className="rounded-xl border border-white/15 p-4 transition-colors duration-200 hover:border-white/40 hover:bg-white/5"
-                          >
-                            <div className="flex items-center gap-3">
-                              <span className="h-10 w-10 flex-none rounded-full border-2 border-white/30 bg-white/5 flex items-center justify-center">
-                                <ServiceIcon preset={sub.icon} className="h-4.5 w-4.5 text-white" />
-                              </span>
-                              <h3 className="text-sm font-semibold text-white">{sub.title}</h3>
-                            </div>
-                          </Link>
-                        ))}
+                        {/* Sub Services */}
+                        {subServices.length > 0 && (
+                          <ul className="space-y-3 text-sm">
+                            {subServices.map((sub: NavigationPageData) => (
+                              <li key={sub.id}>
+                                <Link
+                                  href={getServiceLink(sub)}
+                                  className="transition"
+                                  onClick={() => setShowInfraMegaMenu(false)}
+                                >
+                                  {sub.title}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
                       </div>
-                    )}
-                  </div>
-                </div>
+                    )
+                  })}
               </div>
             </div>
-          )
-        })()}
-
-      {/* Products Mega Menu */}
-      {showProductsMenu &&
-        (() => {
-          const activeBrand = DEVICE_BRANDS[activeProductBrand] || DEVICE_BRANDS[0]
-          const activeDevices = (devicesByBrand[activeBrand] || []).filter((d) => d && d.id && d.slug)
-
-          return (
-            <div
-              className="fixed inset-x-0 top-[5rem] z-40 max-h-[calc(100vh-5rem)] overflow-auto text-white"
-              style={{ background: 'linear-gradient(-135deg, #8b0f1f 0%, #d7213c 20%, #2d0e0e 100%)' }}
-            >
-              <div className="max-w-7xl mx-auto px-16 py-12 relative">
-                <button
-                  type="button"
-                  onClick={() => setShowProductsMenu(false)}
-                  aria-label="Close menu"
-                  className="absolute end-6 top-6 text-white/70 hover:text-white transition"
-                >
-                  <X className="h-6 w-6" />
-                </button>
-
-                <p className="text-sm font-semibold mb-8 text-white/80">
-                  Genuine Hardware From Our Trusted Video Conferencing Brands
-                </p>
-
-                <div className="flex gap-12">
-                  {/* Left rail: brands */}
-                  <div className="w-64 flex-none border-e border-white/15 pe-6 space-y-1">
-                    {DEVICE_BRANDS.map((brand, index) => {
-                      if ((devicesByBrand[brand] || []).length === 0) return null
-                      const isActive = index === activeProductBrand
-                      return (
-                        <button
-                          key={brand}
-                          type="button"
-                          onClick={() => setActiveProductBrand(index)}
-                          className={`w-full text-start px-4 py-3 rounded-lg text-sm font-semibold transition-colors duration-200 ${
-                            isActive ? 'bg-white/15 text-white' : 'text-white/70 hover:bg-white/5 hover:text-white'
-                          }`}
-                        >
-                          {brand}
-                        </button>
-                      )
-                    })}
-                  </div>
-
-                  {/* Right grid: active brand's devices */}
-                  <div className="flex-1 min-w-0">
-                    <h2 className="text-xl font-bold mb-6">{activeBrand}</h2>
-
-                    {activeDevices.length === 0 ? (
-                      <p className="text-sm text-white/60">No products published under this brand yet.</p>
-                    ) : (
-                      <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-5">
-                        {activeDevices.map((d) => (
-                          <Link
-                            key={d.id}
-                            href={`/service/device/${d.slug}`}
-                            onClick={() => setShowProductsMenu(false)}
-                            className="rounded-xl border border-white/15 p-3 transition-colors duration-200 hover:border-white/40 hover:bg-white/5 flex gap-3 items-center"
-                          >
-                            <span className="h-16 w-16 flex-none rounded-lg bg-white/10 overflow-hidden flex items-center justify-center">
-                              {d.imageUrl ? (
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img src={d.imageUrl} alt={d.title} className="h-full w-full object-contain p-1" />
-                              ) : (
-                                <span className="text-[10px] font-semibold uppercase text-white/60">{d.brand}</span>
-                              )}
-                            </span>
-                            <div className="min-w-0">
-                              <h3 className="text-sm font-semibold text-white truncate">{d.title}</h3>
-                              <p className="text-xs text-white/60">
-                                {d.brand}
-                                {d.roomSize ? ` · ${d.roomSize}` : ''}
-                              </p>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )
-        })()}
+          </div>
+        </div>
+      )}
 
     </>
-  )
-}
-
-const MobileProductSection = ({
-  devicesByBrand,
-  onLinkClick,
-}: {
-  devicesByBrand: Record<string, DeviceCardData[]>
-  onLinkClick: () => void
-}) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [openBrand, setOpenBrand] = useState<number | null>(null)
-
-  return (
-    <div className="w-full pb-3">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full text-start focus:outline-none transition-all duration-300"
-      >
-        <span className="text-lg font-semibold text-white">Products</span>
-        <span className="ms-2 text-2xl font-bold text-white transition-transform duration-300">
-          {isOpen ? '−' : '+'}
-        </span>
-      </button>
-
-      <div
-        className={`overflow-hidden transition-all duration-500 ease-in-out ${
-          isOpen ? 'max-h-[2000px] opacity-100 mt-3' : 'max-h-0 opacity-0'
-        }`}
-      >
-        <div className="space-y-3">
-          {DEVICE_BRANDS.map((brand, index) => {
-            const devices = (devicesByBrand[brand] || []).filter((d) => d && d.id && d.slug)
-            if (devices.length === 0) return null
-            const isExpanded = openBrand === index
-
-            return (
-              <div key={brand} className="space-y-2">
-                <div className="flex items-center justify-between ms-4">
-                  <span className="text-white font-medium flex-1">{brand}</span>
-                  <button
-                    onClick={() => setOpenBrand(isExpanded ? null : index)}
-                    className="ms-2 text-xl font-bold text-white transition-transform duration-300"
-                  >
-                    {isExpanded ? '−' : '+'}
-                  </button>
-                </div>
-
-                <div
-                  className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                    isExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
-                  }`}
-                >
-                  <ul className="ms-8 space-y-2">
-                    {devices.map((d) => (
-                      <li key={d.id}>
-                        <Link
-                          href={`/service/device/${d.slug}`}
-                          className="text-white/80 text-md transition-colors duration-300 block"
-                          onClick={onLinkClick}
-                        >
-                          {d.title}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      </div>
-    </div>
   )
 }
