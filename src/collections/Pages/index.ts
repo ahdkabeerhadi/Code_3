@@ -53,6 +53,10 @@ import { BusinessNeeds } from '@/blocks/BusinessNeeds/config'
 import { SubServicesNav } from '@/blocks/SubServicesNav/config'
 import { RoomClassification } from '@/blocks/RoomClassification/config'
 import { SpecComparisonTable } from '@/blocks/SpecComparisonTable/config'
+import { ResultsShowcase } from '@/blocks/ResultsShowcase/config'
+import { ProcessTimeline } from '@/blocks/ProcessTimeline/config'
+import { CoverageTable } from '@/blocks/CoverageTable/config'
+import { PricingFactors } from '@/blocks/PricingFactors/config'
 import { RoomPanelDemo } from '@/blocks/RoomPanelDemo/config'
 import { CategorizedIntegrations } from '@/blocks/CategorizedIntegrations/config'
 import { DeviceBrandShowcase } from '@/blocks/DeviceBrandShowcase/config'
@@ -222,6 +226,10 @@ export const Pages: CollectionConfig<'pages'> = {
                 AssuranceStrip,
                 ScopeChecklist,
                 SpecComparisonTable,
+                ResultsShowcase,
+                ProcessTimeline,
+                CoverageTable,
+                PricingFactors,
                 RoomPanelDemo,
                 CategorizedIntegrations,
                 DeviceBrandShowcase,

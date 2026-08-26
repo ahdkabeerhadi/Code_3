@@ -37,6 +37,10 @@ import { DowntimeEstimatorBlock } from './DowntimeEstimator/Component'
 import { AssuranceStripBlock } from './AssuranceStrip/Component'
 import { ScopeChecklistBlock } from './ScopeChecklist/Component'
 import { SpecComparisonTableBlock } from './SpecComparisonTable/Component'
+import { ResultsShowcaseBlock } from './ResultsShowcase/Component'
+import { ProcessTimelineBlock } from './ProcessTimeline/Component'
+import { CoverageTableBlock } from './CoverageTable/Component'
+import { PricingFactorsBlock } from './PricingFactors/Component'
 import { RoomPanelDemoBlock } from './RoomPanelDemo/Component'
 import { CategorizedIntegrationsBlock } from './CategorizedIntegrations/Component'
 import { DeviceBrandShowcaseBlock } from './DeviceBrandShowcase/Component'
@@ -112,6 +116,10 @@ const blockComponents = {
   businessNeeds: BusinessNeedsBlock,
   subServicesNav: SubServicesNavBlock,
   roomClassification: RoomClassificationBlock,
+  resultsShowcase: ResultsShowcaseBlock,
+  processTimeline: ProcessTimelineBlock,
+  coverageTable: CoverageTableBlock,
+  pricingFactors: PricingFactorsBlock,
 }
 
 export const RenderBlocks: React.FC<{

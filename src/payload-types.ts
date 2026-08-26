@@ -335,6 +335,10 @@ export interface Page {
     | AssuranceStripBlock
     | ScopeChecklistBlock
     | SpecComparisonTableBlock
+    | ResultsShowcaseBlock
+    | ProcessTimelineBlock
+    | CoverageTableBlock
+    | PricingFactorsBlock
     | RoomPanelDemoBlock
     | CategorizedIntegrationsBlock
     | DeviceBrandShowcaseBlock
@@ -1783,6 +1787,11 @@ export interface SpecComparisonTableBlock {
          * e.g. "Infrared"
          */
         label: string;
+        /**
+         * Visually emphasize this column, e.g. a "Most Popular" plan.
+         */
+        highlight?: boolean | null;
+        highlightLabel?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -1807,6 +1816,123 @@ export interface SpecComparisonTableBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'specComparisonTable';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ResultsShowcaseBlock".
+ */
+export interface ResultsShowcaseBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  results?:
+    | {
+        /**
+         * e.g. "82%", "100+", "2-Hour"
+         */
+        value: string;
+        label: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'resultsShowcase';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProcessTimelineBlock".
+ */
+export interface ProcessTimelineBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  steps?:
+    | {
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'processTimeline';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CoverageTableBlock".
+ */
+export interface CoverageTableBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  areaHeaderLabel?: string | null;
+  managedHeaderLabel?: string | null;
+  rows?:
+    | {
+        /**
+         * e.g. "🖥" — pasted directly, no icon library needed.
+         */
+        icon?: string | null;
+        area: string;
+        /**
+         * e.g. "Desktops • Laptops • Printers • Software • User Support"
+         */
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * e.g. "One contract. One support team. One point of accountability."
+   */
+  closingStatement?: string | null;
+  pills?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  ctaLabel?: string | null;
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'coverageTable';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PricingFactorsBlock".
+ */
+export interface PricingFactorsBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  factors?:
+    | {
+        /**
+         * e.g. "👥"
+         */
+        icon?: string | null;
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  ctaHeading?: string | null;
+  ctaDescription?: string | null;
+  ctaLabel?: string | null;
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'pricingFactors';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2494,6 +2620,10 @@ export interface Search {
     | {
         relationTo: 'pages';
         value: string | Page;
+      }
+    | {
+        relationTo: 'devices';
+        value: string | Device;
       };
   slug?: string | null;
   /**
@@ -2813,6 +2943,10 @@ export interface PagesSelect<T extends boolean = true> {
         assuranceStrip?: T | AssuranceStripBlockSelect<T>;
         scopeChecklist?: T | ScopeChecklistBlockSelect<T>;
         specComparisonTable?: T | SpecComparisonTableBlockSelect<T>;
+        resultsShowcase?: T | ResultsShowcaseBlockSelect<T>;
+        processTimeline?: T | ProcessTimelineBlockSelect<T>;
+        coverageTable?: T | CoverageTableBlockSelect<T>;
+        pricingFactors?: T | PricingFactorsBlockSelect<T>;
         roomPanelDemo?: T | RoomPanelDemoBlockSelect<T>;
         categorizedIntegrations?: T | CategorizedIntegrationsBlockSelect<T>;
         deviceBrandShowcase?: T | DeviceBrandShowcaseBlockSelect<T>;
@@ -3565,6 +3699,8 @@ export interface SpecComparisonTableBlockSelect<T extends boolean = true> {
     | T
     | {
         label?: T;
+        highlight?: T;
+        highlightLabel?: T;
         id?: T;
       };
   rows?:
@@ -3579,6 +3715,98 @@ export interface SpecComparisonTableBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ResultsShowcaseBlock_select".
+ */
+export interface ResultsShowcaseBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  results?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProcessTimelineBlock_select".
+ */
+export interface ProcessTimelineBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  steps?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CoverageTableBlock_select".
+ */
+export interface CoverageTableBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  areaHeaderLabel?: T;
+  managedHeaderLabel?: T;
+  rows?:
+    | T
+    | {
+        icon?: T;
+        area?: T;
+        description?: T;
+        id?: T;
+      };
+  closingStatement?: T;
+  pills?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PricingFactorsBlock_select".
+ */
+export interface PricingFactorsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  factors?:
+    | T
+    | {
+        icon?: T;
+        text?: T;
+        id?: T;
+      };
+  ctaHeading?: T;
+  ctaDescription?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
   id?: T;
   blockName?: T;
 }

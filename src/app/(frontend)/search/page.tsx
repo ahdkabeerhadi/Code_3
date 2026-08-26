@@ -23,6 +23,9 @@ function getResultHref(result: SearchResult): string {
     if (slug === 'home') return '/'
     return result.serviceCategory ? `/service/${slug}` : `/${slug}`
   }
+  if (result.doc?.relationTo === 'devices') {
+    return `/service/device/${slug}`
+  }
   return `/posts/${slug}`
 }
 
