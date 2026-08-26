@@ -2,48 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ============================= */
-/* FONT FACE (Open Sauce Sans)   */
-/* ============================= */
-@font-face {
-  font-family: 'Open Sauce Sans';
-  src: url('/fonts/open-sauce/OpenSauceSans-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Open Sauce Sans';
-  src: url('/fonts/open-sauce/OpenSauceSans-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Open Sauce Sans';
-  src: url('/fonts/open-sauce/OpenSauceSans-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Open Sauce Sans';
-  src: url('/fonts/open-sauce/OpenSauceSans-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
+/* Open Sauce Sans is loaded via next/font/local (see src/fonts.ts) - it
+   auto-generates a metrics-matched fallback face, which a hand-written
+   @font-face can't do, so the swap-in doesn't reflow the whole page. */
 
 /* ============================= */
 /* BASE VARIABLES (LIGHT THEME)  */
 /* ============================= */
 @layer base {
   :root {
-    --font-sans: 'Open Sauce Sans', sans-serif;
-
     --background: 0 0% 100%;
     --foreground: 32 7% 13%; /* #202123 */
 
@@ -89,7 +56,7 @@
 
   /* Arabic script isn't covered by Open Sauce Sans - swap to Noto Sans Arabic in RTL */
   [dir='rtl'] body {
-    font-family: var(--font-arabic), 'Open Sauce Sans', sans-serif;
+    font-family: var(--font-arabic), var(--font-open-sauce), sans-serif;
   }
 }
 
