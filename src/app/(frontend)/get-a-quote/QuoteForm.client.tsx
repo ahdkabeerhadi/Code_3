@@ -205,7 +205,7 @@ export function QuoteForm() {
         <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary_red/10">
           <CheckCircle2 className="h-7 w-7 text-primary_red" />
         </div>
-        <h2 className="text-xl font-bold text-foreground">Thanks — we've got your details!</h2>
+        <h2 className="text-xl font-bold text-foreground">Thanks — we&apos;ve got your details!</h2>
         <p className="mt-2 text-sm text-gray-600">
           Our team will review your IT environment and get back to you with a tailored AMC quote shortly.
         </p>

@@ -24,7 +24,7 @@ export default function GetAQuotePage() {
             Get Your Free IT AMC Quote
           </h1>
           <p className="mt-3 text-gray-600 leading-relaxed">
-            Tell us a bit about your IT environment and your business — we'll put together a tailored AMC
+            Tell us a bit about your IT environment and your business — we&apos;ll put together a tailored AMC
             quote based on exactly what you have, not a one-size-fits-all package.
           </p>
           <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
