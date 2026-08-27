@@ -52,6 +52,7 @@ import { ScopeChecklist } from '@/blocks/ScopeChecklist/config'
 import { BusinessNeeds } from '@/blocks/BusinessNeeds/config'
 import { SubServicesNav } from '@/blocks/SubServicesNav/config'
 import { RoomClassification } from '@/blocks/RoomClassification/config'
+import { RoomSizeEstimator } from '@/blocks/RoomSizeEstimator/config'
 import { SpecComparisonTable } from '@/blocks/SpecComparisonTable/config'
 import { ResultsShowcase } from '@/blocks/ResultsShowcase/config'
 import { ProcessTimeline } from '@/blocks/ProcessTimeline/config'
@@ -246,6 +247,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 BusinessNeeds,
                 SubServicesNav,
                 RoomClassification,
+                RoomSizeEstimator,
               ],
               required: true,
               admin: {

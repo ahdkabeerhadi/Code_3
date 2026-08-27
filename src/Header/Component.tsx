@@ -3,12 +3,60 @@ import { TopBar } from './TopBar'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { getMediaUrl } from '@/utilities/getMediaUrl'
 import { getLocale, type Locale } from '@/utilities/getLocale'
+import { getCachedBrandDevices } from '@/components/DeviceCatalog/getBrandDevices'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { unstable_cache } from 'next/cache'
 import React from 'react'
 
 import type { Header, Media, Page } from '@/payload-types'
+
+export interface ProductDeviceData {
+  id: string
+  title: string
+  slug: string
+  imageUrl: string | null
+  category?: string | null
+}
+
+export interface ProductBrandData {
+  brand: string
+  devices: ProductDeviceData[]
+}
+
+const PRODUCT_BRANDS = ['Yealink', 'Logitech', 'Jabra', 'Cisco', 'Poly'] as const
+
+const getDeviceImageUrl = (device: { image?: unknown }): string | null => {
+  const image = device.image
+  if (!image || typeof image !== 'object') return null
+  const media = image as Media
+  if (typeof media.externalUrl === 'string' && media.externalUrl.trim()) return media.externalUrl.trim()
+  if (media.url) return getMediaUrl(media.url, media.updatedAt)
+  return null
+}
+
+const getProductBrandsData = () =>
+  unstable_cache(
+    async () => {
+      const results = await Promise.all(
+        PRODUCT_BRANDS.map((brand) => getCachedBrandDevices(brand)),
+      )
+      return PRODUCT_BRANDS.map((brand, i) => ({
+        brand,
+        devices: (results[i] || [])
+          .filter((d) => d && d.id && d.slug)
+          .map((d) => ({
+            id: d.id,
+            title: d.title,
+            slug: d.slug as string,
+            imageUrl: getDeviceImageUrl(d),
+            category: d.category,
+          })),
+      })) satisfies ProductBrandData[]
+    },
+    ['header-product-brands'],
+    { tags: ['devices-catalog'] },
+  )
 
 interface TechPartnerData {
   name: string
@@ -103,6 +151,7 @@ export async function Header() {
   const locale = await getLocale()
   const headerData = await getCachedGlobal('header', 1, locale)()
   const { navigationPages, techPartners } = await getNavData(locale)()
+  const productBrands = await getProductBrandsData()()
 
   return (
     <>
@@ -111,6 +160,7 @@ export async function Header() {
         data={(headerData as Header) || null}
         navigationPages={navigationPages}
         techPartners={techPartners}
+        productBrands={productBrands}
       />
     </>
   )

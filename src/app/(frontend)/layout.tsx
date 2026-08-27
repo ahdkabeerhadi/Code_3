@@ -18,6 +18,7 @@ import { caMechano, notoSansArabic, openSauceSans } from '@/fonts'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { PhoneButton } from '@/components/PhoneButton'
 import { LocaleLinkGuard } from '@/components/LocaleLinkGuard'
+import { CartDrawer } from '@/components/DeviceCatalog/CartDrawer'
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
 
@@ -77,6 +78,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Footer />
           <PhoneButton />
           <WhatsAppButton />
+          <CartDrawer />
         </Providers>
       </body>
     </html>

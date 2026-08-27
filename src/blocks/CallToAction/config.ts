@@ -13,6 +13,19 @@ export const CallToAction: Block = {
       defaultValue: true,
     },
     {
+      name: 'style',
+      type: 'select',
+      label: 'Style',
+      defaultValue: 'dark',
+      options: [
+        { label: 'Dark (default)', value: 'dark' },
+        { label: 'Red Gradient', value: 'redGradient' },
+      ],
+      admin: {
+        description: 'Red Gradient ignores the background image and uses a red gradient with an ambient glow instead.',
+      },
+    },
+    {
       name: 'title',
       type: 'text',
       label: 'Title',

@@ -1,12 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useDeviceCart } from '@/providers/DeviceCart'
 
 const PHONE_NUMBER = '+971505042547'
 
 export function PhoneButton() {
   const [visible, setVisible] = useState(false)
   const [isRtl, setIsRtl] = useState(false)
+  const { isOpen: isCartOpen } = useDeviceCart()
 
   // Small delay so it doesn't pop in before the page settles
   useEffect(() => {
@@ -14,6 +16,10 @@ export function PhoneButton() {
     setIsRtl(document.documentElement.dir === 'rtl')
     return () => clearTimeout(t)
   }, [])
+
+  // Hidden while the quote cart drawer is open — it sits at a higher z-index
+  // than the drawer and would otherwise cover its bottom action button.
+  if (isCartOpen) return null
 
   return (
     <a
