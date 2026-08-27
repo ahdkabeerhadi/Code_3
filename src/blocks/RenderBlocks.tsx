@@ -57,6 +57,7 @@ import { BlogScrollBlock } from './BlogScroll/Component'
 import { BusinessNeedsBlock } from './BusinessNeeds/Component'
 import { SubServicesNavBlock } from './SubServicesNav/Component'
 import { RoomClassificationBlock } from './RoomClassification/Component'
+import { RoomSizeEstimatorBlock } from './RoomSizeEstimator/Component'
 
 interface BlockProps {
   disableInnerContainer?: boolean
@@ -116,6 +117,7 @@ const blockComponents = {
   businessNeeds: BusinessNeedsBlock,
   subServicesNav: SubServicesNavBlock,
   roomClassification: RoomClassificationBlock,
+  roomSizeEstimator: RoomSizeEstimatorBlock,
   resultsShowcase: ResultsShowcaseBlock,
   processTimeline: ProcessTimelineBlock,
   coverageTable: CoverageTableBlock,

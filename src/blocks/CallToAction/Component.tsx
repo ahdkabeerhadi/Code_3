@@ -16,20 +16,43 @@ export const CallToActionBlock: React.FC<Props> = ({
   title,
   description,
   backgroundImage,
+  style,
 }) => {
+  const isRedGradient = style === 'redGradient'
+
   return (
     <section className={cn('bg-white py-8 md:py-10', className)}>
       <div className="container mx-auto px-4 sm:px-6">
-        <Reveal className="relative overflow-hidden rounded-2xl bg-foreground px-8 py-14 md:py-16 text-center">
-          {backgroundImage && (
+        <Reveal
+          className={cn(
+            'relative overflow-hidden rounded-2xl px-8 py-14 text-center md:py-16',
+            isRedGradient
+              ? 'bg-gradient-to-br from-primary_red to-red-800'
+              : 'bg-foreground',
+          )}
+        >
+          {isRedGradient ? (
             <>
-              <Media
-                resource={backgroundImage}
-                fill
-                imgClassName="absolute inset-0 h-full w-full object-cover opacity-30"
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -top-16 right-0 h-64 w-64 rounded-full bg-white/10 blur-3xl"
               />
-              <div className="absolute inset-0 bg-foreground/70" />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -bottom-16 left-0 h-56 w-56 rounded-full bg-black/10 blur-3xl"
+              />
             </>
+          ) : (
+            backgroundImage && (
+              <>
+                <Media
+                  resource={backgroundImage}
+                  fill
+                  imgClassName="absolute inset-0 h-full w-full object-cover opacity-30"
+                />
+                <div className="absolute inset-0 bg-foreground/70" />
+              </>
+            )
           )}
 
           <div className="relative z-[1] mx-auto max-w-2xl">
@@ -39,12 +62,18 @@ export const CallToActionBlock: React.FC<Props> = ({
               </h2>
             )}
             {description && (
-              <p className="mt-4 text-white/70 leading-relaxed">{description}</p>
+              <p className={cn('mt-4 leading-relaxed', isRedGradient ? 'text-white/85' : 'text-white/70')}>
+                {description}
+              </p>
             )}
             {links && links.length > 0 && (
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 {links.map(({ link }, i) => (
-                  <CMSLink key={i} {...link} />
+                  <CMSLink
+                    key={i}
+                    {...link}
+                    className={cn(isRedGradient && link.appearance !== 'outline' && 'bg-white !text-primary_red hover:bg-white/90')}
+                  />
                 ))}
               </div>
             )}

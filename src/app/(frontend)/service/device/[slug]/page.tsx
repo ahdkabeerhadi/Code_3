@@ -4,11 +4,9 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { notFound } from 'next/navigation'
 import React from 'react'
-import { DeviceCartProvider } from '@/providers/DeviceCart'
 import { DeviceHero } from '@/components/DeviceCatalog/DeviceHero'
 import { DeviceDetails } from '@/components/DeviceCatalog/DeviceDetails'
 import { RelatedDeviceProducts } from '@/components/DeviceCatalog/RelatedDeviceProducts'
-import { CartDrawer } from '@/components/DeviceCatalog/CartDrawer'
 import { SetLightHeader } from '@/components/DeviceCatalog/SetLightHeader'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import {
@@ -45,16 +43,13 @@ export default async function DeviceDetailPage({ params: paramsPromise }: Args) 
   ])
 
   return (
-    <DeviceCartProvider>
-      <article className="relative">
-        <SetLightHeader />
-        <DeviceHero device={device} />
-        <DeviceDetails device={device} />
-        <RelatedDeviceProducts devices={otherBrandDevices} moreDevices={allOtherDevices} />
-        <RenderBlocks blocks={reusedBlocks} />
-        <CartDrawer />
-      </article>
-    </DeviceCartProvider>
+    <article className="relative">
+      <SetLightHeader />
+      <DeviceHero device={device} />
+      <DeviceDetails device={device} />
+      <RelatedDeviceProducts devices={otherBrandDevices} moreDevices={allOtherDevices} />
+      <RenderBlocks blocks={reusedBlocks} />
+    </article>
   )
 }
 

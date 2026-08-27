@@ -1,14 +1,32 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useDeviceCart } from '@/providers/DeviceCart'
 import { DeviceEnquiryForm } from './DeviceEnquiryForm'
+
+// The Zoho SalesIQ chat widget is injected via GTM, not this codebase, and floats
+// at a very high z-index. Its JS API lets us hide/show its launcher button so it
+// doesn't sit on top of the drawer while open; this is best-effort and safe if the
+// widget hasn't loaded yet (the API just won't exist).
+declare global {
+  interface Window {
+    $zoho?: { salesiq?: { floatbutton?: { visible?: (state: 'show' | 'hide') => void } } }
+  }
+}
 
 export function CartDrawer() {
   const { items, removeItem, updateQuantity, clear, isOpen, closeCart } = useDeviceCart()
   const [showForm, setShowForm] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+
+  useEffect(() => {
+    try {
+      window.$zoho?.salesiq?.floatbutton?.visible?.(isOpen ? 'hide' : 'show')
+    } catch {
+      // widget not loaded yet - nothing to do
+    }
+  }, [isOpen])
 
   if (!isOpen) return null
 
@@ -19,12 +37,10 @@ export function CartDrawer() {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end">
+    <div className="fixed inset-0 z-[10000] flex justify-end">
       <div className="absolute inset-0 bg-black/60" onClick={handleClose} aria-hidden="true" />
 
-      {/* Extra bottom padding keeps the sticky action button clear of the
-          Zoho chat widget, which floats fixed in the same bottom-right corner. */}
-      <div className="relative z-50 flex h-full w-full max-w-sm flex-col bg-white p-6 pb-28 shadow-2xl">
+      <div className="relative z-[10000] flex h-full w-full max-w-sm flex-col bg-white p-6 shadow-2xl">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-foreground">Your Quote Cart</h3>
           <button

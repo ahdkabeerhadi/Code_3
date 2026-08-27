@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useDeviceCart } from '@/providers/DeviceCart'
 
 const WHATSAPP_NUMBER = '971505042547' // no + or spaces, country code included
 const DEFAULT_MESSAGE = "Hi CODE3, I'd like to know more about your services."
@@ -8,6 +9,7 @@ const DEFAULT_MESSAGE = "Hi CODE3, I'd like to know more about your services."
 export function WhatsAppButton() {
   const [visible, setVisible] = useState(false)
   const [isRtl, setIsRtl] = useState(false)
+  const { isOpen: isCartOpen } = useDeviceCart()
 
   // Small delay so it doesn't pop in before the page settles
   useEffect(() => {
@@ -19,6 +21,10 @@ export function WhatsAppButton() {
   const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
     DEFAULT_MESSAGE
   )}`
+
+  // Hidden while the quote cart drawer is open — it sits at a higher z-index
+  // than the drawer and would otherwise cover its bottom action button.
+  if (isCartOpen) return null
 
   return (
     <a

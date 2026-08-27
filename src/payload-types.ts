@@ -355,6 +355,7 @@ export interface Page {
     | BusinessNeedsBlock
     | SubServicesNavBlock
     | RoomClassificationBlock
+    | RoomSizeEstimatorBlock
   )[];
   meta?: {
     title?: string | null;
@@ -576,6 +577,10 @@ export interface User {
  */
 export interface CallToActionBlock {
   showLogo?: boolean | null;
+  /**
+   * Red Gradient ignores the background image and uses a red gradient with an ambient glow instead.
+   */
+  style?: ('dark' | 'redGradient') | null;
   title?: string | null;
   description?: string | null;
   links?:
@@ -2391,6 +2396,50 @@ export interface RoomClassificationBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoomSizeEstimatorBlock".
+ */
+export interface RoomSizeEstimatorBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  participantsLabel?: string | null;
+  /**
+   * Ordered smallest to largest - the tool matches participant count to the first tier whose max isn't exceeded.
+   */
+  tiers?:
+    | {
+        /**
+         * Leave blank on the last tier for "no limit".
+         */
+        maxParticipants?: number | null;
+        /**
+         * e.g. "Huddle Room"
+         */
+        roomLabel: string;
+        recommendation: string;
+        /**
+         * e.g. a brand catalog filtered to this room size
+         */
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  disclaimer?: string | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'roomSizeEstimator';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -2963,6 +3012,7 @@ export interface PagesSelect<T extends boolean = true> {
         businessNeeds?: T | BusinessNeedsBlockSelect<T>;
         subServicesNav?: T | SubServicesNavBlockSelect<T>;
         roomClassification?: T | RoomClassificationBlockSelect<T>;
+        roomSizeEstimator?: T | RoomSizeEstimatorBlockSelect<T>;
       };
   meta?:
     | T
@@ -2985,6 +3035,7 @@ export interface PagesSelect<T extends boolean = true> {
  */
 export interface CallToActionBlockSelect<T extends boolean = true> {
   showLogo?: T;
+  style?: T;
   title?: T;
   description?: T;
   links?:
@@ -4088,6 +4139,31 @@ export interface RoomClassificationBlockSelect<T extends boolean = true> {
         image?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoomSizeEstimatorBlock_select".
+ */
+export interface RoomSizeEstimatorBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  participantsLabel?: T;
+  tiers?:
+    | T
+    | {
+        maxParticipants?: T;
+        roomLabel?: T;
+        recommendation?: T;
+        url?: T;
+        id?: T;
+      };
+  disclaimer?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
   id?: T;
   blockName?: T;
 }
