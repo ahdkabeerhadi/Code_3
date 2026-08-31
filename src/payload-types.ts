@@ -317,6 +317,8 @@ export interface Page {
     | TrustedBrandsBlock
     | PartnersDirectoryBlock
     | QuickEnquiryBlock
+    | MeetingRoomAssessmentBlock
+    | RequirementQuizBlock
     | CurrentOpeningsBlock
     | ServiceSolutionsBlock
     | ServicesHeroBlock
@@ -1317,6 +1319,72 @@ export interface QuickEnquiryBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'quickEnquiry';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MeetingRoomAssessmentBlock".
+ */
+export interface MeetingRoomAssessmentBlock {
+  title: string;
+  description?: string | null;
+  submitLabel: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'meetingRoomAssessment';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RequirementQuizBlock".
+ */
+export interface RequirementQuizBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * Each question is a single-select row of chips. Scoring is based on option position (first option = lowest complexity/score), so keep options ordered from lowest to highest.
+   */
+  questions?:
+    | {
+        label: string;
+        options?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  submitLabel: string;
+  /**
+   * Total score = sum of each answer's option position across all questions. Ranges should cover 0 through the maximum possible total (sum of each question's highest option index) with no gaps.
+   */
+  resultTiers?:
+    | {
+        minScore: number;
+        maxScore: number;
+        tierName: string;
+        description: string;
+        /**
+         * e.g. a link to the relevant plan in a pricing table below
+         */
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  disclaimer?: string | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'requirementQuiz';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2974,6 +3042,8 @@ export interface PagesSelect<T extends boolean = true> {
         trustedBrands?: T | TrustedBrandsBlockSelect<T>;
         partnersDirectory?: T | PartnersDirectoryBlockSelect<T>;
         quickEnquiry?: T | QuickEnquiryBlockSelect<T>;
+        meetingRoomAssessment?: T | MeetingRoomAssessmentBlockSelect<T>;
+        requirementQuiz?: T | RequirementQuizBlockSelect<T>;
         currentOpenings?: T | CurrentOpeningsBlockSelect<T>;
         serviceSolutions?: T | ServiceSolutionsBlockSelect<T>;
         servicesHero?: T | ServicesHeroBlockSelect<T>;
@@ -3407,6 +3477,55 @@ export interface QuickEnquiryBlockSelect<T extends boolean = true> {
   promoCtaLabel?: T;
   promoCtaUrl?: T;
   sidebarImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MeetingRoomAssessmentBlock_select".
+ */
+export interface MeetingRoomAssessmentBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  submitLabel?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RequirementQuizBlock_select".
+ */
+export interface RequirementQuizBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  questions?:
+    | T
+    | {
+        label?: T;
+        options?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  submitLabel?: T;
+  resultTiers?:
+    | T
+    | {
+        minScore?: T;
+        maxScore?: T;
+        tierName?: T;
+        description?: T;
+        url?: T;
+        id?: T;
+      };
+  disclaimer?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
   id?: T;
   blockName?: T;
 }

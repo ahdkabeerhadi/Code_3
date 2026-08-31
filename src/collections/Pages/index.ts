@@ -33,6 +33,8 @@ import { Careers } from '@/blocks/CareersBanner/config'
 import { TrustedBrands } from '@/blocks/TrustedBrands/config'
 import { PartnersDirectory } from '@/blocks/PartnersDirectory/config'
 import { QuickEnquiry } from '@/blocks/QuickEnquiry/config'
+import { MeetingRoomAssessment } from '@/blocks/MeetingRoomAssessment/config'
+import { RequirementQuiz } from '@/blocks/RequirementQuiz/config'
 import { ServiceSolutions } from '@/blocks/ServiceSolutions/config'
 import { ServicesHero } from '@/blocks/ServicesHero/config'
 import { ServicesSteps } from '@/blocks/ServicesSteps/config'
@@ -209,6 +211,8 @@ export const Pages: CollectionConfig<'pages'> = {
                 TrustedBrands,
                 PartnersDirectory,
                 QuickEnquiry,
+                MeetingRoomAssessment,
+                RequirementQuiz,
                 CurrentOpenings,
                 ServiceSolutions,
                 ServicesHero,

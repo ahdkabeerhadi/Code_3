@@ -20,6 +20,8 @@ import { CareersBlock } from './CareersBanner/Component'
 import { TrustedBrandsBlock } from './TrustedBrands/Component'
 import { PartnersDirectoryBlock } from './PartnersDirectory/Component'
 import { QuickEnquiryBlock } from './QuickEnquiry/Component'
+import { MeetingRoomAssessmentBlock } from './MeetingRoomAssessment/Component'
+import { RequirementQuizBlock } from './RequirementQuiz/Component'
 import { ServicesHeroBlock } from './ServicesHero/Component'
 import { ServicesStepsBlock } from './ServicesSteps/Component'
 import { ServiceDetailBannerBlock } from './ServiceDetailBanner/Component'
@@ -83,6 +85,8 @@ const blockComponents = {
   trustedBrands: TrustedBrandsBlock,
   partnersDirectory: PartnersDirectoryBlock,
   quickEnquiry: QuickEnquiryBlock,
+  meetingRoomAssessment: MeetingRoomAssessmentBlock,
+  requirementQuiz: RequirementQuizBlock,
   currentOpenings: CurrentOpeningsBlock,
   serviceSolutions: ServiceSolutionsBlock,
   servicesHero: ServicesHeroBlock,
