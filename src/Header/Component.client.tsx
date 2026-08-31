@@ -964,7 +964,6 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
                           <button
                             key={page.id}
                             type="button"
-                            onMouseEnter={() => setActiveInfraCategory(page.id)}
                             onClick={() => setActiveInfraCategory(page.id)}
                             className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-left text-sm transition-colors ${
                               isActive
