@@ -4,9 +4,10 @@ import type { RoomSizeEstimatorBlock as RoomSizeEstimatorBlockProps } from 'src/
 
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
+import { Button } from '@/components/ui/button'
 
 type Props = {
   className?: string
@@ -24,15 +25,22 @@ export const RoomSizeEstimatorBlock: React.FC<Props> = ({
   ctaUrl,
 }) => {
   const [participants, setParticipants] = useState<number | ''>('')
+  // Separate from `participants` so the recommendation only appears once the
+  // visitor clicks "Get Your Recommended Setup" - typing alone no longer
+  // reveals it live.
+  const [submittedCount, setSubmittedCount] = useState<number | null>(null)
 
-  const result = useMemo(() => {
-    if (!tiers || tiers.length === 0) return null
-    if (participants === '') return null
-
-    const count = typeof participants === 'number' ? participants : 0
-    const match = tiers.find((tier) => tier.maxParticipants == null || count <= tier.maxParticipants)
+  const result = (() => {
+    if (!tiers || tiers.length === 0 || submittedCount === null) return null
+    const match = tiers.find((tier) => tier.maxParticipants == null || submittedCount <= tier.maxParticipants)
     return match || tiers[tiers.length - 1]
-  }, [participants, tiers])
+  })()
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (participants === '') return
+    setSubmittedCount(participants)
+  }
 
   if (!tiers || tiers.length === 0) return null
 
@@ -49,7 +57,7 @@ export const RoomSizeEstimatorBlock: React.FC<Props> = ({
         </Reveal>
 
         <Reveal delayMs={100} className="overflow-hidden rounded-2xl border border-border bg-gray-50/60">
-          <div className="grid grid-cols-1 gap-6 p-6 md:grid-cols-2 md:p-8">
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 p-6 md:grid-cols-2 md:p-8">
             <div>
               <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">
                 {participantsLabel}
@@ -58,11 +66,14 @@ export const RoomSizeEstimatorBlock: React.FC<Props> = ({
                 type="number"
                 min={0}
                 inputMode="numeric"
-                placeholder="e.g. 8"
+                placeholder="Enter the number of participants"
                 value={participants}
                 onChange={(e) => setParticipants(e.target.value === '' ? '' : Number(e.target.value))}
                 className={fieldClassName}
               />
+              <Button type="submit" variant="default" className="mt-3 w-full">
+                Get Your Recommended Setup
+              </Button>
             </div>
 
             <div className="flex flex-col justify-center rounded-xl bg-white p-5 shadow-sm">
@@ -83,11 +94,12 @@ export const RoomSizeEstimatorBlock: React.FC<Props> = ({
                 </>
               ) : (
                 <p className="text-sm text-gray-500">
-                  Enter your participant count to see a recommended room solution.
+                  Enter your participant count and click &ldquo;Get Your Recommended Setup&rdquo; to see a
+                  recommended room solution.
                 </p>
               )}
             </div>
-          </div>
+          </form>
 
           <div className="flex flex-col gap-3 border-t border-border bg-white px-6 py-4 sm:flex-row sm:items-center sm:justify-between md:px-8">
             {disclaimer && <p className="text-xs text-gray-500">{disclaimer}</p>}

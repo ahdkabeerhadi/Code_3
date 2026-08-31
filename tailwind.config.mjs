@@ -76,6 +76,8 @@ const config = {
         'scroll-fast': 'scroll 20s linear infinite',
         'slide-in-from-bottom': 'slide-in-from-bottom 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
         'slide-in-from-top': 'slide-in-from-top 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
+        'drift': 'drift 14s ease-in-out infinite',
+        'streak-sway': 'streak-sway 12s ease-in-out infinite',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -169,13 +171,21 @@ const config = {
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
         scroll: {
-          '0%': { 
-            transform: 'translateX(0)' 
+          '0%': {
+            transform: 'translateX(0)'
           },
-          '100%': { 
-            transform: 'translateX(-100%)' 
+          '100%': {
+            transform: 'translateX(-100%)'
           },
-        }
+        },
+        drift: {
+          '0%, 100%': { transform: 'translate(0px, 0px) scale(1)' },
+          '50%': { transform: 'translate(30px, -30px) scale(1.12)' },
+        },
+        'streak-sway': {
+          '0%, 100%': { transform: 'translateX(0px) rotate(-20deg)' },
+          '50%': { transform: 'translateX(70px) rotate(-20deg)' },
+        },
       },
     },
   },

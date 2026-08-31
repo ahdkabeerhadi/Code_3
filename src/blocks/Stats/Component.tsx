@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { cn } from '@/utilities/ui'
 import { ServiceIcon } from '@/components/site/icons'
 import { IconMedia } from '@/components/site/IconMedia'
+import { ClearQuickEnquiry } from '@/components/site/ClearQuickEnquiry'
 
 type Props = {
   className?: string
@@ -91,31 +92,38 @@ export const StatsBlock: React.FC<Props> = ({ className, stats = [] }) => {
   if (safeStats.length === 0) return null
 
   return (
-    <section className={cn('bg-primary_red', className)}>
-      <div className="container mx-auto px-4 sm:px-6">
-        <div
-          className={cn(
-            'grid grid-cols-1 divide-y divide-white/20 border-y border-white/20 sm:divide-y-0 sm:divide-x',
-            safeStats.length === 4 && 'sm:grid-cols-4',
-            safeStats.length === 3 && 'sm:grid-cols-3',
-            safeStats.length === 2 && 'sm:grid-cols-2',
-          )}
-        >
-          {safeStats.map((stat, i) => (
-            <div key={stat.id || i} className="flex flex-col items-center gap-3 px-6 py-10 text-center">
-              <span className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-white/40 overflow-hidden">
-                {stat.iconMedia && typeof stat.iconMedia === 'object' ? (
-                  <IconMedia resource={stat.iconMedia} className="h-6 w-6 object-contain" />
-                ) : (
-                  <ServiceIcon preset={stat.icon || 'check'} className="h-5 w-5 text-white" />
-                )}
-              </span>
-              <Counter target={stat.value} suffix={stat.suffix} />
-              <div className="text-sm text-white/80">{stat.label}</div>
-            </div>
-          ))}
+    <>
+      {/* No-op unless a floating quick-enquiry-style form (e.g. the Quick
+          Enquiry or Meeting Room Assessment block) is present on the page -
+          measures its real height at runtime so this section, which often
+          sits right after the banner, doesn't render underneath it. */}
+      <ClearQuickEnquiry />
+      <section className={cn('bg-primary_red', className)}>
+        <div className="container mx-auto px-4 sm:px-6">
+          <div
+            className={cn(
+              'grid grid-cols-1 divide-y divide-white/20 border-y border-white/20 sm:divide-y-0 sm:divide-x',
+              safeStats.length === 4 && 'sm:grid-cols-4',
+              safeStats.length === 3 && 'sm:grid-cols-3',
+              safeStats.length === 2 && 'sm:grid-cols-2',
+            )}
+          >
+            {safeStats.map((stat, i) => (
+              <div key={stat.id || i} className="flex flex-col items-center gap-3 px-6 py-10 text-center">
+                <span className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-white/40 overflow-hidden">
+                  {stat.iconMedia && typeof stat.iconMedia === 'object' ? (
+                    <IconMedia resource={stat.iconMedia} className="h-6 w-6 object-contain" />
+                  ) : (
+                    <ServiceIcon preset={stat.icon || 'check'} className="h-5 w-5 text-white" />
+                  )}
+                </span>
+                <Counter target={stat.value} suffix={stat.suffix} />
+                <div className="text-sm text-white/80">{stat.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }
