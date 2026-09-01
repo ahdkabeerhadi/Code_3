@@ -2722,6 +2722,10 @@ export interface TeamConvergenceBlock {
   title: string;
   subtitle?: string | null;
   /**
+   * Shown above the scattered items, e.g. "Instead of coordinating separate vendors for:"
+   */
+  beforeLabel?: string | null;
+  /**
    * The fragmented specialties/vendors shown converging into one team.
    */
   items?:
@@ -2730,7 +2734,21 @@ export interface TeamConvergenceBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Shown above the destination, e.g. "you have:"
+   */
+  afterLabel?: string | null;
   teamLabel: string;
+  /**
+   * Optional concrete deliverables shown below the destination, e.g. "One Project Manager."
+   */
+  destinationItems?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  size?: ('default' | 'large') | null;
   /**
    * Short line shown next to the button.
    */
@@ -4680,13 +4698,22 @@ export interface TeamConvergenceBlockSelect<T extends boolean = true> {
   badge?: T;
   title?: T;
   subtitle?: T;
+  beforeLabel?: T;
   items?:
     | T
     | {
         text?: T;
         id?: T;
       };
+  afterLabel?: T;
   teamLabel?: T;
+  destinationItems?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  size?: T;
   ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;
