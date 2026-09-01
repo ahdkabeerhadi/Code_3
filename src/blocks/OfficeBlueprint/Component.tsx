@@ -60,10 +60,10 @@ type Props = {
 // description). Reception/Meeting Rooms sit up front, Server Room/Workstations
 // behind them; Security (index 4) is drawn as a site-wide perimeter, not a room.
 const ROOM_SLOTS = [
-  { zoneIndex: 0, area: 'reception', minHeight: 'min-h-[110px]' },
-  { zoneIndex: 2, area: 'meeting', minHeight: 'min-h-[110px]' },
-  { zoneIndex: 3, area: 'server', minHeight: 'min-h-[150px]' },
-  { zoneIndex: 1, area: 'workstations', minHeight: 'min-h-[150px]' },
+  { zoneIndex: 0, area: 'reception', minHeight: 'min-h-[84px]' },
+  { zoneIndex: 2, area: 'meeting', minHeight: 'min-h-[84px]' },
+  { zoneIndex: 3, area: 'server', minHeight: 'min-h-[110px]' },
+  { zoneIndex: 1, area: 'workstations', minHeight: 'min-h-[110px]' },
 ] as const
 
 export const OfficeBlueprintBlock: React.FC<Props> = ({
@@ -83,18 +83,18 @@ export const OfficeBlueprintBlock: React.FC<Props> = ({
   const isPerimeter = active === 4
 
   return (
-    <section className={cn('bg-white py-10 md:py-14', className)}>
+    <section className={cn('bg-white py-7 md:py-9', className)}>
       <div className="container mx-auto px-4 sm:px-6">
-        <Reveal className="mx-auto mb-10 max-w-2xl text-center md:mb-12">
+        <Reveal className="mx-auto mb-6 max-w-2xl text-center md:mb-7">
           {badge && <Eyebrow className="justify-center">{badge}</Eyebrow>}
           <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground text-balance">{title}</h2>
-          {subtitle && <p className="mt-3 text-gray-600 leading-relaxed">{subtitle}</p>}
+          {subtitle && <p className="mt-2 text-gray-600 leading-relaxed">{subtitle}</p>}
         </Reveal>
 
-        <Reveal delayMs={100} className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-[1fr_300px]">
+        <Reveal delayMs={100} className="mx-auto grid max-w-5xl grid-cols-1 gap-5 md:grid-cols-[1fr_300px]">
           {/* Blueprint */}
           <div
-            className="relative rounded-2xl border-2 border-dashed border-primary_red/35 p-5 pt-8 md:p-7 md:pt-9"
+            className="relative rounded-2xl border-2 border-dashed border-primary_red/35 p-4 pt-7 md:p-5 md:pt-8"
             style={{
               backgroundImage:
                 'linear-gradient(to right, rgba(17,17,17,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(17,17,17,0.05) 1px, transparent 1px)',
@@ -126,7 +126,7 @@ export const OfficeBlueprintBlock: React.FC<Props> = ({
                     type="button"
                     onClick={() => setActive(zoneIndex)}
                     className={cn(
-                      'flex flex-col items-start justify-start gap-2 rounded-xl border-2 border-dashed p-3.5 text-left transition-colors md:p-4',
+                      'flex flex-col items-start justify-start gap-1.5 rounded-xl border-2 border-dashed p-3 text-left transition-colors md:p-3.5',
                       minHeight,
                       isActive
                         ? 'border-primary_red bg-[#FDEBEC]/70'
@@ -149,24 +149,24 @@ export const OfficeBlueprintBlock: React.FC<Props> = ({
           </div>
 
           {/* Detail panel */}
-          <div className="flex flex-col rounded-2xl border border-border bg-gray-50/60 p-5 md:p-6">
-            <div className="mb-4 flex items-center gap-2 text-lg font-bold text-foreground">
+          <div className="flex flex-col rounded-2xl border border-border bg-gray-50/60 p-4 md:p-5">
+            <div className="mb-2.5 flex items-center gap-2 text-lg font-bold text-foreground">
               <span className="font-mono text-primary_red">{String(active + 1).padStart(2, '0')}</span>
               <span>—</span>
               <span>{activeZone?.name}</span>
             </div>
-            <div className="flex flex-1 flex-col gap-1">
+            <div className="flex flex-1 flex-col gap-0.5">
               {(activeZone?.items || []).map((item, i) => {
                 const Icon = getItemIcon(item.text)
                 return (
                   <div
                     key={item.id || i}
                     className={cn(
-                      'flex items-center gap-2.5 py-2 text-sm font-medium text-foreground',
+                      'flex items-center gap-2.5 py-1.5 text-sm font-medium text-foreground',
                       i > 0 && 'border-t border-border/70',
                     )}
                   >
-                    <span className="flex h-7 w-7 flex-none items-center justify-center rounded-lg bg-primary_red/10 text-primary_red">
+                    <span className="flex h-6 w-6 flex-none items-center justify-center rounded-lg bg-primary_red/10 text-primary_red">
                       <Icon className="h-3.5 w-3.5" />
                     </span>
                     {item.text}
@@ -178,7 +178,7 @@ export const OfficeBlueprintBlock: React.FC<Props> = ({
         </Reveal>
 
         {ctaLabel && ctaUrl && (
-          <div className="mt-10 flex flex-col items-center gap-3 text-center md:mt-12">
+          <div className="mt-6 flex flex-col items-center gap-3 text-center md:mt-7">
             <Link
               href={ctaUrl}
               className="inline-flex items-center gap-2 rounded-full bg-primary_red px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-700"
