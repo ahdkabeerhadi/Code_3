@@ -359,6 +359,7 @@ export interface Page {
     | RoomClassificationBlock
     | RoomSizeEstimatorBlock
     | ReactiveProactiveFlowBlock
+    | SetupEstimatorBlock
   )[];
   meta?: {
     title?: string | null;
@@ -2548,6 +2549,54 @@ export interface ReactiveProactiveFlowBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SetupEstimatorBlock".
+ */
+export interface SetupEstimatorBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  questions?:
+    | {
+        label: string;
+        selectionType?: ('single' | 'singleInfo' | 'multi') | null;
+        options?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  submitLabel?: string | null;
+  /**
+   * Matched against the combined score of the single-choice questions only (option index = points). Shown as the recommended scope in the result panel.
+   */
+  sizeTiers?:
+    | {
+        minScore: number;
+        maxScore: number;
+        tierName: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  disclaimer?: string | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'setupEstimator';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -3124,6 +3173,7 @@ export interface PagesSelect<T extends boolean = true> {
         roomClassification?: T | RoomClassificationBlockSelect<T>;
         roomSizeEstimator?: T | RoomSizeEstimatorBlockSelect<T>;
         reactiveProactiveFlow?: T | ReactiveProactiveFlowBlockSelect<T>;
+        setupEstimator?: T | SetupEstimatorBlockSelect<T>;
       };
   meta?:
     | T
@@ -4350,6 +4400,44 @@ export interface ReactiveProactiveFlowBlockSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SetupEstimatorBlock_select".
+ */
+export interface SetupEstimatorBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  questions?:
+    | T
+    | {
+        label?: T;
+        selectionType?: T;
+        options?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  submitLabel?: T;
+  sizeTiers?:
+    | T
+    | {
+        minScore?: T;
+        maxScore?: T;
+        tierName?: T;
+        description?: T;
+        id?: T;
+      };
+  disclaimer?: T;
   ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;

@@ -61,6 +61,7 @@ import { SubServicesNavBlock } from './SubServicesNav/Component'
 import { RoomClassificationBlock } from './RoomClassification/Component'
 import { RoomSizeEstimatorBlock } from './RoomSizeEstimator/Component'
 import { ReactiveProactiveFlowBlock } from './ReactiveProactiveFlow/Component'
+import { SetupEstimatorBlock } from './SetupEstimator/Component'
 
 interface BlockProps {
   disableInnerContainer?: boolean
@@ -124,6 +125,7 @@ const blockComponents = {
   roomClassification: RoomClassificationBlock,
   roomSizeEstimator: RoomSizeEstimatorBlock,
   reactiveProactiveFlow: ReactiveProactiveFlowBlock,
+  setupEstimator: SetupEstimatorBlock,
   resultsShowcase: ResultsShowcaseBlock,
   processTimeline: ProcessTimelineBlock,
   coverageTable: CoverageTableBlock,
