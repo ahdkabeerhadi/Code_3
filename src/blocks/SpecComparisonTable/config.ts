@@ -60,6 +60,19 @@ export const SpecComparisonTable: Block = {
       admin: { description: 'Shown below the table, e.g. helping the visitor pick between two equally valid options.' },
     },
     {
+      name: 'footerCtaLabel',
+      type: 'text',
+      label: 'Closing CTA Button Label (optional)',
+      localized: true,
+      admin: { description: 'Shown alongside the closing guidance, e.g. "Explore IT AMC".' },
+    },
+    {
+      name: 'footerCtaUrl',
+      type: 'text',
+      label: 'Closing CTA Button URL (optional)',
+      admin: { condition: (_, siblingData) => !!siblingData?.footerCtaLabel },
+    },
+    {
       name: 'rows',
       type: 'array',
       label: 'Rows',

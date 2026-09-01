@@ -1,8 +1,9 @@
 import type { SpecComparisonTableBlock as SpecComparisonTableBlockProps } from 'src/payload-types'
 
 import { cn } from '@/utilities/ui'
+import Link from 'next/link'
 import React from 'react'
-import { CheckCircle2, CircleDashed, Sparkles, XCircle } from 'lucide-react'
+import { ArrowRight, CheckCircle2, CircleDashed, Sparkles, XCircle } from 'lucide-react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
 
@@ -53,6 +54,8 @@ export const SpecComparisonTableBlock: React.FC<Props> = ({
   subtitle,
   columns = [],
   footer,
+  footerCtaLabel,
+  footerCtaUrl,
   rows = [],
 }) => {
   if (!columns || columns.length === 0 || !rows || rows.length === 0) return null
@@ -164,8 +167,20 @@ export const SpecComparisonTableBlock: React.FC<Props> = ({
         </Reveal>
 
         {footer && (
-          <Reveal delayMs={150} className="mt-6 rounded-2xl border border-primary_red/15 bg-primary_red/[0.04] px-6 py-4 text-center">
+          <Reveal
+            delayMs={150}
+            className="mt-6 flex flex-col items-center gap-4 rounded-2xl border border-primary_red/15 bg-primary_red/[0.04] px-6 py-4 text-center sm:flex-row sm:justify-between sm:text-left"
+          >
             <p className="text-sm font-medium text-foreground whitespace-pre-line">{footer}</p>
+            {footerCtaLabel && footerCtaUrl && (
+              <Link
+                href={footerCtaUrl}
+                className="group inline-flex flex-none items-center gap-2 rounded-full bg-primary_red px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:scale-[1.03] hover:bg-secondary_red"
+              >
+                {footerCtaLabel}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            )}
           </Reveal>
         )}
       </div>

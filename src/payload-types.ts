@@ -1899,6 +1899,11 @@ export interface SpecComparisonTableBlock {
    */
   footer?: string | null;
   /**
+   * Shown alongside the closing guidance, e.g. "Explore IT AMC".
+   */
+  footerCtaLabel?: string | null;
+  footerCtaUrl?: string | null;
+  /**
    * Each value corresponds to the column at the same position - keep the order in sync with Columns above.
    */
   rows?:
@@ -4229,6 +4234,8 @@ export interface SpecComparisonTableBlockSelect<T extends boolean = true> {
         id?: T;
       };
   footer?: T;
+  footerCtaLabel?: T;
+  footerCtaUrl?: T;
   rows?:
     | T
     | {
