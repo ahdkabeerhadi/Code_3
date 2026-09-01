@@ -53,6 +53,7 @@ export const IconFeatureGridBlock: React.FC<Props> = ({
   title,
   subtitle,
   items = [],
+  footer,
   ctaLabel,
   ctaUrl,
 }) => {
@@ -70,7 +71,10 @@ export const IconFeatureGridBlock: React.FC<Props> = ({
 
         <Reveal
           delayMs={100}
-          className="mx-auto grid max-w-5xl grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5 md:gap-4"
+          className={cn(
+            'mx-auto grid max-w-5xl grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4',
+            safeItems.length <= 4 ? 'md:grid-cols-4' : 'md:grid-cols-5',
+          )}
         >
           {safeItems.map((item, index) => {
             const Icon = getItemIcon(item.text)
@@ -100,6 +104,12 @@ export const IconFeatureGridBlock: React.FC<Props> = ({
             )
           })}
         </Reveal>
+
+        {footer && (
+          <Reveal delayMs={150} className="mx-auto mt-6 max-w-2xl text-center md:mt-7">
+            <p className="text-gray-600 leading-relaxed">{footer}</p>
+          </Reveal>
+        )}
 
         {ctaLabel && ctaUrl && (
           <div className="mt-6 flex flex-col items-center gap-3 text-center md:mt-7">

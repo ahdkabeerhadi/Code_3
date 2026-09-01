@@ -2690,6 +2690,10 @@ export interface IconFeatureGridBlock {
       }[]
     | null;
   /**
+   * Plain closing statement shown below the grid, e.g. reinforcing the pitch without a button.
+   */
+  footer?: string | null;
+  /**
    * Short line shown next to the button.
    */
   ctaText?: string | null;
@@ -4758,6 +4762,7 @@ export interface IconFeatureGridBlockSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
+  footer?: T;
   ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;
