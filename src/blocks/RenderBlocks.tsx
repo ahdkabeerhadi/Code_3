@@ -63,6 +63,7 @@ import { RoomSizeEstimatorBlock } from './RoomSizeEstimator/Component'
 import { ReactiveProactiveFlowBlock } from './ReactiveProactiveFlow/Component'
 import { SetupEstimatorBlock } from './SetupEstimator/Component'
 import { OfficeBlueprintBlock } from './OfficeBlueprint/Component'
+import { IconFeatureGridBlock } from './IconFeatureGrid/Component'
 
 interface BlockProps {
   disableInnerContainer?: boolean
@@ -128,6 +129,7 @@ const blockComponents = {
   reactiveProactiveFlow: ReactiveProactiveFlowBlock,
   setupEstimator: SetupEstimatorBlock,
   officeBlueprint: OfficeBlueprintBlock,
+  iconFeatureGrid: IconFeatureGridBlock,
   resultsShowcase: ResultsShowcaseBlock,
   processTimeline: ProcessTimelineBlock,
   coverageTable: CoverageTableBlock,

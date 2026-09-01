@@ -1,0 +1,44 @@
+import type { Block } from 'payload'
+import { ctaFields } from '@/fields/ctaFields'
+
+export const IconFeatureGrid: Block = {
+  slug: 'iconFeatureGrid',
+  interfaceName: 'IconFeatureGridBlock',
+  labels: {
+    singular: 'Icon Feature Grid',
+    plural: 'Icon Feature Grids',
+  },
+  fields: [
+    {
+      name: 'badge',
+      type: 'text',
+      label: 'Badge Text',
+      localized: true,
+    },
+    {
+      name: 'title',
+      type: 'text',
+      label: 'Title',
+      required: true,
+      localized: true,
+    },
+    {
+      name: 'subtitle',
+      type: 'textarea',
+      label: 'Subtitle',
+      localized: true,
+    },
+    {
+      name: 'items',
+      type: 'array',
+      label: 'Items',
+      minRows: 4,
+      maxRows: 12,
+      admin: {
+        description: 'Short label only (2–4 words). An icon is matched automatically by keyword.',
+      },
+      fields: [{ name: 'text', type: 'text', required: true, localized: true }],
+    },
+    ...ctaFields('Talk to Our Experts'),
+  ],
+}

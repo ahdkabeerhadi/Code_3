@@ -361,6 +361,7 @@ export interface Page {
     | ReactiveProactiveFlowBlock
     | SetupEstimatorBlock
     | OfficeBlueprintBlock
+    | IconFeatureGridBlock
   )[];
   meta?: {
     title?: string | null;
@@ -2634,6 +2635,36 @@ export interface OfficeBlueprintBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IconFeatureGridBlock".
+ */
+export interface IconFeatureGridBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * Short label only (2–4 words). An icon is matched automatically by keyword.
+   */
+  items?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'iconFeatureGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -3212,6 +3243,7 @@ export interface PagesSelect<T extends boolean = true> {
         reactiveProactiveFlow?: T | ReactiveProactiveFlowBlockSelect<T>;
         setupEstimator?: T | SetupEstimatorBlockSelect<T>;
         officeBlueprint?: T | OfficeBlueprintBlockSelect<T>;
+        iconFeatureGrid?: T | IconFeatureGridBlockSelect<T>;
       };
   meta?:
     | T
@@ -4500,6 +4532,26 @@ export interface OfficeBlueprintBlockSelect<T extends boolean = true> {
               text?: T;
               id?: T;
             };
+        id?: T;
+      };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IconFeatureGridBlock_select".
+ */
+export interface IconFeatureGridBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  items?:
+    | T
+    | {
+        text?: T;
         id?: T;
       };
   ctaText?: T;
