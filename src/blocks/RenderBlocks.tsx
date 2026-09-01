@@ -66,6 +66,7 @@ import { OfficeBlueprintBlock } from './OfficeBlueprint/Component'
 import { IconFeatureGridBlock } from './IconFeatureGrid/Component'
 import { ProcessPhasesBlock } from './ProcessPhases/Component'
 import { TeamConvergenceBlock } from './TeamConvergence/Component'
+import { ServiceJourneyBlock } from './ServiceJourney/Component'
 
 interface BlockProps {
   disableInnerContainer?: boolean
@@ -134,6 +135,7 @@ const blockComponents = {
   iconFeatureGrid: IconFeatureGridBlock,
   processPhases: ProcessPhasesBlock,
   teamConvergence: TeamConvergenceBlock,
+  serviceJourney: ServiceJourneyBlock,
   resultsShowcase: ResultsShowcaseBlock,
   processTimeline: ProcessTimelineBlock,
   coverageTable: CoverageTableBlock,

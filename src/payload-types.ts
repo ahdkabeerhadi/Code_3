@@ -364,6 +364,7 @@ export interface Page {
     | IconFeatureGridBlock
     | ProcessPhasesBlock
     | TeamConvergenceBlock
+    | ServiceJourneyBlock
   )[];
   meta?: {
     title?: string | null;
@@ -2778,6 +2779,32 @@ export interface TeamConvergenceBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceJourneyBlock".
+ */
+export interface ServiceJourneyBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * Shown left to right, connected by arrows, in this order.
+   */
+  steps?:
+    | {
+        label: string;
+        /**
+         * Leave blank for a non-clickable step, e.g. the current page.
+         */
+        url?: string | null;
+        emphasis?: ('muted' | 'primary' | 'secondary') | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'serviceJourney';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -3359,6 +3386,7 @@ export interface PagesSelect<T extends boolean = true> {
         iconFeatureGrid?: T | IconFeatureGridBlockSelect<T>;
         processPhases?: T | ProcessPhasesBlockSelect<T>;
         teamConvergence?: T | TeamConvergenceBlockSelect<T>;
+        serviceJourney?: T | ServiceJourneyBlockSelect<T>;
       };
   meta?:
     | T
@@ -4754,6 +4782,25 @@ export interface TeamConvergenceBlockSelect<T extends boolean = true> {
   ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceJourneyBlock_select".
+ */
+export interface ServiceJourneyBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  steps?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        emphasis?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

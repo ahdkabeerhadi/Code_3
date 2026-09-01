@@ -61,6 +61,7 @@ import { OfficeBlueprint } from '@/blocks/OfficeBlueprint/config'
 import { IconFeatureGrid } from '@/blocks/IconFeatureGrid/config'
 import { ProcessPhases } from '@/blocks/ProcessPhases/config'
 import { TeamConvergence } from '@/blocks/TeamConvergence/config'
+import { ServiceJourney } from '@/blocks/ServiceJourney/config'
 import { SpecComparisonTable } from '@/blocks/SpecComparisonTable/config'
 import { ResultsShowcase } from '@/blocks/ResultsShowcase/config'
 import { ProcessTimeline } from '@/blocks/ProcessTimeline/config'
@@ -264,6 +265,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 IconFeatureGrid,
                 ProcessPhases,
                 TeamConvergence,
+                ServiceJourney,
               ],
               required: true,
               admin: {
