@@ -1929,6 +1929,14 @@ export interface ProcessTimelineBlock {
   badge?: string | null;
   title: string;
   subtitle?: string | null;
+  /**
+   * Optional unnumbered marker shown before step 1, e.g. "EMPTY OFFICE" — styled as a plain badge, not a numbered step.
+   */
+  startLabel?: string | null;
+  /**
+   * Use for a "you've arrived" milestone like "Go Live" — fills the last step's marker solid.
+   */
+  emphasizeFinalStep?: boolean | null;
   steps?:
     | {
         title: string;
@@ -4081,6 +4089,8 @@ export interface ProcessTimelineBlockSelect<T extends boolean = true> {
   badge?: T;
   title?: T;
   subtitle?: T;
+  startLabel?: T;
+  emphasizeFinalStep?: T;
   steps?:
     | T
     | {

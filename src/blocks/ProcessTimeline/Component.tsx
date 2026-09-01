@@ -15,12 +15,22 @@ export const ProcessTimelineBlock: React.FC<Props> = ({
   className,
   title,
   subtitle,
+  startLabel,
+  emphasizeFinalStep,
   steps = [],
   ctaText,
   ctaLabel,
   ctaUrl,
 }) => {
   if (!steps || steps.length === 0) return null
+
+  const columnCount = steps.length + (startLabel ? 1 : 0)
+
+  const markerClassName = (filled: boolean) =>
+    cn(
+      'relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full border-2 text-sm font-bold shadow-[0_0_0_6px_white]',
+      filled ? 'border-primary_red bg-primary_red text-white' : 'border-primary_red bg-white text-primary_red',
+    )
 
   return (
     <section className={cn('bg-white py-14 md:py-20', className)}>
@@ -35,13 +45,19 @@ export const ProcessTimelineBlock: React.FC<Props> = ({
           {/* Desktop: horizontal connected timeline */}
           <div className="relative hidden md:block">
             <div className="absolute left-0 right-0 top-5 h-[2px] bg-gradient-to-r from-transparent via-border to-transparent" />
-            <div
-              className="grid"
-              style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }}
-            >
+            <div className="grid" style={{ gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))` }}>
+              {startLabel && (
+                <div className="relative px-4 text-center first:pl-0">
+                  <div className="relative z-10 mx-auto flex h-10 items-center justify-center">
+                    <span className="rounded-full bg-gray-200 px-3 py-1 text-xs font-bold uppercase tracking-wide text-gray-600 shadow-[0_0_0_6px_white]">
+                      {startLabel}
+                    </span>
+                  </div>
+                </div>
+              )}
               {steps.map((step, index) => (
-                <div key={step.id || index} className="relative px-4 text-center first:pl-0 last:pr-0">
-                  <div className="relative z-10 mx-auto flex h-10 w-10 items-center justify-center rounded-full border-2 border-primary_red bg-white text-sm font-bold text-primary_red shadow-[0_0_0_6px_white]">
+                <div key={step.id || index} className="relative px-4 text-center last:pr-0">
+                  <div className={markerClassName(!!emphasizeFinalStep && index === steps.length - 1)}>
                     {index + 1}
                   </div>
                   <h3 className="mt-5 text-base font-bold text-foreground">{step.title}</h3>
@@ -55,9 +71,18 @@ export const ProcessTimelineBlock: React.FC<Props> = ({
           <div className="relative md:hidden">
             <div className="absolute bottom-0 left-5 top-5 w-[2px] bg-border" />
             <div className="space-y-8">
+              {startLabel && (
+                <div className="relative flex items-center gap-4">
+                  <div className="relative z-10 flex h-10 w-10 flex-none items-center justify-center">
+                    <span className="rounded-full bg-gray-200 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-gray-600 shadow-[0_0_0_6px_white]">
+                      {startLabel}
+                    </span>
+                  </div>
+                </div>
+              )}
               {steps.map((step, index) => (
                 <div key={step.id || index} className="relative flex gap-4 pl-0">
-                  <div className="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full border-2 border-primary_red bg-white text-sm font-bold text-primary_red shadow-[0_0_0_6px_white]">
+                  <div className={markerClassName(!!emphasizeFinalStep && index === steps.length - 1)}>
                     {index + 1}
                   </div>
                   <div className="pt-1.5">
