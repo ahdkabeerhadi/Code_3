@@ -5,6 +5,19 @@ import Link from 'next/link'
 import React from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
+import {
+  Activity,
+  FileText,
+  HardDrive,
+  Headset,
+  Lightbulb,
+  RotateCw,
+  ShieldCheck,
+  Ticket,
+  Wifi,
+  Wrench,
+  type LucideIcon,
+} from 'lucide-react'
 
 type Props = {
   className?: string
@@ -18,53 +31,124 @@ function CheckIcon() {
   )
 }
 
-export const ScopeChecklistBlock: React.FC<Props> = ({ badge, className, title, subtitle, items = [], note }) => {
+// Best-effort icon per item, matched by keyword — keeps the Monthly Cadence
+// layout sensible for any future item list, not just AMC's 9.
+function getMonthlyItemIcon(text?: string | null): LucideIcon {
+  const t = (text || '').toLowerCase()
+  if (t.includes('maintenance')) return Wrench
+  if (t.includes('health')) return Activity
+  if (t.includes('network')) return Wifi
+  if (t.includes('security')) return ShieldCheck
+  if (t.includes('backup')) return HardDrive
+  if (t.includes('support')) return Headset
+  if (t.includes('ticket')) return Ticket
+  if (t.includes('report')) return FileText
+  if (t.includes('recommend') || t.includes('improvement')) return Lightbulb
+  return CheckIcon as unknown as LucideIcon
+}
+
+function ChecklistGrid({ badge, title, subtitle, items, note }: ScopeChecklistBlockProps) {
+  return (
+    <>
+      <Reveal className="max-w-2xl mb-6">
+        {badge && <Eyebrow>{badge}</Eyebrow>}
+        <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground">{title}</h2>
+        {subtitle && <p className="mt-3 text-gray-600 leading-relaxed">{subtitle}</p>}
+      </Reveal>
+
+      <Reveal delayMs={100} className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+        {(items || []).map((item, index) => {
+          const content = (
+            <>
+              <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-[#FDEBEC] text-primary_red">
+                <CheckIcon />
+              </span>
+              <span className="text-sm font-medium text-foreground">{item.text}</span>
+            </>
+          )
+
+          if (item.url) {
+            return (
+              <Link
+                key={item.id || index}
+                href={item.url}
+                className="flex items-center gap-2.5 rounded-xl border border-border bg-gray-50/60 px-4 py-3 transition-colors hover:border-primary_red/40 hover:bg-[#FDEBEC]/40"
+              >
+                {content}
+              </Link>
+            )
+          }
+
+          return (
+            <div
+              key={item.id || index}
+              className="flex items-center gap-2.5 rounded-xl border border-border bg-gray-50/60 px-4 py-3"
+            >
+              {content}
+            </div>
+          )
+        })}
+      </Reveal>
+
+      {note && <p className="mt-5 text-sm text-gray-500">{note}</p>}
+    </>
+  )
+}
+
+function MonthlyCadence({ badge, title, subtitle, items, note }: ScopeChecklistBlockProps) {
+  return (
+    <Reveal className="overflow-hidden rounded-3xl border border-border shadow-[0_1px_3px_rgba(0,0,0,0.04),0_24px_50px_-24px_rgba(0,0,0,0.18)]">
+      <div className="grid md:grid-cols-[300px_1fr]">
+        <div className="relative flex flex-col justify-center gap-4 overflow-hidden bg-gradient-to-br from-[#1c1113] via-[#3a0f14] to-primary_red px-7 py-10 md:px-8">
+          <RotateCw className="pointer-events-none absolute -right-8 -top-8 h-36 w-36 text-white/[0.06]" strokeWidth={1.5} />
+          {badge && <Eyebrow className="text-white/70">{badge}</Eyebrow>}
+          <h2 className="text-2xl md:text-[26px] font-semibold leading-tight text-white text-balance">{title}</h2>
+          {subtitle && <p className="text-sm leading-relaxed text-white/70">{subtitle}</p>}
+          {note && (
+            <div className="mt-1 inline-flex w-fit items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-xs font-medium text-white">
+              <RotateCw className="h-3.5 w-3.5 flex-none" />
+              {note}
+            </div>
+          )}
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3">
+          {(items || []).map((item, index) => {
+            const Icon = getMonthlyItemIcon(item.text)
+            const col = index % 3
+            const row = Math.floor(index / 3)
+            const isLastMobile = index === (items?.length ?? 0) - 1
+            return (
+              <div
+                key={item.id || index}
+                className={cn(
+                  'flex items-center gap-3 border-border px-6 py-5 transition-colors hover:bg-gray-50/80',
+                  !isLastMobile && 'border-b sm:border-b-0',
+                  col > 0 && 'sm:border-l',
+                  row > 0 && 'sm:border-t',
+                )}
+              >
+                <span className="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-[#FDEBEC] text-primary_red">
+                  <Icon className="h-[18px] w-[18px]" />
+                </span>
+                <span className="text-sm font-medium text-foreground">{item.text}</span>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </Reveal>
+  )
+}
+
+export const ScopeChecklistBlock: React.FC<Props> = (props) => {
+  const { className, items = [], layoutStyle } = props
   if (!items || items.length === 0) return null
 
   return (
     <section className={cn('bg-white py-7 md:py-9', className)}>
       <div className="container mx-auto px-4 sm:px-6">
-        <Reveal className="max-w-2xl mb-6">
-          {badge && <Eyebrow>{badge}</Eyebrow>}
-          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground">{title}</h2>
-          {subtitle && <p className="mt-3 text-gray-600 leading-relaxed">{subtitle}</p>}
-        </Reveal>
-
-        <Reveal delayMs={100} className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-          {items.map((item, index) => {
-            const content = (
-              <>
-                <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-[#FDEBEC] text-primary_red">
-                  <CheckIcon />
-                </span>
-                <span className="text-sm font-medium text-foreground">{item.text}</span>
-              </>
-            )
-
-            if (item.url) {
-              return (
-                <Link
-                  key={item.id || index}
-                  href={item.url}
-                  className="flex items-center gap-2.5 rounded-xl border border-border bg-gray-50/60 px-4 py-3 transition-colors hover:border-primary_red/40 hover:bg-[#FDEBEC]/40"
-                >
-                  {content}
-                </Link>
-              )
-            }
-
-            return (
-              <div
-                key={item.id || index}
-                className="flex items-center gap-2.5 rounded-xl border border-border bg-gray-50/60 px-4 py-3"
-              >
-                {content}
-              </div>
-            )
-          })}
-        </Reveal>
-
-        {note && <p className="mt-5 text-sm text-gray-500">{note}</p>}
+        {layoutStyle === 'monthly' ? <MonthlyCadence {...props} /> : <ChecklistGrid {...props} />}
       </div>
     </section>
   )

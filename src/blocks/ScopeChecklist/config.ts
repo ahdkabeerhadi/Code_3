@@ -9,6 +9,19 @@ export const ScopeChecklist: Block = {
   },
   fields: [
     {
+      name: 'layoutStyle',
+      type: 'select',
+      label: 'Layout Style',
+      defaultValue: 'grid',
+      options: [
+        { label: 'Checklist Grid', value: 'grid' },
+        { label: 'Monthly Cadence (dark panel + icon rows)', value: 'monthly' },
+      ],
+      admin: {
+        description: 'Monthly Cadence is meant for recurring/ongoing-service content, e.g. "what happens every month."',
+      },
+    },
+    {
       name: 'badge',
       type: 'text',
       label: 'Badge Text',

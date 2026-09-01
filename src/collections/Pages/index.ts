@@ -55,6 +55,7 @@ import { BusinessNeeds } from '@/blocks/BusinessNeeds/config'
 import { SubServicesNav } from '@/blocks/SubServicesNav/config'
 import { RoomClassification } from '@/blocks/RoomClassification/config'
 import { RoomSizeEstimator } from '@/blocks/RoomSizeEstimator/config'
+import { ReactiveProactiveFlow } from '@/blocks/ReactiveProactiveFlow/config'
 import { SpecComparisonTable } from '@/blocks/SpecComparisonTable/config'
 import { ResultsShowcase } from '@/blocks/ResultsShowcase/config'
 import { ProcessTimeline } from '@/blocks/ProcessTimeline/config'
@@ -252,6 +253,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 SubServicesNav,
                 RoomClassification,
                 RoomSizeEstimator,
+                ReactiveProactiveFlow,
               ],
               required: true,
               admin: {

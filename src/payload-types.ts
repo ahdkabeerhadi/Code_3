@@ -358,6 +358,7 @@ export interface Page {
     | SubServicesNavBlock
     | RoomClassificationBlock
     | RoomSizeEstimatorBlock
+    | ReactiveProactiveFlowBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1825,6 +1826,10 @@ export interface AssuranceStripBlock {
  * via the `definition` "ScopeChecklistBlock".
  */
 export interface ScopeChecklistBlock {
+  /**
+   * Monthly Cadence is meant for recurring/ongoing-service content, e.g. "what happens every month."
+   */
+  layoutStyle?: ('grid' | 'monthly') | null;
   badge?: string | null;
   title: string;
   subtitle?: string | null;
@@ -2508,6 +2513,41 @@ export interface RoomSizeEstimatorBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ReactiveProactiveFlowBlock".
+ */
+export interface ReactiveProactiveFlowBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  reactiveLabel?: string | null;
+  reactiveSteps?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  proactiveLabel?: string | null;
+  proactiveSteps?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'reactiveProactiveFlow';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -3083,6 +3123,7 @@ export interface PagesSelect<T extends boolean = true> {
         subServicesNav?: T | SubServicesNavBlockSelect<T>;
         roomClassification?: T | RoomClassificationBlockSelect<T>;
         roomSizeEstimator?: T | RoomSizeEstimatorBlockSelect<T>;
+        reactiveProactiveFlow?: T | ReactiveProactiveFlowBlockSelect<T>;
       };
   meta?:
     | T
@@ -3843,6 +3884,7 @@ export interface AssuranceStripBlockSelect<T extends boolean = true> {
  * via the `definition` "ScopeChecklistBlock_select".
  */
 export interface ScopeChecklistBlockSelect<T extends boolean = true> {
+  layoutStyle?: T;
   badge?: T;
   title?: T;
   subtitle?: T;
@@ -4280,6 +4322,34 @@ export interface RoomSizeEstimatorBlockSelect<T extends boolean = true> {
         id?: T;
       };
   disclaimer?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ReactiveProactiveFlowBlock_select".
+ */
+export interface ReactiveProactiveFlowBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  reactiveLabel?: T;
+  reactiveSteps?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  proactiveLabel?: T;
+  proactiveSteps?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
   ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;

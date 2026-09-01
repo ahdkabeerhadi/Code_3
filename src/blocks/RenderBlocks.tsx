@@ -60,6 +60,7 @@ import { BusinessNeedsBlock } from './BusinessNeeds/Component'
 import { SubServicesNavBlock } from './SubServicesNav/Component'
 import { RoomClassificationBlock } from './RoomClassification/Component'
 import { RoomSizeEstimatorBlock } from './RoomSizeEstimator/Component'
+import { ReactiveProactiveFlowBlock } from './ReactiveProactiveFlow/Component'
 
 interface BlockProps {
   disableInnerContainer?: boolean
@@ -122,6 +123,7 @@ const blockComponents = {
   subServicesNav: SubServicesNavBlock,
   roomClassification: RoomClassificationBlock,
   roomSizeEstimator: RoomSizeEstimatorBlock,
+  reactiveProactiveFlow: ReactiveProactiveFlowBlock,
   resultsShowcase: ResultsShowcaseBlock,
   processTimeline: ProcessTimelineBlock,
   coverageTable: CoverageTableBlock,
