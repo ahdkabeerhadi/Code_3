@@ -1895,12 +1895,21 @@ export interface SpecComparisonTableBlock {
       }[]
     | null;
   /**
+   * Shown below the table, e.g. helping the visitor pick between two equally valid options.
+   */
+  footer?: string | null;
+  /**
+   * Shown alongside the closing guidance, e.g. "Explore IT AMC".
+   */
+  footerCtaLabel?: string | null;
+  footerCtaUrl?: string | null;
+  /**
    * Each value corresponds to the column at the same position - keep the order in sync with Columns above.
    */
   rows?:
     | {
         /**
-         * e.g. "Best Use Case"
+         * e.g. "Best Use Case" - or use "Yes" / "No" / "Limited" as a value below for a proper icon instead of plain text.
          */
         rowLabel: string;
         values?:
@@ -2680,6 +2689,10 @@ export interface IconFeatureGridBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Plain closing statement shown below the grid, e.g. reinforcing the pitch without a button.
+   */
+  footer?: string | null;
   /**
    * Short line shown next to the button.
    */
@@ -4224,6 +4237,9 @@ export interface SpecComparisonTableBlockSelect<T extends boolean = true> {
         highlightLabel?: T;
         id?: T;
       };
+  footer?: T;
+  footerCtaLabel?: T;
+  footerCtaUrl?: T;
   rows?:
     | T
     | {
@@ -4746,6 +4762,7 @@ export interface IconFeatureGridBlockSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
+  footer?: T;
   ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;

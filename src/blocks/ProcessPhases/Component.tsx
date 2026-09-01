@@ -5,7 +5,7 @@ import Link from 'next/link'
 import React from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
-import { ArrowRight, Check, ClipboardList, Headset, Wrench, type LucideIcon } from 'lucide-react'
+import { ArrowRight, Building2, Check, ClipboardList, Headset, Laptop, Wrench, type LucideIcon } from 'lucide-react'
 
 // Best-effort icon per phase, matched by keyword — falls back sensibly for
 // any future phase set, not just "Before / During / After".
@@ -14,6 +14,8 @@ function getPhaseIcon(label?: string | null): LucideIcon {
   if (l.includes('before')) return ClipboardList
   if (l.includes('during')) return Wrench
   if (l.includes('after')) return Headset
+  if (l.includes('remote')) return Laptop
+  if (l.includes('on-site') || l.includes('onsite')) return Building2
   return ClipboardList
 }
 

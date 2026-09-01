@@ -47,6 +47,13 @@ export const IconFeatureGrid: Block = {
         },
       ],
     },
+    {
+      name: 'footer',
+      type: 'textarea',
+      label: 'Closing Line (optional)',
+      localized: true,
+      admin: { description: 'Plain closing statement shown below the grid, e.g. reinforcing the pitch without a button.' },
+    },
     ...ctaFields('Talk to Our Experts'),
   ],
 }

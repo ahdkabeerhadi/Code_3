@@ -9,13 +9,16 @@ import {
   ArrowRight,
   Cable,
   Camera,
+  Cloud,
   Laptop,
   LayoutGrid,
   Mail,
   Network,
   Phone,
+  Printer,
   Server,
   ShieldCheck,
+  User,
   Video,
   Wifi,
   type LucideIcon,
@@ -24,16 +27,19 @@ import {
 // Best-effort icon per item, matched by keyword.
 function getItemIcon(text?: string | null): LucideIcon {
   const t = (text || '').toLowerCase()
-  if (t.includes('workstation')) return Laptop
+  if (t.includes('workstation') || t.includes('desktop') || t.includes('laptop')) return Laptop
   if (t.includes('wi-fi') || t.includes('wifi')) return Wifi
   if (t.includes('network')) return Network
-  if (t.includes('server') || t.includes('cloud')) return Server
-  if (t.includes('cyber') || t.includes('security')) return ShieldCheck
+  if (t.includes('server')) return Server
+  if (t.includes('cloud')) return Cloud
+  if (t.includes('cyber') || t.includes('security') || t.includes('firewall')) return ShieldCheck
   if (t.includes('cctv') || t.includes('access control') || t.includes('camera')) return Camera
+  if (t.includes('printer') || t.includes('peripheral')) return Printer
   if (t.includes('meeting')) return Video
   if (t.includes('365') || t.includes('microsoft') || t.includes('email')) return Mail
-  if (t.includes('communication') || t.includes('phone') || t.includes('call')) return Phone
+  if (t.includes('communication') || t.includes('phone') || t.includes('voip') || t.includes('call')) return Phone
   if (t.includes('cabling') || t.includes('cable')) return Cable
+  if (t.includes('user') || t.includes('account')) return User
   return LayoutGrid
 }
 
@@ -47,6 +53,7 @@ export const IconFeatureGridBlock: React.FC<Props> = ({
   title,
   subtitle,
   items = [],
+  footer,
   ctaLabel,
   ctaUrl,
 }) => {
@@ -64,7 +71,10 @@ export const IconFeatureGridBlock: React.FC<Props> = ({
 
         <Reveal
           delayMs={100}
-          className="mx-auto grid max-w-5xl grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5 md:gap-4"
+          className={cn(
+            'mx-auto grid max-w-5xl grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4',
+            safeItems.length <= 4 ? 'md:grid-cols-4' : 'md:grid-cols-5',
+          )}
         >
           {safeItems.map((item, index) => {
             const Icon = getItemIcon(item.text)
@@ -94,6 +104,12 @@ export const IconFeatureGridBlock: React.FC<Props> = ({
             )
           })}
         </Reveal>
+
+        {footer && (
+          <Reveal delayMs={150} className="mx-auto mt-6 max-w-2xl text-center md:mt-7">
+            <p className="text-gray-600 leading-relaxed">{footer}</p>
+          </Reveal>
+        )}
 
         {ctaLabel && ctaUrl && (
           <div className="mt-6 flex flex-col items-center gap-3 text-center md:mt-7">
