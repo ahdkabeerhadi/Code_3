@@ -12,9 +12,13 @@ export async function getGoogleReviews(): Promise<GoogleReview[] | null> {
   if (!apiKey || !placeId) return null
 
   try {
+    // Google caps this endpoint at 5 reviews no matter what, with no
+    // pagination available - so sort for substance (its "most relevant"
+    // default) rather than "newest", which can surface a bare star rating
+    // with no actual comment ahead of reviews that are worth showing.
     const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(
       placeId,
-    )}&fields=reviews&reviews_sort=newest&key=${apiKey}`
+    )}&fields=reviews&reviews_sort=most_relevant&key=${apiKey}`
 
     // Without a timeout, a slow/hanging Google Places API response blocks the
     // entire page's server render - cap it so a bad external call can't do that.
@@ -24,12 +28,16 @@ export async function getGoogleReviews(): Promise<GoogleReview[] | null> {
     const data = await res.json()
     if (data.status !== 'OK' || !Array.isArray(data.result?.reviews)) return null
 
-    return data.result.reviews.map((r: GoogleReview) => ({
-      author_name: r.author_name,
-      rating: r.rating,
-      text: r.text,
-      relative_time_description: r.relative_time_description,
-    }))
+    return data.result.reviews
+      // Drop reviews with no real comment (e.g. a bare star rating) - not
+      // "good content" even though they're genuine reviews.
+      .filter((r: GoogleReview) => (r.text || '').trim().length >= 20)
+      .map((r: GoogleReview) => ({
+        author_name: r.author_name,
+        rating: r.rating,
+        text: r.text,
+        relative_time_description: r.relative_time_description,
+      }))
   } catch {
     return null
   }

@@ -45,7 +45,7 @@ export const TestimonialsBlock: React.FC<Props> = async ({
   const googleReviews = useGoogleReviews ? await getGoogleReviews() : null
 
   const cards: { quote: string; name: string; role: string; rating?: number; isGoogle?: boolean }[] =
-    googleReviews
+    googleReviews && googleReviews.length > 0
       ? googleReviews.map((r) => ({
           quote: r.text,
           name: r.author_name,
