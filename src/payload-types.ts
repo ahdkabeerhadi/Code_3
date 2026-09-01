@@ -359,6 +359,13 @@ export interface Page {
     | RoomClassificationBlock
     | RoomSizeEstimatorBlock
     | ReactiveProactiveFlowBlock
+    | SetupEstimatorBlock
+    | OfficeBlueprintBlock
+    | IconFeatureGridBlock
+    | ProcessPhasesBlock
+    | TeamConvergenceBlock
+    | ServiceJourneyBlock
+    | CustodyChainBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1767,27 +1774,41 @@ export interface DowntimeEstimatorBlock {
   subtitle?: string | null;
   workstationsLabel?: string | null;
   serversLabel?: string | null;
-  /**
-   * Ordered smallest to largest. The first tier whose limits fit the entered counts is used; if none fit, the last tier is used as the fallback (e.g. "scoped after assessment").
-   */
-  tiers?:
+  floorsLabel?: string | null;
+  floorsOptions?:
     | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  cctvLabel?: string | null;
+  meetingRoomsLabel?: string | null;
+  currentLocationLabel?: string | null;
+  currentLocationOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  newLocationLabel?: string | null;
+  newLocationOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  submitLabel?: string | null;
+  /**
+   * Ordered low to high, matched against a composite score of all the fields above (size, floors, CCTV, meeting rooms, and a bump if current/new location differ).
+   */
+  complexityTiers?:
+    | {
+        minScore: number;
+        maxScore: number;
         /**
-         * e.g. "Small Office"
+         * e.g. "Low", "Medium", "High"
          */
         label: string;
-        /**
-         * Upper limit of workstations for this tier to apply.
-         */
-        maxWorkstations: number;
-        /**
-         * Upper limit of servers for this tier to apply.
-         */
-        maxServers: number;
-        /**
-         * e.g. "Typically a single weekend"
-         */
-        estimate: string;
         id?: string | null;
       }[]
     | null;
@@ -1926,6 +1947,14 @@ export interface ProcessTimelineBlock {
   badge?: string | null;
   title: string;
   subtitle?: string | null;
+  /**
+   * Optional unnumbered marker shown before step 1, e.g. "EMPTY OFFICE" — styled as a plain badge, not a numbered step.
+   */
+  startLabel?: string | null;
+  /**
+   * Use for a "you've arrived" milestone like "Go Live" — fills the last step's marker solid.
+   */
+  emphasizeFinalStep?: boolean | null;
   steps?:
     | {
         title: string;
@@ -2548,6 +2577,256 @@ export interface ReactiveProactiveFlowBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SetupEstimatorBlock".
+ */
+export interface SetupEstimatorBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  questions?:
+    | {
+        label: string;
+        selectionType?: ('single' | 'singleInfo' | 'multi') | null;
+        options?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  submitLabel?: string | null;
+  /**
+   * Matched against the combined score of the single-choice questions only (option index = points). Shown as the recommended scope in the result panel.
+   */
+  sizeTiers?:
+    | {
+        minScore: number;
+        maxScore: number;
+        tierName: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  disclaimer?: string | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'setupEstimator';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OfficeBlueprintBlock".
+ */
+export interface OfficeBlueprintBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * Exactly 5, in this fixed order: 1) Reception, 2) Workstations, 3) Meeting Rooms, 4) Server/IT Room, 5) Security — the layout below is built around this order and treats the 5th as a site-wide perimeter rather than a room.
+   */
+  zones?:
+    | {
+        name: string;
+        items?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'officeBlueprint';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IconFeatureGridBlock".
+ */
+export interface IconFeatureGridBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * Short label only (2–4 words). An icon is matched automatically by keyword.
+   */
+  items?:
+    | {
+        text: string;
+        /**
+         * If set, this card links to the given URL, e.g. "/service/cyber-security-dubai-uae".
+         */
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'iconFeatureGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProcessPhasesBlock".
+ */
+export interface ProcessPhasesBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * Equally-weighted, sequential phases (e.g. Before / During / After) — not a comparison of alternatives. All items render the same way.
+   */
+  phases?:
+    | {
+        label: string;
+        items?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'processPhases';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamConvergenceBlock".
+ */
+export interface TeamConvergenceBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * Shown above the scattered items, e.g. "Instead of coordinating separate vendors for:"
+   */
+  beforeLabel?: string | null;
+  /**
+   * The fragmented specialties/vendors shown converging into one team.
+   */
+  items?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Shown above the destination, e.g. "you have:"
+   */
+  afterLabel?: string | null;
+  teamLabel: string;
+  /**
+   * Optional concrete deliverables shown below the destination, e.g. "One Project Manager."
+   */
+  destinationItems?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  size?: ('default' | 'large') | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'teamConvergence';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceJourneyBlock".
+ */
+export interface ServiceJourneyBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * Shown left to right, connected by arrows, in this order.
+   */
+  steps?:
+    | {
+        label: string;
+        /**
+         * Leave blank for a non-clickable step, e.g. the current page.
+         */
+        url?: string | null;
+        emphasis?: ('muted' | 'primary' | 'secondary') | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'serviceJourney';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CustodyChainBlock".
+ */
+export interface CustodyChainBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * Short single words/phrases, shown in order connected by arrows, e.g. "Tag".
+   */
+  steps?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'custodyChain';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -3124,6 +3403,13 @@ export interface PagesSelect<T extends boolean = true> {
         roomClassification?: T | RoomClassificationBlockSelect<T>;
         roomSizeEstimator?: T | RoomSizeEstimatorBlockSelect<T>;
         reactiveProactiveFlow?: T | ReactiveProactiveFlowBlockSelect<T>;
+        setupEstimator?: T | SetupEstimatorBlockSelect<T>;
+        officeBlueprint?: T | OfficeBlueprintBlockSelect<T>;
+        iconFeatureGrid?: T | IconFeatureGridBlockSelect<T>;
+        processPhases?: T | ProcessPhasesBlockSelect<T>;
+        teamConvergence?: T | TeamConvergenceBlockSelect<T>;
+        serviceJourney?: T | ServiceJourneyBlockSelect<T>;
+        custodyChain?: T | CustodyChainBlockSelect<T>;
       };
   meta?:
     | T
@@ -3848,13 +4134,36 @@ export interface DowntimeEstimatorBlockSelect<T extends boolean = true> {
   subtitle?: T;
   workstationsLabel?: T;
   serversLabel?: T;
-  tiers?:
+  floorsLabel?: T;
+  floorsOptions?:
     | T
     | {
+        text?: T;
+        id?: T;
+      };
+  cctvLabel?: T;
+  meetingRoomsLabel?: T;
+  currentLocationLabel?: T;
+  currentLocationOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  newLocationLabel?: T;
+  newLocationOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  submitLabel?: T;
+  complexityTiers?:
+    | T
+    | {
+        minScore?: T;
+        maxScore?: T;
         label?: T;
-        maxWorkstations?: T;
-        maxServers?: T;
-        estimate?: T;
         id?: T;
       };
   disclaimer?: T;
@@ -3957,6 +4266,8 @@ export interface ProcessTimelineBlockSelect<T extends boolean = true> {
   badge?: T;
   title?: T;
   subtitle?: T;
+  startLabel?: T;
+  emphasizeFinalStep?: T;
   steps?:
     | T
     | {
@@ -4353,6 +4664,183 @@ export interface ReactiveProactiveFlowBlockSelect<T extends boolean = true> {
   ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SetupEstimatorBlock_select".
+ */
+export interface SetupEstimatorBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  questions?:
+    | T
+    | {
+        label?: T;
+        selectionType?: T;
+        options?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  submitLabel?: T;
+  sizeTiers?:
+    | T
+    | {
+        minScore?: T;
+        maxScore?: T;
+        tierName?: T;
+        description?: T;
+        id?: T;
+      };
+  disclaimer?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OfficeBlueprintBlock_select".
+ */
+export interface OfficeBlueprintBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  zones?:
+    | T
+    | {
+        name?: T;
+        items?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IconFeatureGridBlock_select".
+ */
+export interface IconFeatureGridBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  items?:
+    | T
+    | {
+        text?: T;
+        url?: T;
+        id?: T;
+      };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProcessPhasesBlock_select".
+ */
+export interface ProcessPhasesBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  phases?:
+    | T
+    | {
+        label?: T;
+        items?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamConvergenceBlock_select".
+ */
+export interface TeamConvergenceBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  beforeLabel?: T;
+  items?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  afterLabel?: T;
+  teamLabel?: T;
+  destinationItems?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  size?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceJourneyBlock_select".
+ */
+export interface ServiceJourneyBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  steps?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        emphasis?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CustodyChainBlock_select".
+ */
+export interface CustodyChainBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  steps?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

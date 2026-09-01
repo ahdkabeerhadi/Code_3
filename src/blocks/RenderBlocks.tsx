@@ -61,6 +61,13 @@ import { SubServicesNavBlock } from './SubServicesNav/Component'
 import { RoomClassificationBlock } from './RoomClassification/Component'
 import { RoomSizeEstimatorBlock } from './RoomSizeEstimator/Component'
 import { ReactiveProactiveFlowBlock } from './ReactiveProactiveFlow/Component'
+import { SetupEstimatorBlock } from './SetupEstimator/Component'
+import { OfficeBlueprintBlock } from './OfficeBlueprint/Component'
+import { IconFeatureGridBlock } from './IconFeatureGrid/Component'
+import { ProcessPhasesBlock } from './ProcessPhases/Component'
+import { TeamConvergenceBlock } from './TeamConvergence/Component'
+import { ServiceJourneyBlock } from './ServiceJourney/Component'
+import { CustodyChainBlock } from './CustodyChain/Component'
 
 interface BlockProps {
   disableInnerContainer?: boolean
@@ -124,6 +131,13 @@ const blockComponents = {
   roomClassification: RoomClassificationBlock,
   roomSizeEstimator: RoomSizeEstimatorBlock,
   reactiveProactiveFlow: ReactiveProactiveFlowBlock,
+  setupEstimator: SetupEstimatorBlock,
+  officeBlueprint: OfficeBlueprintBlock,
+  iconFeatureGrid: IconFeatureGridBlock,
+  processPhases: ProcessPhasesBlock,
+  teamConvergence: TeamConvergenceBlock,
+  serviceJourney: ServiceJourneyBlock,
+  custodyChain: CustodyChainBlock,
   resultsShowcase: ResultsShowcaseBlock,
   processTimeline: ProcessTimelineBlock,
   coverageTable: CoverageTableBlock,

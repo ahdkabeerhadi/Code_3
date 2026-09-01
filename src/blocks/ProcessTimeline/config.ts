@@ -29,11 +29,30 @@ export const ProcessTimeline: Block = {
       localized: true,
     },
     {
+      name: 'startLabel',
+      type: 'text',
+      label: 'Start Milestone (optional)',
+      localized: true,
+      admin: {
+        description:
+          'Optional unnumbered marker shown before step 1, e.g. "EMPTY OFFICE" — styled as a plain badge, not a numbered step.',
+      },
+    },
+    {
+      name: 'emphasizeFinalStep',
+      type: 'checkbox',
+      label: 'Emphasize final step as a destination (filled marker)',
+      defaultValue: false,
+      admin: {
+        description: 'Use for a "you\'ve arrived" milestone like "Go Live" — fills the last step\'s marker solid.',
+      },
+    },
+    {
       name: 'steps',
       type: 'array',
       label: 'Steps',
       minRows: 2,
-      maxRows: 6,
+      maxRows: 7,
       fields: [
         {
           name: 'title',
