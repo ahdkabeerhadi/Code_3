@@ -68,15 +68,28 @@ export const IconFeatureGridBlock: React.FC<Props> = ({
         >
           {safeItems.map((item, index) => {
             const Icon = getItemIcon(item.text)
-            return (
-              <div
-                key={item.id || index}
-                className="group flex flex-col items-center gap-2.5 rounded-2xl border border-border bg-white p-4 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary_red/30 hover:shadow-md md:p-5"
-              >
+            const cardClassName =
+              'group flex flex-col items-center gap-2.5 rounded-2xl border border-border bg-white p-4 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary_red/30 hover:shadow-md md:p-5'
+            const inner = (
+              <>
                 <span className="flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-[#FDEBEC] text-primary_red transition-transform duration-300 group-hover:scale-105">
                   <Icon className="h-5 w-5" />
                 </span>
                 <span className="text-sm font-semibold leading-snug text-foreground">{item.text}</span>
+              </>
+            )
+
+            if (item.url) {
+              return (
+                <Link key={item.id || index} href={item.url} className={cardClassName}>
+                  {inner}
+                </Link>
+              )
+            }
+
+            return (
+              <div key={item.id || index} className={cardClassName}>
+                {inner}
               </div>
             )
           })}

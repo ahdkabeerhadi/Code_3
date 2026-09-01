@@ -2647,6 +2647,10 @@ export interface IconFeatureGridBlock {
   items?:
     | {
         text: string;
+        /**
+         * If set, this card links to the given URL, e.g. "/service/cyber-security-dubai-uae".
+         */
+        url?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -4552,6 +4556,7 @@ export interface IconFeatureGridBlockSelect<T extends boolean = true> {
     | T
     | {
         text?: T;
+        url?: T;
         id?: T;
       };
   ctaText?: T;

@@ -37,7 +37,15 @@ export const IconFeatureGrid: Block = {
       admin: {
         description: 'Short label only (2–4 words). An icon is matched automatically by keyword.',
       },
-      fields: [{ name: 'text', type: 'text', required: true, localized: true }],
+      fields: [
+        { name: 'text', type: 'text', required: true, localized: true },
+        {
+          name: 'url',
+          type: 'text',
+          label: 'Link URL (optional)',
+          admin: { description: 'If set, this card links to the given URL, e.g. "/service/cyber-security-dubai-uae".' },
+        },
+      ],
     },
     ...ctaFields('Talk to Our Experts'),
   ],
