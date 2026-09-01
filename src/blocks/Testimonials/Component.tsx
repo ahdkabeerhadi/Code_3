@@ -5,6 +5,7 @@ import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
 import { getGoogleReviews } from './getGoogleReviews'
 import { TestimonialCard } from './TestimonialCard'
+import { GoogleRatingBadge } from './GoogleRatingBadge'
 import { CtaButton } from '@/components/site/CtaButton'
 
 type Props = {
@@ -45,8 +46,8 @@ export const TestimonialsBlock: React.FC<Props> = async ({
   const googleReviews = useGoogleReviews ? await getGoogleReviews() : null
 
   const cards: { quote: string; name: string; role: string; rating?: number; isGoogle?: boolean }[] =
-    googleReviews && googleReviews.length > 0
-      ? googleReviews.map((r) => ({
+    googleReviews && googleReviews.reviews.length > 0
+      ? googleReviews.reviews.map((r) => ({
           quote: r.text,
           name: r.author_name,
           role: r.relative_time_description || '',
@@ -66,6 +67,14 @@ export const TestimonialsBlock: React.FC<Props> = async ({
         <Reveal className="max-w-2xl mb-10">
           {badge && <Eyebrow>{badge}</Eyebrow>}
           <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground">{title}</h2>
+          {googleReviews && typeof googleReviews.rating === 'number' && (
+            <GoogleRatingBadge
+              rating={googleReviews.rating}
+              userRatingsTotal={googleReviews.userRatingsTotal}
+              mapsUrl={googleReviews.mapsUrl}
+              className="mt-4"
+            />
+          )}
         </Reveal>
       </div>
 
