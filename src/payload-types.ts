@@ -363,6 +363,7 @@ export interface Page {
     | OfficeBlueprintBlock
     | IconFeatureGridBlock
     | ProcessPhasesBlock
+    | TeamConvergenceBlock
   )[];
   meta?: {
     title?: string | null;
@@ -2714,6 +2715,37 @@ export interface ProcessPhasesBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamConvergenceBlock".
+ */
+export interface TeamConvergenceBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * The fragmented specialties/vendors shown converging into one team.
+   */
+  items?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  teamLabel: string;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'teamConvergence';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -3294,6 +3326,7 @@ export interface PagesSelect<T extends boolean = true> {
         officeBlueprint?: T | OfficeBlueprintBlockSelect<T>;
         iconFeatureGrid?: T | IconFeatureGridBlockSelect<T>;
         processPhases?: T | ProcessPhasesBlockSelect<T>;
+        teamConvergence?: T | TeamConvergenceBlockSelect<T>;
       };
   meta?:
     | T
@@ -4633,6 +4666,27 @@ export interface ProcessPhasesBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamConvergenceBlock_select".
+ */
+export interface TeamConvergenceBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  items?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  teamLabel?: T;
   ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;

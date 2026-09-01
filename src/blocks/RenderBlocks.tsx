@@ -65,6 +65,7 @@ import { SetupEstimatorBlock } from './SetupEstimator/Component'
 import { OfficeBlueprintBlock } from './OfficeBlueprint/Component'
 import { IconFeatureGridBlock } from './IconFeatureGrid/Component'
 import { ProcessPhasesBlock } from './ProcessPhases/Component'
+import { TeamConvergenceBlock } from './TeamConvergence/Component'
 
 interface BlockProps {
   disableInnerContainer?: boolean
@@ -132,6 +133,7 @@ const blockComponents = {
   officeBlueprint: OfficeBlueprintBlock,
   iconFeatureGrid: IconFeatureGridBlock,
   processPhases: ProcessPhasesBlock,
+  teamConvergence: TeamConvergenceBlock,
   resultsShowcase: ResultsShowcaseBlock,
   processTimeline: ProcessTimelineBlock,
   coverageTable: CoverageTableBlock,
