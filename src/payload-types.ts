@@ -1895,12 +1895,16 @@ export interface SpecComparisonTableBlock {
       }[]
     | null;
   /**
+   * Shown below the table, e.g. helping the visitor pick between two equally valid options.
+   */
+  footer?: string | null;
+  /**
    * Each value corresponds to the column at the same position - keep the order in sync with Columns above.
    */
   rows?:
     | {
         /**
-         * e.g. "Best Use Case"
+         * e.g. "Best Use Case" - or use "Yes" / "No" / "Limited" as a value below for a proper icon instead of plain text.
          */
         rowLabel: string;
         values?:
@@ -4224,6 +4228,7 @@ export interface SpecComparisonTableBlockSelect<T extends boolean = true> {
         highlightLabel?: T;
         id?: T;
       };
+  footer?: T;
   rows?:
     | T
     | {

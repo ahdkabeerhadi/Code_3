@@ -53,6 +53,13 @@ export const SpecComparisonTable: Block = {
       ],
     },
     {
+      name: 'footer',
+      type: 'textarea',
+      label: 'Closing Guidance (optional)',
+      localized: true,
+      admin: { description: 'Shown below the table, e.g. helping the visitor pick between two equally valid options.' },
+    },
+    {
       name: 'rows',
       type: 'array',
       label: 'Rows',
@@ -61,7 +68,13 @@ export const SpecComparisonTable: Block = {
         description: 'Each value corresponds to the column at the same position - keep the order in sync with Columns above.',
       },
       fields: [
-        { name: 'rowLabel', type: 'text', required: true, localized: true, admin: { description: 'e.g. "Best Use Case"' } },
+        {
+          name: 'rowLabel',
+          type: 'text',
+          required: true,
+          localized: true,
+          admin: { description: 'e.g. "Best Use Case" - or use "Yes" / "No" / "Limited" as a value below for a proper icon instead of plain text.' },
+        },
         {
           name: 'values',
           type: 'array',

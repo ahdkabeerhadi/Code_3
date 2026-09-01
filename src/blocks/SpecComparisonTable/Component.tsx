@@ -2,9 +2,45 @@ import type { SpecComparisonTableBlock as SpecComparisonTableBlockProps } from '
 
 import { cn } from '@/utilities/ui'
 import React from 'react'
-import { Sparkles } from 'lucide-react'
+import { CheckCircle2, CircleDashed, Sparkles, XCircle } from 'lucide-react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
+
+// "Yes" / "No" / "Limited" get a proper semantic icon instead of the plain
+// dot + text used for free-text spec values (e.g. "Infrared").
+function ValueDisplay({ text }: { text?: string | null }) {
+  const t = (text || '').trim().toLowerCase()
+  if (t === 'yes' || t === '✅') {
+    return (
+      <span className="inline-flex items-center gap-1.5 font-semibold text-green-700">
+        <CheckCircle2 className="h-4 w-4 flex-none" />
+        Yes
+      </span>
+    )
+  }
+  if (t === 'no' || t === '❌') {
+    return (
+      <span className="inline-flex items-center gap-1.5 text-gray-400">
+        <XCircle className="h-4 w-4 flex-none" />
+        No
+      </span>
+    )
+  }
+  if (t === 'limited') {
+    return (
+      <span className="inline-flex items-center gap-1.5 font-medium text-amber-600">
+        <CircleDashed className="h-4 w-4 flex-none" />
+        Limited
+      </span>
+    )
+  }
+  return (
+    <>
+      <span className="mr-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary_red align-middle" />
+      {text}
+    </>
+  )
+}
 
 type Props = {
   className?: string
@@ -16,6 +52,7 @@ export const SpecComparisonTableBlock: React.FC<Props> = ({
   title,
   subtitle,
   columns = [],
+  footer,
   rows = [],
 }) => {
   if (!columns || columns.length === 0 || !rows || rows.length === 0) return null
@@ -29,8 +66,6 @@ export const SpecComparisonTableBlock: React.FC<Props> = ({
       'group/cell relative border-t border-primary_red/15 bg-primary_red/[0.05] px-5 py-4 text-sm font-medium text-gray-800 ring-1 ring-inset ring-primary_red/20 transition-colors',
       isLastRow && 'rounded-b-2xl pb-5',
     )
-
-  const Dot = () => <span className="mr-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary_red align-middle" />
 
   return (
     <section className={cn('relative overflow-hidden bg-gradient-to-b from-gray-50/70 to-white py-7 md:py-9', className)}>
@@ -88,8 +123,7 @@ export const SpecComparisonTableBlock: React.FC<Props> = ({
                     </div>
                     {columns.map((col, cIndex) => (
                       <div key={row.values?.[cIndex]?.id || cIndex} className={valueCellClass(cIndex, isLastRow)}>
-                        <Dot />
-                        {row.values?.[cIndex]?.text}
+                        <ValueDisplay text={row.values?.[cIndex]?.text} />
                       </div>
                     ))}
                   </div>
@@ -119,8 +153,7 @@ export const SpecComparisonTableBlock: React.FC<Props> = ({
                     <div key={row.id || rIndex} className={cn(rIndex !== 0 && 'border-t border-border/70 pt-2.5')}>
                       <dt className="text-xs font-semibold uppercase tracking-wide text-gray-400">{row.rowLabel}</dt>
                       <dd className="mt-0.5 flex items-center text-sm text-gray-700">
-                        <Dot />
-                        {row.values?.[cIndex]?.text}
+                        <ValueDisplay text={row.values?.[cIndex]?.text} />
                       </dd>
                     </div>
                   ))}
@@ -129,6 +162,12 @@ export const SpecComparisonTableBlock: React.FC<Props> = ({
             ))}
           </div>
         </Reveal>
+
+        {footer && (
+          <Reveal delayMs={150} className="mt-6 rounded-2xl border border-primary_red/15 bg-primary_red/[0.04] px-6 py-4 text-center">
+            <p className="text-sm font-medium text-foreground whitespace-pre-line">{footer}</p>
+          </Reveal>
+        )}
       </div>
     </section>
   )
