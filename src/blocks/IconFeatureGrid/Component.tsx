@@ -9,13 +9,16 @@ import {
   ArrowRight,
   Cable,
   Camera,
+  Cloud,
   Laptop,
   LayoutGrid,
   Mail,
   Network,
   Phone,
+  Printer,
   Server,
   ShieldCheck,
+  User,
   Video,
   Wifi,
   type LucideIcon,
@@ -24,16 +27,19 @@ import {
 // Best-effort icon per item, matched by keyword.
 function getItemIcon(text?: string | null): LucideIcon {
   const t = (text || '').toLowerCase()
-  if (t.includes('workstation')) return Laptop
+  if (t.includes('workstation') || t.includes('desktop') || t.includes('laptop')) return Laptop
   if (t.includes('wi-fi') || t.includes('wifi')) return Wifi
   if (t.includes('network')) return Network
-  if (t.includes('server') || t.includes('cloud')) return Server
-  if (t.includes('cyber') || t.includes('security')) return ShieldCheck
+  if (t.includes('server')) return Server
+  if (t.includes('cloud')) return Cloud
+  if (t.includes('cyber') || t.includes('security') || t.includes('firewall')) return ShieldCheck
   if (t.includes('cctv') || t.includes('access control') || t.includes('camera')) return Camera
+  if (t.includes('printer') || t.includes('peripheral')) return Printer
   if (t.includes('meeting')) return Video
   if (t.includes('365') || t.includes('microsoft') || t.includes('email')) return Mail
-  if (t.includes('communication') || t.includes('phone') || t.includes('call')) return Phone
+  if (t.includes('communication') || t.includes('phone') || t.includes('voip') || t.includes('call')) return Phone
   if (t.includes('cabling') || t.includes('cable')) return Cable
+  if (t.includes('user') || t.includes('account')) return User
   return LayoutGrid
 }
 
