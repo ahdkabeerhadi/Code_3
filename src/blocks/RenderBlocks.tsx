@@ -64,6 +64,7 @@ import { ReactiveProactiveFlowBlock } from './ReactiveProactiveFlow/Component'
 import { SetupEstimatorBlock } from './SetupEstimator/Component'
 import { OfficeBlueprintBlock } from './OfficeBlueprint/Component'
 import { IconFeatureGridBlock } from './IconFeatureGrid/Component'
+import { ProcessPhasesBlock } from './ProcessPhases/Component'
 
 interface BlockProps {
   disableInnerContainer?: boolean
@@ -130,6 +131,7 @@ const blockComponents = {
   setupEstimator: SetupEstimatorBlock,
   officeBlueprint: OfficeBlueprintBlock,
   iconFeatureGrid: IconFeatureGridBlock,
+  processPhases: ProcessPhasesBlock,
   resultsShowcase: ResultsShowcaseBlock,
   processTimeline: ProcessTimelineBlock,
   coverageTable: CoverageTableBlock,

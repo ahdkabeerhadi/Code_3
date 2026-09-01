@@ -59,6 +59,7 @@ import { ReactiveProactiveFlow } from '@/blocks/ReactiveProactiveFlow/config'
 import { SetupEstimator } from '@/blocks/SetupEstimator/config'
 import { OfficeBlueprint } from '@/blocks/OfficeBlueprint/config'
 import { IconFeatureGrid } from '@/blocks/IconFeatureGrid/config'
+import { ProcessPhases } from '@/blocks/ProcessPhases/config'
 import { SpecComparisonTable } from '@/blocks/SpecComparisonTable/config'
 import { ResultsShowcase } from '@/blocks/ResultsShowcase/config'
 import { ProcessTimeline } from '@/blocks/ProcessTimeline/config'
@@ -260,6 +261,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 SetupEstimator,
                 OfficeBlueprint,
                 IconFeatureGrid,
+                ProcessPhases,
               ],
               required: true,
               admin: {

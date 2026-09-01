@@ -362,6 +362,7 @@ export interface Page {
     | SetupEstimatorBlock
     | OfficeBlueprintBlock
     | IconFeatureGridBlock
+    | ProcessPhasesBlock
   )[];
   meta?: {
     title?: string | null;
@@ -2677,6 +2678,42 @@ export interface IconFeatureGridBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProcessPhasesBlock".
+ */
+export interface ProcessPhasesBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * Equally-weighted, sequential phases (e.g. Before / During / After) — not a comparison of alternatives. All items render the same way.
+   */
+  phases?:
+    | {
+        label: string;
+        items?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'processPhases';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -3256,6 +3293,7 @@ export interface PagesSelect<T extends boolean = true> {
         setupEstimator?: T | SetupEstimatorBlockSelect<T>;
         officeBlueprint?: T | OfficeBlueprintBlockSelect<T>;
         iconFeatureGrid?: T | IconFeatureGridBlockSelect<T>;
+        processPhases?: T | ProcessPhasesBlockSelect<T>;
       };
   meta?:
     | T
@@ -4567,6 +4605,32 @@ export interface IconFeatureGridBlockSelect<T extends boolean = true> {
     | {
         text?: T;
         url?: T;
+        id?: T;
+      };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProcessPhasesBlock_select".
+ */
+export interface ProcessPhasesBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  phases?:
+    | T
+    | {
+        label?: T;
+        items?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
         id?: T;
       };
   ctaText?: T;
