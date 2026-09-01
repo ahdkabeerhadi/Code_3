@@ -365,6 +365,7 @@ export interface Page {
     | ProcessPhasesBlock
     | TeamConvergenceBlock
     | ServiceJourneyBlock
+    | CustodyChainBlock
   )[];
   meta?: {
     title?: string | null;
@@ -2805,6 +2806,27 @@ export interface ServiceJourneyBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CustodyChainBlock".
+ */
+export interface CustodyChainBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * Short single words/phrases, shown in order connected by arrows, e.g. "Tag".
+   */
+  steps?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'custodyChain';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -3387,6 +3409,7 @@ export interface PagesSelect<T extends boolean = true> {
         processPhases?: T | ProcessPhasesBlockSelect<T>;
         teamConvergence?: T | TeamConvergenceBlockSelect<T>;
         serviceJourney?: T | ServiceJourneyBlockSelect<T>;
+        custodyChain?: T | CustodyChainBlockSelect<T>;
       };
   meta?:
     | T
@@ -4799,6 +4822,23 @@ export interface ServiceJourneyBlockSelect<T extends boolean = true> {
         label?: T;
         url?: T;
         emphasis?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CustodyChainBlock_select".
+ */
+export interface CustodyChainBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  steps?:
+    | T
+    | {
+        text?: T;
         id?: T;
       };
   id?: T;

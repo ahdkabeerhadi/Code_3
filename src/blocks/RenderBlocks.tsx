@@ -67,6 +67,7 @@ import { IconFeatureGridBlock } from './IconFeatureGrid/Component'
 import { ProcessPhasesBlock } from './ProcessPhases/Component'
 import { TeamConvergenceBlock } from './TeamConvergence/Component'
 import { ServiceJourneyBlock } from './ServiceJourney/Component'
+import { CustodyChainBlock } from './CustodyChain/Component'
 
 interface BlockProps {
   disableInnerContainer?: boolean
@@ -136,6 +137,7 @@ const blockComponents = {
   processPhases: ProcessPhasesBlock,
   teamConvergence: TeamConvergenceBlock,
   serviceJourney: ServiceJourneyBlock,
+  custodyChain: CustodyChainBlock,
   resultsShowcase: ResultsShowcaseBlock,
   processTimeline: ProcessTimelineBlock,
   coverageTable: CoverageTableBlock,
