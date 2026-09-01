@@ -360,6 +360,7 @@ export interface Page {
     | RoomSizeEstimatorBlock
     | ReactiveProactiveFlowBlock
     | SetupEstimatorBlock
+    | OfficeBlueprintBlock
   )[];
   meta?: {
     title?: string | null;
@@ -2597,6 +2598,42 @@ export interface SetupEstimatorBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OfficeBlueprintBlock".
+ */
+export interface OfficeBlueprintBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * Exactly 5, in this fixed order: 1) Reception, 2) Workstations, 3) Meeting Rooms, 4) Server/IT Room, 5) Security — the layout below is built around this order and treats the 5th as a site-wide perimeter rather than a room.
+   */
+  zones?:
+    | {
+        name: string;
+        items?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'officeBlueprint';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -3174,6 +3211,7 @@ export interface PagesSelect<T extends boolean = true> {
         roomSizeEstimator?: T | RoomSizeEstimatorBlockSelect<T>;
         reactiveProactiveFlow?: T | ReactiveProactiveFlowBlockSelect<T>;
         setupEstimator?: T | SetupEstimatorBlockSelect<T>;
+        officeBlueprint?: T | OfficeBlueprintBlockSelect<T>;
       };
   meta?:
     | T
@@ -4438,6 +4476,32 @@ export interface SetupEstimatorBlockSelect<T extends boolean = true> {
         id?: T;
       };
   disclaimer?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OfficeBlueprintBlock_select".
+ */
+export interface OfficeBlueprintBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  zones?:
+    | T
+    | {
+        name?: T;
+        items?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
   ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;

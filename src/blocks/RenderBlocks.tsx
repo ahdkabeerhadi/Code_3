@@ -62,6 +62,7 @@ import { RoomClassificationBlock } from './RoomClassification/Component'
 import { RoomSizeEstimatorBlock } from './RoomSizeEstimator/Component'
 import { ReactiveProactiveFlowBlock } from './ReactiveProactiveFlow/Component'
 import { SetupEstimatorBlock } from './SetupEstimator/Component'
+import { OfficeBlueprintBlock } from './OfficeBlueprint/Component'
 
 interface BlockProps {
   disableInnerContainer?: boolean
@@ -126,6 +127,7 @@ const blockComponents = {
   roomSizeEstimator: RoomSizeEstimatorBlock,
   reactiveProactiveFlow: ReactiveProactiveFlowBlock,
   setupEstimator: SetupEstimatorBlock,
+  officeBlueprint: OfficeBlueprintBlock,
   resultsShowcase: ResultsShowcaseBlock,
   processTimeline: ProcessTimelineBlock,
   coverageTable: CoverageTableBlock,

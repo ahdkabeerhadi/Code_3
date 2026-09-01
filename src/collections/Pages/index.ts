@@ -57,6 +57,7 @@ import { RoomClassification } from '@/blocks/RoomClassification/config'
 import { RoomSizeEstimator } from '@/blocks/RoomSizeEstimator/config'
 import { ReactiveProactiveFlow } from '@/blocks/ReactiveProactiveFlow/config'
 import { SetupEstimator } from '@/blocks/SetupEstimator/config'
+import { OfficeBlueprint } from '@/blocks/OfficeBlueprint/config'
 import { SpecComparisonTable } from '@/blocks/SpecComparisonTable/config'
 import { ResultsShowcase } from '@/blocks/ResultsShowcase/config'
 import { ProcessTimeline } from '@/blocks/ProcessTimeline/config'
@@ -256,6 +257,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 RoomSizeEstimator,
                 ReactiveProactiveFlow,
                 SetupEstimator,
+                OfficeBlueprint,
               ],
               required: true,
               admin: {
