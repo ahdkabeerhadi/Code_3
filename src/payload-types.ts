@@ -1772,27 +1772,41 @@ export interface DowntimeEstimatorBlock {
   subtitle?: string | null;
   workstationsLabel?: string | null;
   serversLabel?: string | null;
-  /**
-   * Ordered smallest to largest. The first tier whose limits fit the entered counts is used; if none fit, the last tier is used as the fallback (e.g. "scoped after assessment").
-   */
-  tiers?:
+  floorsLabel?: string | null;
+  floorsOptions?:
     | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  cctvLabel?: string | null;
+  meetingRoomsLabel?: string | null;
+  currentLocationLabel?: string | null;
+  currentLocationOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  newLocationLabel?: string | null;
+  newLocationOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  submitLabel?: string | null;
+  /**
+   * Ordered low to high, matched against a composite score of all the fields above (size, floors, CCTV, meeting rooms, and a bump if current/new location differ).
+   */
+  complexityTiers?:
+    | {
+        minScore: number;
+        maxScore: number;
         /**
-         * e.g. "Small Office"
+         * e.g. "Low", "Medium", "High"
          */
         label: string;
-        /**
-         * Upper limit of workstations for this tier to apply.
-         */
-        maxWorkstations: number;
-        /**
-         * Upper limit of servers for this tier to apply.
-         */
-        maxServers: number;
-        /**
-         * e.g. "Typically a single weekend"
-         */
-        estimate: string;
         id?: string | null;
       }[]
     | null;
@@ -4069,13 +4083,36 @@ export interface DowntimeEstimatorBlockSelect<T extends boolean = true> {
   subtitle?: T;
   workstationsLabel?: T;
   serversLabel?: T;
-  tiers?:
+  floorsLabel?: T;
+  floorsOptions?:
     | T
     | {
+        text?: T;
+        id?: T;
+      };
+  cctvLabel?: T;
+  meetingRoomsLabel?: T;
+  currentLocationLabel?: T;
+  currentLocationOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  newLocationLabel?: T;
+  newLocationOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  submitLabel?: T;
+  complexityTiers?:
+    | T
+    | {
+        minScore?: T;
+        maxScore?: T;
         label?: T;
-        maxWorkstations?: T;
-        maxServers?: T;
-        estimate?: T;
         id?: T;
       };
   disclaimer?: T;

@@ -1,5 +1,12 @@
 import type { Block } from 'payload'
 
+const optionsField = (name: string) => ({
+  name,
+  type: 'array' as const,
+  minRows: 2,
+  fields: [{ name: 'text', type: 'text' as const, required: true, localized: true }],
+})
+
 export const DowntimeEstimator: Block = {
   slug: 'downtimeEstimator',
   interfaceName: 'DowntimeEstimatorBlock',
@@ -12,7 +19,7 @@ export const DowntimeEstimator: Block = {
       name: 'badge',
       type: 'text',
       label: 'Badge Text',
-      defaultValue: 'PLAN YOUR MOVE',
+      defaultValue: 'PLAN YOUR IT MOVE',
       localized: true,
     },
     {
@@ -20,7 +27,7 @@ export const DowntimeEstimator: Block = {
       type: 'text',
       label: 'Title',
       required: true,
-      defaultValue: 'Estimate Your Move Window',
+      defaultValue: 'Estimate Your Move Complexity',
       localized: true,
     },
     {
@@ -29,52 +36,49 @@ export const DowntimeEstimator: Block = {
       label: 'Subtitle',
       localized: true,
     },
+    { name: 'workstationsLabel', type: 'text', label: 'Workstations Label', defaultValue: 'Workstations', localized: true },
+    { name: 'serversLabel', type: 'text', label: 'Servers Label', defaultValue: 'Servers', localized: true },
+    { name: 'floorsLabel', type: 'text', label: 'Office Floors Label', defaultValue: 'Office Floors', localized: true },
+    optionsField('floorsOptions'),
+    { name: 'cctvLabel', type: 'text', label: 'CCTV Cameras Label', defaultValue: 'CCTV Cameras', localized: true },
+    { name: 'meetingRoomsLabel', type: 'text', label: 'Meeting Rooms Label', defaultValue: 'Meeting Rooms', localized: true },
     {
-      name: 'workstationsLabel',
+      name: 'currentLocationLabel',
       type: 'text',
-      label: 'Workstations Input Label',
-      defaultValue: 'Number of workstations',
+      label: 'Current Location Label',
+      defaultValue: 'Current Location',
+      localized: true,
+    },
+    optionsField('currentLocationOptions'),
+    { name: 'newLocationLabel', type: 'text', label: 'New Location Label', defaultValue: 'New Location', localized: true },
+    optionsField('newLocationOptions'),
+    {
+      name: 'submitLabel',
+      type: 'text',
+      label: 'Submit Button Label',
+      defaultValue: 'Estimate My Move',
       localized: true,
     },
     {
-      name: 'serversLabel',
-      type: 'text',
-      label: 'Servers Input Label',
-      defaultValue: 'Number of servers',
-      localized: true,
-    },
-    {
-      name: 'tiers',
+      name: 'complexityTiers',
       type: 'array',
-      label: 'Estimate Tiers',
-      labels: { singular: 'Tier', plural: 'Tiers' },
+      label: 'Complexity Tiers',
       minRows: 1,
       admin: {
         description:
-          'Ordered smallest to largest. The first tier whose limits fit the entered counts is used; if none fit, the last tier is used as the fallback (e.g. "scoped after assessment").',
+          'Ordered low to high, matched against a composite score of all the fields above (size, floors, CCTV, meeting rooms, and a bump if current/new location differ).',
       },
       fields: [
-        { name: 'label', type: 'text', required: true, localized: true, admin: { description: 'e.g. "Small Office"' } },
-        {
-          name: 'maxWorkstations',
-          type: 'number',
-          required: true,
-          admin: { description: 'Upper limit of workstations for this tier to apply.' },
-        },
-        {
-          name: 'maxServers',
-          type: 'number',
-          required: true,
-          admin: { description: 'Upper limit of servers for this tier to apply.' },
-        },
-        { name: 'estimate', type: 'text', required: true, localized: true, admin: { description: 'e.g. "Typically a single weekend"' } },
+        { name: 'minScore', type: 'number', required: true },
+        { name: 'maxScore', type: 'number', required: true },
+        { name: 'label', type: 'text', required: true, localized: true, admin: { description: 'e.g. "Low", "Medium", "High"' } },
       ],
     },
     {
       name: 'disclaimer',
       type: 'text',
       label: 'Disclaimer',
-      defaultValue: 'This is an estimate only. Your exact timeline is confirmed after a site assessment.',
+      defaultValue: 'Final timeline confirmed after site assessment.',
       localized: true,
     },
     {
