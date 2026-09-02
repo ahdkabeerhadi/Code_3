@@ -6,6 +6,7 @@ import React from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
 import {
+  AppWindow,
   ArrowRight,
   Building2,
   Cable,
@@ -37,6 +38,7 @@ import {
   Share2,
   ShieldCheck,
   Signpost,
+  Smartphone,
   Store,
   Sun,
   Tablet,
@@ -52,6 +54,12 @@ import {
 function getItemIcon(text?: string | null): LucideIcon {
   const t = (text || '').toLowerCase()
   if (t.includes('workstation') || t.includes('desktop') || t.includes('laptop')) return Laptop
+  if (t.includes('windows')) return AppWindow
+  if (t.includes('macos') || t.includes('mac os')) return Laptop
+  if (t.includes('chromeos') || t.includes('chrome os')) return Cloud
+  if (t.includes('android')) return Tablet
+  // Word-boundary match: bare `includes('ios')` would false-positive on "kiosk", "radios", "studios", etc.
+  if (/\bios\b/.test(t)) return Smartphone
   if (t.includes('wi-fi') || t.includes('wifi')) return Wifi
   if (t.includes('network')) return Network
   if (t.includes('server')) return Server
