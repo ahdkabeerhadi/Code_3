@@ -38,8 +38,17 @@ export const SignageEstimator: Block = {
     optionsField('screensOptions'),
     { name: 'environmentLabel', type: 'text', label: 'Indoor / Outdoor Question Label', defaultValue: 'Indoor / Outdoor', localized: true },
     optionsField('environmentOptions'),
-    { name: 'sizeLabel', type: 'text', label: 'Screen Size Question Label', defaultValue: 'Screen Size', localized: true },
-    optionsField('sizeOptions'),
+    {
+      name: 'sizeTiers',
+      type: 'array',
+      label: 'Recommended Screen-Size Tiers',
+      minRows: 2,
+      admin: {
+        description:
+          'Not a question - the possible recommended sizes, ordered smallest to largest. Matched automatically from Location and Indoor/Outdoor.',
+      },
+      fields: [{ name: 'text', type: 'text', required: true, localized: true }],
+    },
     { name: 'contentTypeLabel', type: 'text', label: 'Content Type Question Label', defaultValue: 'Content Type', localized: true },
     optionsField('contentTypeOptions'),
     { name: 'cmsLabel', type: 'text', label: 'CMS Question Label', defaultValue: 'Need Content Management System?', localized: true },

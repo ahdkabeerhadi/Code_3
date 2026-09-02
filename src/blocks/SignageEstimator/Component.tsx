@@ -13,13 +13,19 @@ import {
   Check,
   LayoutTemplate,
   MapPin,
-  Maximize2,
   Monitor,
   Settings2,
   Sparkles,
   Sun,
   type LucideIcon,
 } from 'lucide-react'
+
+// Maps a "Where will it be used?" option index to a recommended screen-size
+// tier index within sizeTiers (0-based, smallest to largest). Kept in code
+// as a best-effort default since there's no explicit screen-size question.
+// Order matches the default locationOptions: Corporate Office, Retail
+// Store, Hotel, Restaurant, Healthcare, Education, Reception/Lobby, Outdoor.
+const LOCATION_TO_SIZE_TIER = [0, 1, 2, 1, 0, 1, 0, 3]
 
 function ChipQuestion({
   label,
@@ -85,8 +91,7 @@ export const SignageEstimatorBlock: React.FC<Props> = ({
   screensOptions = [],
   environmentLabel,
   environmentOptions = [],
-  sizeLabel,
-  sizeOptions = [],
+  sizeTiers = [],
   contentTypeLabel,
   contentTypeOptions = [],
   cmsLabel,
@@ -99,14 +104,13 @@ export const SignageEstimatorBlock: React.FC<Props> = ({
   const safeLocation = locationOptions || []
   const safeScreens = screensOptions || []
   const safeEnvironment = environmentOptions || []
-  const safeSize = sizeOptions || []
+  const safeSizeTiers = sizeTiers || []
   const safeContentType = contentTypeOptions || []
   const safeCms = cmsOptions || []
 
   const [location, setLocation] = useState<number | null>(null)
   const [screens, setScreens] = useState<number | null>(null)
   const [environment, setEnvironment] = useState<number | null>(null)
-  const [size, setSize] = useState<number | null>(null)
   const [contentType, setContentType] = useState<number | null>(null)
   const [cms, setCms] = useState<number | null>(null)
   const [attempted, setAttempted] = useState(false)
@@ -116,7 +120,7 @@ export const SignageEstimatorBlock: React.FC<Props> = ({
     safeLocation.length === 0 ||
     safeScreens.length === 0 ||
     safeEnvironment.length === 0 ||
-    safeSize.length === 0 ||
+    safeSizeTiers.length === 0 ||
     safeContentType.length === 0 ||
     safeCms.length === 0
   ) {
@@ -124,7 +128,7 @@ export const SignageEstimatorBlock: React.FC<Props> = ({
   }
 
   const allAnswered =
-    location !== null && screens !== null && environment !== null && size !== null && contentType !== null && cms !== null
+    location !== null && screens !== null && environment !== null && contentType !== null && cms !== null
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -139,11 +143,16 @@ export const SignageEstimatorBlock: React.FC<Props> = ({
     if (!submitted || !allAnswered) return null
 
     const wantsCms = (safeCms[cms as number]?.text || '').toLowerCase().includes('yes')
-    const sizeText = safeSize[size as number]?.text
     const locationText = safeLocation[location as number]?.text
     const environmentText = safeEnvironment[environment as number]?.text
     const contentTypeText = safeContentType[contentType as number]?.text
     const screensText = safeScreens[screens as number]?.text
+
+    const isOutdoor = (environmentText || '').toLowerCase().includes('outdoor')
+    const tierIndex = isOutdoor
+      ? safeSizeTiers.length - 1
+      : Math.min(LOCATION_TO_SIZE_TIER[location as number] ?? 0, safeSizeTiers.length - 1)
+    const sizeText = safeSizeTiers[tierIndex]?.text
 
     return { sizeText, locationText, environmentText, contentTypeText, screensText, wantsCms }
   })()
@@ -192,24 +201,14 @@ export const SignageEstimatorBlock: React.FC<Props> = ({
                 />
               </div>
 
-              <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
-                <ChipQuestion
-                  label={sizeLabel}
-                  Icon={Maximize2}
-                  options={safeSize}
-                  value={size}
-                  onChange={setSize}
-                  error={attempted && size === null}
-                />
-                <ChipQuestion
-                  label={cmsLabel}
-                  Icon={Settings2}
-                  options={safeCms}
-                  value={cms}
-                  onChange={setCms}
-                  error={attempted && cms === null}
-                />
-              </div>
+              <ChipQuestion
+                label={cmsLabel}
+                Icon={Settings2}
+                options={safeCms}
+                value={cms}
+                onChange={setCms}
+                error={attempted && cms === null}
+              />
 
               <ChipQuestion
                 label={contentTypeLabel}

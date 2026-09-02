@@ -3005,8 +3005,10 @@ export interface SignageEstimatorBlock {
         id?: string | null;
       }[]
     | null;
-  sizeLabel?: string | null;
-  sizeOptions?:
+  /**
+   * Not a question - the possible recommended sizes, ordered smallest to largest. Matched automatically from Location and Indoor/Outdoor.
+   */
+  sizeTiers?:
     | {
         text: string;
         id?: string | null;
@@ -5192,8 +5194,7 @@ export interface SignageEstimatorBlockSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
-  sizeLabel?: T;
-  sizeOptions?:
+  sizeTiers?:
     | T
     | {
         text?: T;
