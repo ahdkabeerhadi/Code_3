@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { ctaFields } from '@/fields/ctaFields'
 
 export const ComparisonTable: Block = {
   slug: 'comparisonTable',
@@ -68,5 +69,6 @@ export const ComparisonTable: Block = {
         { name: 'right', type: 'text', label: 'Right Column (CODE3)', required: true, localized: true },
       ],
     },
+    ...ctaFields(''),
   ],
 }

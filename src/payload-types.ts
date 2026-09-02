@@ -1711,6 +1711,15 @@ export interface ComparisonTableBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'comparisonTable';
@@ -4305,6 +4314,9 @@ export interface ComparisonTableBlockSelect<T extends boolean = true> {
         right?: T;
         id?: T;
       };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
   id?: T;
   blockName?: T;
 }

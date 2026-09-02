@@ -1,7 +1,9 @@
 import type { ComparisonTableBlock as ComparisonTableBlockProps } from 'src/payload-types'
 
 import { cn } from '@/utilities/ui'
+import Link from 'next/link'
 import React from 'react'
+import { ArrowRight } from 'lucide-react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
 
@@ -43,6 +45,9 @@ export const ComparisonTableBlock: React.FC<Props> = ({
   middleLabel,
   rightLabel,
   rows = [],
+  ctaText,
+  ctaLabel,
+  ctaUrl,
 }) => {
   if (!rows || rows.length === 0) return null
   const showMiddle = Boolean(middleEnabled && middleLabel)
@@ -110,6 +115,19 @@ export const ComparisonTableBlock: React.FC<Props> = ({
             </ul>
           </div>
         </Reveal>
+
+        {ctaText && ctaLabel && ctaUrl && (
+          <div className="mt-8 flex flex-col items-center gap-3 text-center md:mt-10">
+            <p className="text-sm font-medium text-gray-600">{ctaText}</p>
+            <Link
+              href={ctaUrl}
+              className="inline-flex items-center gap-2 rounded-full bg-primary_red px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-700"
+            >
+              {ctaLabel}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   )
