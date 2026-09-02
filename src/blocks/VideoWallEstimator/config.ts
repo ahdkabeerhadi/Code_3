@@ -36,8 +36,6 @@ export const VideoWallEstimator: Block = {
     optionsField('locationOptions'),
     { name: 'displaysLabel', type: 'text', label: 'Displays Question Label', defaultValue: 'How many displays?', localized: true },
     optionsField('displaysOptions'),
-    { name: 'technologyLabel', type: 'text', label: 'Technology Question Label', defaultValue: 'Preferred Technology', localized: true },
-    optionsField('technologyOptions'),
     { name: 'contentTypeLabel', type: 'text', label: 'Content Type Question Label', defaultValue: 'Content Type', localized: true },
     optionsField('contentTypeOptions'),
     { name: 'distanceLabel', type: 'text', label: 'Viewing Distance Question Label', defaultValue: 'Viewing Distance', localized: true },

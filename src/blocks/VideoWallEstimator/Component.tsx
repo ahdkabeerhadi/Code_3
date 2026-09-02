@@ -12,7 +12,6 @@ import {
   ArrowRight,
   Check,
   LayoutTemplate,
-  Layers,
   MapPin,
   Monitor,
   Ruler,
@@ -24,13 +23,9 @@ import {
 // own "Video Wall Technologies for Every Environment" guidance: close
 // viewing favors Fine-Pitch LED, control/command/security rooms favor
 // LCD, everything else favors Direct View LED for large-format impact.
-function techLabel(techText?: string | null, distanceText?: string | null, locationText?: string | null): string {
-  const tech = (techText || '').toLowerCase()
+function techLabel(distanceText?: string | null, locationText?: string | null): string {
   const distance = (distanceText || '').toLowerCase()
   const location = (locationText || '').toLowerCase()
-
-  if (tech.includes('lcd')) return 'LCD Video Wall'
-  if (tech.includes('led')) return distance.includes('close') ? 'Fine-Pitch LED' : 'Direct View LED'
 
   if (distance.includes('close')) return 'Fine-Pitch LED'
   if (location.includes('control room') || location.includes('command center') || location.includes('security room')) {
@@ -96,8 +91,6 @@ export const VideoWallEstimatorBlock: React.FC<Props> = ({
   locationOptions = [],
   displaysLabel,
   displaysOptions = [],
-  technologyLabel,
-  technologyOptions = [],
   contentTypeLabel,
   contentTypeOptions = [],
   distanceLabel,
@@ -109,13 +102,11 @@ export const VideoWallEstimatorBlock: React.FC<Props> = ({
 }) => {
   const safeLocation = locationOptions || []
   const safeDisplays = displaysOptions || []
-  const safeTechnology = technologyOptions || []
   const safeContentType = contentTypeOptions || []
   const safeDistance = distanceOptions || []
 
   const [location, setLocation] = useState<number | null>(null)
   const [displays, setDisplays] = useState<number | null>(null)
-  const [technology, setTechnology] = useState<number | null>(null)
   const [contentType, setContentType] = useState<number | null>(null)
   const [distance, setDistance] = useState<number | null>(null)
   const [attempted, setAttempted] = useState(false)
@@ -124,15 +115,13 @@ export const VideoWallEstimatorBlock: React.FC<Props> = ({
   if (
     safeLocation.length === 0 ||
     safeDisplays.length === 0 ||
-    safeTechnology.length === 0 ||
     safeContentType.length === 0 ||
     safeDistance.length === 0
   ) {
     return null
   }
 
-  const allAnswered =
-    location !== null && displays !== null && technology !== null && contentType !== null && distance !== null
+  const allAnswered = location !== null && displays !== null && contentType !== null && distance !== null
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -148,11 +137,10 @@ export const VideoWallEstimatorBlock: React.FC<Props> = ({
 
     const locationText = safeLocation[location as number]?.text
     const displaysText = safeDisplays[displays as number]?.text
-    const technologyText = safeTechnology[technology as number]?.text
     const contentTypeText = safeContentType[contentType as number]?.text
     const distanceText = safeDistance[distance as number]?.text
 
-    const label = techLabel(technologyText, distanceText, locationText)
+    const label = techLabel(distanceText, locationText)
 
     return { label, locationText, displaysText, contentTypeText }
   })()
@@ -192,25 +180,6 @@ export const VideoWallEstimatorBlock: React.FC<Props> = ({
                   error={attempted && displays === null}
                 />
                 <ChipQuestion
-                  label={technologyLabel}
-                  Icon={Layers}
-                  options={safeTechnology}
-                  value={technology}
-                  onChange={setTechnology}
-                  error={attempted && technology === null}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
-                <ChipQuestion
-                  label={contentTypeLabel}
-                  Icon={LayoutTemplate}
-                  options={safeContentType}
-                  value={contentType}
-                  onChange={setContentType}
-                  error={attempted && contentType === null}
-                />
-                <ChipQuestion
                   label={distanceLabel}
                   Icon={Ruler}
                   options={safeDistance}
@@ -219,6 +188,15 @@ export const VideoWallEstimatorBlock: React.FC<Props> = ({
                   error={attempted && distance === null}
                 />
               </div>
+
+              <ChipQuestion
+                label={contentTypeLabel}
+                Icon={LayoutTemplate}
+                options={safeContentType}
+                value={contentType}
+                onChange={setContentType}
+                error={attempted && contentType === null}
+              />
 
               <Button type="submit" variant="default" className="group w-full">
                 {submitLabel}

@@ -3148,13 +3148,6 @@ export interface VideoWallEstimatorBlock {
         id?: string | null;
       }[]
     | null;
-  technologyLabel?: string | null;
-  technologyOptions?:
-    | {
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
   contentTypeLabel?: string | null;
   contentTypeOptions?:
     | {
@@ -5441,13 +5434,6 @@ export interface VideoWallEstimatorBlockSelect<T extends boolean = true> {
       };
   displaysLabel?: T;
   displaysOptions?:
-    | T
-    | {
-        text?: T;
-        id?: T;
-      };
-  technologyLabel?: T;
-  technologyOptions?:
     | T
     | {
         text?: T;
