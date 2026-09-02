@@ -15,6 +15,7 @@ import {
   Camera,
   Cloud,
   Columns3,
+  Crosshair,
   DoorOpen,
   FileText,
   Frame,
@@ -32,6 +33,7 @@ import {
   Maximize2,
   Megaphone,
   Network,
+  Palette,
   PenLine,
   Phone,
   Presentation,
@@ -44,15 +46,18 @@ import {
   Share2,
   ShieldCheck,
   Signpost,
+  SlidersHorizontal,
   Smartphone,
   Store,
   Sun,
+  SunMedium,
   Tablet,
   User,
   Users,
   UtensilsCrossed,
   Video,
   Wifi,
+  Wrench,
   ZoomIn,
   type LucideIcon,
 } from 'lucide-react'
@@ -90,6 +95,11 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('room dimension') || t.includes('dimension')) return Building2
   if (t.includes('resolution')) return Aperture
   if (t.includes('bezel')) return Frame
+  if (t.includes('alignment')) return Crosshair
+  if (t.includes('brightness')) return SunMedium
+  if (t.includes('color')) return Palette
+  if (t.includes('calibrat')) return SlidersHorizontal
+  if (t.includes('mounting')) return Wrench
   if (t.includes('outdoor')) return Sun
   if (t.includes('indoor')) return Home
   if (t.includes('menu board') || t.includes('menu')) return UtensilsCrossed
