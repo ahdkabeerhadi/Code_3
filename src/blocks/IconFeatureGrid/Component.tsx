@@ -7,12 +7,19 @@ import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
 import {
   ArrowRight,
+  Building2,
   Cable,
   Camera,
   Cloud,
+  Columns3,
+  DoorOpen,
   GraduationCap,
+  Grid3x3,
+  Hand,
+  Home,
   Laptop,
   LayoutGrid,
+  Lightbulb,
   Mail,
   Network,
   PenLine,
@@ -22,8 +29,13 @@ import {
   Server,
   Share2,
   ShieldCheck,
+  Signpost,
+  Store,
+  Sun,
+  Tablet,
   User,
   Users,
+  UtensilsCrossed,
   Video,
   Wifi,
   type LucideIcon,
@@ -43,6 +55,18 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('present')) return Presentation
   if (t.includes('collaborate')) return Users
   if (t.includes('annotate')) return PenLine
+  if (t.includes('video wall')) return Grid3x3
+  if (t.includes('outdoor')) return Sun
+  if (t.includes('indoor')) return Home
+  if (t.includes('menu board') || t.includes('menu')) return UtensilsCrossed
+  if (t.includes('reception')) return DoorOpen
+  if (t.includes('wayfinding')) return Signpost
+  if (t.includes('corporate communication')) return Building2
+  if (t.includes('retail')) return Store
+  if (t.includes('kiosk') || t.includes('touchscreen')) return Tablet
+  if (t.includes('led display') || t.includes('led screen')) return Lightbulb
+  if (t.includes('multi-screen') || t.includes('multi screen')) return Columns3
+  if (t.includes('interactive')) return Hand
   if (t.includes('meeting') || t.includes('video')) return Video
   if (t.includes('teach')) return GraduationCap
   if (t.includes('365') || t.includes('microsoft') || t.includes('email')) return Mail
