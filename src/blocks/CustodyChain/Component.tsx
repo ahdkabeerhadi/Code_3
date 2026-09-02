@@ -11,6 +11,8 @@ import {
   CheckCircle2,
   Cpu,
   Database,
+  LayoutDashboard,
+  MapPin,
   Network,
   PenTool,
   Plug,
@@ -34,6 +36,8 @@ function getStepIcon(text?: string | null): LucideIcon {
   if (t.includes('creation') || t.includes('create')) return PenTool
   if (t.includes('management system') || t.includes('cms')) return Database
   if (t.includes('player')) return Cpu
+  if (t.includes('dashboard')) return LayoutDashboard
+  if (t.includes('location')) return MapPin
   if (t.includes('network')) return Network
   if (t.includes('display') || t.includes('screen')) return Tv
   if (t.includes('audience')) return Users
