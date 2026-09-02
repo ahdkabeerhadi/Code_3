@@ -27,12 +27,14 @@ import {
   Lightbulb,
   ListVideo,
   Mail,
+  Maximize2,
   Megaphone,
   Network,
   PenLine,
   Phone,
   Presentation,
   Printer,
+  Projector,
   RefreshCw,
   Server,
   Share2,
@@ -47,6 +49,7 @@ import {
   UtensilsCrossed,
   Video,
   Wifi,
+  ZoomIn,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -71,6 +74,9 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('collaborate')) return Users
   if (t.includes('annotate')) return PenLine
   if (t.includes('video wall')) return Grid3x3
+  if (t.includes('direct view')) return Maximize2
+  if (t.includes('fine-pitch') || t.includes('fine pitch')) return ZoomIn
+  if (t.includes('projection') || t.includes('projector')) return Projector
   if (t.includes('outdoor')) return Sun
   if (t.includes('indoor')) return Home
   if (t.includes('menu board') || t.includes('menu')) return UtensilsCrossed
