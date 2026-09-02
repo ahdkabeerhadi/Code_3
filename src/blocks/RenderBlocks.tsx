@@ -72,6 +72,7 @@ import { DisplayEstimatorBlock } from './DisplayEstimator/Component'
 import { TransformationFlowBlock } from './TransformationFlow/Component'
 import { RoomSizeGuideBlock } from './RoomSizeGuide/Component'
 import { SignageEstimatorBlock } from './SignageEstimator/Component'
+import { CastingEstimatorBlock } from './CastingEstimator/Component'
 
 interface BlockProps {
   disableInnerContainer?: boolean
@@ -146,6 +147,7 @@ const blockComponents = {
   transformationFlow: TransformationFlowBlock,
   roomSizeGuide: RoomSizeGuideBlock,
   signageEstimator: SignageEstimatorBlock,
+  castingEstimator: CastingEstimatorBlock,
   resultsShowcase: ResultsShowcaseBlock,
   processTimeline: ProcessTimelineBlock,
   coverageTable: CoverageTableBlock,
