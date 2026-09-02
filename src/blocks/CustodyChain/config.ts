@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { ctaFields } from '@/fields/ctaFields'
 
 export const CustodyChain: Block = {
   slug: 'custodyChain',
@@ -36,5 +37,6 @@ export const CustodyChain: Block = {
       admin: { description: 'Short single words/phrases, shown in order connected by arrows, e.g. "Tag".' },
       fields: [{ name: 'text', type: 'text', required: true, localized: true }],
     },
+    ...ctaFields(''),
   ],
 }

@@ -1,6 +1,7 @@
 import type { CustodyChainBlock as CustodyChainBlockProps } from 'src/payload-types'
 
 import { cn } from '@/utilities/ui'
+import Link from 'next/link'
 import React from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
@@ -43,7 +44,15 @@ type Props = {
   className?: string
 } & CustodyChainBlockProps
 
-export const CustodyChainBlock: React.FC<Props> = ({ className, badge, title, subtitle, steps = [] }) => {
+export const CustodyChainBlock: React.FC<Props> = ({
+  className,
+  badge,
+  title,
+  subtitle,
+  steps = [],
+  ctaLabel,
+  ctaUrl,
+}) => {
   const safeSteps = steps || []
   if (safeSteps.length === 0) return null
 
@@ -80,6 +89,18 @@ export const CustodyChainBlock: React.FC<Props> = ({ className, badge, title, su
             })}
           </div>
         </Reveal>
+
+        {ctaLabel && ctaUrl && (
+          <div className="mt-6 flex justify-center md:mt-7">
+            <Link
+              href={ctaUrl}
+              className="inline-flex items-center gap-2 rounded-full bg-primary_red px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-700"
+            >
+              {ctaLabel}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   )
