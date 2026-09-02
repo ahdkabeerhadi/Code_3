@@ -161,7 +161,10 @@ export const IconFeatureGridBlock: React.FC<Props> = ({
             'mx-auto grid max-w-5xl gap-3 md:gap-4',
             hasDescriptions
               ? cn('grid-cols-1 sm:grid-cols-2', safeItems.length === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3')
-              : cn('grid-cols-2 sm:grid-cols-3', safeItems.length <= 4 ? 'md:grid-cols-4' : 'md:grid-cols-5'),
+              : cn(
+                  'grid-cols-2 sm:grid-cols-3',
+                  safeItems.length <= 4 ? 'md:grid-cols-4' : safeItems.length <= 6 ? 'md:grid-cols-6' : 'md:grid-cols-5',
+                ),
           )}
         >
           {safeItems.map((item, index) => {
