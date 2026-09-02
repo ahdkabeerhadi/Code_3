@@ -68,6 +68,7 @@ import { ProcessPhasesBlock } from './ProcessPhases/Component'
 import { TeamConvergenceBlock } from './TeamConvergence/Component'
 import { ServiceJourneyBlock } from './ServiceJourney/Component'
 import { CustodyChainBlock } from './CustodyChain/Component'
+import { DisplayEstimatorBlock } from './DisplayEstimator/Component'
 
 interface BlockProps {
   disableInnerContainer?: boolean
@@ -138,6 +139,7 @@ const blockComponents = {
   teamConvergence: TeamConvergenceBlock,
   serviceJourney: ServiceJourneyBlock,
   custodyChain: CustodyChainBlock,
+  displayEstimator: DisplayEstimatorBlock,
   resultsShowcase: ResultsShowcaseBlock,
   processTimeline: ProcessTimelineBlock,
   coverageTable: CoverageTableBlock,

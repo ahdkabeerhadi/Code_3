@@ -63,6 +63,7 @@ import { ProcessPhases } from '@/blocks/ProcessPhases/config'
 import { TeamConvergence } from '@/blocks/TeamConvergence/config'
 import { ServiceJourney } from '@/blocks/ServiceJourney/config'
 import { CustodyChain } from '@/blocks/CustodyChain/config'
+import { DisplayEstimator } from '@/blocks/DisplayEstimator/config'
 import { SpecComparisonTable } from '@/blocks/SpecComparisonTable/config'
 import { ResultsShowcase } from '@/blocks/ResultsShowcase/config'
 import { ProcessTimeline } from '@/blocks/ProcessTimeline/config'
@@ -268,6 +269,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 TeamConvergence,
                 ServiceJourney,
                 CustodyChain,
+                DisplayEstimator,
               ],
               required: true,
               admin: {
