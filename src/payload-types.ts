@@ -2407,6 +2407,11 @@ export interface DeliveryProcessBlock {
    * Leave the label blank to hide the button entirely.
    */
   ctaUrl?: string | null;
+  /**
+   * If set alongside a second URL, shows a secondary button next to the first, e.g. linking to a related service.
+   */
+  ctaLabel2?: string | null;
+  ctaUrl2?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'deliveryProcess';
@@ -4843,6 +4848,8 @@ export interface DeliveryProcessBlockSelect<T extends boolean = true> {
   ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;
+  ctaLabel2?: T;
+  ctaUrl2?: T;
   id?: T;
   blockName?: T;
 }

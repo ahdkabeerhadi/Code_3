@@ -2,6 +2,8 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import type { DeliveryProcessBlock as DeliveryProcessBlockProps } from 'src/payload-types'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { cn } from '@/utilities/ui'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
@@ -26,6 +28,8 @@ export const DeliveryProcessBlock: React.FC<Props> = ({
   ctaText,
   ctaLabel,
   ctaUrl,
+  ctaLabel2,
+  ctaUrl2,
 }) => {
   const safeSteps = steps || []
   const timelineRef = useRef<HTMLDivElement>(null)
@@ -119,7 +123,31 @@ export const DeliveryProcessBlock: React.FC<Props> = ({
           </div>
         </div>
 
-        <CtaButton text={ctaText} label={ctaLabel} url={ctaUrl} className="mt-10" />
+        {ctaLabel2 && ctaUrl2 ? (
+          ctaLabel && ctaUrl && (
+            <div className="mt-10 flex flex-col items-center justify-between gap-4 rounded-2xl border border-primary_red/20 bg-primary_red/5 px-6 py-5 sm:flex-row">
+              {ctaText && <p className="text-sm font-medium text-foreground sm:text-base">{ctaText}</p>}
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                <Link
+                  href={ctaUrl}
+                  className="group inline-flex flex-none items-center gap-2.5 rounded-full bg-primary_red px-6 py-3.5 text-sm font-semibold text-white shadow-md shadow-primary_red/20 transition-all duration-300 hover:scale-[1.03] hover:bg-secondary_red hover:shadow-lg hover:shadow-primary_red/30 active:scale-[0.98]"
+                >
+                  {ctaLabel}
+                  <ArrowRight className="h-4 w-4 flex-none transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+                <Link
+                  href={ctaUrl2}
+                  className="group inline-flex flex-none items-center gap-2.5 rounded-full border border-primary_red px-6 py-3.5 text-sm font-semibold text-primary_red transition-all duration-300 hover:bg-[#FDEBEC]"
+                >
+                  {ctaLabel2}
+                  <ArrowRight className="h-4 w-4 flex-none transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </div>
+          )
+        ) : (
+          <CtaButton text={ctaText} label={ctaLabel} url={ctaUrl} className="mt-10" />
+        )}
       </div>
     </section>
   )
