@@ -368,6 +368,7 @@ export interface Page {
     | CustodyChainBlock
     | DisplayEstimatorBlock
     | TransformationFlowBlock
+    | RoomSizeGuideBlock
   )[];
   meta?: {
     title?: string | null;
@@ -2944,6 +2945,34 @@ export interface TransformationFlowBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoomSizeGuideBlock".
+ */
+export interface RoomSizeGuideBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  rows?:
+    | {
+        room: string;
+        recommended: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'roomSizeGuide';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -3529,6 +3558,7 @@ export interface PagesSelect<T extends boolean = true> {
         custodyChain?: T | CustodyChainBlockSelect<T>;
         displayEstimator?: T | DisplayEstimatorBlockSelect<T>;
         transformationFlow?: T | TransformationFlowBlockSelect<T>;
+        roomSizeGuide?: T | RoomSizeGuideBlockSelect<T>;
       };
   meta?:
     | T
@@ -5034,6 +5064,27 @@ export interface TransformationFlowBlockSelect<T extends boolean = true> {
       };
   outcomeLabel?: T;
   outcomeText?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoomSizeGuideBlock_select".
+ */
+export interface RoomSizeGuideBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  rows?:
+    | T
+    | {
+        room?: T;
+        recommended?: T;
+        id?: T;
+      };
   ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;
