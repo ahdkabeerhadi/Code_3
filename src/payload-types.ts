@@ -371,6 +371,7 @@ export interface Page {
     | RoomSizeGuideBlock
     | SignageEstimatorBlock
     | CastingEstimatorBlock
+    | VideoWallEstimatorBlock
   )[];
   meta?: {
     title?: string | null;
@@ -3127,6 +3128,64 @@ export interface CastingEstimatorBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideoWallEstimatorBlock".
+ */
+export interface VideoWallEstimatorBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  locationLabel?: string | null;
+  locationOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  displaysLabel?: string | null;
+  displaysOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  technologyLabel?: string | null;
+  technologyOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  contentTypeLabel?: string | null;
+  contentTypeOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  distanceLabel?: string | null;
+  distanceOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  submitLabel?: string | null;
+  disclaimer?: string | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'videoWallEstimator';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -3715,6 +3774,7 @@ export interface PagesSelect<T extends boolean = true> {
         roomSizeGuide?: T | RoomSizeGuideBlockSelect<T>;
         signageEstimator?: T | SignageEstimatorBlockSelect<T>;
         castingEstimator?: T | CastingEstimatorBlockSelect<T>;
+        videoWallEstimator?: T | VideoWallEstimatorBlockSelect<T>;
       };
   meta?:
     | T
@@ -5351,6 +5411,57 @@ export interface CastingEstimatorBlockSelect<T extends boolean = true> {
       };
   vcLabel?: T;
   vcOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  submitLabel?: T;
+  disclaimer?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideoWallEstimatorBlock_select".
+ */
+export interface VideoWallEstimatorBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  locationLabel?: T;
+  locationOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  displaysLabel?: T;
+  displaysOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  technologyLabel?: T;
+  technologyOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  contentTypeLabel?: T;
+  contentTypeOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  distanceLabel?: T;
+  distanceOptions?:
     | T
     | {
         text?: T;
