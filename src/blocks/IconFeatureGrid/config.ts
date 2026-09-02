@@ -40,6 +40,16 @@ export const IconFeatureGrid: Block = {
       fields: [
         { name: 'text', type: 'text', required: true, localized: true },
         {
+          name: 'description',
+          type: 'textarea',
+          label: 'Description (optional)',
+          localized: true,
+          admin: {
+            description:
+              'A one-line description switches every card in this grid to a larger, left-aligned layout instead of the compact centered one.',
+          },
+        },
+        {
           name: 'url',
           type: 'text',
           label: 'Link URL (optional)',

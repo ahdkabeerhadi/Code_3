@@ -2686,6 +2686,10 @@ export interface IconFeatureGridBlock {
     | {
         text: string;
         /**
+         * A one-line description switches every card in this grid to a larger, left-aligned layout instead of the compact centered one.
+         */
+        description?: string | null;
+        /**
          * If set, this card links to the given URL, e.g. "/service/cyber-security-dubai-uae".
          */
         url?: string | null;
@@ -4895,6 +4899,7 @@ export interface IconFeatureGridBlockSelect<T extends boolean = true> {
     | T
     | {
         text?: T;
+        description?: T;
         url?: T;
         id?: T;
       };
