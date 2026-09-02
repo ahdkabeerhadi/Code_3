@@ -12,6 +12,7 @@ import {
   DoorOpen,
   Globe,
   GraduationCap,
+  Monitor,
   Presentation,
   Store,
   Users,
@@ -26,9 +27,10 @@ function getRoomIcon(text?: string | null): LucideIcon {
   if (t.includes('training')) return GraduationCap
   if (t.includes('venue')) return Building2
   if (t.includes('reception') || t.includes('small office')) return DoorOpen
+  if (t.includes('command centre') || t.includes('command center') || t.includes('showroom')) return Monitor
+  if (t.includes('meeting')) return Presentation
   if (t.includes('retail') || t.includes('hospitality')) return Store
   if (t.includes('enterprise') || t.includes('multi-location') || t.includes('multi location')) return Globe
-  if (t.includes('meeting')) return Presentation
   return Presentation
 }
 
