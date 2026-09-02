@@ -966,18 +966,20 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
                             type="button"
                             onClick={() => setActiveInfraCategory(page.id)}
                             className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-left text-sm transition-colors ${
-                              isActive
-                                ? 'bg-white font-semibold text-primary_red shadow-sm'
-                                : 'text-white/80 hover:bg-white/10 hover:text-white'
+                              isActive ? 'font-semibold text-white' : 'text-white/80 hover:bg-white/10 hover:text-white'
                             }`}
                           >
                             <ServiceIcon
                               preset={getIconForServiceTitle(page.title)}
-                              className={`h-4 w-4 flex-none ${isActive ? 'text-primary_red' : 'text-white/60'}`}
+                              className={`h-4 w-4 flex-none ${isActive ? 'text-white' : 'text-white/60'}`}
                             />
-                            <span className="flex-1 leading-snug">{page.title}</span>
+                            <span
+                              className={`flex-1 leading-snug ${isActive ? 'underline decoration-2 underline-offset-4' : ''}`}
+                            >
+                              {page.title}
+                            </span>
                             <ChevronRight
-                              className={`h-3.5 w-3.5 flex-none text-primary_red transition-opacity ${
+                              className={`h-3.5 w-3.5 flex-none text-white transition-opacity ${
                                 isActive ? 'opacity-100' : 'opacity-0'
                               }`}
                             />
@@ -1048,15 +1050,19 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
                           </div>
 
                           {active.subServices.length > 0 ? (
-                            <ul className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
+                            <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                               {active.subServices.map((sub: NavigationPageData) => (
                                 <li key={sub.id}>
                                   <Link
                                     href={getServiceLink(sub)}
                                     onClick={() => setShowInfraMegaMenu(false)}
-                                    className="text-sm text-gray-600 transition-colors hover:text-primary_red"
+                                    className="group flex items-center gap-2.5 rounded-xl border border-border bg-white px-4 py-3 text-sm text-gray-700 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary_red/30 hover:text-primary_red hover:shadow-md"
                                   >
-                                    {sub.title}
+                                    <ServiceIcon
+                                      preset={getIconForServiceTitle(sub.title)}
+                                      className="h-4 w-4 flex-none text-primary_red/70 transition-colors group-hover:text-primary_red"
+                                    />
+                                    <span className="flex-1 leading-snug">{sub.title}</span>
                                   </Link>
                                 </li>
                               ))}
