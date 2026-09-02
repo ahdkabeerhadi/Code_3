@@ -7,23 +7,42 @@ import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
 import {
   ArrowRight,
+  Building2,
   Cable,
+  Calendar,
   Camera,
   Cloud,
+  Columns3,
+  DoorOpen,
+  FileText,
   GraduationCap,
+  Grid2x2,
+  Grid3x3,
+  Hand,
+  Home,
+  Image as ImageIcon,
   Laptop,
   LayoutGrid,
+  Lightbulb,
+  ListVideo,
   Mail,
+  Megaphone,
   Network,
   PenLine,
   Phone,
   Presentation,
   Printer,
+  RefreshCw,
   Server,
   Share2,
   ShieldCheck,
+  Signpost,
+  Store,
+  Sun,
+  Tablet,
   User,
   Users,
+  UtensilsCrossed,
   Video,
   Wifi,
   type LucideIcon,
@@ -43,7 +62,26 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('present')) return Presentation
   if (t.includes('collaborate')) return Users
   if (t.includes('annotate')) return PenLine
+  if (t.includes('video wall')) return Grid3x3
+  if (t.includes('outdoor')) return Sun
+  if (t.includes('indoor')) return Home
+  if (t.includes('menu board') || t.includes('menu')) return UtensilsCrossed
+  if (t.includes('reception')) return DoorOpen
+  if (t.includes('wayfinding')) return Signpost
+  if (t.includes('corporate communication')) return Building2
+  if (t.includes('retail')) return Store
+  if (t.includes('kiosk') || t.includes('touchscreen')) return Tablet
+  if (t.includes('led display') || t.includes('led screen')) return Lightbulb
+  if (t.includes('multi-screen') || t.includes('multi screen')) return Columns3
+  if (t.includes('interactive')) return Hand
+  if (t.includes('screen group')) return Grid2x2
+  if (t.includes('promotion')) return Megaphone
+  if (t.includes('schedule')) return Calendar
+  if (t.includes('playlist')) return ListVideo
+  if (t.includes('update')) return RefreshCw
+  if (t.includes('image')) return ImageIcon
   if (t.includes('meeting') || t.includes('video')) return Video
+  if (t.includes('content')) return FileText
   if (t.includes('teach')) return GraduationCap
   if (t.includes('365') || t.includes('microsoft') || t.includes('email')) return Mail
   if (t.includes('communication') || t.includes('phone') || t.includes('voip') || t.includes('call')) return Phone

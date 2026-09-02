@@ -2842,6 +2842,15 @@ export interface CustodyChainBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'custodyChain';
@@ -5068,6 +5077,9 @@ export interface CustodyChainBlockSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
   id?: T;
   blockName?: T;
 }

@@ -1,6 +1,7 @@
 import type { CustodyChainBlock as CustodyChainBlockProps } from 'src/payload-types'
 
 import { cn } from '@/utilities/ui'
+import Link from 'next/link'
 import React from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
@@ -10,6 +11,8 @@ import {
   CheckCircle2,
   Cpu,
   Database,
+  LayoutDashboard,
+  MapPin,
   Network,
   PenTool,
   Plug,
@@ -33,6 +36,8 @@ function getStepIcon(text?: string | null): LucideIcon {
   if (t.includes('creation') || t.includes('create')) return PenTool
   if (t.includes('management system') || t.includes('cms')) return Database
   if (t.includes('player')) return Cpu
+  if (t.includes('dashboard')) return LayoutDashboard
+  if (t.includes('location')) return MapPin
   if (t.includes('network')) return Network
   if (t.includes('display') || t.includes('screen')) return Tv
   if (t.includes('audience')) return Users
@@ -43,7 +48,15 @@ type Props = {
   className?: string
 } & CustodyChainBlockProps
 
-export const CustodyChainBlock: React.FC<Props> = ({ className, badge, title, subtitle, steps = [] }) => {
+export const CustodyChainBlock: React.FC<Props> = ({
+  className,
+  badge,
+  title,
+  subtitle,
+  steps = [],
+  ctaLabel,
+  ctaUrl,
+}) => {
   const safeSteps = steps || []
   if (safeSteps.length === 0) return null
 
@@ -80,6 +93,18 @@ export const CustodyChainBlock: React.FC<Props> = ({ className, badge, title, su
             })}
           </div>
         </Reveal>
+
+        {ctaLabel && ctaUrl && (
+          <div className="mt-6 flex justify-center md:mt-7">
+            <Link
+              href={ctaUrl}
+              className="inline-flex items-center gap-2 rounded-full bg-primary_red px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-700"
+            >
+              {ctaLabel}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   )
