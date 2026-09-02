@@ -4,7 +4,22 @@ import { cn } from '@/utilities/ui'
 import React from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
-import { ArrowRight, Camera, CheckCircle2, Plug, Tag, Truck, Unplug, type LucideIcon } from 'lucide-react'
+import {
+  ArrowRight,
+  Camera,
+  CheckCircle2,
+  Cpu,
+  Database,
+  Network,
+  PenTool,
+  Plug,
+  Tag,
+  Truck,
+  Tv,
+  Unplug,
+  Users,
+  type LucideIcon,
+} from 'lucide-react'
 
 // Best-effort icon per chain step, matched by keyword.
 function getStepIcon(text?: string | null): LucideIcon {
@@ -15,6 +30,12 @@ function getStepIcon(text?: string | null): LucideIcon {
   if (t.includes('transport')) return Truck
   if (t.includes('reinstall') || t.includes('install')) return Plug
   if (t.includes('verify') || t.includes('test')) return CheckCircle2
+  if (t.includes('creation') || t.includes('create')) return PenTool
+  if (t.includes('management system') || t.includes('cms')) return Database
+  if (t.includes('player')) return Cpu
+  if (t.includes('network')) return Network
+  if (t.includes('display') || t.includes('screen')) return Tv
+  if (t.includes('audience')) return Users
   return CheckCircle2
 }
 
