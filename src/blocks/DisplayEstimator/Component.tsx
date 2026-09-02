@@ -10,11 +10,11 @@ import { Reveal } from '@/components/site/Reveal'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Check, MapPin, Monitor, Sparkles, Users, Video, type LucideIcon } from 'lucide-react'
 
-// Maps a "Number of Users" option index to the recommended screen-size tier's
-// index within screenSizeOptions (index 0 there is always "Not Sure", so
-// recommendations start at 1). Kept in code as a best-effort default; an
-// explicit screen-size preference from the visitor always wins over this.
-const USERS_TO_SIZE_INDEX = [1, 2, 2, 3]
+// Maps a "Number of Users" option index to a recommended screen-size tier,
+// 0-based among whichever options are NOT "Not Sure" (there may not be one at
+// all). Kept in code as a best-effort default; an explicit screen-size
+// preference from the visitor always wins over this.
+const USERS_TO_SIZE_TIER = [0, 1, 1, 2]
 
 function ChipQuestion({
   label,
@@ -114,11 +114,18 @@ export const DisplayEstimatorBlock: React.FC<Props> = ({
 
     const wantsVc = (safeVc[vc as number]?.text || '').toLowerCase().includes('yes')
 
+    // Detected by text, not position - so this still works whether or not a
+    // "Not Sure" option exists at all in the configured list.
+    const notSureIndex = safeScreenSize.findIndex((o) => (o.text || '').toLowerCase().includes('not sure'))
+
     // An explicit preference always wins over the computed default.
     const recommendedIndex =
-      screenSize !== 0
+      screenSize !== notSureIndex
         ? screenSize
-        : Math.min(USERS_TO_SIZE_INDEX[users as number] ?? 1, safeScreenSize.length - 1)
+        : Math.min(
+            (notSureIndex === 0 ? 1 : 0) + (USERS_TO_SIZE_TIER[users as number] ?? 0),
+            safeScreenSize.length - 1,
+          )
     const recommendedSize = safeScreenSize[recommendedIndex]?.text
 
     return {
