@@ -5,7 +5,18 @@ import Link from 'next/link'
 import React from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
-import { ArrowRight, Briefcase, Building2, GraduationCap, Presentation, Users, type LucideIcon } from 'lucide-react'
+import {
+  ArrowRight,
+  Briefcase,
+  Building2,
+  DoorOpen,
+  Globe,
+  GraduationCap,
+  Presentation,
+  Store,
+  Users,
+  type LucideIcon,
+} from 'lucide-react'
 
 // Best-effort icon per room type, matched by keyword.
 function getRoomIcon(text?: string | null): LucideIcon {
@@ -14,6 +25,9 @@ function getRoomIcon(text?: string | null): LucideIcon {
   if (t.includes('boardroom')) return Briefcase
   if (t.includes('training')) return GraduationCap
   if (t.includes('venue')) return Building2
+  if (t.includes('reception') || t.includes('small office')) return DoorOpen
+  if (t.includes('retail') || t.includes('hospitality')) return Store
+  if (t.includes('enterprise') || t.includes('multi-location') || t.includes('multi location')) return Globe
   if (t.includes('meeting')) return Presentation
   return Presentation
 }
