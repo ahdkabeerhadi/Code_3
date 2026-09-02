@@ -61,7 +61,10 @@ export const RoomSizeGuideBlock: React.FC<Props> = ({
 
         <Reveal
           delayMs={100}
-          className="mx-auto grid max-w-5xl grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 md:gap-4"
+          className={cn(
+            'mx-auto grid max-w-5xl grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4',
+            safeRows.length === 4 ? 'md:grid-cols-4' : 'md:grid-cols-3',
+          )}
         >
           {safeRows.map((row, index) => {
             const Icon = getRoomIcon(row.room)
