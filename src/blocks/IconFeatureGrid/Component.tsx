@@ -10,15 +10,20 @@ import {
   Cable,
   Camera,
   Cloud,
+  GraduationCap,
   Laptop,
   LayoutGrid,
   Mail,
   Network,
+  PenLine,
   Phone,
+  Presentation,
   Printer,
   Server,
+  Share2,
   ShieldCheck,
   User,
+  Users,
   Video,
   Wifi,
   type LucideIcon,
@@ -35,11 +40,16 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('cyber') || t.includes('security') || t.includes('firewall')) return ShieldCheck
   if (t.includes('cctv') || t.includes('access control') || t.includes('camera')) return Camera
   if (t.includes('printer') || t.includes('peripheral')) return Printer
-  if (t.includes('meeting')) return Video
+  if (t.includes('present')) return Presentation
+  if (t.includes('collaborate')) return Users
+  if (t.includes('annotate')) return PenLine
+  if (t.includes('meeting') || t.includes('video')) return Video
+  if (t.includes('teach')) return GraduationCap
   if (t.includes('365') || t.includes('microsoft') || t.includes('email')) return Mail
   if (t.includes('communication') || t.includes('phone') || t.includes('voip') || t.includes('call')) return Phone
   if (t.includes('cabling') || t.includes('cable')) return Cable
   if (t.includes('user') || t.includes('account')) return User
+  if (t.includes('share')) return Share2
   return LayoutGrid
 }
 
@@ -59,6 +69,7 @@ export const IconFeatureGridBlock: React.FC<Props> = ({
 }) => {
   const safeItems = items || []
   if (safeItems.length === 0) return null
+  const hasDescriptions = safeItems.some((item) => item.description)
 
   return (
     <section className={cn('bg-white py-7 md:py-9', className)}>
@@ -72,20 +83,32 @@ export const IconFeatureGridBlock: React.FC<Props> = ({
         <Reveal
           delayMs={100}
           className={cn(
-            'mx-auto grid max-w-5xl grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4',
-            safeItems.length <= 4 ? 'md:grid-cols-4' : 'md:grid-cols-5',
+            'mx-auto grid max-w-5xl gap-3 md:gap-4',
+            hasDescriptions
+              ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+              : cn('grid-cols-2 sm:grid-cols-3', safeItems.length <= 4 ? 'md:grid-cols-4' : 'md:grid-cols-5'),
           )}
         >
           {safeItems.map((item, index) => {
             const Icon = getItemIcon(item.text)
-            const cardClassName =
-              'group flex flex-col items-center gap-2.5 rounded-2xl border border-border bg-white p-4 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary_red/30 hover:shadow-md md:p-5'
+            const cardClassName = cn(
+              'group flex rounded-2xl border border-border bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary_red/30 hover:shadow-md',
+              hasDescriptions ? 'flex-col gap-2 p-5 text-left' : 'flex-col items-center gap-2.5 p-4 text-center md:p-5',
+            )
             const inner = (
               <>
-                <span className="flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-[#FDEBEC] text-primary_red transition-transform duration-300 group-hover:scale-105">
-                  <Icon className="h-5 w-5" />
+                <span
+                  className={cn(
+                    'flex flex-none items-center justify-center rounded-xl bg-[#FDEBEC] text-primary_red transition-transform duration-300 group-hover:scale-105',
+                    hasDescriptions ? 'h-12 w-12' : 'h-11 w-11',
+                  )}
+                >
+                  <Icon className={hasDescriptions ? 'h-6 w-6' : 'h-5 w-5'} />
                 </span>
                 <span className="text-sm font-semibold leading-snug text-foreground">{item.text}</span>
+                {item.description && (
+                  <span className="text-sm leading-relaxed text-gray-600">{item.description}</span>
+                )}
               </>
             )
 

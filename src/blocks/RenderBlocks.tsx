@@ -68,6 +68,10 @@ import { ProcessPhasesBlock } from './ProcessPhases/Component'
 import { TeamConvergenceBlock } from './TeamConvergence/Component'
 import { ServiceJourneyBlock } from './ServiceJourney/Component'
 import { CustodyChainBlock } from './CustodyChain/Component'
+import { DisplayEstimatorBlock } from './DisplayEstimator/Component'
+import { TransformationFlowBlock } from './TransformationFlow/Component'
+import { RoomSizeGuideBlock } from './RoomSizeGuide/Component'
+import { SignageEstimatorBlock } from './SignageEstimator/Component'
 
 interface BlockProps {
   disableInnerContainer?: boolean
@@ -138,6 +142,10 @@ const blockComponents = {
   teamConvergence: TeamConvergenceBlock,
   serviceJourney: ServiceJourneyBlock,
   custodyChain: CustodyChainBlock,
+  displayEstimator: DisplayEstimatorBlock,
+  transformationFlow: TransformationFlowBlock,
+  roomSizeGuide: RoomSizeGuideBlock,
+  signageEstimator: SignageEstimatorBlock,
   resultsShowcase: ResultsShowcaseBlock,
   processTimeline: ProcessTimelineBlock,
   coverageTable: CoverageTableBlock,

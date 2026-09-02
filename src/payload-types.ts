@@ -366,6 +366,10 @@ export interface Page {
     | TeamConvergenceBlock
     | ServiceJourneyBlock
     | CustodyChainBlock
+    | DisplayEstimatorBlock
+    | TransformationFlowBlock
+    | RoomSizeGuideBlock
+    | SignageEstimatorBlock
   )[];
   meta?: {
     title?: string | null;
@@ -2683,6 +2687,10 @@ export interface IconFeatureGridBlock {
     | {
         text: string;
         /**
+         * A one-line description switches every card in this grid to a larger, left-aligned layout instead of the compact centered one.
+         */
+        description?: string | null;
+        /**
          * If set, this card links to the given URL, e.g. "/service/cyber-security-dubai-uae".
          */
         url?: string | null;
@@ -2837,6 +2845,203 @@ export interface CustodyChainBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'custodyChain';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DisplayEstimatorBlock".
+ */
+export interface DisplayEstimatorBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  locationLabel?: string | null;
+  locationOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  usersLabel?: string | null;
+  usersOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Not a question - the possible recommended sizes, ordered smallest to largest. Matched automatically from Number of Users.
+   */
+  sizeTiers?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  vcLabel?: string | null;
+  vcOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  submitLabel?: string | null;
+  disclaimer?: string | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'displayEstimator';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TransformationFlowBlock".
+ */
+export interface TransformationFlowBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  beforeLabel?: string | null;
+  /**
+   * The old, faceless way - shown as plain muted chips, deliberately without icons.
+   */
+  beforeSteps?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * The branded destination, e.g. "CODE3 INTERACTIVE DISPLAY".
+   */
+  hubLabel?: string | null;
+  /**
+   * What the hub enables - shown as branded, icon-matched chips.
+   */
+  capabilitySteps?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  outcomeLabel?: string | null;
+  /**
+   * The payoff line, e.g. "A Smarter Way to Meet, Teach & Collaborate."
+   */
+  outcomeText: string;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'transformationFlow';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoomSizeGuideBlock".
+ */
+export interface RoomSizeGuideBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  rows?:
+    | {
+        room: string;
+        recommended: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'roomSizeGuide';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SignageEstimatorBlock".
+ */
+export interface SignageEstimatorBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  locationLabel?: string | null;
+  locationOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  screensLabel?: string | null;
+  screensOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  environmentLabel?: string | null;
+  environmentOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Not a question - the possible recommended sizes, ordered smallest to largest. Matched automatically from Location and Indoor/Outdoor.
+   */
+  sizeTiers?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  contentTypeLabel?: string | null;
+  contentTypeOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  cmsLabel?: string | null;
+  cmsOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  submitLabel?: string | null;
+  disclaimer?: string | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'signageEstimator';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3423,6 +3628,10 @@ export interface PagesSelect<T extends boolean = true> {
         teamConvergence?: T | TeamConvergenceBlockSelect<T>;
         serviceJourney?: T | ServiceJourneyBlockSelect<T>;
         custodyChain?: T | CustodyChainBlockSelect<T>;
+        displayEstimator?: T | DisplayEstimatorBlockSelect<T>;
+        transformationFlow?: T | TransformationFlowBlockSelect<T>;
+        roomSizeGuide?: T | RoomSizeGuideBlockSelect<T>;
+        signageEstimator?: T | SignageEstimatorBlockSelect<T>;
       };
   meta?:
     | T
@@ -4759,6 +4968,7 @@ export interface IconFeatureGridBlockSelect<T extends boolean = true> {
     | T
     | {
         text?: T;
+        description?: T;
         url?: T;
         id?: T;
       };
@@ -4858,6 +5068,157 @@ export interface CustodyChainBlockSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DisplayEstimatorBlock_select".
+ */
+export interface DisplayEstimatorBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  locationLabel?: T;
+  locationOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  usersLabel?: T;
+  usersOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  sizeTiers?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  vcLabel?: T;
+  vcOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  submitLabel?: T;
+  disclaimer?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TransformationFlowBlock_select".
+ */
+export interface TransformationFlowBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  beforeLabel?: T;
+  beforeSteps?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  hubLabel?: T;
+  capabilitySteps?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  outcomeLabel?: T;
+  outcomeText?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoomSizeGuideBlock_select".
+ */
+export interface RoomSizeGuideBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  rows?:
+    | T
+    | {
+        room?: T;
+        recommended?: T;
+        id?: T;
+      };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SignageEstimatorBlock_select".
+ */
+export interface SignageEstimatorBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  locationLabel?: T;
+  locationOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  screensLabel?: T;
+  screensOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  environmentLabel?: T;
+  environmentOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  sizeTiers?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  contentTypeLabel?: T;
+  contentTypeOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  cmsLabel?: T;
+  cmsOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  submitLabel?: T;
+  disclaimer?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
   id?: T;
   blockName?: T;
 }
