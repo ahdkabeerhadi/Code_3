@@ -98,5 +98,18 @@ export const DeliveryProcess: Block = {
       'Start Your Project',
       'Ready to kick off your next project with us?',
     ),
+    {
+      name: 'ctaLabel2',
+      type: 'text',
+      label: 'Second CTA Button Label (optional)',
+      localized: true,
+      admin: { description: 'If set alongside a second URL, shows a secondary button next to the first, e.g. linking to a related service.' },
+    },
+    {
+      name: 'ctaUrl2',
+      type: 'text',
+      label: 'Second CTA Button URL (optional)',
+      admin: { condition: (_, siblingData) => Boolean(siblingData?.ctaLabel2) },
+    },
   ],
 }

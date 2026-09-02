@@ -6,6 +6,8 @@ import React from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
 import {
+  AppWindow,
+  Aperture,
   ArrowRight,
   Building2,
   Cable,
@@ -13,8 +15,10 @@ import {
   Camera,
   Cloud,
   Columns3,
+  Crosshair,
   DoorOpen,
   FileText,
+  Frame,
   GraduationCap,
   Grid2x2,
   Grid3x3,
@@ -26,25 +30,35 @@ import {
   Lightbulb,
   ListVideo,
   Mail,
+  Maximize2,
   Megaphone,
   Network,
+  Palette,
   PenLine,
   Phone,
   Presentation,
   Printer,
+  Projector,
   RefreshCw,
+  Ruler,
   Server,
+  Settings2,
   Share2,
   ShieldCheck,
   Signpost,
+  SlidersHorizontal,
+  Smartphone,
   Store,
   Sun,
+  SunMedium,
   Tablet,
   User,
   Users,
   UtensilsCrossed,
   Video,
   Wifi,
+  Wrench,
+  ZoomIn,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -52,6 +66,12 @@ import {
 function getItemIcon(text?: string | null): LucideIcon {
   const t = (text || '').toLowerCase()
   if (t.includes('workstation') || t.includes('desktop') || t.includes('laptop')) return Laptop
+  if (t.includes('windows')) return AppWindow
+  if (t.includes('macos') || t.includes('mac os')) return Laptop
+  if (t.includes('chromeos') || t.includes('chrome os')) return Cloud
+  if (t.includes('android')) return Tablet
+  // Word-boundary match: bare `includes('ios')` would false-positive on "kiosk", "radios", "studios", etc.
+  if (/\bios\b/.test(t)) return Smartphone
   if (t.includes('wi-fi') || t.includes('wifi')) return Wifi
   if (t.includes('network')) return Network
   if (t.includes('server')) return Server
@@ -63,6 +83,23 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('collaborate')) return Users
   if (t.includes('annotate')) return PenLine
   if (t.includes('video wall')) return Grid3x3
+  if (t.includes('direct view')) return Maximize2
+  if (t.includes('fine-pitch') || t.includes('fine pitch')) return ZoomIn
+  if (t.includes('projection') || t.includes('projector')) return Projector
+  if (t.includes('2 × 2') || t.includes('2x2') || t.includes('2 x 2')) return Grid2x2
+  if (t.includes('3 × 3') || t.includes('3x3') || t.includes('3 x 3')) return Grid3x3
+  if (t.includes('4 × 4') || t.includes('4x4') || t.includes('4 x 4')) return LayoutGrid
+  if (/\bcustom\b/.test(t)) return Settings2
+  if (t.includes('screen size')) return Maximize2
+  if (t.includes('viewing distance') || t.includes('distance')) return Ruler
+  if (t.includes('room dimension') || t.includes('dimension')) return Building2
+  if (t.includes('resolution')) return Aperture
+  if (t.includes('bezel')) return Frame
+  if (t.includes('alignment')) return Crosshair
+  if (t.includes('brightness')) return SunMedium
+  if (t.includes('color')) return Palette
+  if (t.includes('calibrat')) return SlidersHorizontal
+  if (t.includes('mounting')) return Wrench
   if (t.includes('outdoor')) return Sun
   if (t.includes('indoor')) return Home
   if (t.includes('menu board') || t.includes('menu')) return UtensilsCrossed
@@ -85,7 +122,7 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('teach')) return GraduationCap
   if (t.includes('365') || t.includes('microsoft') || t.includes('email')) return Mail
   if (t.includes('communication') || t.includes('phone') || t.includes('voip') || t.includes('call')) return Phone
-  if (t.includes('cabling') || t.includes('cable')) return Cable
+  if (t.includes('cabling') || t.includes('cable') || t.includes('source')) return Cable
   if (t.includes('user') || t.includes('account')) return User
   if (t.includes('share')) return Share2
   return LayoutGrid
@@ -123,8 +160,11 @@ export const IconFeatureGridBlock: React.FC<Props> = ({
           className={cn(
             'mx-auto grid max-w-5xl gap-3 md:gap-4',
             hasDescriptions
-              ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
-              : cn('grid-cols-2 sm:grid-cols-3', safeItems.length <= 4 ? 'md:grid-cols-4' : 'md:grid-cols-5'),
+              ? cn('grid-cols-1 sm:grid-cols-2', safeItems.length === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3')
+              : cn(
+                  'grid-cols-2 sm:grid-cols-3',
+                  safeItems.length <= 4 ? 'md:grid-cols-4' : safeItems.length <= 6 ? 'md:grid-cols-6' : 'md:grid-cols-5',
+                ),
           )}
         >
           {safeItems.map((item, index) => {

@@ -67,6 +67,8 @@ import { DisplayEstimator } from '@/blocks/DisplayEstimator/config'
 import { TransformationFlow } from '@/blocks/TransformationFlow/config'
 import { RoomSizeGuide } from '@/blocks/RoomSizeGuide/config'
 import { SignageEstimator } from '@/blocks/SignageEstimator/config'
+import { CastingEstimator } from '@/blocks/CastingEstimator/config'
+import { VideoWallEstimator } from '@/blocks/VideoWallEstimator/config'
 import { SpecComparisonTable } from '@/blocks/SpecComparisonTable/config'
 import { ResultsShowcase } from '@/blocks/ResultsShowcase/config'
 import { ProcessTimeline } from '@/blocks/ProcessTimeline/config'
@@ -276,6 +278,8 @@ export const Pages: CollectionConfig<'pages'> = {
                 TransformationFlow,
                 RoomSizeGuide,
                 SignageEstimator,
+                CastingEstimator,
+                VideoWallEstimator,
               ],
               required: true,
               admin: {

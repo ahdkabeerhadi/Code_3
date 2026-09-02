@@ -7,13 +7,16 @@ import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
 import {
   ArrowRight,
+  Building2,
   Camera,
+  Cast,
   CheckCircle2,
   ChevronsDown,
   ClipboardList,
   Handshake,
   KeyRound,
   Mail,
+  Monitor,
   Network,
   Presentation,
   Server,
@@ -27,6 +30,9 @@ import {
 // Best-effort icon per scattered item, matched by keyword.
 function getItemIcon(text?: string | null): LucideIcon {
   const t = (text || '').toLowerCase()
+  if (t.includes('presenter')) return User
+  if (t.includes('cast')) return Cast
+  if (t.includes('interactive') || t.includes('display')) return Monitor
   if (t.includes('wi-fi') || t.includes('wifi')) return Wifi
   if (t.includes('network')) return Network
   if (t.includes('server')) return Server
@@ -46,6 +52,15 @@ function getDestinationIcon(text?: string | null): LucideIcon {
   if (t.includes('plan')) return ClipboardList
   if (t.includes('handover')) return Handshake
   return CheckCircle2
+}
+
+// Best-effort icon for the main destination hero card, matched by keyword.
+// Defaults to UsersRound (a unified team) since that's the block's original use case.
+function getHeroIcon(text?: string | null): LucideIcon {
+  const t = (text || '').toLowerCase()
+  if (t.includes('screen') || t.includes('display')) return Monitor
+  if (t.includes('room')) return Building2
+  return UsersRound
 }
 
 // Small alternating tilt per chip so the "before" state reads as scattered
@@ -134,7 +149,10 @@ export const TeamConvergenceBlock: React.FC<Props> = ({
                 isLarge ? 'h-12 w-12' : 'h-9 w-9',
               )}
             >
-              <UsersRound className={isLarge ? 'h-6 w-6' : 'h-5 w-5'} />
+              {(() => {
+                const HeroIcon = getHeroIcon(teamLabel)
+                return <HeroIcon className={isLarge ? 'h-6 w-6' : 'h-5 w-5'} />
+              })()}
             </span>
             <span
               className={cn(
