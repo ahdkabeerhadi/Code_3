@@ -64,6 +64,7 @@ import { TeamConvergence } from '@/blocks/TeamConvergence/config'
 import { ServiceJourney } from '@/blocks/ServiceJourney/config'
 import { CustodyChain } from '@/blocks/CustodyChain/config'
 import { DisplayEstimator } from '@/blocks/DisplayEstimator/config'
+import { TransformationFlow } from '@/blocks/TransformationFlow/config'
 import { SpecComparisonTable } from '@/blocks/SpecComparisonTable/config'
 import { ResultsShowcase } from '@/blocks/ResultsShowcase/config'
 import { ProcessTimeline } from '@/blocks/ProcessTimeline/config'
@@ -270,6 +271,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 ServiceJourney,
                 CustodyChain,
                 DisplayEstimator,
+                TransformationFlow,
               ],
               required: true,
               admin: {

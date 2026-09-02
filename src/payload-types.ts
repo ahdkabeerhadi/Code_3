@@ -367,6 +367,7 @@ export interface Page {
     | ServiceJourneyBlock
     | CustodyChainBlock
     | DisplayEstimatorBlock
+    | TransformationFlowBlock
   )[];
   meta?: {
     title?: string | null;
@@ -2894,6 +2895,55 @@ export interface DisplayEstimatorBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TransformationFlowBlock".
+ */
+export interface TransformationFlowBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  beforeLabel?: string | null;
+  /**
+   * The old, faceless way - shown as plain muted chips, deliberately without icons.
+   */
+  beforeSteps?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * The branded destination, e.g. "CODE3 INTERACTIVE DISPLAY".
+   */
+  hubLabel?: string | null;
+  /**
+   * What the hub enables - shown as branded, icon-matched chips.
+   */
+  capabilitySteps?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  outcomeLabel?: string | null;
+  /**
+   * The payoff line, e.g. "A Smarter Way to Meet, Teach & Collaborate."
+   */
+  outcomeText: string;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'transformationFlow';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -3478,6 +3528,7 @@ export interface PagesSelect<T extends boolean = true> {
         serviceJourney?: T | ServiceJourneyBlockSelect<T>;
         custodyChain?: T | CustodyChainBlockSelect<T>;
         displayEstimator?: T | DisplayEstimatorBlockSelect<T>;
+        transformationFlow?: T | TransformationFlowBlockSelect<T>;
       };
   meta?:
     | T
@@ -4953,6 +5004,36 @@ export interface DisplayEstimatorBlockSelect<T extends boolean = true> {
       };
   submitLabel?: T;
   disclaimer?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TransformationFlowBlock_select".
+ */
+export interface TransformationFlowBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  beforeLabel?: T;
+  beforeSteps?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  hubLabel?: T;
+  capabilitySteps?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  outcomeLabel?: T;
+  outcomeText?: T;
   ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;
