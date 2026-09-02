@@ -37,20 +37,13 @@ export const DisplayEstimator: Block = {
     { name: 'usersLabel', type: 'text', label: 'Users Question Label', defaultValue: 'Number of Users', localized: true },
     optionsField('usersOptions'),
     {
-      name: 'screenSizeLabel',
-      type: 'text',
-      label: 'Screen Size Question Label',
-      defaultValue: 'Preferred Screen Size',
-      localized: true,
-    },
-    {
-      name: 'screenSizeOptions',
+      name: 'sizeTiers',
       type: 'array',
-      label: 'Screen Size Options',
+      label: 'Recommended Screen-Size Tiers',
       minRows: 2,
       admin: {
         description:
-          'First option should be "Not Sure" - if selected, the recommended size is computed from Number of Users instead of taken literally.',
+          'Not a question - the possible recommended sizes, ordered smallest to largest. Matched automatically from Number of Users.',
       },
       fields: [{ name: 'text', type: 'text', required: true, localized: true }],
     },

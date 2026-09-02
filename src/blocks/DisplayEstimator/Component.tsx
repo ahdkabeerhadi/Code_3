@@ -8,12 +8,11 @@ import React, { useState } from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Check, MapPin, Monitor, Sparkles, Users, Video, type LucideIcon } from 'lucide-react'
+import { ArrowRight, Check, MapPin, Sparkles, Users, Video, type LucideIcon } from 'lucide-react'
 
-// Maps a "Number of Users" option index to a recommended screen-size tier,
-// 0-based among whichever options are NOT "Not Sure" (there may not be one at
-// all). Kept in code as a best-effort default; an explicit screen-size
-// preference from the visitor always wins over this.
+// Maps a "Number of Users" option index to a recommended screen-size tier
+// index within sizeTiers (0-based, smallest to largest). Kept in code as a
+// best-effort default since there's no explicit screen-size question anymore.
 const USERS_TO_SIZE_TIER = [0, 1, 1, 2]
 
 function ChipQuestion({
@@ -73,8 +72,7 @@ export const DisplayEstimatorBlock: React.FC<Props> = ({
   locationOptions = [],
   usersLabel,
   usersOptions = [],
-  screenSizeLabel,
-  screenSizeOptions = [],
+  sizeTiers = [],
   vcLabel,
   vcOptions = [],
   submitLabel,
@@ -84,21 +82,20 @@ export const DisplayEstimatorBlock: React.FC<Props> = ({
 }) => {
   const safeLocation = locationOptions || []
   const safeUsers = usersOptions || []
-  const safeScreenSize = screenSizeOptions || []
+  const safeSizeTiers = sizeTiers || []
   const safeVc = vcOptions || []
 
   const [location, setLocation] = useState<number | null>(null)
   const [users, setUsers] = useState<number | null>(null)
-  const [screenSize, setScreenSize] = useState<number | null>(null)
   const [vc, setVc] = useState<number | null>(null)
   const [attempted, setAttempted] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
-  if (safeLocation.length === 0 || safeUsers.length === 0 || safeScreenSize.length === 0 || safeVc.length === 0) {
+  if (safeLocation.length === 0 || safeUsers.length === 0 || safeSizeTiers.length === 0 || safeVc.length === 0) {
     return null
   }
 
-  const allAnswered = location !== null && users !== null && screenSize !== null && vc !== null
+  const allAnswered = location !== null && users !== null && vc !== null
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -113,23 +110,10 @@ export const DisplayEstimatorBlock: React.FC<Props> = ({
     if (!submitted || !allAnswered) return null
 
     const wantsVc = (safeVc[vc as number]?.text || '').toLowerCase().includes('yes')
-
-    // Detected by text, not position - so this still works whether or not a
-    // "Not Sure" option exists at all in the configured list.
-    const notSureIndex = safeScreenSize.findIndex((o) => (o.text || '').toLowerCase().includes('not sure'))
-
-    // An explicit preference always wins over the computed default.
-    const recommendedIndex =
-      screenSize !== notSureIndex
-        ? screenSize
-        : Math.min(
-            (notSureIndex === 0 ? 1 : 0) + (USERS_TO_SIZE_TIER[users as number] ?? 0),
-            safeScreenSize.length - 1,
-          )
-    const recommendedSize = safeScreenSize[recommendedIndex]?.text
+    const tierIndex = Math.min(USERS_TO_SIZE_TIER[users as number] ?? 0, safeSizeTiers.length - 1)
 
     return {
-      size: recommendedSize,
+      size: safeSizeTiers[tierIndex]?.text,
       locationText: safeLocation[location as number]?.text,
       usersText: safeUsers[users as number]?.text,
       wantsVc,
@@ -164,14 +148,6 @@ export const DisplayEstimatorBlock: React.FC<Props> = ({
                 value={users}
                 onChange={setUsers}
                 error={attempted && users === null}
-              />
-              <ChipQuestion
-                label={screenSizeLabel}
-                Icon={Monitor}
-                options={safeScreenSize}
-                value={screenSize}
-                onChange={setScreenSize}
-                error={attempted && screenSize === null}
               />
               <ChipQuestion
                 label={vcLabel}

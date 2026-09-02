@@ -2861,11 +2861,10 @@ export interface DisplayEstimatorBlock {
         id?: string | null;
       }[]
     | null;
-  screenSizeLabel?: string | null;
   /**
-   * First option should be "Not Sure" - if selected, the recommended size is computed from Number of Users instead of taken literally.
+   * Not a question - the possible recommended sizes, ordered smallest to largest. Matched automatically from Number of Users.
    */
-  screenSizeOptions?:
+  sizeTiers?:
     | {
         text: string;
         id?: string | null;
@@ -4939,8 +4938,7 @@ export interface DisplayEstimatorBlockSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
-  screenSizeLabel?: T;
-  screenSizeOptions?:
+  sizeTiers?:
     | T
     | {
         text?: T;
