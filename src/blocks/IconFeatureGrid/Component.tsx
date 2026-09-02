@@ -7,6 +7,7 @@ import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
 import {
   AppWindow,
+  Aperture,
   ArrowRight,
   Building2,
   Cable,
@@ -16,6 +17,7 @@ import {
   Columns3,
   DoorOpen,
   FileText,
+  Frame,
   GraduationCap,
   Grid2x2,
   Grid3x3,
@@ -36,7 +38,9 @@ import {
   Printer,
   Projector,
   RefreshCw,
+  Ruler,
   Server,
+  Settings2,
   Share2,
   ShieldCheck,
   Signpost,
@@ -77,6 +81,15 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('direct view')) return Maximize2
   if (t.includes('fine-pitch') || t.includes('fine pitch')) return ZoomIn
   if (t.includes('projection') || t.includes('projector')) return Projector
+  if (t.includes('2 × 2') || t.includes('2x2') || t.includes('2 x 2')) return Grid2x2
+  if (t.includes('3 × 3') || t.includes('3x3') || t.includes('3 x 3')) return Grid3x3
+  if (t.includes('4 × 4') || t.includes('4x4') || t.includes('4 x 4')) return LayoutGrid
+  if (/\bcustom\b/.test(t)) return Settings2
+  if (t.includes('screen size')) return Maximize2
+  if (t.includes('viewing distance') || t.includes('distance')) return Ruler
+  if (t.includes('room dimension') || t.includes('dimension')) return Building2
+  if (t.includes('resolution')) return Aperture
+  if (t.includes('bezel')) return Frame
   if (t.includes('outdoor')) return Sun
   if (t.includes('indoor')) return Home
   if (t.includes('menu board') || t.includes('menu')) return UtensilsCrossed
@@ -99,7 +112,7 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('teach')) return GraduationCap
   if (t.includes('365') || t.includes('microsoft') || t.includes('email')) return Mail
   if (t.includes('communication') || t.includes('phone') || t.includes('voip') || t.includes('call')) return Phone
-  if (t.includes('cabling') || t.includes('cable')) return Cable
+  if (t.includes('cabling') || t.includes('cable') || t.includes('source')) return Cable
   if (t.includes('user') || t.includes('account')) return User
   if (t.includes('share')) return Share2
   return LayoutGrid
