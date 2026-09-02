@@ -7,7 +7,9 @@ import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
 import {
   ArrowRight,
+  Building2,
   Camera,
+  Cast,
   CheckCircle2,
   ChevronsDown,
   ClipboardList,
@@ -29,6 +31,8 @@ import {
 function getItemIcon(text?: string | null): LucideIcon {
   const t = (text || '').toLowerCase()
   if (t.includes('presenter')) return User
+  if (t.includes('cast')) return Cast
+  if (t.includes('interactive') || t.includes('display')) return Monitor
   if (t.includes('wi-fi') || t.includes('wifi')) return Wifi
   if (t.includes('network')) return Network
   if (t.includes('server')) return Server
@@ -55,6 +59,7 @@ function getDestinationIcon(text?: string | null): LucideIcon {
 function getHeroIcon(text?: string | null): LucideIcon {
   const t = (text || '').toLowerCase()
   if (t.includes('screen') || t.includes('display')) return Monitor
+  if (t.includes('room')) return Building2
   return UsersRound
 }
 
