@@ -369,6 +369,7 @@ export interface Page {
     | DisplayEstimatorBlock
     | TransformationFlowBlock
     | RoomSizeGuideBlock
+    | SignageEstimatorBlock
   )[];
   meta?: {
     title?: string | null;
@@ -2977,6 +2978,71 @@ export interface RoomSizeGuideBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SignageEstimatorBlock".
+ */
+export interface SignageEstimatorBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  locationLabel?: string | null;
+  locationOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  screensLabel?: string | null;
+  screensOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  environmentLabel?: string | null;
+  environmentOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  sizeLabel?: string | null;
+  sizeOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  contentTypeLabel?: string | null;
+  contentTypeOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  cmsLabel?: string | null;
+  cmsOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  submitLabel?: string | null;
+  disclaimer?: string | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'signageEstimator';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -3563,6 +3629,7 @@ export interface PagesSelect<T extends boolean = true> {
         displayEstimator?: T | DisplayEstimatorBlockSelect<T>;
         transformationFlow?: T | TransformationFlowBlockSelect<T>;
         roomSizeGuide?: T | RoomSizeGuideBlockSelect<T>;
+        signageEstimator?: T | SignageEstimatorBlockSelect<T>;
       };
   meta?:
     | T
@@ -5090,6 +5157,64 @@ export interface RoomSizeGuideBlockSelect<T extends boolean = true> {
         recommended?: T;
         id?: T;
       };
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SignageEstimatorBlock_select".
+ */
+export interface SignageEstimatorBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  locationLabel?: T;
+  locationOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  screensLabel?: T;
+  screensOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  environmentLabel?: T;
+  environmentOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  sizeLabel?: T;
+  sizeOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  contentTypeLabel?: T;
+  contentTypeOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  cmsLabel?: T;
+  cmsOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  submitLabel?: T;
+  disclaimer?: T;
   ctaText?: T;
   ctaLabel?: T;
   ctaUrl?: T;

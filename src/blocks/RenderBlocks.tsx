@@ -71,6 +71,7 @@ import { CustodyChainBlock } from './CustodyChain/Component'
 import { DisplayEstimatorBlock } from './DisplayEstimator/Component'
 import { TransformationFlowBlock } from './TransformationFlow/Component'
 import { RoomSizeGuideBlock } from './RoomSizeGuide/Component'
+import { SignageEstimatorBlock } from './SignageEstimator/Component'
 
 interface BlockProps {
   disableInnerContainer?: boolean
@@ -144,6 +145,7 @@ const blockComponents = {
   displayEstimator: DisplayEstimatorBlock,
   transformationFlow: TransformationFlowBlock,
   roomSizeGuide: RoomSizeGuideBlock,
+  signageEstimator: SignageEstimatorBlock,
   resultsShowcase: ResultsShowcaseBlock,
   processTimeline: ProcessTimelineBlock,
   coverageTable: CoverageTableBlock,
