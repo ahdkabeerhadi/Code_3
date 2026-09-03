@@ -372,6 +372,7 @@ export interface Page {
     | SignageEstimatorBlock
     | CastingEstimatorBlock
     | VideoWallEstimatorBlock
+    | ProjectorEstimatorBlock
   )[];
   meta?: {
     title?: string | null;
@@ -3179,6 +3180,71 @@ export interface VideoWallEstimatorBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProjectorEstimatorBlock".
+ */
+export interface ProjectorEstimatorBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  spaceLabel?: string | null;
+  spaceOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  roomSizeLabel?: string | null;
+  roomSizeOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  peopleLabel?: string | null;
+  peopleOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  lightLabel?: string | null;
+  lightOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  projectionLabel?: string | null;
+  projectionOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  screenLabel?: string | null;
+  screenOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  submitLabel?: string | null;
+  disclaimer?: string | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'projectorEstimator';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -3768,6 +3834,7 @@ export interface PagesSelect<T extends boolean = true> {
         signageEstimator?: T | SignageEstimatorBlockSelect<T>;
         castingEstimator?: T | CastingEstimatorBlockSelect<T>;
         videoWallEstimator?: T | VideoWallEstimatorBlockSelect<T>;
+        projectorEstimator?: T | ProjectorEstimatorBlockSelect<T>;
       };
   meta?:
     | T
@@ -5448,6 +5515,64 @@ export interface VideoWallEstimatorBlockSelect<T extends boolean = true> {
       };
   distanceLabel?: T;
   distanceOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  submitLabel?: T;
+  disclaimer?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProjectorEstimatorBlock_select".
+ */
+export interface ProjectorEstimatorBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  spaceLabel?: T;
+  spaceOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  roomSizeLabel?: T;
+  roomSizeOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  peopleLabel?: T;
+  peopleOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  lightLabel?: T;
+  lightOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  projectionLabel?: T;
+  projectionOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  screenLabel?: T;
+  screenOptions?:
     | T
     | {
         text?: T;
