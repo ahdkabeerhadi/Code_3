@@ -75,6 +75,7 @@ import { SignageEstimatorBlock } from './SignageEstimator/Component'
 import { CastingEstimatorBlock } from './CastingEstimator/Component'
 import { VideoWallEstimatorBlock } from './VideoWallEstimator/Component'
 import { ProjectorEstimatorBlock } from './ProjectorEstimator/Component'
+import { PASystemEstimatorBlock } from './PASystemEstimator/Component'
 
 interface BlockProps {
   disableInnerContainer?: boolean
@@ -152,6 +153,7 @@ const blockComponents = {
   castingEstimator: CastingEstimatorBlock,
   videoWallEstimator: VideoWallEstimatorBlock,
   projectorEstimator: ProjectorEstimatorBlock,
+  paSystemEstimator: PASystemEstimatorBlock,
   resultsShowcase: ResultsShowcaseBlock,
   processTimeline: ProcessTimelineBlock,
   coverageTable: CoverageTableBlock,
