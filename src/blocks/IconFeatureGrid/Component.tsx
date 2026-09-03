@@ -6,6 +6,7 @@ import React from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
 import {
+  Activity,
   AppWindow,
   Aperture,
   ArrowRight,
@@ -100,6 +101,8 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('4 × 4') || t.includes('4x4') || t.includes('4 x 4')) return LayoutGrid
   if (/\bcustom\b/.test(t)) return Settings2
   if (t.includes('screen size')) return Maximize2
+  if (t.includes('room size')) return Home
+  if (t.includes('ambient light')) return Lightbulb
   if (t.includes('viewing distance') || t.includes('distance')) return Ruler
   if (t.includes('room dimension') || t.includes('dimension')) return Building2
   if (t.includes('resolution')) return Aperture
@@ -128,6 +131,7 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('image')) return ImageIcon
   if (t.includes('meeting') || t.includes('video')) return Video
   if (t.includes('content')) return FileText
+  if (t.includes('usage')) return Activity
   if (t.includes('teach')) return GraduationCap
   if (t.includes('365') || t.includes('microsoft') || t.includes('email')) return Mail
   if (t.includes('communication') || t.includes('phone') || t.includes('voip') || t.includes('call')) return Phone
