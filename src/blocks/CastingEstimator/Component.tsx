@@ -169,7 +169,7 @@ export const CastingEstimatorBlock: React.FC<Props> = ({
                   <StartOverButton onClick={handleStartOver} />
                 </div>
               ) : (
-                <div key={step}>
+                <div key={step} className="animate-step-in">
                   <WizardProgress current={step} total={totalSteps} />
                   {steps[step]}
                   <WizardBackLink show={step > 0} onBack={handleBack} />

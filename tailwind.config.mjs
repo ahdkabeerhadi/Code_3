@@ -78,6 +78,8 @@ const config = {
         'slide-in-from-top': 'slide-in-from-top 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
         'drift': 'drift 14s ease-in-out infinite',
         'streak-sway': 'streak-sway 12s ease-in-out infinite',
+        'step-in': 'step-in 0.4s ease-out',
+        'result-pop': 'result-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -185,6 +187,14 @@ const config = {
         'streak-sway': {
           '0%, 100%': { transform: 'translateX(0px) rotate(-20deg)' },
           '50%': { transform: 'translateX(70px) rotate(-20deg)' },
+        },
+        'step-in': {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'result-pop': {
+          '0%': { opacity: '0', transform: 'scale(0.94)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
         },
       },
     },

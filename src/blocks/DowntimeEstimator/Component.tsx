@@ -173,7 +173,7 @@ export const DowntimeEstimatorBlock: React.FC<
                   <StartOverButton onClick={handleStartOver} />
                 </div>
               ) : (
-                <div key={step}>
+                <div key={step} className="animate-step-in">
                   <WizardProgress current={step} total={totalSteps} />
                   {current.content}
                   {current.kind === 'number' ? (

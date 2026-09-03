@@ -177,7 +177,7 @@ export const SetupEstimatorBlock: React.FC<Props> = ({
                   <StartOverButton onClick={handleStartOver} />
                 </div>
               ) : (
-                <div key={step}>
+                <div key={step} className="animate-step-in">
                   <WizardProgress current={step} total={safeQuestions.length} />
 
                   <div className="mb-4 flex items-center gap-3">
@@ -201,10 +201,10 @@ export const SetupEstimatorBlock: React.FC<Props> = ({
                           type="button"
                           onClick={() => (isMulti ? toggleMulti(step, oIndex) : selectSingle(step, oIndex))}
                           className={cn(
-                            'inline-flex items-center gap-1.5 rounded-full border px-4 py-2.5 text-sm font-medium transition-colors',
+                            'inline-flex items-center gap-1.5 rounded-full border px-4 py-2.5 text-sm font-medium transition-all duration-150 active:scale-95',
                             isSelected
-                              ? 'border-primary_red bg-primary_red text-white'
-                              : 'border-gray-200 bg-white text-gray-600 hover:border-primary_red/50 hover:bg-[#FDEBEC] hover:text-primary_red',
+                              ? 'border-primary_red bg-primary_red text-white shadow-sm shadow-primary_red/20'
+                              : 'border-gray-200 bg-white text-gray-600 hover:-translate-y-0.5 hover:border-primary_red/50 hover:bg-[#FDEBEC] hover:text-primary_red hover:shadow-sm',
                           )}
                         >
                           {isMulti ? (

@@ -29,10 +29,10 @@ export function ChipQuestion({
             type="button"
             onClick={() => onChange(i)}
             className={cn(
-              'inline-flex items-center gap-1.5 rounded-full border px-4 py-2.5 text-sm font-medium transition-colors',
+              'inline-flex items-center gap-1.5 rounded-full border px-4 py-2.5 text-sm font-medium transition-all duration-150 active:scale-95',
               value === i
-                ? 'border-primary_red bg-primary_red text-white'
-                : 'border-gray-200 bg-white text-gray-600 hover:border-primary_red/50 hover:bg-[#FDEBEC] hover:text-primary_red',
+                ? 'border-primary_red bg-primary_red text-white shadow-sm shadow-primary_red/20'
+                : 'border-gray-200 bg-white text-gray-600 hover:-translate-y-0.5 hover:border-primary_red/50 hover:bg-[#FDEBEC] hover:text-primary_red hover:shadow-sm',
             )}
           >
             {value === i && <Check className="h-3.5 w-3.5" />}
