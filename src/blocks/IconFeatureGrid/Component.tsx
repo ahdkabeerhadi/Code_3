@@ -35,6 +35,7 @@ import {
   Mail,
   Maximize2,
   Megaphone,
+  Mic,
   Minimize2,
   Music,
   Network,
@@ -53,6 +54,7 @@ import {
   Signpost,
   SlidersHorizontal,
   Smartphone,
+  Speaker,
   Store,
   Sun,
   SunMedium,
@@ -61,6 +63,7 @@ import {
   Users,
   UtensilsCrossed,
   Video,
+  Volume2,
   Wifi,
   Wrench,
   Zap,
@@ -132,6 +135,10 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('background music') || t.includes('music')) return Music
   if (t.includes('ip-based') || t.includes('ip based')) return Network
   if (t.includes('commercial')) return Building2
+  if (t.includes('microphone')) return Mic
+  if (t.includes('speaker')) return Speaker
+  if (t.includes('amplifier')) return Volume2
+  if (t.includes('audio controller')) return SlidersHorizontal
   if (t.includes('promotion')) return Megaphone
   if (t.includes('schedule')) return Calendar
   if (t.includes('playlist')) return ListVideo
