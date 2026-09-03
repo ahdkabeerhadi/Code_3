@@ -9,6 +9,7 @@ import {
   AppWindow,
   Aperture,
   ArrowRight,
+  Briefcase,
   Building2,
   Cable,
   Calendar,
@@ -32,6 +33,7 @@ import {
   Mail,
   Maximize2,
   Megaphone,
+  Minimize2,
   Network,
   Palette,
   PenLine,
@@ -58,6 +60,7 @@ import {
   Video,
   Wifi,
   Wrench,
+  Zap,
   ZoomIn,
   type LucideIcon,
 } from 'lucide-react'
@@ -85,6 +88,12 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('video wall')) return Grid3x3
   if (t.includes('direct view')) return Maximize2
   if (t.includes('fine-pitch') || t.includes('fine pitch')) return ZoomIn
+  if (t.includes('business projector')) return Briefcase
+  if (t.includes('short-throw') || t.includes('short throw')) return Minimize2
+  if (t.includes('laser')) return Zap
+  if (t.includes('high-brightness') || t.includes('high brightness')) return SunMedium
+  if (t.includes('large venue')) return Building2
+  if (t.includes('interactive projector')) return Hand
   if (t.includes('projection') || t.includes('projector')) return Projector
   if (t.includes('2 × 2') || t.includes('2x2') || t.includes('2 x 2')) return Grid2x2
   if (t.includes('3 × 3') || t.includes('3x3') || t.includes('3 x 3')) return Grid3x3
