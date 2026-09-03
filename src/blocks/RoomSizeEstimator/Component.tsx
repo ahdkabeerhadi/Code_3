@@ -61,11 +61,11 @@ export const RoomSizeEstimatorBlock: React.FC<Props> = ({
           <EstimatorCard>
             <form onSubmit={handleSubmit} className={estimatorFormClassName}>
               <div>
-                <div className="mb-2 flex items-center gap-2">
-                  <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary_red/10 text-primary_red">
-                    <Users className="h-3.5 w-3.5" />
+                <div className="mb-3 flex items-center gap-3">
+                  <span className="flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-[#FDEBEC] text-primary_red">
+                    <Users className="h-5 w-5" />
                   </span>
-                  <label className="text-xs font-bold uppercase tracking-wider text-gray-600">{participantsLabel}</label>
+                  <label className="text-sm font-semibold text-foreground">{participantsLabel}</label>
                 </div>
                 <input
                   type="number"
@@ -74,7 +74,7 @@ export const RoomSizeEstimatorBlock: React.FC<Props> = ({
                   placeholder="Enter the number of participants"
                   value={participants}
                   onChange={(e) => setParticipants(e.target.value === '' ? '' : Number(e.target.value))}
-                  className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 outline-none transition-colors placeholder:text-gray-400 focus:border-primary_red"
+                  className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 outline-none transition-colors placeholder:text-gray-400 focus:border-primary_red"
                 />
                 <Button type="submit" variant="default" className="mt-4 w-full">
                   Get Your Recommended Setup
