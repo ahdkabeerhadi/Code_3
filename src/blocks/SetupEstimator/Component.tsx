@@ -180,16 +180,16 @@ export const SetupEstimatorBlock: React.FC<Props> = ({
                 <div key={step} className="animate-step-in">
                   <WizardProgress current={step} total={safeQuestions.length} />
 
-                  <div className="mb-4 flex items-center gap-3">
-                    <span className="flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-[#FDEBEC] text-primary_red">
-                      <QuestionIcon className="h-5 w-5" />
+                  <div className="mb-6 flex items-center gap-4">
+                    <span className="flex h-14 w-14 flex-none items-center justify-center rounded-xl bg-[#FDEBEC] text-primary_red">
+                      <QuestionIcon className="h-6 w-6" />
                     </span>
-                    <label className="text-base font-semibold text-foreground">
+                    <label className="text-xl font-semibold text-foreground">
                       {question.label}
-                      {isMulti && <span className="ml-1.5 font-normal text-gray-400">(select all that apply)</span>}
+                      {isMulti && <span className="ml-1.5 text-base font-normal text-gray-400">(select all that apply)</span>}
                     </label>
                   </div>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-3">
                     {(question.options || []).map((option, oIndex) => {
                       const isSelected = isMulti
                         ? Array.isArray(answers[step]) && (answers[step] as number[]).includes(oIndex)
@@ -201,7 +201,7 @@ export const SetupEstimatorBlock: React.FC<Props> = ({
                           type="button"
                           onClick={() => (isMulti ? toggleMulti(step, oIndex) : selectSingle(step, oIndex))}
                           className={cn(
-                            'inline-flex items-center gap-1.5 rounded-full border px-4 py-2.5 text-sm font-medium transition-all duration-150 active:scale-95',
+                            'inline-flex items-center gap-2 rounded-full border px-5 py-3 text-base font-medium transition-all duration-150 active:scale-95',
                             isSelected
                               ? 'border-primary_red bg-primary_red text-white shadow-sm shadow-primary_red/20'
                               : 'border-gray-200 bg-white text-gray-600 hover:-translate-y-0.5 hover:border-primary_red/50 hover:bg-[#FDEBEC] hover:text-primary_red hover:shadow-sm',
@@ -209,14 +209,14 @@ export const SetupEstimatorBlock: React.FC<Props> = ({
                         >
                           {isMulti ? (
                             isSelected ? (
-                              <CheckSquare2 className="h-3.5 w-3.5 flex-none" />
+                              <CheckSquare2 className="h-4 w-4 flex-none" />
                             ) : (
-                              <Square className="h-3.5 w-3.5 flex-none" />
+                              <Square className="h-4 w-4 flex-none" />
                             )
                           ) : (
-                            isSelected && <Check className="h-3.5 w-3.5 flex-none" />
+                            isSelected && <Check className="h-4 w-4 flex-none" />
                           )}
-                          {ItemIcon && !isSelected && <ItemIcon className="h-3.5 w-3.5 flex-none text-primary_red/70" />}
+                          {ItemIcon && !isSelected && <ItemIcon className="h-4 w-4 flex-none text-primary_red/70" />}
                           {option.text}
                         </button>
                       )

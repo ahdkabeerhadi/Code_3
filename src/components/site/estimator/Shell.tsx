@@ -10,14 +10,14 @@ export function EstimatorCard({ children, className }: { children: ReactNode; cl
   )
 }
 
-export const estimatorBodyClassName = 'mx-auto max-w-xl p-6 md:p-10'
+export const estimatorBodyClassName = 'mx-auto max-w-2xl px-6 py-10 md:px-12 md:py-16'
 
 export function StartOverButton({ onClick }: { onClick: () => void }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className="mx-auto mt-5 block text-sm font-semibold text-primary_red hover:underline"
+      className="mx-auto mt-6 block text-base font-semibold text-primary_red hover:underline"
     >
       Start Over
     </button>

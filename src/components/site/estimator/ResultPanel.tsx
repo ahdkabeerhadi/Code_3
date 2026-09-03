@@ -11,13 +11,13 @@ export function EstimatorResultPanel({
   children?: ReactNode
 }) {
   return (
-    <div className="animate-result-pop rounded-2xl bg-[#FDEBEC] p-6 text-center sm:p-8">
-      <span className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-primary_red text-white">
-        <Check className="h-5 w-5" strokeWidth={3} />
+    <div className="animate-result-pop rounded-2xl bg-[#FDEBEC] p-8 text-center sm:p-12">
+      <span className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary_red text-white">
+        <Check className="h-6 w-6" strokeWidth={3} />
       </span>
-      {eyebrow && <div className="text-xs font-bold uppercase tracking-wider text-primary_red">{eyebrow}</div>}
-      {headline && <div className="mt-2 text-2xl font-bold text-foreground md:text-3xl">{headline}</div>}
-      {children && <div className="mt-3 text-sm leading-relaxed text-gray-600">{children}</div>}
+      {eyebrow && <div className="text-sm font-bold uppercase tracking-wider text-primary_red">{eyebrow}</div>}
+      {headline && <div className="mt-2 text-3xl font-bold text-foreground md:text-4xl">{headline}</div>}
+      {children && <div className="mt-4 text-base leading-relaxed text-gray-600">{children}</div>}
     </div>
   )
 }

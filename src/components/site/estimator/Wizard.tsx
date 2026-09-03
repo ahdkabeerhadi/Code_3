@@ -4,14 +4,14 @@ import { ArrowLeft, ArrowRight } from 'lucide-react'
 export function WizardProgress({ current, total }: { current: number; total: number }) {
   const pct = ((current + 1) / total) * 100
   return (
-    <div className="mb-6">
-      <div className="mb-2 flex items-center justify-between text-xs font-medium text-gray-500">
+    <div className="mb-8">
+      <div className="mb-2.5 flex items-center justify-between text-sm font-medium text-gray-500">
         <span>
           Step {current + 1} of {total}
         </span>
         <span>{Math.round(pct)}%</span>
       </div>
-      <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100">
+      <div className="h-2.5 w-full overflow-hidden rounded-full bg-gray-100">
         <div
           className="h-full rounded-full bg-primary_red transition-all duration-500 ease-out"
           style={{ width: `${pct}%` }}
@@ -28,7 +28,7 @@ export function WizardBackLink({ show, onBack }: { show: boolean; onBack: () => 
       <button
         type="button"
         onClick={onBack}
-        className="inline-flex items-center gap-1.5 rounded-full px-2 py-2.5 text-sm font-semibold text-gray-500 transition-all active:scale-95 hover:text-foreground"
+        className="inline-flex items-center gap-1.5 rounded-full px-2 py-3 text-base font-semibold text-gray-500 transition-all active:scale-95 hover:text-foreground"
       >
         <ArrowLeft className="h-4 w-4" />
         Back
@@ -56,7 +56,7 @@ export function WizardNav({
         <button
           type="button"
           onClick={onBack}
-          className="inline-flex items-center gap-1.5 rounded-full px-2 py-2.5 text-sm font-semibold text-gray-500 transition-all active:scale-95 hover:text-foreground"
+          className="inline-flex items-center gap-1.5 rounded-full px-2 py-3 text-base font-semibold text-gray-500 transition-all active:scale-95 hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" />
           Back
@@ -69,7 +69,7 @@ export function WizardNav({
         onClick={onNext}
         disabled={nextDisabled}
         className={cn(
-          'group inline-flex items-center gap-2 rounded-full bg-primary_red px-6 py-2.5 text-sm font-semibold text-white transition-all active:scale-95 hover:bg-secondary_red',
+          'group inline-flex items-center gap-2 rounded-full bg-primary_red px-7 py-3 text-base font-semibold text-white transition-all active:scale-95 hover:bg-secondary_red',
           nextDisabled && 'cursor-not-allowed opacity-40 hover:bg-primary_red active:scale-100',
         )}
       >
