@@ -6,11 +6,11 @@ import { cn } from '@/utilities/ui'
 import React, { useState } from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
-import { Button } from '@/components/ui/button'
 import { ChipQuestion } from '@/components/site/estimator/ChipQuestion'
 import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
-import { EstimatorCard, EstimatorFooter, estimatorFormClassName, estimatorQuestionsClassName } from '@/components/site/estimator/Shell'
-import { ArrowRight, LayoutTemplate, MapPin, Monitor, Settings2, Sun } from 'lucide-react'
+import { EstimatorCard, EstimatorFooter, StartOverButton, estimatorBodyClassName } from '@/components/site/estimator/Shell'
+import { WizardNav, WizardProgress } from '@/components/site/estimator/Wizard'
+import { LayoutTemplate, MapPin, Monitor, Settings2, Sun } from 'lucide-react'
 
 // Maps a "Where will it be used?" option index to a recommended screen-size
 // tier index within sizeTiers (0-based, smallest to largest). Kept in code
@@ -61,7 +61,7 @@ export const SignageEstimatorBlock: React.FC<Props> = ({
   const [environment, setEnvironment] = useState<number | null>(null)
   const [contentType, setContentType] = useState<number | null>(null)
   const [cms, setCms] = useState<number | null>(null)
-  const [attempted, setAttempted] = useState(false)
+  const [step, setStep] = useState(0)
   const [submitted, setSubmitted] = useState(false)
 
   if (
@@ -75,20 +75,59 @@ export const SignageEstimatorBlock: React.FC<Props> = ({
     return null
   }
 
-  const allAnswered =
-    location !== null && screens !== null && environment !== null && contentType !== null && cms !== null
+  const steps = [
+    {
+      answered: location !== null,
+      content: <ChipQuestion label={locationLabel} Icon={MapPin} options={safeLocation} value={location} onChange={setLocation} />,
+    },
+    {
+      answered: screens !== null,
+      content: <ChipQuestion label={screensLabel} Icon={Monitor} options={safeScreens} value={screens} onChange={setScreens} />,
+    },
+    {
+      answered: environment !== null,
+      content: (
+        <ChipQuestion label={environmentLabel} Icon={Sun} options={safeEnvironment} value={environment} onChange={setEnvironment} />
+      ),
+    },
+    {
+      answered: cms !== null,
+      content: <ChipQuestion label={cmsLabel} Icon={Settings2} options={safeCms} value={cms} onChange={setCms} />,
+    },
+    {
+      answered: contentType !== null,
+      content: (
+        <ChipQuestion
+          label={contentTypeLabel}
+          Icon={LayoutTemplate}
+          options={safeContentType}
+          value={contentType}
+          onChange={setContentType}
+        />
+      ),
+    },
+  ]
+  const isLast = step === steps.length - 1
+  const current = steps[step]
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!allAnswered) {
-      setAttempted(true)
-      return
-    }
-    setSubmitted(true)
+  const handleNext = () => {
+    if (!current.answered) return
+    if (isLast) setSubmitted(true)
+    else setStep((s) => s + 1)
+  }
+  const handleBack = () => setStep((s) => Math.max(0, s - 1))
+  const handleStartOver = () => {
+    setLocation(null)
+    setScreens(null)
+    setEnvironment(null)
+    setContentType(null)
+    setCms(null)
+    setStep(0)
+    setSubmitted(false)
   }
 
   const result = (() => {
-    if (!submitted || !allAnswered) return null
+    if (!submitted) return null
 
     const wantsCms = (safeCms[cms as number]?.text || '').toLowerCase().includes('yes')
     const locationText = safeLocation[location as number]?.text
@@ -116,78 +155,33 @@ export const SignageEstimatorBlock: React.FC<Props> = ({
 
         <Reveal delayMs={100}>
           <EstimatorCard>
-            <form onSubmit={handleSubmit} className={estimatorFormClassName}>
-              <div className={estimatorQuestionsClassName}>
-                <ChipQuestion
-                  label={locationLabel}
-                  Icon={MapPin}
-                  options={safeLocation}
-                  value={location}
-                  onChange={setLocation}
-                  error={attempted && location === null}
-                />
-
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                  <ChipQuestion
-                    label={screensLabel}
-                    Icon={Monitor}
-                    options={safeScreens}
-                    value={screens}
-                    onChange={setScreens}
-                    error={attempted && screens === null}
-                  />
-                  <ChipQuestion
-                    label={environmentLabel}
-                    Icon={Sun}
-                    options={safeEnvironment}
-                    value={environment}
-                    onChange={setEnvironment}
-                    error={attempted && environment === null}
-                  />
-                </div>
-
-                <ChipQuestion
-                  label={cmsLabel}
-                  Icon={Settings2}
-                  options={safeCms}
-                  value={cms}
-                  onChange={setCms}
-                  error={attempted && cms === null}
-                />
-
-                <ChipQuestion
-                  label={contentTypeLabel}
-                  Icon={LayoutTemplate}
-                  options={safeContentType}
-                  value={contentType}
-                  onChange={setContentType}
-                  error={attempted && contentType === null}
-                />
-
-                <Button type="submit" variant="default" className="group w-full">
-                  {submitLabel}
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Button>
-              </div>
-
-              <EstimatorResultPanel
-                hasResult={Boolean(result)}
-                eyebrow="Recommended Screen Size"
-                headline={result?.sizeText}
-                emptyText={<>Answer the questions and click &ldquo;{submitLabel}&rdquo; to see your recommended signage setup.</>}
-              >
-                {result && (
-                  <>
+            <div className={estimatorBodyClassName}>
+              {result ? (
+                <div>
+                  <EstimatorResultPanel eyebrow="Recommended Screen Size" headline={result.sizeText}>
                     For {article(result.environmentText)} {result.environmentText?.toLowerCase()}{' '}
-                    {result.locationText?.toLowerCase()} running {result.contentTypeText?.toLowerCase()} content
-                    across {result.screensText?.toLowerCase()}, a {result.sizeText} display is a strong fit.{' '}
+                    {result.locationText?.toLowerCase()} running {result.contentTypeText?.toLowerCase()} content across{' '}
+                    {result.screensText?.toLowerCase()}, a {result.sizeText} display is a strong fit.{' '}
                     {result.wantsCms
                       ? "We'll include a cloud-based content management system so you can update and schedule content remotely across every screen."
                       : "Since a CMS isn't required, content can be updated directly per screen — you can always add centralized management later as you scale."}
-                  </>
-                )}
-              </EstimatorResultPanel>
-            </form>
+                  </EstimatorResultPanel>
+                  <StartOverButton onClick={handleStartOver} />
+                </div>
+              ) : (
+                <div key={step}>
+                  <WizardProgress current={step} total={steps.length} />
+                  {current.content}
+                  <WizardNav
+                    showBack={step > 0}
+                    onBack={handleBack}
+                    onNext={handleNext}
+                    nextLabel={isLast ? submitLabel || 'Submit' : 'Next'}
+                    nextDisabled={!current.answered}
+                  />
+                </div>
+              )}
+            </div>
 
             <EstimatorFooter disclaimer={disclaimer} ctaLabel={ctaLabel} ctaUrl={ctaUrl} />
           </EstimatorCard>

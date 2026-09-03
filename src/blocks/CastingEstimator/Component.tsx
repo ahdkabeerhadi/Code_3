@@ -6,11 +6,11 @@ import { cn } from '@/utilities/ui'
 import React, { useState } from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
-import { Button } from '@/components/ui/button'
 import { ChipQuestion } from '@/components/site/estimator/ChipQuestion'
 import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
-import { EstimatorCard, EstimatorFooter, estimatorFormClassName, estimatorQuestionsClassName } from '@/components/site/estimator/Shell'
-import { ArrowRight, Laptop, MapPin, Tv, Users, Video } from 'lucide-react'
+import { EstimatorCard, EstimatorFooter, StartOverButton, estimatorBodyClassName } from '@/components/site/estimator/Shell'
+import { WizardNav, WizardProgress } from '@/components/site/estimator/Wizard'
+import { Laptop, MapPin, Tv, Users, Video } from 'lucide-react'
 
 // Best-effort recommended casting label from the selected device platform.
 function deviceLabel(text?: string | null): string {
@@ -57,7 +57,7 @@ export const CastingEstimatorBlock: React.FC<Props> = ({
   const [currentDisplay, setCurrentDisplay] = useState<number | null>(null)
   const [devices, setDevices] = useState<number | null>(null)
   const [vc, setVc] = useState<number | null>(null)
-  const [attempted, setAttempted] = useState(false)
+  const [step, setStep] = useState(0)
   const [submitted, setSubmitted] = useState(false)
 
   if (
@@ -70,20 +70,65 @@ export const CastingEstimatorBlock: React.FC<Props> = ({
     return null
   }
 
-  const allAnswered =
-    location !== null && participants !== null && currentDisplay !== null && devices !== null && vc !== null
+  const steps = [
+    {
+      answered: location !== null,
+      content: <ChipQuestion label={locationLabel} Icon={MapPin} options={safeLocation} value={location} onChange={setLocation} />,
+    },
+    {
+      answered: participants !== null,
+      content: (
+        <ChipQuestion
+          label={participantsLabel}
+          Icon={Users}
+          options={safeParticipants}
+          value={participants}
+          onChange={setParticipants}
+        />
+      ),
+    },
+    {
+      answered: currentDisplay !== null,
+      content: (
+        <ChipQuestion
+          label={currentDisplayLabel}
+          Icon={Tv}
+          options={safeCurrentDisplay}
+          value={currentDisplay}
+          onChange={setCurrentDisplay}
+        />
+      ),
+    },
+    {
+      answered: devices !== null,
+      content: <ChipQuestion label={devicesLabel} Icon={Laptop} options={safeDevices} value={devices} onChange={setDevices} />,
+    },
+    {
+      answered: vc !== null,
+      content: <ChipQuestion label={vcLabel} Icon={Video} options={safeVc} value={vc} onChange={setVc} />,
+    },
+  ]
+  const isLast = step === steps.length - 1
+  const current = steps[step]
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!allAnswered) {
-      setAttempted(true)
-      return
-    }
-    setSubmitted(true)
+  const handleNext = () => {
+    if (!current.answered) return
+    if (isLast) setSubmitted(true)
+    else setStep((s) => s + 1)
+  }
+  const handleBack = () => setStep((s) => Math.max(0, s - 1))
+  const handleStartOver = () => {
+    setLocation(null)
+    setParticipants(null)
+    setCurrentDisplay(null)
+    setDevices(null)
+    setVc(null)
+    setStep(0)
+    setSubmitted(false)
   }
 
   const result = (() => {
-    if (!submitted || !allAnswered) return null
+    if (!submitted) return null
 
     const locationText = safeLocation[location as number]?.text
     const participantsText = safeParticipants[participants as number]?.text
@@ -93,14 +138,11 @@ export const CastingEstimatorBlock: React.FC<Props> = ({
 
     const label = deviceLabel(devicesText)
 
-    let vcNote =
-      "We'll help you determine whether conferencing-ready casting makes sense for your setup."
+    let vcNote = "We'll help you determine whether conferencing-ready casting makes sense for your setup."
     if (vcText.includes('yes')) {
-      vcNote =
-        "We'll include conferencing-ready casting so remote participants can join every session."
+      vcNote = "We'll include conferencing-ready casting so remote participants can join every session."
     } else if (vcText.includes('no')) {
-      vcNote =
-        "Since video conferencing isn't required, we'll focus on fast, reliable local screen sharing."
+      vcNote = "Since video conferencing isn't required, we'll focus on fast, reliable local screen sharing."
     }
 
     return { label, locationText, participantsText, currentDisplayText, devicesText, vcNote }
@@ -117,76 +159,29 @@ export const CastingEstimatorBlock: React.FC<Props> = ({
 
         <Reveal delayMs={100}>
           <EstimatorCard>
-            <form onSubmit={handleSubmit} className={estimatorFormClassName}>
-              <div className={estimatorQuestionsClassName}>
-                <ChipQuestion
-                  label={locationLabel}
-                  Icon={MapPin}
-                  options={safeLocation}
-                  value={location}
-                  onChange={setLocation}
-                  error={attempted && location === null}
-                />
-
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                  <ChipQuestion
-                    label={participantsLabel}
-                    Icon={Users}
-                    options={safeParticipants}
-                    value={participants}
-                    onChange={setParticipants}
-                    error={attempted && participants === null}
-                  />
-                  <ChipQuestion
-                    label={currentDisplayLabel}
-                    Icon={Tv}
-                    options={safeCurrentDisplay}
-                    value={currentDisplay}
-                    onChange={setCurrentDisplay}
-                    error={attempted && currentDisplay === null}
+            <div className={estimatorBodyClassName}>
+              {result ? (
+                <div>
+                  <EstimatorResultPanel eyebrow="Recommended Casting Setup" headline={result.label}>
+                    For a {result.locationText?.toLowerCase()} with {result.participantsText?.toLowerCase()} participants
+                    using a {result.currentDisplayText?.toLowerCase()}, this setup is a strong fit. {result.vcNote}
+                  </EstimatorResultPanel>
+                  <StartOverButton onClick={handleStartOver} />
+                </div>
+              ) : (
+                <div key={step}>
+                  <WizardProgress current={step} total={steps.length} />
+                  {current.content}
+                  <WizardNav
+                    showBack={step > 0}
+                    onBack={handleBack}
+                    onNext={handleNext}
+                    nextLabel={isLast ? submitLabel || 'Submit' : 'Next'}
+                    nextDisabled={!current.answered}
                   />
                 </div>
-
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                  <ChipQuestion
-                    label={devicesLabel}
-                    Icon={Laptop}
-                    options={safeDevices}
-                    value={devices}
-                    onChange={setDevices}
-                    error={attempted && devices === null}
-                  />
-                  <ChipQuestion
-                    label={vcLabel}
-                    Icon={Video}
-                    options={safeVc}
-                    value={vc}
-                    onChange={setVc}
-                    error={attempted && vc === null}
-                  />
-                </div>
-
-                <Button type="submit" variant="default" className="group w-full">
-                  {submitLabel}
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Button>
-              </div>
-
-              <EstimatorResultPanel
-                hasResult={Boolean(result)}
-                eyebrow="Recommended Casting Setup"
-                headline={result?.label}
-                emptyText={<>Answer the questions and click &ldquo;{submitLabel}&rdquo; to see your recommended casting setup.</>}
-              >
-                {result && (
-                  <>
-                    For a {result.locationText?.toLowerCase()} with {result.participantsText?.toLowerCase()}{' '}
-                    participants using a {result.currentDisplayText?.toLowerCase()}, this setup is a strong fit.{' '}
-                    {result.vcNote}
-                  </>
-                )}
-              </EstimatorResultPanel>
-            </form>
+              )}
+            </div>
 
             <EstimatorFooter disclaimer={disclaimer} ctaLabel={ctaLabel} ctaUrl={ctaUrl} />
           </EstimatorCard>

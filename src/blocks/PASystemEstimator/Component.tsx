@@ -6,11 +6,11 @@ import { cn } from '@/utilities/ui'
 import React, { useState } from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
-import { Button } from '@/components/ui/button'
 import { ChipQuestion } from '@/components/site/estimator/ChipQuestion'
 import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
-import { EstimatorCard, EstimatorFooter, estimatorFormClassName, estimatorQuestionsClassName } from '@/components/site/estimator/Shell'
-import { ArrowRight, Building2, Grid2x2, ListChecks, Maximize2, Plug } from 'lucide-react'
+import { EstimatorCard, EstimatorFooter, StartOverButton, estimatorBodyClassName } from '@/components/site/estimator/Shell'
+import { WizardNav, WizardProgress } from '@/components/site/estimator/Wizard'
+import { Building2, Grid2x2, ListChecks, Maximize2, Plug } from 'lucide-react'
 
 // Best-effort recommended PA system type, matched the same way as the
 // page's own "Public Address Systems for Every Requirement" types: an
@@ -71,7 +71,7 @@ export const PASystemEstimatorBlock: React.FC<Props> = ({
   const [zones, setZones] = useState<number | null>(null)
   const [need, setNeed] = useState<number | null>(null)
   const [integration, setIntegration] = useState<number | null>(null)
-  const [attempted, setAttempted] = useState(false)
+  const [step, setStep] = useState(0)
   const [submitted, setSubmitted] = useState(false)
 
   if (
@@ -84,20 +84,51 @@ export const PASystemEstimatorBlock: React.FC<Props> = ({
     return null
   }
 
-  const allAnswered =
-    facility !== null && area !== null && zones !== null && need !== null && integration !== null
+  const steps = [
+    {
+      answered: facility !== null,
+      content: <ChipQuestion label={facilityLabel} Icon={Building2} options={safeFacility} value={facility} onChange={setFacility} />,
+    },
+    {
+      answered: area !== null,
+      content: <ChipQuestion label={areaLabel} Icon={Maximize2} options={safeArea} value={area} onChange={setArea} />,
+    },
+    {
+      answered: zones !== null,
+      content: <ChipQuestion label={zonesLabel} Icon={Grid2x2} options={safeZones} value={zones} onChange={setZones} />,
+    },
+    {
+      answered: need !== null,
+      content: <ChipQuestion label={needLabel} Icon={ListChecks} options={safeNeed} value={need} onChange={setNeed} />,
+    },
+    {
+      answered: integration !== null,
+      content: (
+        <ChipQuestion label={integrationLabel} Icon={Plug} options={safeIntegration} value={integration} onChange={setIntegration} />
+      ),
+    },
+  ]
+  const isLast = step === steps.length - 1
+  const current = steps[step]
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!allAnswered) {
-      setAttempted(true)
-      return
-    }
-    setSubmitted(true)
+  const handleNext = () => {
+    if (!current.answered) return
+    if (isLast) setSubmitted(true)
+    else setStep((s) => s + 1)
+  }
+  const handleBack = () => setStep((s) => Math.max(0, s - 1))
+  const handleStartOver = () => {
+    setFacility(null)
+    setArea(null)
+    setZones(null)
+    setNeed(null)
+    setIntegration(null)
+    setStep(0)
+    setSubmitted(false)
   }
 
   const result = (() => {
-    if (!submitted || !allAnswered) return null
+    if (!submitted) return null
 
     const facilityText = safeFacility[facility as number]?.text
     const areaText = safeArea[area as number]?.text
@@ -131,75 +162,30 @@ export const PASystemEstimatorBlock: React.FC<Props> = ({
 
         <Reveal delayMs={100}>
           <EstimatorCard>
-            <form onSubmit={handleSubmit} className={estimatorFormClassName}>
-              <div className={estimatorQuestionsClassName}>
-                <ChipQuestion
-                  label={facilityLabel}
-                  Icon={Building2}
-                  options={safeFacility}
-                  value={facility}
-                  onChange={setFacility}
-                  error={attempted && facility === null}
-                />
-
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                  <ChipQuestion
-                    label={areaLabel}
-                    Icon={Maximize2}
-                    options={safeArea}
-                    value={area}
-                    onChange={setArea}
-                    error={attempted && area === null}
-                  />
-                  <ChipQuestion
-                    label={zonesLabel}
-                    Icon={Grid2x2}
-                    options={safeZones}
-                    value={zones}
-                    onChange={setZones}
-                    error={attempted && zones === null}
-                  />
-                </div>
-
-                <ChipQuestion
-                  label={needLabel}
-                  Icon={ListChecks}
-                  options={safeNeed}
-                  value={need}
-                  onChange={setNeed}
-                  error={attempted && need === null}
-                />
-
-                <ChipQuestion
-                  label={integrationLabel}
-                  Icon={Plug}
-                  options={safeIntegration}
-                  value={integration}
-                  onChange={setIntegration}
-                  error={attempted && integration === null}
-                />
-
-                <Button type="submit" variant="default" className="group w-full">
-                  {submitLabel}
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Button>
-              </div>
-
-              <EstimatorResultPanel
-                hasResult={Boolean(result)}
-                eyebrow="Recommended PA System"
-                headline={result?.label}
-                emptyText={<>Answer the questions and click &ldquo;{submitLabel}&rdquo; to see your recommended PA system.</>}
-              >
-                {result && (
-                  <>
+            <div className={estimatorBodyClassName}>
+              {result ? (
+                <div>
+                  <EstimatorResultPanel eyebrow="Recommended PA System" headline={result.label}>
                     For {article(result.facilityText)} {result.facilityText?.toLowerCase()} ({result.areaText?.toLowerCase()}) with{' '}
                     {result.zonesText?.toLowerCase()} zone(s) needing {result.needText?.toLowerCase()}, a{' '}
                     {result.label.toLowerCase()} is a strong fit. {result.integrationNote}
-                  </>
-                )}
-              </EstimatorResultPanel>
-            </form>
+                  </EstimatorResultPanel>
+                  <StartOverButton onClick={handleStartOver} />
+                </div>
+              ) : (
+                <div key={step}>
+                  <WizardProgress current={step} total={steps.length} />
+                  {current.content}
+                  <WizardNav
+                    showBack={step > 0}
+                    onBack={handleBack}
+                    onNext={handleNext}
+                    nextLabel={isLast ? submitLabel || 'Submit' : 'Next'}
+                    nextDisabled={!current.answered}
+                  />
+                </div>
+              )}
+            </div>
 
             <EstimatorFooter disclaimer={disclaimer} ctaLabel={ctaLabel} ctaUrl={ctaUrl} />
           </EstimatorCard>

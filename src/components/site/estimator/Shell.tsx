@@ -10,8 +10,19 @@ export function EstimatorCard({ children, className }: { children: ReactNode; cl
   )
 }
 
-export const estimatorFormClassName = 'grid grid-cols-1 gap-8 p-6 md:grid-cols-2 md:p-8'
-export const estimatorQuestionsClassName = 'space-y-5'
+export const estimatorBodyClassName = 'mx-auto max-w-xl p-6 md:p-10'
+
+export function StartOverButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="mx-auto mt-5 block text-sm font-semibold text-primary_red hover:underline"
+    >
+      Start Over
+    </button>
+  )
+}
 
 export function EstimatorFooter({
   disclaimer,

@@ -6,11 +6,11 @@ import { cn } from '@/utilities/ui'
 import React, { useState } from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
-import { Button } from '@/components/ui/button'
 import { ChipQuestion } from '@/components/site/estimator/ChipQuestion'
 import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
-import { EstimatorCard, EstimatorFooter, estimatorFormClassName, estimatorQuestionsClassName } from '@/components/site/estimator/Shell'
-import { ArrowRight, MapPin, Users, Video } from 'lucide-react'
+import { EstimatorCard, EstimatorFooter, StartOverButton, estimatorBodyClassName } from '@/components/site/estimator/Shell'
+import { WizardNav, WizardProgress } from '@/components/site/estimator/Wizard'
+import { MapPin, Users, Video } from 'lucide-react'
 
 // Maps a "Number of Users" option index to a recommended screen-size tier
 // index within sizeTiers (0-based, smallest to largest). Kept in code as a
@@ -46,26 +46,46 @@ export const DisplayEstimatorBlock: React.FC<Props> = ({
   const [location, setLocation] = useState<number | null>(null)
   const [users, setUsers] = useState<number | null>(null)
   const [vc, setVc] = useState<number | null>(null)
-  const [attempted, setAttempted] = useState(false)
+  const [step, setStep] = useState(0)
   const [submitted, setSubmitted] = useState(false)
 
   if (safeLocation.length === 0 || safeUsers.length === 0 || safeSizeTiers.length === 0 || safeVc.length === 0) {
     return null
   }
 
-  const allAnswered = location !== null && users !== null && vc !== null
+  const steps = [
+    {
+      answered: location !== null,
+      content: <ChipQuestion label={locationLabel} Icon={MapPin} options={safeLocation} value={location} onChange={setLocation} />,
+    },
+    {
+      answered: users !== null,
+      content: <ChipQuestion label={usersLabel} Icon={Users} options={safeUsers} value={users} onChange={setUsers} />,
+    },
+    {
+      answered: vc !== null,
+      content: <ChipQuestion label={vcLabel} Icon={Video} options={safeVc} value={vc} onChange={setVc} />,
+    },
+  ]
+  const isLast = step === steps.length - 1
+  const current = steps[step]
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!allAnswered) {
-      setAttempted(true)
-      return
-    }
-    setSubmitted(true)
+  const handleNext = () => {
+    if (!current.answered) return
+    if (isLast) setSubmitted(true)
+    else setStep((s) => s + 1)
+  }
+  const handleBack = () => setStep((s) => Math.max(0, s - 1))
+  const handleStartOver = () => {
+    setLocation(null)
+    setUsers(null)
+    setVc(null)
+    setStep(0)
+    setSubmitted(false)
   }
 
   const result = (() => {
-    if (!submitted || !allAnswered) return null
+    if (!submitted) return null
 
     const wantsVc = (safeVc[vc as number]?.text || '').toLowerCase().includes('yes')
     const tierIndex = Math.min(USERS_TO_SIZE_TIER[users as number] ?? 0, safeSizeTiers.length - 1)
@@ -89,54 +109,30 @@ export const DisplayEstimatorBlock: React.FC<Props> = ({
 
         <Reveal delayMs={100}>
           <EstimatorCard>
-            <form onSubmit={handleSubmit} className={estimatorFormClassName}>
-              <div className={estimatorQuestionsClassName}>
-                <ChipQuestion
-                  label={locationLabel}
-                  Icon={MapPin}
-                  options={safeLocation}
-                  value={location}
-                  onChange={setLocation}
-                  error={attempted && location === null}
-                />
-                <ChipQuestion
-                  label={usersLabel}
-                  Icon={Users}
-                  options={safeUsers}
-                  value={users}
-                  onChange={setUsers}
-                  error={attempted && users === null}
-                />
-                <ChipQuestion
-                  label={vcLabel}
-                  Icon={Video}
-                  options={safeVc}
-                  value={vc}
-                  onChange={setVc}
-                  error={attempted && vc === null}
-                />
-
-                <Button type="submit" variant="default" className="group w-full">
-                  {submitLabel}
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Button>
-              </div>
-
-              <EstimatorResultPanel
-                hasResult={Boolean(result)}
-                eyebrow="Recommended Display Size"
-                headline={result?.size}
-                emptyText={<>Answer the questions and click &ldquo;{submitLabel}&rdquo; to see your recommended display size.</>}
-              >
-                {result && (
-                  <>
-                    For a {result.locationText?.toLowerCase()} with {result.usersText} people, this size keeps the
-                    screen clearly visible from every seat.
+            <div className={estimatorBodyClassName}>
+              {result ? (
+                <div>
+                  <EstimatorResultPanel eyebrow="Recommended Display Size" headline={result.size}>
+                    For a {result.locationText?.toLowerCase()} with {result.usersText} people, this size keeps the screen
+                    clearly visible from every seat.
                     {result.wantsVc && " We'll include an integrated camera and audio setup for seamless video conferencing."}
-                  </>
-                )}
-              </EstimatorResultPanel>
-            </form>
+                  </EstimatorResultPanel>
+                  <StartOverButton onClick={handleStartOver} />
+                </div>
+              ) : (
+                <div key={step}>
+                  <WizardProgress current={step} total={steps.length} />
+                  {current.content}
+                  <WizardNav
+                    showBack={step > 0}
+                    onBack={handleBack}
+                    onNext={handleNext}
+                    nextLabel={isLast ? submitLabel || 'Submit' : 'Next'}
+                    nextDisabled={!current.answered}
+                  />
+                </div>
+              )}
+            </div>
 
             <EstimatorFooter disclaimer={disclaimer} ctaLabel={ctaLabel} ctaUrl={ctaUrl} />
           </EstimatorCard>

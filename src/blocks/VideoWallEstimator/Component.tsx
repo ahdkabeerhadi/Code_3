@@ -6,11 +6,11 @@ import { cn } from '@/utilities/ui'
 import React, { useState } from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
-import { Button } from '@/components/ui/button'
 import { ChipQuestion } from '@/components/site/estimator/ChipQuestion'
 import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
-import { EstimatorCard, EstimatorFooter, estimatorFormClassName, estimatorQuestionsClassName } from '@/components/site/estimator/Shell'
-import { ArrowRight, LayoutTemplate, MapPin, Monitor, Ruler } from 'lucide-react'
+import { EstimatorCard, EstimatorFooter, StartOverButton, estimatorBodyClassName } from '@/components/site/estimator/Shell'
+import { WizardNav, WizardProgress } from '@/components/site/estimator/Wizard'
+import { LayoutTemplate, MapPin, Monitor, Ruler } from 'lucide-react'
 
 // Best-effort recommended technology, matched the same way as the page's
 // own "Video Wall Technologies for Every Environment" guidance: close
@@ -58,31 +58,59 @@ export const VideoWallEstimatorBlock: React.FC<Props> = ({
   const [displays, setDisplays] = useState<number | null>(null)
   const [contentType, setContentType] = useState<number | null>(null)
   const [distance, setDistance] = useState<number | null>(null)
-  const [attempted, setAttempted] = useState(false)
+  const [step, setStep] = useState(0)
   const [submitted, setSubmitted] = useState(false)
 
-  if (
-    safeLocation.length === 0 ||
-    safeDisplays.length === 0 ||
-    safeContentType.length === 0 ||
-    safeDistance.length === 0
-  ) {
+  if (safeLocation.length === 0 || safeDisplays.length === 0 || safeContentType.length === 0 || safeDistance.length === 0) {
     return null
   }
 
-  const allAnswered = location !== null && displays !== null && contentType !== null && distance !== null
+  const steps = [
+    {
+      answered: location !== null,
+      content: <ChipQuestion label={locationLabel} Icon={MapPin} options={safeLocation} value={location} onChange={setLocation} />,
+    },
+    {
+      answered: displays !== null,
+      content: <ChipQuestion label={displaysLabel} Icon={Monitor} options={safeDisplays} value={displays} onChange={setDisplays} />,
+    },
+    {
+      answered: distance !== null,
+      content: <ChipQuestion label={distanceLabel} Icon={Ruler} options={safeDistance} value={distance} onChange={setDistance} />,
+    },
+    {
+      answered: contentType !== null,
+      content: (
+        <ChipQuestion
+          label={contentTypeLabel}
+          Icon={LayoutTemplate}
+          options={safeContentType}
+          value={contentType}
+          onChange={setContentType}
+        />
+      ),
+    },
+  ]
+  const isLast = step === steps.length - 1
+  const current = steps[step]
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!allAnswered) {
-      setAttempted(true)
-      return
-    }
-    setSubmitted(true)
+  const handleNext = () => {
+    if (!current.answered) return
+    if (isLast) setSubmitted(true)
+    else setStep((s) => s + 1)
+  }
+  const handleBack = () => setStep((s) => Math.max(0, s - 1))
+  const handleStartOver = () => {
+    setLocation(null)
+    setDisplays(null)
+    setContentType(null)
+    setDistance(null)
+    setStep(0)
+    setSubmitted(false)
   }
 
   const result = (() => {
-    if (!submitted || !allAnswered) return null
+    if (!submitted) return null
 
     const locationText = safeLocation[location as number]?.text
     const displaysText = safeDisplays[displays as number]?.text
@@ -105,65 +133,29 @@ export const VideoWallEstimatorBlock: React.FC<Props> = ({
 
         <Reveal delayMs={100}>
           <EstimatorCard>
-            <form onSubmit={handleSubmit} className={estimatorFormClassName}>
-              <div className={estimatorQuestionsClassName}>
-                <ChipQuestion
-                  label={locationLabel}
-                  Icon={MapPin}
-                  options={safeLocation}
-                  value={location}
-                  onChange={setLocation}
-                  error={attempted && location === null}
-                />
-
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                  <ChipQuestion
-                    label={displaysLabel}
-                    Icon={Monitor}
-                    options={safeDisplays}
-                    value={displays}
-                    onChange={setDisplays}
-                    error={attempted && displays === null}
-                  />
-                  <ChipQuestion
-                    label={distanceLabel}
-                    Icon={Ruler}
-                    options={safeDistance}
-                    value={distance}
-                    onChange={setDistance}
-                    error={attempted && distance === null}
-                  />
-                </div>
-
-                <ChipQuestion
-                  label={contentTypeLabel}
-                  Icon={LayoutTemplate}
-                  options={safeContentType}
-                  value={contentType}
-                  onChange={setContentType}
-                  error={attempted && contentType === null}
-                />
-
-                <Button type="submit" variant="default" className="group w-full">
-                  {submitLabel}
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Button>
-              </div>
-
-              <EstimatorResultPanel
-                hasResult={Boolean(result)}
-                eyebrow="Recommended Technology"
-                headline={result?.label}
-                emptyText={<>Answer the questions and click &ldquo;{submitLabel}&rdquo; to see your recommended video wall technology.</>}
-              >
-                {result && (
-                  <>
+            <div className={estimatorBodyClassName}>
+              {result ? (
+                <div>
+                  <EstimatorResultPanel eyebrow="Recommended Technology" headline={result.label}>
                     For a {result.locationText?.toLowerCase()} showing {result.contentTypeText?.toLowerCase()} across{' '}
                     {result.displaysText?.toLowerCase()} displays, a {result.label} setup is a strong fit.
-                  </>
-                )}
-              </EstimatorResultPanel>
-            </form>
+                  </EstimatorResultPanel>
+                  <StartOverButton onClick={handleStartOver} />
+                </div>
+              ) : (
+                <div key={step}>
+                  <WizardProgress current={step} total={steps.length} />
+                  {current.content}
+                  <WizardNav
+                    showBack={step > 0}
+                    onBack={handleBack}
+                    onNext={handleNext}
+                    nextLabel={isLast ? submitLabel || 'Submit' : 'Next'}
+                    nextDisabled={!current.answered}
+                  />
+                </div>
+              )}
+            </div>
 
             <EstimatorFooter disclaimer={disclaimer} ctaLabel={ctaLabel} ctaUrl={ctaUrl} />
           </EstimatorCard>

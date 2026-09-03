@@ -6,11 +6,10 @@ import { cn } from '@/utilities/ui'
 import React, { useState } from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
-import { Button } from '@/components/ui/button'
 import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
-import { EstimatorCard, EstimatorFooter, estimatorFormClassName, estimatorQuestionsClassName } from '@/components/site/estimator/Shell'
+import { EstimatorCard, EstimatorFooter, StartOverButton, estimatorBodyClassName } from '@/components/site/estimator/Shell'
+import { WizardNav, WizardProgress } from '@/components/site/estimator/Wizard'
 import {
-  ArrowRight,
   Briefcase,
   Building2,
   Camera,
@@ -78,8 +77,8 @@ export const SetupEstimatorBlock: React.FC<Props> = ({
   // single questions: answers[qIndex] = selected option index
   // multi questions: answers[qIndex] = array of selected option indices
   const [answers, setAnswers] = useState<Record<number, number | number[]>>({})
-  const [submitted, setSubmitted] = useState<Record<number, number | number[]> | null>(null)
-  const [attempted, setAttempted] = useState(false)
+  const [step, setStep] = useState(0)
+  const [submitted, setSubmitted] = useState(false)
 
   if (safeQuestions.length === 0 || safeTiers.length === 0) return null
 
@@ -88,7 +87,6 @@ export const SetupEstimatorBlock: React.FC<Props> = ({
     if (type === 'multi') return Array.isArray(val) && val.length > 0
     return typeof val === 'number'
   }
-  const allAnswered = safeQuestions.every((q, i) => isAnswered(i, q.selectionType))
 
   const selectSingle = (qIndex: number, oIndex: number) => {
     setAnswers((prev) => ({ ...prev, [qIndex]: oIndex }))
@@ -101,27 +99,35 @@ export const SetupEstimatorBlock: React.FC<Props> = ({
     })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!allAnswered) {
-      setAttempted(true)
-      return
-    }
-    setSubmitted(answers)
+  const isLast = step === safeQuestions.length - 1
+  const question = safeQuestions[step]
+  const isMulti = question.selectionType === 'multi'
+  const QuestionIcon = getQuestionIcon(question.label)
+
+  const handleNext = () => {
+    if (!isAnswered(step, question.selectionType)) return
+    if (isLast) setSubmitted(true)
+    else setStep((s) => s + 1)
+  }
+  const handleBack = () => setStep((s) => Math.max(0, s - 1))
+  const handleStartOver = () => {
+    setAnswers({})
+    setStep(0)
+    setSubmitted(false)
   }
 
   const result = (() => {
     if (!submitted) return null
     const score = safeQuestions.reduce((sum, q, i) => {
       if (q.selectionType !== 'single') return sum
-      const v = submitted[i]
+      const v = answers[i]
       return sum + (typeof v === 'number' ? v : 0)
     }, 0)
     const tier = safeTiers.find((t) => score >= t.minScore && score <= t.maxScore) || safeTiers[safeTiers.length - 1]
 
     const selectedItems = safeQuestions.flatMap((q, i) => {
       if (q.selectionType !== 'multi') return []
-      const picked = Array.isArray(submitted[i]) ? (submitted[i] as number[]) : []
+      const picked = Array.isArray(answers[i]) ? (answers[i] as number[]) : []
       return picked.map((oIndex) => q.options?.[oIndex]?.text).filter(Boolean) as string[]
     })
 
@@ -139,83 +145,13 @@ export const SetupEstimatorBlock: React.FC<Props> = ({
 
         <Reveal delayMs={100}>
           <EstimatorCard>
-            <form onSubmit={handleSubmit} className={estimatorFormClassName}>
-              <div className={estimatorQuestionsClassName}>
-                {safeQuestions.map((question, qIndex) => {
-                  const QuestionIcon = getQuestionIcon(question.label)
-                  const isMulti = question.selectionType === 'multi'
-                  return (
-                    <div key={question.id || qIndex}>
-                      <div className="mb-3 flex items-center gap-3">
-                        <span className="flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-[#FDEBEC] text-primary_red">
-                          <QuestionIcon className="h-5 w-5" />
-                        </span>
-                        <label className="text-sm font-semibold text-foreground">
-                          {question.label}
-                          {isMulti && <span className="ml-1.5 font-normal text-gray-400">(select all that apply)</span>}
-                        </label>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {(question.options || []).map((option, oIndex) => {
-                          const isSelected = isMulti
-                            ? Array.isArray(answers[qIndex]) && (answers[qIndex] as number[]).includes(oIndex)
-                            : answers[qIndex] === oIndex
-                          const ItemIcon = isMulti ? getItemIcon(option.text) : null
-                          return (
-                            <button
-                              key={option.id || oIndex}
-                              type="button"
-                              onClick={() =>
-                                isMulti ? toggleMulti(qIndex, oIndex) : selectSingle(qIndex, oIndex)
-                              }
-                              className={cn(
-                                'inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-colors',
-                                isSelected
-                                  ? 'border-primary_red bg-primary_red text-white'
-                                  : 'border-gray-200 bg-white text-gray-600 hover:border-primary_red/50 hover:bg-[#FDEBEC] hover:text-primary_red',
-                              )}
-                            >
-                              {isMulti ? (
-                                isSelected ? (
-                                  <CheckSquare2 className="h-3.5 w-3.5 flex-none" />
-                                ) : (
-                                  <Square className="h-3.5 w-3.5 flex-none" />
-                                )
-                              ) : (
-                                isSelected && <Check className="h-3.5 w-3.5 flex-none" />
-                              )}
-                              {ItemIcon && !isSelected && <ItemIcon className="h-3.5 w-3.5 flex-none text-primary_red/70" />}
-                              {option.text}
-                            </button>
-                          )
-                        })}
-                      </div>
-                      {attempted && !isAnswered(qIndex, question.selectionType) && (
-                        <p className="mt-1.5 text-xs font-medium text-primary_red">
-                          {isMulti ? 'Select at least one option.' : 'Please select an option.'}
-                        </p>
-                      )}
-                    </div>
-                  )
-                })}
-
-                <Button type="submit" variant="default" className="group w-full">
-                  {submitLabel}
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Button>
-              </div>
-
-              <EstimatorResultPanel
-                hasResult={Boolean(result)}
-                eyebrow="Recommended Scope"
-                headline={result?.tier.tierName}
-                emptyText={<>Answer the questions and click &ldquo;{submitLabel}&rdquo; to see your recommended setup scope.</>}
-              >
-                {result && (
-                  <>
+            <div className={estimatorBodyClassName}>
+              {result ? (
+                <div>
+                  <EstimatorResultPanel eyebrow="Recommended Scope" headline={result.tier.tierName}>
                     <p>{result.tier.description}</p>
                     {result.selectedItems.length > 0 && (
-                      <div className="mt-4 border-t border-border/70 pt-4 text-left">
+                      <div className="mt-4 border-t border-black/5 pt-4 text-left">
                         <div className="mb-2 text-center text-xs font-semibold uppercase tracking-wide text-gray-500">
                           Your setup will include
                         </div>
@@ -223,7 +159,7 @@ export const SetupEstimatorBlock: React.FC<Props> = ({
                           {result.selectedItems.map((item, i) => (
                             <span
                               key={i}
-                              className="inline-flex items-center gap-1 rounded-md bg-white px-2.5 py-1 text-xs font-medium text-foreground ring-1 ring-border"
+                              className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-1 text-xs font-medium text-foreground ring-1 ring-black/10"
                             >
                               <Check className="h-3 w-3 flex-none text-primary_red" />
                               {item}
@@ -232,10 +168,66 @@ export const SetupEstimatorBlock: React.FC<Props> = ({
                         </div>
                       </div>
                     )}
-                  </>
-                )}
-              </EstimatorResultPanel>
-            </form>
+                  </EstimatorResultPanel>
+                  <StartOverButton onClick={handleStartOver} />
+                </div>
+              ) : (
+                <div key={step}>
+                  <WizardProgress current={step} total={safeQuestions.length} />
+
+                  <div className="mb-4 flex items-center gap-3">
+                    <span className="flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-[#FDEBEC] text-primary_red">
+                      <QuestionIcon className="h-5 w-5" />
+                    </span>
+                    <label className="text-base font-semibold text-foreground">
+                      {question.label}
+                      {isMulti && <span className="ml-1.5 font-normal text-gray-400">(select all that apply)</span>}
+                    </label>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {(question.options || []).map((option, oIndex) => {
+                      const isSelected = isMulti
+                        ? Array.isArray(answers[step]) && (answers[step] as number[]).includes(oIndex)
+                        : answers[step] === oIndex
+                      const ItemIcon = isMulti ? getItemIcon(option.text) : null
+                      return (
+                        <button
+                          key={option.id || oIndex}
+                          type="button"
+                          onClick={() => (isMulti ? toggleMulti(step, oIndex) : selectSingle(step, oIndex))}
+                          className={cn(
+                            'inline-flex items-center gap-1.5 rounded-full border px-4 py-2.5 text-sm font-medium transition-colors',
+                            isSelected
+                              ? 'border-primary_red bg-primary_red text-white'
+                              : 'border-gray-200 bg-white text-gray-600 hover:border-primary_red/50 hover:bg-[#FDEBEC] hover:text-primary_red',
+                          )}
+                        >
+                          {isMulti ? (
+                            isSelected ? (
+                              <CheckSquare2 className="h-3.5 w-3.5 flex-none" />
+                            ) : (
+                              <Square className="h-3.5 w-3.5 flex-none" />
+                            )
+                          ) : (
+                            isSelected && <Check className="h-3.5 w-3.5 flex-none" />
+                          )}
+                          {ItemIcon && !isSelected && <ItemIcon className="h-3.5 w-3.5 flex-none text-primary_red/70" />}
+                          {option.text}
+                        </button>
+                      )
+                    })}
+                  </div>
+
+                  <WizardNav
+                    showBack={step > 0}
+                    onBack={handleBack}
+                    onNext={handleNext}
+                    nextLabel={isLast ? submitLabel || 'Submit' : 'Next'}
+                    nextDisabled={!isAnswered(step, question.selectionType)}
+                  />
+                </div>
+              )}
+            </div>
 
             <EstimatorFooter disclaimer={disclaimer} ctaLabel={ctaLabel} ctaUrl={ctaUrl} />
           </EstimatorCard>
