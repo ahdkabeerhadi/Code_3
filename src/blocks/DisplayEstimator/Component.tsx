@@ -9,7 +9,7 @@ import { Reveal } from '@/components/site/Reveal'
 import { ChipQuestion } from '@/components/site/estimator/ChipQuestion'
 import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
 import { EstimatorCard, EstimatorFooter, StartOverButton, estimatorBodyClassName } from '@/components/site/estimator/Shell'
-import { WizardNav, WizardProgress } from '@/components/site/estimator/Wizard'
+import { WizardBackLink, WizardProgress } from '@/components/site/estimator/Wizard'
 import { MapPin, Users, Video } from 'lucide-react'
 
 // Maps a "Number of Users" option index to a recommended screen-size tier
@@ -33,7 +33,6 @@ export const DisplayEstimatorBlock: React.FC<Props> = ({
   sizeTiers = [],
   vcLabel,
   vcOptions = [],
-  submitLabel,
   disclaimer,
   ctaLabel,
   ctaUrl,
@@ -53,28 +52,30 @@ export const DisplayEstimatorBlock: React.FC<Props> = ({
     return null
   }
 
-  const steps = [
-    {
-      answered: location !== null,
-      content: <ChipQuestion label={locationLabel} Icon={MapPin} options={safeLocation} value={location} onChange={setLocation} />,
-    },
-    {
-      answered: users !== null,
-      content: <ChipQuestion label={usersLabel} Icon={Users} options={safeUsers} value={users} onChange={setUsers} />,
-    },
-    {
-      answered: vc !== null,
-      content: <ChipQuestion label={vcLabel} Icon={Video} options={safeVc} value={vc} onChange={setVc} />,
-    },
-  ]
-  const isLast = step === steps.length - 1
-  const current = steps[step]
-
-  const handleNext = () => {
-    if (!current.answered) return
+  const totalSteps = 3
+  const isLast = step === totalSteps - 1
+  const advance = () => {
     if (isLast) setSubmitted(true)
     else setStep((s) => s + 1)
   }
+  const select = (setter: (i: number) => void, i: number) => {
+    setter(i)
+    advance()
+  }
+
+  const steps = [
+    <ChipQuestion
+      key="location"
+      label={locationLabel}
+      Icon={MapPin}
+      options={safeLocation}
+      value={location}
+      onChange={(i) => select(setLocation, i)}
+    />,
+    <ChipQuestion key="users" label={usersLabel} Icon={Users} options={safeUsers} value={users} onChange={(i) => select(setUsers, i)} />,
+    <ChipQuestion key="vc" label={vcLabel} Icon={Video} options={safeVc} value={vc} onChange={(i) => select(setVc, i)} />,
+  ]
+
   const handleBack = () => setStep((s) => Math.max(0, s - 1))
   const handleStartOver = () => {
     setLocation(null)
@@ -121,15 +122,9 @@ export const DisplayEstimatorBlock: React.FC<Props> = ({
                 </div>
               ) : (
                 <div key={step}>
-                  <WizardProgress current={step} total={steps.length} />
-                  {current.content}
-                  <WizardNav
-                    showBack={step > 0}
-                    onBack={handleBack}
-                    onNext={handleNext}
-                    nextLabel={isLast ? submitLabel || 'Submit' : 'Next'}
-                    nextDisabled={!current.answered}
-                  />
+                  <WizardProgress current={step} total={totalSteps} />
+                  {steps[step]}
+                  <WizardBackLink show={step > 0} onBack={handleBack} />
                 </div>
               )}
             </div>

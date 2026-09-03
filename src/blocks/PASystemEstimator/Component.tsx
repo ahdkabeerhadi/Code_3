@@ -9,7 +9,7 @@ import { Reveal } from '@/components/site/Reveal'
 import { ChipQuestion } from '@/components/site/estimator/ChipQuestion'
 import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
 import { EstimatorCard, EstimatorFooter, StartOverButton, estimatorBodyClassName } from '@/components/site/estimator/Shell'
-import { WizardNav, WizardProgress } from '@/components/site/estimator/Wizard'
+import { WizardBackLink, WizardProgress } from '@/components/site/estimator/Wizard'
 import { Building2, Grid2x2, ListChecks, Maximize2, Plug } from 'lucide-react'
 
 // Best-effort recommended PA system type, matched the same way as the
@@ -55,7 +55,6 @@ export const PASystemEstimatorBlock: React.FC<Props> = ({
   needOptions = [],
   integrationLabel,
   integrationOptions = [],
-  submitLabel,
   disclaimer,
   ctaLabel,
   ctaUrl,
@@ -84,38 +83,53 @@ export const PASystemEstimatorBlock: React.FC<Props> = ({
     return null
   }
 
-  const steps = [
-    {
-      answered: facility !== null,
-      content: <ChipQuestion label={facilityLabel} Icon={Building2} options={safeFacility} value={facility} onChange={setFacility} />,
-    },
-    {
-      answered: area !== null,
-      content: <ChipQuestion label={areaLabel} Icon={Maximize2} options={safeArea} value={area} onChange={setArea} />,
-    },
-    {
-      answered: zones !== null,
-      content: <ChipQuestion label={zonesLabel} Icon={Grid2x2} options={safeZones} value={zones} onChange={setZones} />,
-    },
-    {
-      answered: need !== null,
-      content: <ChipQuestion label={needLabel} Icon={ListChecks} options={safeNeed} value={need} onChange={setNeed} />,
-    },
-    {
-      answered: integration !== null,
-      content: (
-        <ChipQuestion label={integrationLabel} Icon={Plug} options={safeIntegration} value={integration} onChange={setIntegration} />
-      ),
-    },
-  ]
-  const isLast = step === steps.length - 1
-  const current = steps[step]
-
-  const handleNext = () => {
-    if (!current.answered) return
+  const totalSteps = 5
+  const isLast = step === totalSteps - 1
+  const advance = () => {
     if (isLast) setSubmitted(true)
     else setStep((s) => s + 1)
   }
+  const select = (setter: (i: number) => void, i: number) => {
+    setter(i)
+    advance()
+  }
+
+  const steps = [
+    <ChipQuestion
+      key="facility"
+      label={facilityLabel}
+      Icon={Building2}
+      options={safeFacility}
+      value={facility}
+      onChange={(i) => select(setFacility, i)}
+    />,
+    <ChipQuestion
+      key="area"
+      label={areaLabel}
+      Icon={Maximize2}
+      options={safeArea}
+      value={area}
+      onChange={(i) => select(setArea, i)}
+    />,
+    <ChipQuestion
+      key="zones"
+      label={zonesLabel}
+      Icon={Grid2x2}
+      options={safeZones}
+      value={zones}
+      onChange={(i) => select(setZones, i)}
+    />,
+    <ChipQuestion key="need" label={needLabel} Icon={ListChecks} options={safeNeed} value={need} onChange={(i) => select(setNeed, i)} />,
+    <ChipQuestion
+      key="integration"
+      label={integrationLabel}
+      Icon={Plug}
+      options={safeIntegration}
+      value={integration}
+      onChange={(i) => select(setIntegration, i)}
+    />,
+  ]
+
   const handleBack = () => setStep((s) => Math.max(0, s - 1))
   const handleStartOver = () => {
     setFacility(null)
@@ -174,15 +188,9 @@ export const PASystemEstimatorBlock: React.FC<Props> = ({
                 </div>
               ) : (
                 <div key={step}>
-                  <WizardProgress current={step} total={steps.length} />
-                  {current.content}
-                  <WizardNav
-                    showBack={step > 0}
-                    onBack={handleBack}
-                    onNext={handleNext}
-                    nextLabel={isLast ? submitLabel || 'Submit' : 'Next'}
-                    nextDisabled={!current.answered}
-                  />
+                  <WizardProgress current={step} total={totalSteps} />
+                  {steps[step]}
+                  <WizardBackLink show={step > 0} onBack={handleBack} />
                 </div>
               )}
             </div>

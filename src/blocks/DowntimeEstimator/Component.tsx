@@ -10,7 +10,7 @@ import { ChipQuestion } from '@/components/site/estimator/ChipQuestion'
 import { NumberField } from '@/components/site/estimator/NumberField'
 import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
 import { EstimatorCard, EstimatorFooter, StartOverButton, estimatorBodyClassName } from '@/components/site/estimator/Shell'
-import { WizardNav, WizardProgress } from '@/components/site/estimator/Wizard'
+import { WizardBackLink, WizardNav, WizardProgress } from '@/components/site/estimator/Wizard'
 import { Building2, Camera, Flag, Laptop, MapPin, Presentation, Server } from 'lucide-react'
 
 // Buckets a raw count into a 0-3 complexity contribution. Kept in code (not
@@ -64,57 +64,70 @@ export const DowntimeEstimatorBlock: React.FC<
   const safeTiers = complexityTiers || []
   if (safeTiers.length === 0) return null
 
+  const totalSteps = 7
+  const isLast = step === totalSteps - 1
+  const advance = () => {
+    if (isLast) setSubmitted(true)
+    else setStep((s) => s + 1)
+  }
+  const select = (setter: (i: number) => void, i: number) => {
+    setter(i)
+    advance()
+  }
+
   const steps = [
     {
+      kind: 'number' as const,
       answered: workstations !== '',
       content: (
         <NumberField label={workstationsLabel} Icon={Laptop} placeholder="e.g. 20" value={workstations} onChange={setWorkstations} />
       ),
     },
     {
+      kind: 'number' as const,
       answered: servers !== '',
       content: <NumberField label={serversLabel} Icon={Server} placeholder="e.g. 2" value={servers} onChange={setServers} />,
     },
     {
-      answered: floors !== null,
-      content: <ChipQuestion label={floorsLabel} Icon={Building2} options={safeFloors} value={floors} onChange={setFloors} />,
+      kind: 'chip' as const,
+      content: <ChipQuestion label={floorsLabel} Icon={Building2} options={safeFloors} value={floors} onChange={(i) => select(setFloors, i)} />,
     },
     {
+      kind: 'number' as const,
       answered: cctv !== '',
       content: <NumberField label={cctvLabel} Icon={Camera} placeholder="e.g. 4" value={cctv} onChange={setCctv} />,
     },
     {
+      kind: 'number' as const,
       answered: meetingRooms !== '',
       content: (
         <NumberField label={meetingRoomsLabel} Icon={Presentation} placeholder="e.g. 2" value={meetingRooms} onChange={setMeetingRooms} />
       ),
     },
     {
-      answered: currentLocation !== null,
+      kind: 'chip' as const,
       content: (
         <ChipQuestion
           label={currentLocationLabel}
           Icon={MapPin}
           options={safeCurrent}
           value={currentLocation}
-          onChange={setCurrentLocation}
+          onChange={(i) => select(setCurrentLocation, i)}
         />
       ),
     },
     {
-      answered: newLocation !== null,
+      kind: 'chip' as const,
       content: (
-        <ChipQuestion label={newLocationLabel} Icon={Flag} options={safeNew} value={newLocation} onChange={setNewLocation} />
+        <ChipQuestion label={newLocationLabel} Icon={Flag} options={safeNew} value={newLocation} onChange={(i) => select(setNewLocation, i)} />
       ),
     },
   ]
-  const isLast = step === steps.length - 1
   const current = steps[step]
 
-  const handleNext = () => {
-    if (!current.answered) return
-    if (isLast) setSubmitted(true)
-    else setStep((s) => s + 1)
+  const handleNumberNext = () => {
+    if (current.kind === 'number' && !current.answered) return
+    advance()
   }
   const handleBack = () => setStep((s) => Math.max(0, s - 1))
   const handleStartOver = () => {
@@ -161,15 +174,19 @@ export const DowntimeEstimatorBlock: React.FC<
                 </div>
               ) : (
                 <div key={step}>
-                  <WizardProgress current={step} total={steps.length} />
+                  <WizardProgress current={step} total={totalSteps} />
                   {current.content}
-                  <WizardNav
-                    showBack={step > 0}
-                    onBack={handleBack}
-                    onNext={handleNext}
-                    nextLabel={isLast ? submitLabel || 'Submit' : 'Next'}
-                    nextDisabled={!current.answered}
-                  />
+                  {current.kind === 'number' ? (
+                    <WizardNav
+                      showBack={step > 0}
+                      onBack={handleBack}
+                      onNext={handleNumberNext}
+                      nextLabel={isLast ? submitLabel || 'Submit' : 'Next'}
+                      nextDisabled={!current.answered}
+                    />
+                  ) : (
+                    <WizardBackLink show={step > 0} onBack={handleBack} />
+                  )}
                 </div>
               )}
             </div>

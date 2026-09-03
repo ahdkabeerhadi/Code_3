@@ -21,6 +21,22 @@ export function WizardProgress({ current, total }: { current: number; total: num
   )
 }
 
+export function WizardBackLink({ show, onBack }: { show: boolean; onBack: () => void }) {
+  if (!show) return null
+  return (
+    <div className="mt-8">
+      <button
+        type="button"
+        onClick={onBack}
+        className="inline-flex items-center gap-1.5 rounded-full px-2 py-2.5 text-sm font-semibold text-gray-500 transition-colors hover:text-foreground"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Back
+      </button>
+    </div>
+  )
+}
+
 export function WizardNav({
   showBack,
   onBack,

@@ -8,7 +8,7 @@ import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
 import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
 import { EstimatorCard, EstimatorFooter, StartOverButton, estimatorBodyClassName } from '@/components/site/estimator/Shell'
-import { WizardNav, WizardProgress } from '@/components/site/estimator/Wizard'
+import { WizardBackLink, WizardNav, WizardProgress } from '@/components/site/estimator/Wizard'
 import {
   Briefcase,
   Building2,
@@ -88,8 +88,15 @@ export const SetupEstimatorBlock: React.FC<Props> = ({
     return typeof val === 'number'
   }
 
+  const isLast = step === safeQuestions.length - 1
+  const advance = () => {
+    if (isLast) setSubmitted(true)
+    else setStep((s) => s + 1)
+  }
+
   const selectSingle = (qIndex: number, oIndex: number) => {
     setAnswers((prev) => ({ ...prev, [qIndex]: oIndex }))
+    advance()
   }
   const toggleMulti = (qIndex: number, oIndex: number) => {
     setAnswers((prev) => {
@@ -99,15 +106,13 @@ export const SetupEstimatorBlock: React.FC<Props> = ({
     })
   }
 
-  const isLast = step === safeQuestions.length - 1
   const question = safeQuestions[step]
   const isMulti = question.selectionType === 'multi'
   const QuestionIcon = getQuestionIcon(question.label)
 
-  const handleNext = () => {
+  const handleMultiNext = () => {
     if (!isAnswered(step, question.selectionType)) return
-    if (isLast) setSubmitted(true)
-    else setStep((s) => s + 1)
+    advance()
   }
   const handleBack = () => setStep((s) => Math.max(0, s - 1))
   const handleStartOver = () => {
@@ -218,13 +223,17 @@ export const SetupEstimatorBlock: React.FC<Props> = ({
                     })}
                   </div>
 
-                  <WizardNav
-                    showBack={step > 0}
-                    onBack={handleBack}
-                    onNext={handleNext}
-                    nextLabel={isLast ? submitLabel || 'Submit' : 'Next'}
-                    nextDisabled={!isAnswered(step, question.selectionType)}
-                  />
+                  {isMulti ? (
+                    <WizardNav
+                      showBack={step > 0}
+                      onBack={handleBack}
+                      onNext={handleMultiNext}
+                      nextLabel={isLast ? submitLabel || 'Submit' : 'Next'}
+                      nextDisabled={!isAnswered(step, question.selectionType)}
+                    />
+                  ) : (
+                    <WizardBackLink show={step > 0} onBack={handleBack} />
+                  )}
                 </div>
               )}
             </div>

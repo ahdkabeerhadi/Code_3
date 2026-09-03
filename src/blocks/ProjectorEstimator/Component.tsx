@@ -9,7 +9,7 @@ import { Reveal } from '@/components/site/Reveal'
 import { ChipQuestion } from '@/components/site/estimator/ChipQuestion'
 import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
 import { EstimatorCard, EstimatorFooter, StartOverButton, estimatorBodyClassName } from '@/components/site/estimator/Shell'
-import { WizardNav, WizardProgress } from '@/components/site/estimator/Wizard'
+import { WizardBackLink, WizardProgress } from '@/components/site/estimator/Wizard'
 import { MapPin, Maximize2, Projector, Sun, Tv, Users } from 'lucide-react'
 
 // Best-effort recommended projector type, matched the same way as the
@@ -63,7 +63,6 @@ export const ProjectorEstimatorBlock: React.FC<Props> = ({
   projectionOptions = [],
   screenLabel,
   screenOptions = [],
-  submitLabel,
   disclaimer,
   ctaLabel,
   ctaUrl,
@@ -95,42 +94,47 @@ export const ProjectorEstimatorBlock: React.FC<Props> = ({
     return null
   }
 
-  const steps = [
-    {
-      answered: space !== null,
-      content: <ChipQuestion label={spaceLabel} Icon={MapPin} options={safeSpace} value={space} onChange={setSpace} />,
-    },
-    {
-      answered: roomSize !== null,
-      content: <ChipQuestion label={roomSizeLabel} Icon={Maximize2} options={safeRoomSize} value={roomSize} onChange={setRoomSize} />,
-    },
-    {
-      answered: people !== null,
-      content: <ChipQuestion label={peopleLabel} Icon={Users} options={safePeople} value={people} onChange={setPeople} />,
-    },
-    {
-      answered: light !== null,
-      content: <ChipQuestion label={lightLabel} Icon={Sun} options={safeLight} value={light} onChange={setLight} />,
-    },
-    {
-      answered: projection !== null,
-      content: (
-        <ChipQuestion label={projectionLabel} Icon={Projector} options={safeProjection} value={projection} onChange={setProjection} />
-      ),
-    },
-    {
-      answered: screen !== null,
-      content: <ChipQuestion label={screenLabel} Icon={Tv} options={safeScreen} value={screen} onChange={setScreen} />,
-    },
-  ]
-  const isLast = step === steps.length - 1
-  const current = steps[step]
-
-  const handleNext = () => {
-    if (!current.answered) return
+  const totalSteps = 6
+  const isLast = step === totalSteps - 1
+  const advance = () => {
     if (isLast) setSubmitted(true)
     else setStep((s) => s + 1)
   }
+  const select = (setter: (i: number) => void, i: number) => {
+    setter(i)
+    advance()
+  }
+
+  const steps = [
+    <ChipQuestion key="space" label={spaceLabel} Icon={MapPin} options={safeSpace} value={space} onChange={(i) => select(setSpace, i)} />,
+    <ChipQuestion
+      key="roomSize"
+      label={roomSizeLabel}
+      Icon={Maximize2}
+      options={safeRoomSize}
+      value={roomSize}
+      onChange={(i) => select(setRoomSize, i)}
+    />,
+    <ChipQuestion
+      key="people"
+      label={peopleLabel}
+      Icon={Users}
+      options={safePeople}
+      value={people}
+      onChange={(i) => select(setPeople, i)}
+    />,
+    <ChipQuestion key="light" label={lightLabel} Icon={Sun} options={safeLight} value={light} onChange={(i) => select(setLight, i)} />,
+    <ChipQuestion
+      key="projection"
+      label={projectionLabel}
+      Icon={Projector}
+      options={safeProjection}
+      value={projection}
+      onChange={(i) => select(setProjection, i)}
+    />,
+    <ChipQuestion key="screen" label={screenLabel} Icon={Tv} options={safeScreen} value={screen} onChange={(i) => select(setScreen, i)} />,
+  ]
+
   const handleBack = () => setStep((s) => Math.max(0, s - 1))
   const handleStartOver = () => {
     setSpace(null)
@@ -185,15 +189,9 @@ export const ProjectorEstimatorBlock: React.FC<Props> = ({
                 </div>
               ) : (
                 <div key={step}>
-                  <WizardProgress current={step} total={steps.length} />
-                  {current.content}
-                  <WizardNav
-                    showBack={step > 0}
-                    onBack={handleBack}
-                    onNext={handleNext}
-                    nextLabel={isLast ? submitLabel || 'Submit' : 'Next'}
-                    nextDisabled={!current.answered}
-                  />
+                  <WizardProgress current={step} total={totalSteps} />
+                  {steps[step]}
+                  <WizardBackLink show={step > 0} onBack={handleBack} />
                 </div>
               )}
             </div>
