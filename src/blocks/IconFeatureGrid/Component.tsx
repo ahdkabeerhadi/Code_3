@@ -6,9 +6,12 @@ import React from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
 import {
+  Activity,
+  AlertTriangle,
   AppWindow,
   Aperture,
   ArrowRight,
+  Briefcase,
   Building2,
   Cable,
   Calendar,
@@ -32,6 +35,9 @@ import {
   Mail,
   Maximize2,
   Megaphone,
+  Mic,
+  Minimize2,
+  Music,
   Network,
   Palette,
   PenLine,
@@ -48,6 +54,7 @@ import {
   Signpost,
   SlidersHorizontal,
   Smartphone,
+  Speaker,
   Store,
   Sun,
   SunMedium,
@@ -56,8 +63,10 @@ import {
   Users,
   UtensilsCrossed,
   Video,
+  Volume2,
   Wifi,
   Wrench,
+  Zap,
   ZoomIn,
   type LucideIcon,
 } from 'lucide-react'
@@ -85,12 +94,20 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('video wall')) return Grid3x3
   if (t.includes('direct view')) return Maximize2
   if (t.includes('fine-pitch') || t.includes('fine pitch')) return ZoomIn
+  if (t.includes('business projector')) return Briefcase
+  if (t.includes('short-throw') || t.includes('short throw')) return Minimize2
+  if (t.includes('laser')) return Zap
+  if (t.includes('high-brightness') || t.includes('high brightness')) return SunMedium
+  if (t.includes('large venue')) return Building2
+  if (t.includes('interactive projector')) return Hand
   if (t.includes('projection') || t.includes('projector')) return Projector
   if (t.includes('2 × 2') || t.includes('2x2') || t.includes('2 x 2')) return Grid2x2
   if (t.includes('3 × 3') || t.includes('3x3') || t.includes('3 x 3')) return Grid3x3
   if (t.includes('4 × 4') || t.includes('4x4') || t.includes('4 x 4')) return LayoutGrid
   if (/\bcustom\b/.test(t)) return Settings2
   if (t.includes('screen size')) return Maximize2
+  if (t.includes('room size')) return Home
+  if (t.includes('ambient light')) return Lightbulb
   if (t.includes('viewing distance') || t.includes('distance')) return Ruler
   if (t.includes('room dimension') || t.includes('dimension')) return Building2
   if (t.includes('resolution')) return Aperture
@@ -112,6 +129,16 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('multi-screen') || t.includes('multi screen')) return Columns3
   if (t.includes('interactive')) return Hand
   if (t.includes('screen group')) return Grid2x2
+  if (t.includes('evacuation')) return AlertTriangle
+  if (t.includes('paging')) return Megaphone
+  if (t.includes('zoned') || t.includes('zone')) return Grid2x2
+  if (t.includes('background music') || t.includes('music')) return Music
+  if (t.includes('ip-based') || t.includes('ip based')) return Network
+  if (t.includes('commercial')) return Building2
+  if (t.includes('microphone')) return Mic
+  if (t.includes('speaker')) return Speaker
+  if (t.includes('amplifier')) return Volume2
+  if (t.includes('audio controller')) return SlidersHorizontal
   if (t.includes('promotion')) return Megaphone
   if (t.includes('schedule')) return Calendar
   if (t.includes('playlist')) return ListVideo
@@ -119,6 +146,7 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('image')) return ImageIcon
   if (t.includes('meeting') || t.includes('video')) return Video
   if (t.includes('content')) return FileText
+  if (t.includes('usage')) return Activity
   if (t.includes('teach')) return GraduationCap
   if (t.includes('365') || t.includes('microsoft') || t.includes('email')) return Mail
   if (t.includes('communication') || t.includes('phone') || t.includes('voip') || t.includes('call')) return Phone

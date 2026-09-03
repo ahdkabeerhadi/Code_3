@@ -69,6 +69,8 @@ import { RoomSizeGuide } from '@/blocks/RoomSizeGuide/config'
 import { SignageEstimator } from '@/blocks/SignageEstimator/config'
 import { CastingEstimator } from '@/blocks/CastingEstimator/config'
 import { VideoWallEstimator } from '@/blocks/VideoWallEstimator/config'
+import { ProjectorEstimator } from '@/blocks/ProjectorEstimator/config'
+import { PASystemEstimator } from '@/blocks/PASystemEstimator/config'
 import { SpecComparisonTable } from '@/blocks/SpecComparisonTable/config'
 import { ResultsShowcase } from '@/blocks/ResultsShowcase/config'
 import { ProcessTimeline } from '@/blocks/ProcessTimeline/config'
@@ -280,6 +282,8 @@ export const Pages: CollectionConfig<'pages'> = {
                 SignageEstimator,
                 CastingEstimator,
                 VideoWallEstimator,
+                ProjectorEstimator,
+                PASystemEstimator,
               ],
               required: true,
               admin: {

@@ -10,12 +10,15 @@ import {
   Briefcase,
   Building2,
   DoorOpen,
+  Factory,
   Globe,
   GraduationCap,
   Monitor,
   Presentation,
   Store,
+  Sun,
   Users,
+  Warehouse,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -31,6 +34,12 @@ function getRoomIcon(text?: string | null): LucideIcon {
   if (t.includes('meeting')) return Presentation
   if (t.includes('retail') || t.includes('hospitality')) return Store
   if (t.includes('enterprise') || t.includes('multi-location') || t.includes('multi location')) return Globe
+  if (t.includes('commercial')) return Building2
+  if (t.includes('industrial')) return Factory
+  if (t.includes('warehouse')) return Warehouse
+  if (t.includes('open-ceiling') || t.includes('open ceiling')) return Warehouse
+  if (t.includes('outdoor')) return Sun
+  if (t.includes('office')) return Briefcase
   return Presentation
 }
 
