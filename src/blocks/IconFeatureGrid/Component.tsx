@@ -7,6 +7,7 @@ import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
 import {
   Activity,
+  AlertTriangle,
   AppWindow,
   Aperture,
   ArrowRight,
@@ -35,6 +36,7 @@ import {
   Maximize2,
   Megaphone,
   Minimize2,
+  Music,
   Network,
   Palette,
   PenLine,
@@ -124,6 +126,12 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('multi-screen') || t.includes('multi screen')) return Columns3
   if (t.includes('interactive')) return Hand
   if (t.includes('screen group')) return Grid2x2
+  if (t.includes('evacuation')) return AlertTriangle
+  if (t.includes('paging')) return Megaphone
+  if (t.includes('zoned') || t.includes('zone')) return Grid2x2
+  if (t.includes('background music') || t.includes('music')) return Music
+  if (t.includes('ip-based') || t.includes('ip based')) return Network
+  if (t.includes('commercial')) return Building2
   if (t.includes('promotion')) return Megaphone
   if (t.includes('schedule')) return Calendar
   if (t.includes('playlist')) return ListVideo
