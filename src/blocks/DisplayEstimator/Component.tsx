@@ -3,61 +3,19 @@
 import type { DisplayEstimatorBlock as DisplayEstimatorBlockProps } from 'src/payload-types'
 
 import { cn } from '@/utilities/ui'
-import Link from 'next/link'
 import React, { useState } from 'react'
 import { Eyebrow } from '@/components/site/Eyebrow'
 import { Reveal } from '@/components/site/Reveal'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Check, MapPin, Sparkles, Users, Video, type LucideIcon } from 'lucide-react'
+import { ChipQuestion } from '@/components/site/estimator/ChipQuestion'
+import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
+import { EstimatorCard, EstimatorFooter, estimatorFormClassName, estimatorQuestionsClassName } from '@/components/site/estimator/Shell'
+import { ArrowRight, MapPin, Users, Video } from 'lucide-react'
 
 // Maps a "Number of Users" option index to a recommended screen-size tier
 // index within sizeTiers (0-based, smallest to largest). Kept in code as a
 // best-effort default since there's no explicit screen-size question anymore.
 const USERS_TO_SIZE_TIER = [0, 1, 1, 2]
-
-function ChipQuestion({
-  label,
-  Icon,
-  options,
-  value,
-  onChange,
-  error,
-}: {
-  label?: string | null
-  Icon: LucideIcon
-  options: { text: string; id?: string | null }[]
-  value: number | null
-  onChange: (index: number) => void
-  error?: boolean
-}) {
-  return (
-    <div>
-      <div className="mb-1.5 flex items-center gap-1.5">
-        <Icon className="h-3.5 w-3.5 flex-none text-primary_red" />
-        <label className="text-xs font-semibold uppercase tracking-wide text-gray-500">{label}</label>
-      </div>
-      <div className="flex flex-wrap gap-1.5">
-        {options.map((opt, i) => (
-          <button
-            key={opt.id || i}
-            type="button"
-            onClick={() => onChange(i)}
-            className={cn(
-              'inline-flex items-center gap-1 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors',
-              value === i
-                ? 'border-primary_red bg-primary_red text-white'
-                : 'border-border bg-white text-gray-700 hover:border-primary_red/40 hover:text-primary_red',
-            )}
-          >
-            {value === i && <Check className="h-3.5 w-3.5" />}
-            {opt.text}
-          </button>
-        ))}
-      </div>
-      {error && <p className="mt-1 text-xs text-primary_red">Please select an option.</p>}
-    </div>
-  )
-}
 
 type Props = {
   className?: string
@@ -129,84 +87,59 @@ export const DisplayEstimatorBlock: React.FC<Props> = ({
           {subtitle && <p className="mt-3 text-gray-600 leading-relaxed">{subtitle}</p>}
         </Reveal>
 
-        <Reveal delayMs={100} className="overflow-hidden rounded-2xl border border-border bg-gray-50/60 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_20px_45px_-20px_rgba(0,0,0,0.15)]">
-          <div className="h-1.5 w-full bg-gradient-to-r from-primary_red via-red-400 to-primary_red" />
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 p-5 md:grid-cols-2 md:p-7">
-            <div className="space-y-3.5">
-              <ChipQuestion
-                label={locationLabel}
-                Icon={MapPin}
-                options={safeLocation}
-                value={location}
-                onChange={setLocation}
-                error={attempted && location === null}
-              />
-              <ChipQuestion
-                label={usersLabel}
-                Icon={Users}
-                options={safeUsers}
-                value={users}
-                onChange={setUsers}
-                error={attempted && users === null}
-              />
-              <ChipQuestion
-                label={vcLabel}
-                Icon={Video}
-                options={safeVc}
-                value={vc}
-                onChange={setVc}
-                error={attempted && vc === null}
-              />
+        <Reveal delayMs={100}>
+          <EstimatorCard>
+            <form onSubmit={handleSubmit} className={estimatorFormClassName}>
+              <div className={estimatorQuestionsClassName}>
+                <ChipQuestion
+                  label={locationLabel}
+                  Icon={MapPin}
+                  options={safeLocation}
+                  value={location}
+                  onChange={setLocation}
+                  error={attempted && location === null}
+                />
+                <ChipQuestion
+                  label={usersLabel}
+                  Icon={Users}
+                  options={safeUsers}
+                  value={users}
+                  onChange={setUsers}
+                  error={attempted && users === null}
+                />
+                <ChipQuestion
+                  label={vcLabel}
+                  Icon={Video}
+                  options={safeVc}
+                  value={vc}
+                  onChange={setVc}
+                  error={attempted && vc === null}
+                />
 
-              <Button type="submit" variant="default" className="group w-full">
-                {submitLabel}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              </Button>
-            </div>
+                <Button type="submit" variant="default" className="group w-full">
+                  {submitLabel}
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                </Button>
+              </div>
 
-            <div
-              className={cn(
-                'flex flex-col justify-center rounded-xl p-5 transition-all duration-300',
-                result
-                  ? 'border border-primary_red/15 bg-gradient-to-b from-primary_red/[0.06] to-white shadow-sm'
-                  : 'bg-white shadow-sm',
-              )}
-            >
-              {result ? (
-                <>
-                  <span className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-primary_red/10 text-primary_red">
-                    <Sparkles className="h-5 w-5" />
-                  </span>
-                  <div className="text-xs font-semibold uppercase tracking-wide text-primary_red">
-                    Recommended Display Size
-                  </div>
-                  <div className="mt-1 text-2xl font-bold text-foreground">{result.size}</div>
-                  <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+              <EstimatorResultPanel
+                hasResult={Boolean(result)}
+                eyebrow="Recommended Display Size"
+                headline={result?.size}
+                emptyText={<>Answer the questions and click &ldquo;{submitLabel}&rdquo; to see your recommended display size.</>}
+              >
+                {result && (
+                  <>
                     For a {result.locationText?.toLowerCase()} with {result.usersText} people, this size keeps the
                     screen clearly visible from every seat.
-                    {result.wantsVc &&
-                      " We'll include an integrated camera and audio setup for seamless video conferencing."}
-                  </p>
-                </>
-              ) : (
-                <p className="text-sm text-gray-500">
-                  Answer the questions and click &ldquo;{submitLabel}&rdquo; to see your recommended display size.
-                </p>
-              )}
-            </div>
-          </form>
+                    {result.wantsVc && " We'll include an integrated camera and audio setup for seamless video conferencing."}
+                  </>
+                )}
+              </EstimatorResultPanel>
+            </form>
 
-          <div className="flex flex-col gap-3 border-t border-border bg-white px-6 py-4 sm:flex-row sm:items-center sm:justify-between md:px-8">
-            {disclaimer && <p className="text-xs text-gray-500">{disclaimer}</p>}
-            {ctaLabel && ctaUrl && (
-              <Link
-                href={ctaUrl}
-                className="inline-flex flex-none items-center gap-2 rounded-full bg-primary_red px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:bg-secondary_red"
-              >
-                {ctaLabel}
-              </Link>
-            )}
-          </div>
+            <EstimatorFooter disclaimer={disclaimer} ctaLabel={ctaLabel} ctaUrl={ctaUrl} />
+          </EstimatorCard>
         </Reveal>
       </div>
     </section>
