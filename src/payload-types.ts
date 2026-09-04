@@ -374,6 +374,7 @@ export interface Page {
     | VideoWallEstimatorBlock
     | ProjectorEstimatorBlock
     | PASystemEstimatorBlock
+    | BGMEstimatorBlock
   )[];
   meta?: {
     title?: string | null;
@@ -3304,6 +3305,71 @@ export interface PASystemEstimatorBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BGMEstimatorBlock".
+ */
+export interface BGMEstimatorBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  spaceLabel?: string | null;
+  spaceOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  areaLabel?: string | null;
+  areaOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  zonesLabel?: string | null;
+  zonesOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  speakerLabel?: string | null;
+  speakerOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  volumeLabel?: string | null;
+  volumeOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  multiLocationLabel?: string | null;
+  multiLocationOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  submitLabel?: string | null;
+  disclaimer?: string | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'bgmEstimator';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -3895,6 +3961,7 @@ export interface PagesSelect<T extends boolean = true> {
         videoWallEstimator?: T | VideoWallEstimatorBlockSelect<T>;
         projectorEstimator?: T | ProjectorEstimatorBlockSelect<T>;
         paSystemEstimator?: T | PASystemEstimatorBlockSelect<T>;
+        bgmEstimator?: T | BGMEstimatorBlockSelect<T>;
       };
   meta?:
     | T
@@ -5684,6 +5751,64 @@ export interface PASystemEstimatorBlockSelect<T extends boolean = true> {
       };
   integrationLabel?: T;
   integrationOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  submitLabel?: T;
+  disclaimer?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BGMEstimatorBlock_select".
+ */
+export interface BGMEstimatorBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  spaceLabel?: T;
+  spaceOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  areaLabel?: T;
+  areaOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  zonesLabel?: T;
+  zonesOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  speakerLabel?: T;
+  speakerOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  volumeLabel?: T;
+  volumeOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  multiLocationLabel?: T;
+  multiLocationOptions?:
     | T
     | {
         text?: T;
