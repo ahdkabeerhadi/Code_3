@@ -29,7 +29,6 @@ export function NumberField({
         value={value}
         onChange={(e) => onChange(e.target.value === '' ? '' : Number(e.target.value))}
         className="w-full rounded-xl border border-gray-200 bg-white px-5 py-4 text-lg text-gray-900 outline-none transition-all placeholder:text-gray-400 focus:border-primary_red focus:ring-4 focus:ring-primary_red/10"
-        autoFocus
       />
     </div>
   )
