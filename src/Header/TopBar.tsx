@@ -1,5 +1,6 @@
 import React from 'react'
 import { getCachedGlobal } from '@/utilities/getGlobals'
+import type { Locale } from '@/utilities/getLocale'
 import type { Footer } from '@/payload-types'
 
 function PhoneIcon() {
@@ -28,8 +29,8 @@ function ClockIcon() {
   )
 }
 
-export async function TopBar() {
-  const footerData = (await getCachedGlobal('footer', 1)()) as Footer
+export async function TopBar({ locale }: { locale: Locale }) {
+  const footerData = (await getCachedGlobal('footer', 1, locale)()) as Footer
   const contactInfo = footerData?.contactInfo
 
   const phone = contactInfo?.phone
