@@ -5,6 +5,25 @@ import type { IconPreset } from './icons'
  * page doesn't have its own `icon` field set. Matched case-insensitively.
  */
 const TITLE_ICON_MAP: Record<string, IconPreset> = {
+  // Top-level parent service categories (shown together in nav menus, so each
+  // needs a visually distinct icon rather than falling through to the wrench default).
+  'managed it service': 'settings',
+  'audio visual (av) solutions': 'tv',
+  'cyber security': 'shield',
+  'security & surveillance solutions': 'camera',
+  'cloud and microsoft solutions': 'cloud',
+  'network infrastructure': 'network',
+  'unified communication': 'phone',
+  'backup and business continuity': 'refresh',
+  'it infrastructure service': 'server',
+  'hardware and software services': 'box',
+  'professional services': 'lightbulb',
+  seo: 'search',
+  'brand identity and design': 'palette',
+  'ui/ux design': 'layout',
+  'mobile app development': 'smartphone',
+  'web development': 'code',
+
   'it amc': 'smartphone',
   'on call it support': 'headset',
   'new office it setup': 'building',

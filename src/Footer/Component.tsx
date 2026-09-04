@@ -130,7 +130,10 @@ const getFooterServicePages = (locale: 'en' | 'ar') =>
 
 export async function Footer() {
   const locale = await getLocale()
-  const footerData = (await getCachedGlobal('footer', 1, locale)()) as Footer
+  const [footerData, servicePages] = await Promise.all([
+    getCachedGlobal('footer', 1, locale)() as Promise<Footer>,
+    getFooterServicePages(locale)(),
+  ])
 
   const navItems = footerData?.navItems || []
   const description = footerData?.description
@@ -138,8 +141,6 @@ export async function Footer() {
   const bottomBar = footerData?.bottomBar
   const logo = footerData?.logo
   const socialLinks = footerData?.socialLinks
-
-  const servicePages = await getFooterServicePages(locale)()
 
   const parentServices = servicePages.filter((p) => !p.parentService)
   const subServices = servicePages.filter((p) => p.parentService)

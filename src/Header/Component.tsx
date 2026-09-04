@@ -149,13 +149,15 @@ const getNavData = (locale: Locale) =>
 
 export async function Header() {
   const locale = await getLocale()
-  const headerData = await getCachedGlobal('header', 1, locale)()
-  const { navigationPages, techPartners } = await getNavData(locale)()
-  const productBrands = await getProductBrandsData()()
+  const [headerData, { navigationPages, techPartners }, productBrands] = await Promise.all([
+    getCachedGlobal('header', 1, locale)(),
+    getNavData(locale)(),
+    getProductBrandsData()(),
+  ])
 
   return (
     <>
-      <TopBar />
+      <TopBar locale={locale} />
       <HeaderClient
         data={(headerData as Header) || null}
         navigationPages={navigationPages}
