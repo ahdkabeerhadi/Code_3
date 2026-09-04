@@ -131,9 +131,13 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('screen group')) return Grid2x2
   if (t.includes('evacuation')) return AlertTriangle
   if (t.includes('paging')) return Megaphone
+  if (t.includes('single-zone') || t.includes('single zone')) return Home
+  if (t.includes('multi-location') || t.includes('multi location')) return Building2
+  if (t.includes('centralized') || t.includes('central')) return Settings2
   if (t.includes('zoned') || t.includes('zone')) return Grid2x2
   if (t.includes('background music') || t.includes('music')) return Music
   if (t.includes('ip-based') || t.includes('ip based')) return Network
+  if (t.includes('ceiling')) return Aperture
   if (t.includes('commercial')) return Building2
   if (t.includes('microphone')) return Mic
   if (t.includes('speaker')) return Speaker
