@@ -376,6 +376,7 @@ export interface Page {
     | PASystemEstimatorBlock
     | BGMEstimatorBlock
     | CCTVEstimatorBlock
+    | AICameraEstimatorBlock
   )[];
   meta?: {
     title?: string | null;
@@ -3436,6 +3437,64 @@ export interface CCTVEstimatorBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AICameraEstimatorBlock".
+ */
+export interface AICameraEstimatorBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  propertyLabel?: string | null;
+  propertyOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  areaLabel?: string | null;
+  areaOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  coverageLabel?: string | null;
+  coverageOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  featureLabel?: string | null;
+  featureOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  existingCctvLabel?: string | null;
+  existingCctvOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  submitLabel?: string | null;
+  disclaimer?: string | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'aiCameraEstimator';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -4029,6 +4088,7 @@ export interface PagesSelect<T extends boolean = true> {
         paSystemEstimator?: T | PASystemEstimatorBlockSelect<T>;
         bgmEstimator?: T | BGMEstimatorBlockSelect<T>;
         cctvEstimator?: T | CCTVEstimatorBlockSelect<T>;
+        aiCameraEstimator?: T | AICameraEstimatorBlockSelect<T>;
       };
   meta?:
     | T
@@ -5934,6 +5994,57 @@ export interface CCTVEstimatorBlockSelect<T extends boolean = true> {
       };
   aiLabel?: T;
   aiOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  submitLabel?: T;
+  disclaimer?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AICameraEstimatorBlock_select".
+ */
+export interface AICameraEstimatorBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  propertyLabel?: T;
+  propertyOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  areaLabel?: T;
+  areaOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  coverageLabel?: T;
+  coverageOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  featureLabel?: T;
+  featureOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  existingCctvLabel?: T;
+  existingCctvOptions?:
     | T
     | {
         text?: T;

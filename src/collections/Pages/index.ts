@@ -73,6 +73,7 @@ import { ProjectorEstimator } from '@/blocks/ProjectorEstimator/config'
 import { PASystemEstimator } from '@/blocks/PASystemEstimator/config'
 import { BGMEstimator } from '@/blocks/BGMEstimator/config'
 import { CCTVEstimator } from '@/blocks/CCTVEstimator/config'
+import { AICameraEstimator } from '@/blocks/AICameraEstimator/config'
 import { SpecComparisonTable } from '@/blocks/SpecComparisonTable/config'
 import { ResultsShowcase } from '@/blocks/ResultsShowcase/config'
 import { ProcessTimeline } from '@/blocks/ProcessTimeline/config'
@@ -288,6 +289,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 PASystemEstimator,
                 BGMEstimator,
                 CCTVEstimator,
+                AICameraEstimator,
               ],
               required: true,
               admin: {
