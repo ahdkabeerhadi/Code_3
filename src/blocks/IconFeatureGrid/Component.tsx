@@ -22,6 +22,7 @@ import {
   Crosshair,
   DoorOpen,
   FileText,
+  Footprints,
   Frame,
   GraduationCap,
   Grid2x2,
@@ -46,8 +47,10 @@ import {
   Presentation,
   Printer,
   Projector,
+  Radar,
   RefreshCw,
   Ruler,
+  ScanEye,
   Server,
   Settings2,
   Share2,
@@ -96,6 +99,11 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('ptz')) return ZoomIn
   if (t.includes('nvr')) return Server
   if (t.includes('vehicle') || t.includes('anpr')) return Car
+  if (t.includes('people detection') || t.includes('people counting')) return Users
+  if (t.includes('intrusion')) return AlertTriangle
+  if (t.includes('loiter')) return Footprints
+  if (t.includes('object recognition') || t.includes('object detection')) return ScanEye
+  if (t.includes('unusual activity')) return Radar
   if (t.includes('cctv') || t.includes('access control') || t.includes('camera')) return Camera
   if (t.includes('printer') || t.includes('peripheral')) return Printer
   if (t.includes('present')) return Presentation
