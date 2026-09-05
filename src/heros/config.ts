@@ -43,6 +43,10 @@ export const hero: Field = {
           label: 'Soft Impact',
           value: 'softImpact',
         },
+        {
+          label: 'Vivid Impact',
+          value: 'vividImpact',
+        },
       ],
       required: true,
     },
