@@ -33,9 +33,15 @@ const ServiceOverviewComponent: React.FC<ServiceOverviewProps> = ({
             )}
             <h2 className="text-3xl font-bold leading-tight text-gray-900 md:text-4xl">{title}</h2>
             {description && (
-              <p className={cn('max-w-3xl text-base text-gray-600 md:text-lg', hasImage && 'max-w-lg', !hasImage && 'max-w-none')}>
-                {description}
-              </p>
+              <div className={cn('max-w-3xl space-y-4 text-base text-gray-600 md:text-lg', hasImage && 'max-w-lg', !hasImage && 'max-w-none')}>
+                {/* Blank-line-separated paragraphs render as distinct <p> tags
+                    instead of one run-on block - a single-paragraph
+                    description (the common case) still renders exactly as
+                    before, just wrapped in one extra div. */}
+                {description.split(/\n\s*\n/).map((paragraph, i) => (
+                  <p key={i}>{paragraph}</p>
+                ))}
+              </div>
             )}
           </Reveal>
 
