@@ -54,6 +54,7 @@ import {
   Signpost,
   SlidersHorizontal,
   Smartphone,
+  Sparkles,
   Speaker,
   Store,
   Sun,
@@ -86,6 +87,13 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('server')) return Server
   if (t.includes('cloud')) return Cloud
   if (t.includes('cyber') || t.includes('security') || t.includes('firewall')) return ShieldCheck
+  if (t.includes('ip cctv') || t.includes('ip-based cctv')) return Network
+  if (t.includes('hd cctv')) return Video
+  if (t.includes('ai-powered') || t.includes('ai powered')) return Sparkles
+  if (t.includes('indoor cctv')) return Home
+  if (t.includes('outdoor cctv')) return Sun
+  if (t.includes('ptz')) return ZoomIn
+  if (t.includes('nvr')) return Server
   if (t.includes('cctv') || t.includes('access control') || t.includes('camera')) return Camera
   if (t.includes('printer') || t.includes('peripheral')) return Printer
   if (t.includes('present')) return Presentation
