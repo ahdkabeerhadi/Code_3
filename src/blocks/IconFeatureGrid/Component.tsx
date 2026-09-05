@@ -101,6 +101,8 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('outdoor cctv')) return Sun
   if (t.includes('ptz')) return ZoomIn
   if (t.includes('nvr')) return Server
+  if (t.includes('dome')) return Building2
+  if (t.includes('bullet')) return Sun
   if (t.includes('vehicle') || t.includes('anpr')) return Car
   if (t.includes('people detection') || t.includes('people counting')) return Users
   if (t.includes('intrusion')) return AlertTriangle
