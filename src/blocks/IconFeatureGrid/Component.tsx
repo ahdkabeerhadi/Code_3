@@ -141,7 +141,7 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('commercial')) return Building2
   if (t.includes('microphone')) return Mic
   if (t.includes('speaker')) return Speaker
-  if (t.includes('amplifier')) return Volume2
+  if (t.includes('amplifier') || t.includes('volume')) return Volume2
   if (t.includes('audio controller')) return SlidersHorizontal
   if (t.includes('promotion')) return Megaphone
   if (t.includes('schedule')) return Calendar
