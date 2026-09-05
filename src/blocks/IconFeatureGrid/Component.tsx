@@ -30,6 +30,7 @@ import {
   Grid2x2,
   Grid3x3,
   Hand,
+  HardDrive,
   Home,
   Image as ImageIcon,
   Laptop,
@@ -95,6 +96,11 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (/\bios\b/.test(t)) return Smartphone
   if (t.includes('wi-fi') || t.includes('wifi')) return Wifi
   if (t.includes('network')) return Network
+  if (t.includes('managed it')) return Settings2
+  if (t.includes('it infrastructure')) return Server
+  if (t.includes('audio visual')) return Video
+  if (t.includes('backup') || t.includes('business continuity')) return HardDrive
+  if (t.includes('security & surveillance') || t.includes('security and surveillance')) return Camera
   if (t.includes('server')) return Server
   if (t.includes('cloud')) return Cloud
   if (t.includes('cyber') || t.includes('security') || t.includes('firewall')) return ShieldCheck
