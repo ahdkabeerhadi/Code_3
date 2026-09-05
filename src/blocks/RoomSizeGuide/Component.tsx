@@ -9,22 +9,32 @@ import {
   ArrowRight,
   Briefcase,
   Building2,
+  Camera,
+  Car,
   DoorOpen,
   Factory,
   Globe,
   GraduationCap,
   Monitor,
   Presentation,
+  Sparkles,
   Store,
   Sun,
   Users,
   Warehouse,
+  ZoomIn,
   type LucideIcon,
 } from 'lucide-react'
 
 // Best-effort icon per room type, matched by keyword.
 function getRoomIcon(text?: string | null): LucideIcon {
   const t = (text || '').toLowerCase()
+  if (t.includes('dome')) return Building2
+  if (t.includes('bullet')) return Sun
+  if (t.includes('ptz')) return ZoomIn
+  if (t.includes('turret')) return Camera
+  if (t.includes('ai camera') || t.includes('ai-camera')) return Sparkles
+  if (t.includes('anpr')) return Car
   if (t.includes('huddle')) return Users
   if (t.includes('boardroom')) return Briefcase
   if (t.includes('training')) return GraduationCap
