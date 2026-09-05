@@ -13,6 +13,7 @@ const HERO_STATS = [
   { value: '30+', label: 'Experienced Professionals', icon: Users },
   { value: '50+', label: 'Technology Partners', icon: Handshake },
   { value: '1500+', label: 'Projects Delivered', icon: CheckCircle2 },
+  { value: '400+', label: 'Satisfied Customers', icon: Smile },
 ]
 
 // A bold, saturated hero using the same dark-red gradient already
