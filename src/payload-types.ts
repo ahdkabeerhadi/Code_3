@@ -375,6 +375,7 @@ export interface Page {
     | ProjectorEstimatorBlock
     | PASystemEstimatorBlock
     | BGMEstimatorBlock
+    | CCTVEstimatorBlock
   )[];
   meta?: {
     title?: string | null;
@@ -3370,6 +3371,71 @@ export interface BGMEstimatorBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CCTVEstimatorBlock".
+ */
+export interface CCTVEstimatorBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  propertyLabel?: string | null;
+  propertyOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  areaLabel?: string | null;
+  areaOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  camerasLabel?: string | null;
+  camerasOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  coverageLabel?: string | null;
+  coverageOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  remoteViewingLabel?: string | null;
+  remoteViewingOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  aiLabel?: string | null;
+  aiOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  submitLabel?: string | null;
+  disclaimer?: string | null;
+  /**
+   * Short line shown next to the button.
+   */
+  ctaText?: string | null;
+  ctaLabel?: string | null;
+  /**
+   * Leave the label blank to hide the button entirely.
+   */
+  ctaUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cctvEstimator';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "devices".
  */
 export interface Device {
@@ -3962,6 +4028,7 @@ export interface PagesSelect<T extends boolean = true> {
         projectorEstimator?: T | ProjectorEstimatorBlockSelect<T>;
         paSystemEstimator?: T | PASystemEstimatorBlockSelect<T>;
         bgmEstimator?: T | BGMEstimatorBlockSelect<T>;
+        cctvEstimator?: T | CCTVEstimatorBlockSelect<T>;
       };
   meta?:
     | T
@@ -5809,6 +5876,64 @@ export interface BGMEstimatorBlockSelect<T extends boolean = true> {
       };
   multiLocationLabel?: T;
   multiLocationOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  submitLabel?: T;
+  disclaimer?: T;
+  ctaText?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CCTVEstimatorBlock_select".
+ */
+export interface CCTVEstimatorBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  propertyLabel?: T;
+  propertyOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  areaLabel?: T;
+  areaOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  camerasLabel?: T;
+  camerasOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  coverageLabel?: T;
+  coverageOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  remoteViewingLabel?: T;
+  remoteViewingOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  aiLabel?: T;
+  aiOptions?:
     | T
     | {
         text?: T;
