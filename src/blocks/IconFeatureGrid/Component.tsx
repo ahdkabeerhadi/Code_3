@@ -53,6 +53,7 @@ import {
   RefreshCw,
   Ruler,
   ScanEye,
+  ScanLine,
   Server,
   Settings2,
   Share2,
@@ -105,6 +106,7 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('intrusion')) return AlertTriangle
   if (t.includes('loiter')) return Footprints
   if (t.includes('object recognition') || t.includes('object detection')) return ScanEye
+  if (t.includes('line crossing')) return ScanLine
   if (t.includes('unusual activity')) return Radar
   if (t.includes('night vision') || t.includes('ir camera') || t.includes('ir /')) return Moon
   if (t.includes('low-light') || t.includes('low light')) return CloudMoon
