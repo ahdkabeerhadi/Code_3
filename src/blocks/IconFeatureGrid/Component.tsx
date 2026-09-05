@@ -18,6 +18,7 @@ import {
   Camera,
   Car,
   Cloud,
+  CloudMoon,
   Columns3,
   Crosshair,
   DoorOpen,
@@ -39,6 +40,7 @@ import {
   Megaphone,
   Mic,
   Minimize2,
+  Moon,
   Music,
   Network,
   Palette,
@@ -104,6 +106,9 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('loiter')) return Footprints
   if (t.includes('object recognition') || t.includes('object detection')) return ScanEye
   if (t.includes('unusual activity')) return Radar
+  if (t.includes('night vision') || t.includes('ir camera') || t.includes('ir /')) return Moon
+  if (t.includes('low-light') || t.includes('low light')) return CloudMoon
+  if (t.includes('lighting-assisted') || t.includes('lighting assisted')) return Lightbulb
   if (t.includes('cctv') || t.includes('access control') || t.includes('camera')) return Camera
   if (t.includes('printer') || t.includes('peripheral')) return Printer
   if (t.includes('present')) return Presentation
