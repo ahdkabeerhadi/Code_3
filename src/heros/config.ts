@@ -39,6 +39,10 @@ export const hero: Field = {
           label: 'Photo Impact',
           value: 'photoImpact',
         },
+        {
+          label: 'Soft Impact',
+          value: 'softImpact',
+        },
       ],
       required: true,
     },
