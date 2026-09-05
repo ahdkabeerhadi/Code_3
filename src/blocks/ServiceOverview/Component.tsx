@@ -9,6 +9,12 @@ interface ServiceOverviewProps {
   title?: string
   description?: string
   image?: string | MediaType | null
+  // Most service pages pair this block with a QuickEnquiry form that floats
+  // absolutely over the top-right of the page, so the text column normally
+  // needs to stay narrow even without an image to avoid running under it.
+  // Standalone pages (e.g. About Us) with no such sidebar should pass false
+  // to use the full width instead of leaving a dead gap on the right.
+  reserveSidebarSpace?: boolean
   className?: string
 }
 
@@ -18,6 +24,7 @@ const ServiceOverviewComponent: React.FC<ServiceOverviewProps> = ({
   title,
   description,
   image,
+  reserveSidebarSpace = true,
 }) => {
   const hasImage = !!image && typeof image === 'object'
 
@@ -25,7 +32,12 @@ const ServiceOverviewComponent: React.FC<ServiceOverviewProps> = ({
     <section className={cn('bg-white pt-2 pb-8 md:pt-3 md:pb-10', className)}>
       <div className="container mx-auto px-4 sm:px-6">
         <div className={cn('flex flex-col items-start gap-6', hasImage && 'md:flex-row md:gap-8')}>
-          <Reveal className={cn('flex flex-1 flex-col items-start gap-4 text-left', !hasImage && 'lg:max-w-[calc(100%-420px)]')}>
+          <Reveal
+            className={cn(
+              'flex flex-1 flex-col items-start gap-4 text-left',
+              !hasImage && reserveSidebarSpace && 'lg:max-w-[calc(100%-420px)]',
+            )}
+          >
             {badge && (
               <span className="inline-block w-max rounded-full border border-secondary_red bg-primary_red px-5 py-2 text-xs font-semibold uppercase tracking-wider text-white">
                 {badge}

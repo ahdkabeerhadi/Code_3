@@ -31,7 +31,17 @@ export const ServiceOverview: Block = {
       relationTo: 'media',
       label: 'Image',
       admin: {
-        description: 'Optional — the overview renders full-width without one.',
+        description: 'Optional — the overview renders full-width without one, unless space is reserved for a sidebar below.',
+      },
+    },
+    {
+      name: 'reserveSidebarSpace',
+      type: 'checkbox',
+      label: 'Reserve space for a floating sidebar form (e.g. Quick Enquiry)',
+      defaultValue: true,
+      admin: {
+        description:
+          'Keep checked on service pages that also have a Quick Enquiry block, so text doesn\'t run under it. Uncheck for standalone pages with no such sidebar, so the text uses the full width.',
       },
     },
   ],

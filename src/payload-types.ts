@@ -1544,9 +1544,13 @@ export interface ServiceOverviewBlock {
   title: string;
   description: string;
   /**
-   * Optional — the overview renders full-width without one.
+   * Optional — the overview renders full-width without one, unless space is reserved for a sidebar below.
    */
   image?: (string | null) | Media;
+  /**
+   * Keep checked on service pages that also have a Quick Enquiry block, so text doesn't run under it. Uncheck for standalone pages with no such sidebar, so the text uses the full width.
+   */
+  reserveSidebarSpace?: boolean | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'serviceOverview';
@@ -4645,6 +4649,7 @@ export interface ServiceOverviewBlockSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   image?: T;
+  reserveSidebarSpace?: T;
   id?: T;
   blockName?: T;
 }
