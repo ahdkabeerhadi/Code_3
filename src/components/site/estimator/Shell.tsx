@@ -4,18 +4,8 @@ import type { ReactNode } from 'react'
 
 export function EstimatorCard({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div
-      className={cn(
-        'relative overflow-hidden rounded-2xl border border-gray-100 bg-gradient-to-br from-white via-white to-[#FDF2F3] shadow-sm',
-        className,
-      )}
-    >
-      {/* Soft decorative accents so the card reads as a designed frame rather
-          than empty white space around the content - purely atmospheric,
-          sits behind everything and never affects layout or readability. */}
-      <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-primary_red/10 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-primary_red/5 blur-3xl" />
-      <div className="relative">{children}</div>
+    <div className={cn('overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm', className)}>
+      {children}
     </div>
   )
 }
