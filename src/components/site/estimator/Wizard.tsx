@@ -94,12 +94,12 @@ export function WizardNav({
   nextDisabled: boolean
 }) {
   return (
-    <div className="mt-8 flex items-center justify-between gap-3">
+    <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
       {showBack ? (
         <button
           type="button"
           onClick={onBack}
-          className="inline-flex items-center gap-1.5 rounded-full px-2 py-3 text-base font-semibold text-gray-500 transition-all active:scale-95 hover:text-foreground"
+          className="inline-flex flex-none items-center gap-1.5 rounded-full px-2 py-3 text-base font-semibold text-gray-500 transition-all active:scale-95 hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" />
           Back
@@ -112,7 +112,7 @@ export function WizardNav({
         onClick={onNext}
         disabled={nextDisabled}
         className={cn(
-          'group inline-flex items-center gap-2 rounded-full bg-primary_red px-7 py-3 text-base font-semibold text-white transition-all active:scale-95 hover:bg-secondary_red',
+          'group inline-flex flex-none items-center gap-2 whitespace-nowrap rounded-full bg-primary_red px-7 py-3 text-base font-semibold text-white transition-all active:scale-95 hover:bg-secondary_red',
           nextDisabled && 'cursor-not-allowed opacity-40 hover:bg-primary_red active:scale-100',
         )}
       >
