@@ -22,6 +22,7 @@ import {
   Columns3,
   Crosshair,
   DoorOpen,
+  Fence,
   FileText,
   Footprints,
   Frame,
@@ -35,6 +36,7 @@ import {
   LayoutGrid,
   Lightbulb,
   ListVideo,
+  Lock,
   Mail,
   Maximize2,
   Megaphone,
@@ -113,6 +115,10 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('night vision') || t.includes('ir camera') || t.includes('ir /')) return Moon
   if (t.includes('low-light') || t.includes('low light')) return CloudMoon
   if (t.includes('lighting-assisted') || t.includes('lighting assisted')) return Lightbulb
+  if (t.includes('unauthorized')) return DoorOpen
+  if (t.includes('restricted')) return Lock
+  if (t.includes('perimeter breach') || t.includes('perimeter')) return Fence
+  if (t.includes('occupancy')) return Users
   if (t.includes('cctv') || t.includes('access control') || t.includes('camera')) return Camera
   if (t.includes('printer') || t.includes('peripheral')) return Printer
   if (t.includes('present')) return Presentation
