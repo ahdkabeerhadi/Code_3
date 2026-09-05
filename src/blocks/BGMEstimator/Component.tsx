@@ -37,9 +37,11 @@ function speakerNote(speakerText?: string | null): string {
 }
 
 function volumeNote(volumeText?: string | null): string {
-  const v = (volumeText || '').toLowerCase()
-  if (v.includes('yes')) return 'Each area will have independent volume control.'
-  if (v.includes('no')) return 'A single centralized control will keep things simple.'
+  // Exact match, not .includes() - "Not Sure" contains the substring "no" and
+  // would otherwise be misread as a "No" answer.
+  const v = (volumeText || '').trim().toLowerCase()
+  if (v === 'yes') return 'Each area will have independent volume control.'
+  if (v === 'no') return 'A single centralized control will keep things simple.'
   return "We'll help determine whether independent zone control makes sense for your setup."
 }
 

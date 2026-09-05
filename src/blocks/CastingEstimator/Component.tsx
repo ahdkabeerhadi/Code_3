@@ -134,14 +134,16 @@ export const CastingEstimatorBlock: React.FC<Props> = ({
     const participantsText = safeParticipants[participants as number]?.text
     const currentDisplayText = safeCurrentDisplay[currentDisplay as number]?.text
     const devicesText = safeDevices[devices as number]?.text
-    const vcText = (safeVc[vc as number]?.text || '').toLowerCase()
+    // Exact match, not .includes() - "Not Sure" contains the substring "no"
+    // and would otherwise be misread as a "No" answer.
+    const vcText = (safeVc[vc as number]?.text || '').trim().toLowerCase()
 
     const label = deviceLabel(devicesText)
 
     let vcNote = "We'll help you determine whether conferencing-ready casting makes sense for your setup."
-    if (vcText.includes('yes')) {
+    if (vcText === 'yes') {
       vcNote = "We'll include conferencing-ready casting so remote participants can join every session."
-    } else if (vcText.includes('no')) {
+    } else if (vcText === 'no') {
       vcNote = "Since video conferencing isn't required, we'll focus on fast, reliable local screen sharing."
     }
 
