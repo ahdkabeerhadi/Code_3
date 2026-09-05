@@ -219,7 +219,7 @@ export interface Page {
    */
   navOrder?: number | null;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'photoImpact';
     richText?: {
       root: {
         type: string;
