@@ -9,7 +9,7 @@ import { Reveal } from '@/components/site/Reveal'
 import { ChipQuestion } from '@/components/site/estimator/ChipQuestion'
 import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
 import { EstimatorCard, EstimatorFooter, StartOverButton, estimatorBodyClassName } from '@/components/site/estimator/Shell'
-import { WizardBackLink, WizardProgress } from '@/components/site/estimator/Wizard'
+import { EstimatorWizardFrame, WizardBackLink } from '@/components/site/estimator/Wizard'
 import { Building2, Camera, Eye, Grid2x2, MapPin, Sparkles } from 'lucide-react'
 
 // Best-effort recommended system type, matched the same way as the page's
@@ -115,40 +115,31 @@ export const CCTVEstimatorBlock: React.FC<Props> = ({
   }
 
   const steps = [
-    <ChipQuestion
-      key="property"
-      label={propertyLabel}
-      Icon={Building2}
-      options={safeProperty}
-      value={property}
-      onChange={(i) => select(setProperty, i)}
-    />,
-    <ChipQuestion key="area" label={areaLabel} Icon={MapPin} options={safeArea} value={area} onChange={(i) => select(setArea, i)} />,
-    <ChipQuestion
-      key="cameras"
-      label={camerasLabel}
-      Icon={Camera}
-      options={safeCameras}
-      value={cameras}
-      onChange={(i) => select(setCameras, i)}
-    />,
-    <ChipQuestion
-      key="coverage"
-      label={coverageLabel}
-      Icon={Grid2x2}
-      options={safeCoverage}
-      value={coverage}
-      onChange={(i) => select(setCoverage, i)}
-    />,
-    <ChipQuestion
-      key="remoteViewing"
-      label={remoteViewingLabel}
-      Icon={Eye}
-      options={safeRemoteViewing}
-      value={remoteViewing}
-      onChange={(i) => select(setRemoteViewing, i)}
-    />,
-    <ChipQuestion key="ai" label={aiLabel} Icon={Sparkles} options={safeAi} value={ai} onChange={(i) => select(setAi, i)} />,
+    {
+      icon: Building2,
+      content: <ChipQuestion label={propertyLabel} options={safeProperty} value={property} onChange={(i) => select(setProperty, i)} />,
+    },
+    { icon: MapPin, content: <ChipQuestion label={areaLabel} options={safeArea} value={area} onChange={(i) => select(setArea, i)} /> },
+    {
+      icon: Camera,
+      content: <ChipQuestion label={camerasLabel} options={safeCameras} value={cameras} onChange={(i) => select(setCameras, i)} />,
+    },
+    {
+      icon: Grid2x2,
+      content: <ChipQuestion label={coverageLabel} options={safeCoverage} value={coverage} onChange={(i) => select(setCoverage, i)} />,
+    },
+    {
+      icon: Eye,
+      content: (
+        <ChipQuestion
+          label={remoteViewingLabel}
+          options={safeRemoteViewing}
+          value={remoteViewing}
+          onChange={(i) => select(setRemoteViewing, i)}
+        />
+      ),
+    },
+    { icon: Sparkles, content: <ChipQuestion label={aiLabel} options={safeAi} value={ai} onChange={(i) => select(setAi, i)} /> },
   ]
 
   const handleBack = () => setStep((s) => Math.max(0, s - 1))
@@ -197,24 +188,23 @@ export const CCTVEstimatorBlock: React.FC<Props> = ({
 
         <Reveal delayMs={100}>
           <EstimatorCard>
-            <div className={estimatorBodyClassName}>
-              {result ? (
-                <div>
-                  <EstimatorResultPanel eyebrow="Recommended CCTV System" headline={result.label}>
-                    For {article(result.propertyText)} {result.propertyText?.toLowerCase()} ({result.areaText?.toLowerCase()}) needing{' '}
-                    {result.camerasText?.toLowerCase()} cameras covering {result.coverageText?.toLowerCase()}, we recommend{' '}
-                    {result.label}. {result.remoteViewingNote} {result.aiNote}
-                  </EstimatorResultPanel>
-                  <StartOverButton onClick={handleStartOver} />
-                </div>
-              ) : (
+            {result ? (
+              <div className={estimatorBodyClassName}>
+                <EstimatorResultPanel eyebrow="Recommended CCTV System" headline={result.label}>
+                  For {article(result.propertyText)} {result.propertyText?.toLowerCase()} ({result.areaText?.toLowerCase()}) needing{' '}
+                  {result.camerasText?.toLowerCase()} cameras covering {result.coverageText?.toLowerCase()}, we recommend{' '}
+                  {result.label}. {result.remoteViewingNote} {result.aiNote}
+                </EstimatorResultPanel>
+                <StartOverButton onClick={handleStartOver} />
+              </div>
+            ) : (
+              <EstimatorWizardFrame icon={steps[step].icon} current={step} total={totalSteps}>
                 <div key={step}>
-                  <WizardProgress current={step} total={totalSteps} />
-                  {steps[step]}
+                  {steps[step].content}
                   <WizardBackLink show={step > 0} onBack={handleBack} />
                 </div>
-              )}
-            </div>
+              </EstimatorWizardFrame>
+            )}
 
             <EstimatorFooter disclaimer={disclaimer} ctaLabel={ctaLabel} ctaUrl={ctaUrl} />
           </EstimatorCard>

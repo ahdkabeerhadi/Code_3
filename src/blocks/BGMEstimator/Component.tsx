@@ -9,7 +9,7 @@ import { Reveal } from '@/components/site/Reveal'
 import { ChipQuestion } from '@/components/site/estimator/ChipQuestion'
 import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
 import { EstimatorCard, EstimatorFooter, StartOverButton, estimatorBodyClassName } from '@/components/site/estimator/Shell'
-import { WizardBackLink, WizardProgress } from '@/components/site/estimator/Wizard'
+import { EstimatorWizardFrame, WizardBackLink } from '@/components/site/estimator/Wizard'
 import { Building2, Grid2x2, MapPin, Maximize2, SlidersHorizontal, Volume2 } from 'lucide-react'
 
 // Best-effort recommended system type, matched the same way as the page's own
@@ -114,33 +114,28 @@ export const BGMEstimatorBlock: React.FC<Props> = ({
   }
 
   const steps = [
-    <ChipQuestion key="space" label={spaceLabel} Icon={Building2} options={safeSpace} value={space} onChange={(i) => select(setSpace, i)} />,
-    <ChipQuestion key="area" label={areaLabel} Icon={Maximize2} options={safeArea} value={area} onChange={(i) => select(setArea, i)} />,
-    <ChipQuestion key="zones" label={zonesLabel} Icon={Grid2x2} options={safeZones} value={zones} onChange={(i) => select(setZones, i)} />,
-    <ChipQuestion
-      key="speaker"
-      label={speakerLabel}
-      Icon={Volume2}
-      options={safeSpeaker}
-      value={speaker}
-      onChange={(i) => select(setSpeaker, i)}
-    />,
-    <ChipQuestion
-      key="volume"
-      label={volumeLabel}
-      Icon={SlidersHorizontal}
-      options={safeVolume}
-      value={volume}
-      onChange={(i) => select(setVolume, i)}
-    />,
-    <ChipQuestion
-      key="multiLocation"
-      label={multiLocationLabel}
-      Icon={MapPin}
-      options={safeMultiLocation}
-      value={multiLocation}
-      onChange={(i) => select(setMultiLocation, i)}
-    />,
+    { icon: Building2, content: <ChipQuestion label={spaceLabel} options={safeSpace} value={space} onChange={(i) => select(setSpace, i)} /> },
+    { icon: Maximize2, content: <ChipQuestion label={areaLabel} options={safeArea} value={area} onChange={(i) => select(setArea, i)} /> },
+    { icon: Grid2x2, content: <ChipQuestion label={zonesLabel} options={safeZones} value={zones} onChange={(i) => select(setZones, i)} /> },
+    {
+      icon: Volume2,
+      content: <ChipQuestion label={speakerLabel} options={safeSpeaker} value={speaker} onChange={(i) => select(setSpeaker, i)} />,
+    },
+    {
+      icon: SlidersHorizontal,
+      content: <ChipQuestion label={volumeLabel} options={safeVolume} value={volume} onChange={(i) => select(setVolume, i)} />,
+    },
+    {
+      icon: MapPin,
+      content: (
+        <ChipQuestion
+          label={multiLocationLabel}
+          options={safeMultiLocation}
+          value={multiLocation}
+          onChange={(i) => select(setMultiLocation, i)}
+        />
+      ),
+    },
   ]
 
   const handleBack = () => setStep((s) => Math.max(0, s - 1))
@@ -188,24 +183,22 @@ export const BGMEstimatorBlock: React.FC<Props> = ({
 
         <Reveal delayMs={100}>
           <EstimatorCard>
-            <div className={estimatorBodyClassName}>
-              {result ? (
-                <div>
-                  <EstimatorResultPanel eyebrow="Recommended Audio System" headline={result.label}>
-                    For {article(result.spaceText)} {result.spaceText?.toLowerCase()} ({result.areaText?.toLowerCase()}) with{' '}
-                    {result.zonesText?.toLowerCase()} zone(s), we recommend {result.label}. {result.speakerNote}{' '}
-                    {result.volumeNote}
-                  </EstimatorResultPanel>
-                  <StartOverButton onClick={handleStartOver} />
-                </div>
-              ) : (
+            {result ? (
+              <div className={estimatorBodyClassName}>
+                <EstimatorResultPanel eyebrow="Recommended Audio System" headline={result.label}>
+                  For {article(result.spaceText)} {result.spaceText?.toLowerCase()} ({result.areaText?.toLowerCase()}) with{' '}
+                  {result.zonesText?.toLowerCase()} zone(s), we recommend {result.label}. {result.speakerNote} {result.volumeNote}
+                </EstimatorResultPanel>
+                <StartOverButton onClick={handleStartOver} />
+              </div>
+            ) : (
+              <EstimatorWizardFrame icon={steps[step].icon} current={step} total={totalSteps}>
                 <div key={step}>
-                  <WizardProgress current={step} total={totalSteps} />
-                  {steps[step]}
+                  {steps[step].content}
                   <WizardBackLink show={step > 0} onBack={handleBack} />
                 </div>
-              )}
-            </div>
+              </EstimatorWizardFrame>
+            )}
 
             <EstimatorFooter disclaimer={disclaimer} ctaLabel={ctaLabel} ctaUrl={ctaUrl} />
           </EstimatorCard>

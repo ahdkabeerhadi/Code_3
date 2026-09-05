@@ -9,7 +9,7 @@ import { Reveal } from '@/components/site/Reveal'
 import { ChipQuestion } from '@/components/site/estimator/ChipQuestion'
 import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
 import { EstimatorCard, EstimatorFooter, StartOverButton, estimatorBodyClassName } from '@/components/site/estimator/Shell'
-import { WizardBackLink, WizardProgress } from '@/components/site/estimator/Wizard'
+import { EstimatorWizardFrame, WizardBackLink } from '@/components/site/estimator/Wizard'
 import { LayoutTemplate, MapPin, Monitor, Settings2, Sun } from 'lucide-react'
 
 // Maps a "Where will it be used?" option index to a recommended screen-size
@@ -86,39 +86,35 @@ export const SignageEstimatorBlock: React.FC<Props> = ({
   }
 
   const steps = [
-    <ChipQuestion
-      key="location"
-      label={locationLabel}
-      Icon={MapPin}
-      options={safeLocation}
-      value={location}
-      onChange={(i) => select(setLocation, i)}
-    />,
-    <ChipQuestion
-      key="screens"
-      label={screensLabel}
-      Icon={Monitor}
-      options={safeScreens}
-      value={screens}
-      onChange={(i) => select(setScreens, i)}
-    />,
-    <ChipQuestion
-      key="environment"
-      label={environmentLabel}
-      Icon={Sun}
-      options={safeEnvironment}
-      value={environment}
-      onChange={(i) => select(setEnvironment, i)}
-    />,
-    <ChipQuestion key="cms" label={cmsLabel} Icon={Settings2} options={safeCms} value={cms} onChange={(i) => select(setCms, i)} />,
-    <ChipQuestion
-      key="contentType"
-      label={contentTypeLabel}
-      Icon={LayoutTemplate}
-      options={safeContentType}
-      value={contentType}
-      onChange={(i) => select(setContentType, i)}
-    />,
+    {
+      icon: MapPin,
+      content: <ChipQuestion label={locationLabel} options={safeLocation} value={location} onChange={(i) => select(setLocation, i)} />,
+    },
+    {
+      icon: Monitor,
+      content: <ChipQuestion label={screensLabel} options={safeScreens} value={screens} onChange={(i) => select(setScreens, i)} />,
+    },
+    {
+      icon: Sun,
+      content: (
+        <ChipQuestion label={environmentLabel} options={safeEnvironment} value={environment} onChange={(i) => select(setEnvironment, i)} />
+      ),
+    },
+    {
+      icon: Settings2,
+      content: <ChipQuestion label={cmsLabel} options={safeCms} value={cms} onChange={(i) => select(setCms, i)} />,
+    },
+    {
+      icon: LayoutTemplate,
+      content: (
+        <ChipQuestion
+          label={contentTypeLabel}
+          options={safeContentType}
+          value={contentType}
+          onChange={(i) => select(setContentType, i)}
+        />
+      ),
+    },
   ]
 
   const handleBack = () => setStep((s) => Math.max(0, s - 1))
@@ -161,27 +157,26 @@ export const SignageEstimatorBlock: React.FC<Props> = ({
 
         <Reveal delayMs={100}>
           <EstimatorCard>
-            <div className={estimatorBodyClassName}>
-              {result ? (
-                <div>
-                  <EstimatorResultPanel eyebrow="Recommended Screen Size" headline={result.sizeText}>
-                    For {article(result.environmentText)} {result.environmentText?.toLowerCase()}{' '}
-                    {result.locationText?.toLowerCase()} running {result.contentTypeText?.toLowerCase()} content across{' '}
-                    {result.screensText?.toLowerCase()}, a {result.sizeText} display is a strong fit.{' '}
-                    {result.wantsCms
-                      ? "We'll include a cloud-based content management system so you can update and schedule content remotely across every screen."
-                      : "Since a CMS isn't required, content can be updated directly per screen — you can always add centralized management later as you scale."}
-                  </EstimatorResultPanel>
-                  <StartOverButton onClick={handleStartOver} />
-                </div>
-              ) : (
+            {result ? (
+              <div className={estimatorBodyClassName}>
+                <EstimatorResultPanel eyebrow="Recommended Screen Size" headline={result.sizeText}>
+                  For {article(result.environmentText)} {result.environmentText?.toLowerCase()}{' '}
+                  {result.locationText?.toLowerCase()} running {result.contentTypeText?.toLowerCase()} content across{' '}
+                  {result.screensText?.toLowerCase()}, a {result.sizeText} display is a strong fit.{' '}
+                  {result.wantsCms
+                    ? "We'll include a cloud-based content management system so you can update and schedule content remotely across every screen."
+                    : "Since a CMS isn't required, content can be updated directly per screen — you can always add centralized management later as you scale."}
+                </EstimatorResultPanel>
+                <StartOverButton onClick={handleStartOver} />
+              </div>
+            ) : (
+              <EstimatorWizardFrame icon={steps[step].icon} current={step} total={totalSteps}>
                 <div key={step} className="animate-step-in">
-                  <WizardProgress current={step} total={totalSteps} />
-                  {steps[step]}
+                  {steps[step].content}
                   <WizardBackLink show={step > 0} onBack={handleBack} />
                 </div>
-              )}
-            </div>
+              </EstimatorWizardFrame>
+            )}
 
             <EstimatorFooter disclaimer={disclaimer} ctaLabel={ctaLabel} ctaUrl={ctaUrl} />
           </EstimatorCard>

@@ -9,7 +9,7 @@ import { Reveal } from '@/components/site/Reveal'
 import { ChipQuestion } from '@/components/site/estimator/ChipQuestion'
 import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
 import { EstimatorCard, EstimatorFooter, StartOverButton, estimatorBodyClassName } from '@/components/site/estimator/Shell'
-import { WizardBackLink, WizardProgress } from '@/components/site/estimator/Wizard'
+import { EstimatorWizardFrame, WizardBackLink } from '@/components/site/estimator/Wizard'
 import { MapPin, Users, Video } from 'lucide-react'
 
 // Maps a "Number of Users" option index to a recommended screen-size tier
@@ -64,16 +64,18 @@ export const DisplayEstimatorBlock: React.FC<Props> = ({
   }
 
   const steps = [
-    <ChipQuestion
-      key="location"
-      label={locationLabel}
-      Icon={MapPin}
-      options={safeLocation}
-      value={location}
-      onChange={(i) => select(setLocation, i)}
-    />,
-    <ChipQuestion key="users" label={usersLabel} Icon={Users} options={safeUsers} value={users} onChange={(i) => select(setUsers, i)} />,
-    <ChipQuestion key="vc" label={vcLabel} Icon={Video} options={safeVc} value={vc} onChange={(i) => select(setVc, i)} />,
+    {
+      icon: MapPin,
+      content: <ChipQuestion label={locationLabel} options={safeLocation} value={location} onChange={(i) => select(setLocation, i)} />,
+    },
+    {
+      icon: Users,
+      content: <ChipQuestion label={usersLabel} options={safeUsers} value={users} onChange={(i) => select(setUsers, i)} />,
+    },
+    {
+      icon: Video,
+      content: <ChipQuestion label={vcLabel} options={safeVc} value={vc} onChange={(i) => select(setVc, i)} />,
+    },
   ]
 
   const handleBack = () => setStep((s) => Math.max(0, s - 1))
@@ -110,24 +112,23 @@ export const DisplayEstimatorBlock: React.FC<Props> = ({
 
         <Reveal delayMs={100}>
           <EstimatorCard>
-            <div className={estimatorBodyClassName}>
-              {result ? (
-                <div>
-                  <EstimatorResultPanel eyebrow="Recommended Display Size" headline={result.size}>
-                    For a {result.locationText?.toLowerCase()} with {result.usersText} people, this size keeps the screen
-                    clearly visible from every seat.
-                    {result.wantsVc && " We'll include an integrated camera and audio setup for seamless video conferencing."}
-                  </EstimatorResultPanel>
-                  <StartOverButton onClick={handleStartOver} />
-                </div>
-              ) : (
+            {result ? (
+              <div className={estimatorBodyClassName}>
+                <EstimatorResultPanel eyebrow="Recommended Display Size" headline={result.size}>
+                  For a {result.locationText?.toLowerCase()} with {result.usersText} people, this size keeps the screen
+                  clearly visible from every seat.
+                  {result.wantsVc && " We'll include an integrated camera and audio setup for seamless video conferencing."}
+                </EstimatorResultPanel>
+                <StartOverButton onClick={handleStartOver} />
+              </div>
+            ) : (
+              <EstimatorWizardFrame icon={steps[step].icon} current={step} total={totalSteps}>
                 <div key={step} className="animate-step-in">
-                  <WizardProgress current={step} total={totalSteps} />
-                  {steps[step]}
+                  {steps[step].content}
                   <WizardBackLink show={step > 0} onBack={handleBack} />
                 </div>
-              )}
-            </div>
+              </EstimatorWizardFrame>
+            )}
 
             <EstimatorFooter disclaimer={disclaimer} ctaLabel={ctaLabel} ctaUrl={ctaUrl} />
           </EstimatorCard>
