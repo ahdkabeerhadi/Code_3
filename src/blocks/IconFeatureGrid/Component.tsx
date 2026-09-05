@@ -11,6 +11,7 @@ import {
   AppWindow,
   Aperture,
   ArrowRight,
+  BadgeCheck,
   Briefcase,
   Building2,
   Cable,
@@ -30,12 +31,15 @@ import {
   Grid2x2,
   Grid3x3,
   Hand,
+  Handshake,
   HardDrive,
+  Headset,
   Home,
   Image as ImageIcon,
   Laptop,
   LayoutGrid,
   Lightbulb,
+  ListChecks,
   ListVideo,
   Lock,
   Mail,
@@ -127,6 +131,13 @@ function getItemIcon(text?: string | null): LucideIcon {
   if (t.includes('restricted')) return Lock
   if (t.includes('perimeter breach') || t.includes('perimeter')) return Fence
   if (t.includes('occupancy')) return Users
+  if (t.includes('certified')) return BadgeCheck
+  if (t.includes('multi-vendor') || t.includes('multi vendor')) return Handshake
+  if (t.includes('infrastructure experience')) return Server
+  if (t.includes('av expertise')) return Video
+  if (t.includes('remote support')) return Headset
+  if (t.includes('on-site deployment') || t.includes('on site deployment')) return Wrench
+  if (t.includes('project management')) return ListChecks
   if (t.includes('night surveillance')) return Moon
   if (t.includes('parking')) return Car
   if (t.includes('warehouse')) return Warehouse
