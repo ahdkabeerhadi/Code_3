@@ -11,6 +11,7 @@ import { NumberField } from '@/components/site/estimator/NumberField'
 import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
 import { EstimatorCard, EstimatorFooter, StartOverButton, estimatorBodyClassName } from '@/components/site/estimator/Shell'
 import { EstimatorWizardFrame, WizardBackLink, WizardNav } from '@/components/site/estimator/Wizard'
+import { useScrollOnResult } from '@/components/site/estimator/useScrollOnResult'
 import { Building2, Camera, Flag, Laptop, MapPin, Presentation, Server } from 'lucide-react'
 
 // Buckets a raw count into a 0-3 complexity contribution. Kept in code (not
@@ -57,6 +58,7 @@ export const DowntimeEstimatorBlock: React.FC<
   const [newLocation, setNewLocation] = useState<number | null>(null)
   const [step, setStep] = useState(0)
   const [submitted, setSubmitted] = useState(false)
+  const sectionRef = useScrollOnResult<HTMLElement>(submitted)
 
   const safeFloors = floorsOptions || []
   const safeCurrent = currentLocationOptions || []
@@ -158,7 +160,7 @@ export const DowntimeEstimatorBlock: React.FC<
   })()
 
   return (
-    <section className={cn('bg-white py-7 md:py-9', className)}>
+    <section ref={sectionRef} className={cn('bg-white py-7 md:py-9 scroll-mt-32', className)}>
       <div className="container mx-auto px-4 sm:px-6">
         <Reveal className="max-w-2xl mb-6">
           {badge && <Eyebrow>{badge}</Eyebrow>}

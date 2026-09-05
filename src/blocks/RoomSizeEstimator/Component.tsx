@@ -10,6 +10,7 @@ import { Reveal } from '@/components/site/Reveal'
 import { Button } from '@/components/ui/button'
 import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
 import { EstimatorCard, EstimatorFooter, StartOverButton, estimatorBodyClassName } from '@/components/site/estimator/Shell'
+import { useScrollOnResult } from '@/components/site/estimator/useScrollOnResult'
 import { Users } from 'lucide-react'
 
 type Props = {
@@ -30,6 +31,7 @@ export const RoomSizeEstimatorBlock: React.FC<Props> = ({
 }) => {
   const [participants, setParticipants] = useState<number | ''>('')
   const [submittedCount, setSubmittedCount] = useState<number | null>(null)
+  const sectionRef = useScrollOnResult<HTMLElement>(submittedCount !== null)
 
   const result = (() => {
     if (!tiers || tiers.length === 0 || submittedCount === null) return null
@@ -51,7 +53,7 @@ export const RoomSizeEstimatorBlock: React.FC<Props> = ({
   if (!tiers || tiers.length === 0) return null
 
   return (
-    <section className={cn('bg-white py-7 md:py-9', className)}>
+    <section ref={sectionRef} className={cn('bg-white py-7 md:py-9 scroll-mt-32', className)}>
       <div className="container mx-auto px-4 sm:px-6">
         <Reveal className="max-w-2xl mb-6">
           {badge && <Eyebrow>{badge}</Eyebrow>}

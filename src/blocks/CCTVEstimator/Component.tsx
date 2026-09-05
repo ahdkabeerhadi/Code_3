@@ -10,6 +10,7 @@ import { ChipQuestion } from '@/components/site/estimator/ChipQuestion'
 import { EstimatorResultPanel } from '@/components/site/estimator/ResultPanel'
 import { EstimatorCard, EstimatorFooter, StartOverButton, estimatorBodyClassName } from '@/components/site/estimator/Shell'
 import { EstimatorWizardFrame, WizardBackLink } from '@/components/site/estimator/Wizard'
+import { useScrollOnResult } from '@/components/site/estimator/useScrollOnResult'
 import { Building2, Camera, Eye, Grid2x2, MapPin, Sparkles } from 'lucide-react'
 
 // Best-effort recommended system type, matched the same way as the page's
@@ -91,6 +92,7 @@ export const CCTVEstimatorBlock: React.FC<Props> = ({
   const [ai, setAi] = useState<number | null>(null)
   const [step, setStep] = useState(0)
   const [submitted, setSubmitted] = useState(false)
+  const sectionRef = useScrollOnResult<HTMLElement>(submitted)
 
   if (
     safeProperty.length === 0 ||
@@ -178,7 +180,7 @@ export const CCTVEstimatorBlock: React.FC<Props> = ({
   })()
 
   return (
-    <section className={cn('bg-white py-7 md:py-9', className)}>
+    <section ref={sectionRef} className={cn('bg-white py-7 md:py-9 scroll-mt-32', className)}>
       <div className="container mx-auto px-4 sm:px-6">
         <Reveal className="max-w-2xl mb-6">
           {badge && <Eyebrow>{badge}</Eyebrow>}
